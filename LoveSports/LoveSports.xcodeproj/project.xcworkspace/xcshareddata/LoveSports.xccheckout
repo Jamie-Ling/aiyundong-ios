@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>16FCF746-DE23-4989-A2B8-D354CE551F98</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LoveSports</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>03B402B67624AC8713468B7A8A47DF9F650D7ABB</key>
+		<string>https://github.com/Jamie-Ling/aiyundong-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LoveSports/LoveSports.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>03B402B67624AC8713468B7A8A47DF9F650D7ABB</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Jamie-Ling/aiyundong-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>03B402B67624AC8713468B7A8A47DF9F650D7ABB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>03B402B67624AC8713468B7A8A47DF9F650D7ABB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>aiyundong-ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RunningVC.h"
+#import "HomeVC.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) RunningVC *vc;
+@property (nonatomic, strong) HomeVC *vc;
 
 @end
 

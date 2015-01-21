@@ -334,4 +334,20 @@ inline static void zeroClearInt(int* p, size_t count) { memset(p, 0, sizeof(int)
     free(dv);
 }
 
+
++ (UIImage *)image:(NSString *)resourceName
+{
+    UIImage *img = nil;
+    if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)])
+    {
+        img = [[UIImage imageNamed:resourceName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    else
+    {
+        img = [UIImage imageNamed:resourceName];
+    }
+    
+    return img;
+}
+
 @end

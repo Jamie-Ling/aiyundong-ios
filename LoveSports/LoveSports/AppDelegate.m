@@ -20,10 +20,9 @@
 {
     // Override point for customization after application launch.
     
-    _vc = [[RunningVC alloc] init];
-    ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController:_vc];
+    _vc = [HomeVC custom];
     
-    self.window.rootViewController = nav;
+    self.window.rootViewController = _vc;
     [self.window makeKeyAndVisible];
     return YES;
 }

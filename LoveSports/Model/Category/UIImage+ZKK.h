@@ -17,5 +17,6 @@
 // 高斯模糊
 - (UIImage*)stackBlur:(NSUInteger)radius;
 + (BOOL)checkPngIsExist:(NSString *)filePath withIndex:(NSString *)imageName;
++ (UIImage *)image:(NSString *)resourceName;
 
 @end
