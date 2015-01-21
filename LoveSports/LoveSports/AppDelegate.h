@@ -14,5 +14,8 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) HomeVC *vc;
 
+@property (strong, nonatomic) UINavigationController *_mainNavigationController;        //主页面主流程控制器
+@property (strong, nonatomic) UINavigationController *_loginNavigationController;          //登录、注册流程控制器
+
 @end
 

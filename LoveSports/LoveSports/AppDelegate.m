@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import "ZKKNavigationController.h"
+#import "MSIntroView.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<EAIntroDelegate>
 
 @end
 
@@ -21,8 +22,14 @@
     // Override point for customization after application launch.
     
     _vc = [HomeVC custom];
+    self._mainNavigationController = [[UINavigationController alloc] initWithRootViewController: _vc];
     
-    self.window.rootViewController = _vc;
+    self.window.rootViewController = self._mainNavigationController;
+    
+    
+    //添加介绍页
+    [self addIntroView];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -53,5 +60,23 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark ---------------- 介绍页 & 介绍页回调-----------------
+//添加介绍页
+- (void) addIntroView
+{
+    if (![[ObjectCTools shared] objectForKey:@"introViewShow"])
+    {
+        [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
+    }
+}
+
+//介绍页完成回调
+- (void) introDidFinish:(EAIntroView *)introView
+{
+    NSLog(@"介绍页加载完毕");
+    [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"introViewShow"];
+}
+
 
 @end

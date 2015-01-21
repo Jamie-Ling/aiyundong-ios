@@ -123,4 +123,23 @@
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+
+#pragma mark - check
+//add by jamie 20140121
+/**
+ *  判断字符串是否为Nil或者空
+ *
+ *  @param str 需要校验的字符串
+ *
+ *  @return  YES:为nil或者空，NO:有内容
+ */
++ (BOOL )isNilOrEmpty: (NSString *) str;
+{
+    if (str && ![str isEqualToString:@""])
+    {
+        return NO;
+    }
+    return YES;
+}
+
 @end

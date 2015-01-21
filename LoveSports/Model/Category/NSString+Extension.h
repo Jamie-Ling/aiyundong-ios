@@ -42,4 +42,15 @@
 // 删除字符串开头与结尾的空白符与换行
 - (NSString *)trim;
 
+
+
+/**
+ *  判断字符串是否为Nil或者空
+ *
+ *  @param str 需要校验的字符串
+ *
+ *  @return  YES:为nil或者空，NO:有内容
+ */
++ (BOOL )isNilOrEmpty: (NSString *) str;
+
 @end
