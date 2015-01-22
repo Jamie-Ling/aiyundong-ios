@@ -83,7 +83,7 @@
 {
     CGSize buttonSize = item.size;
     CGFloat offsetX = (self.width - _itemsArray .count * buttonSize.width) / 7;
-    CGFloat offsetY = (self.height - buttonSize.height) / 2;
+    CGFloat offsetY = (self.height - buttonSize.height) / 2 + 5;
     CGRect rect = CGRectMake(offsetX + index * (buttonSize.width + offsetX), offsetY, buttonSize.width, buttonSize.height);
     item.frame = rect;
 }

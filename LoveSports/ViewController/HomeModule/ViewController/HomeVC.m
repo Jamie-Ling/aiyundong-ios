@@ -45,26 +45,17 @@
     NSArray *vcArray = @[vc1, vc2, vc3, vc4, vc5, vc6];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
+    NSArray *imagesArray = @[@"头像", @"顶部四格1", @"顶部四格2", @"顶部四格3", @"顶部四格4", @"更多"];
     for (int i = 0; i < vcArray.count; i++)
     {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 35)];
         
-        button.backgroundColor = [UIColor redColor];
+        button.backgroundColor = [UIColor clearColor];
         button.exclusiveTouch = YES;
-        NSString *title = [NSString stringWithFormat:@"%d", i + 1];
-      
-        [button setTitle:title forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         button.selected = NO;
-        
-        if (i == 0)
-        {
-            [button setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"头像"] forState:UIControlStateSelected];
-            [button setBackgroundColor:[UIColor clearColor]];
-        }
-        
+        [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateSelected];
+       
         [itemsArray addObject:button];
     }
     
