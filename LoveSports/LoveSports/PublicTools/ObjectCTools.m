@@ -106,9 +106,11 @@ static ObjectCTools *_tools = nil;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:image forState:UIControlStateNormal];
     
+    //本应用返回时仍需要显示返回二字
     if ([title isEqualToString:@"返回"]) {
-        title = @"    ";
+        title = @"  返回";
     }
+    
     if ([title length] > 0) {
         [button setTitle:title forState:UIControlStateNormal];
     }else{
@@ -440,7 +442,7 @@ static ObjectCTools *_tools = nil;
     theTextField.leftView = paddingView;
     theTextField.leftViewMode = UITextFieldViewModeAlways;
     
-    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(3, 10, theTextField.frame.size.height / 2.0, theTextField.frame.size.height / 2.0)];
+    UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(3, 10, theTextField.frame.size.height / 2.5, theTextField.frame.size.height / 2.0)];
     UIImage *tempImage = [UIImage imageNamed:imageName];
     if (zoomNumber)
     {
@@ -560,6 +562,34 @@ static ObjectCTools *_tools = nil;
     [theLable setAdjustsFontSizeToFitWidth:adjustsFontSizeToFitWidth];
     [theLable setWidth:frameSize.width];
     [theLable setHeight:frameSize.height];
+}
+
+/**
+ *  得到一个圆形按钮
+ *
+ *  @param theSize    按钮的边长
+ *  @param imagetName 按钮图片名字
+ *
+ *  @return 返回生成的这个圆形按钮
+ */
+- (FlatRoundedButton *) getARoundedButtonWithSize:(CGFloat ) theSize
+                                    withImageName: (NSString *) imagetName
+{
+    FlatRoundedButton *userImageButton = [[FlatRoundedButton alloc] initWithFrame:CGRectMake(0, 0, theSize, theSize)];
+    if (![NSString isNilOrEmpty:imagetName])
+    {
+        // 不做缓存
+        [userImageButton setImage:[UIImage imageNamed:imagetName] forState:UIControlStateNormal];
+    }
+    else
+    {
+        //设置成默认圆形图片
+        [userImageButton setImage:[UIImage imageNamed:kDefaultHeadPhoto] forState:UIControlStateNormal];
+    }
+    [userImageButton setBorderColor:[UIColor orangeColor]];
+    [userImageButton setBorderWidth:0.5];
+    
+    return userImageButton;
 }
 
 #pragma mark ---------------- 缓存数据plist读、写、清除(个人信息数据)-----------------
@@ -719,7 +749,93 @@ static ObjectCTools *_tools = nil;
     return urlFullAdderss;
 }
 
+
 #pragma mark ---------------- 格式校验 -----------------
+/**
+ *  密码校验
+ *
+ *  @param numString 待校验的密码
+ *
+ *  @return 校验结果，YES：合格， NO：密码格式不正确
+ */
+- (BOOL)checkPassword:(NSString *)numString {
+    NSString *urlRegex = @"[a-zA-Z0-9_]{6,20}$";  //最少6位，最多20位
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegex];
+    
+    return [pred evaluateWithObject:numString];
+}
+
+
+/**
+ *  邮箱校验
+ *
+ *  @param str2validate 待校验的邮箱
+ *
+ *  @return 校验结果，YES：合格， NO：邮箱格式不正确
+ */
+- (BOOL)checkEmail:(NSString *)str2validate;
+{
+    NSString *emailRegex = @"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailPredicate evaluateWithObject:str2validate];
+}
+
+/**
+ *  手机号码简单校验并用UIAlertView提示
+ *
+ *  @param phoneNumberString 等校验的手机号码
+ *
+ *  @return 校验结果，YES：合格， NO：手机号码格式不正确
+ */
+- (BOOL) checkPhoneNumberAndShowAlert: (NSString *) phoneNumberString
+{
+    if ([phoneNumberString stringByReplacingOccurrencesOfString:@" " withString:@""].length !=11) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入11位手机号码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return NO;
+    }
+    if (![[phoneNumberString substringToIndex:1] isEqualToString:@"1"]) {
+        UIAlertView	*alertview = [[UIAlertView alloc] initWithTitle:@"手机号码输入不正确，请输入正确的手机号"
+                                                            message:nil
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil];
+        [alertview show];
+        return NO;
+    }
+    return YES;
+}
+
+/**
+ *  手机号码或者邮箱号码校验
+ *
+ *  @param numberOrEmailString 待校验的用户名（可能为手机号码或者邮箱号码）
+ *
+ *  @return 校验结果，YES：合格， NO：手机号码格式及邮箱格式均不正确
+ */
+- (BOOL)checkPhoneNumberOrEmail: (NSString *) numberOrEmailString
+{
+    if (![self checkEmail:numberOrEmailString])
+    {
+        //手机号码简单校验位数
+        if (numberOrEmailString.length) {
+            if (![[numberOrEmailString substringToIndex:1] isEqualToString:@"1"]) {
+                return NO;
+            }
+            
+            if ([numberOrEmailString stringByReplacingOccurrencesOfString:@" " withString:@""].length != 11) {
+                
+                return NO;
+            }
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark ---------------- TableView相关 -----------------
 /**
  *  隐藏多余分隔线
@@ -734,4 +850,10 @@ static ObjectCTools *_tools = nil;
     view = nil;
 }
 
+#pragma mark ---------------- 摄像头和相册相关的公共类 -----------------
+// 判断设备是否有摄像头
+- (BOOL) isCameraAvailable
+{
+    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+}
 @end

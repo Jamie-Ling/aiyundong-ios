@@ -17,5 +17,11 @@
 @property (strong, nonatomic) UINavigationController *_mainNavigationController;        //主页面主流程控制器
 @property (strong, nonatomic) UINavigationController *_loginNavigationController;          //登录、注册流程控制器
 
+
+/**
+ *  退出登录
+ */
+- (void) signOut;
+
 @end
 

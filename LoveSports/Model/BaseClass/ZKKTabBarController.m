@@ -45,7 +45,9 @@
 
 - (void)loadContentViews
 {
-    self.navigationController.navigationBar.hidden = YES;
+    //屏蔽--by jamie, 实现用户中心的导航条推出方式
+//    self.navigationController.navigationBar.hidden = YES;
+    
     _contentView = [[UIView alloc] initWithFrame:_contentFrame];
     [self.view addSubview:_contentView];
     

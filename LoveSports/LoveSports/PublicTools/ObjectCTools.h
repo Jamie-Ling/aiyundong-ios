@@ -13,6 +13,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "FlatRoundedButton.h"
 
 
 
@@ -238,6 +239,18 @@
         withFontToFitWidth: (BOOL) adjustsFontSizeToFitWidth;
 
 
+/**
+ *  得到一个圆形按钮
+ *
+ *  @param theSize    按钮的边长
+ *  @param imagetName 按钮图片名字
+ *
+ *  @return 返回生成的这个圆形按钮
+ */
+- (FlatRoundedButton *) getARoundedButtonWithSize:(CGFloat ) theSize
+                                    withImageName: (NSString *) imagetName;
+
+
 #pragma mark ---------------- 数据持久化 ---缓存数据plist读、写、清除(个人信息数据)，文件存储等-----------------
 
 /**
@@ -278,6 +291,42 @@
 
 
 #pragma mark ---------------- 格式校验 -----------------
+/**
+ *  密码校验
+ *
+ *  @param numString 待校验的密码
+ *
+ *  @return 校验结果，YES：合格， NO：密码格式不正确
+ */
+- (BOOL)checkPassword:(NSString *)numString;
+
+/**
+ *  邮箱校验
+ *
+ *  @param str2validate 待校验的邮箱
+ *
+ *  @return 校验结果，YES：合格， NO：邮箱格式不正确
+ */
+- (BOOL)checkEmail:(NSString *)str2validate;
+
+/**
+ *  手机号码简单校验并用UIAlertView提示
+ *
+ *  @param phoneNumberString 等校验的手机号码
+ *
+ *  @return 校验结果，YES：合格， NO：手机号码格式不正确
+ */
+- (BOOL) checkPhoneNumberAndShowAlert: (NSString *) phoneNumberString;
+
+
+/**
+ *  手机号码或者邮箱号码校验
+ *
+ *  @param numberOrEmailString 待校验的用户名（可能为手机号码或者邮箱号码）
+ *
+ *  @return 校验结果，YES：合格， NO：手机号码格式及邮箱格式均不正确
+ */
+- (BOOL)checkPhoneNumberOrEmail: (NSString *) numberOrEmailString;
 
 
 #pragma mark ---------------- 截屏 -----------------
@@ -289,6 +338,12 @@
 #pragma mark ---------------- GUID -----------------
 
 #pragma mark ---------------- 摄像头和相册相关的公共类 -----------------
+/**
+ *  判断设备是否有摄像头
+ *
+ *  @return YES:有摄像头，NO:没摄像头
+ */
+- (BOOL) isCameraAvailable;
 
 
 #pragma mark ---------------- location相关 -----------------

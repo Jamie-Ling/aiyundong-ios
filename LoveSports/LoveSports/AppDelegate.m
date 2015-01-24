@@ -26,6 +26,8 @@
     
     self.window.rootViewController = self._mainNavigationController;
     
+    //导航条设置
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
     
     //添加介绍页
     [self addIntroView];
@@ -68,6 +70,21 @@
     if (![[ObjectCTools shared] objectForKey:@"introViewShow"])
     {
         [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
+        
+        //测试--给一个本地的测试用户信息
+        NSDictionary *testUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      @"", kUserInfoOfHeadPhotoKey,
+                                      @"1987-01-01", kUserInfoOfAgeKey,
+                                      @"深圳长沙", kUserInfoOfAreaKey,
+                                      @"天将降大任于斯人也，必先苦其心志...", kUserInfoOfDeclarationKey,
+                                      @"172", kUserInfoOfHeightKey,
+                                      @"上网、爬山、蹦极", kUserInfoOfInterestingKey,
+                                      @"一休哥", kUserInfoOfNickNameKey,
+                                      @"男", kUserInfoOfSexKey,
+                                      @"56", kUserInfoOfWeightKey, nil
+                                      ];
+        [[NSUserDefaults standardUserDefaults] setObject:testUserInfo forKey:kLastLoginUserInfo];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 

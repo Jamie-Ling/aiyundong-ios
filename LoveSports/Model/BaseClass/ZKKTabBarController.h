@@ -26,6 +26,8 @@
 
 - (id)initWithViewControllers:(NSArray *)vcs items:(NSArray *)items;
 
+- (void)loadContentViews;
+
 @end
 
 #pragma mark-

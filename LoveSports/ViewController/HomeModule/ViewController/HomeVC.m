@@ -33,6 +33,12 @@
     [self setSelectedIndex:1];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 + (id)custom
 {
     UserCenterVC *vc1 = [[UserCenterVC alloc] init];
@@ -56,6 +62,16 @@
         [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateSelected];
        
+        //注意，头像按钮是用户设置的（来自服务器或本地设置）  --- jamie
+        //测试头像
+        NSString *testUserHeadPhoto = @"testImage.jpg";
+        if (i == 0)
+        {
+            button = [[ObjectCTools shared] getARoundedButtonWithSize:40 withImageName:testUserHeadPhoto];
+        }
+        //--------------------------------------------------------
+        
+        
         [itemsArray addObject:button];
     }
     
@@ -64,19 +80,44 @@
     return tabBarController;
 }
 
-//- (void) tabBar:(ZKKTabBar *)tabBar didSelectIndex:(NSInteger)index
-//{
-//    if (_firstComeUserCenterVC && index == 0)
-//    {
-//        [self.navigationController pushViewController:[self.viewControllers objectAtIndex:0] animated:YES];
-//        return;
-//    }
-//    
-//    if (index == 0)
-//    {
-//        _firstComeUserCenterVC = YES;
-//    }
-//    [super tabBar:tabBar didSelectIndex:index];
-//}
+
+#pragma mark ---------------- 用户中心导航条推出管控 -----------------
+//重用父类方法，实现用户中心的导航条推出方式-1
+- (void) tabBar:(ZKKTabBar *)tabBar didSelectIndex:(NSInteger)index
+{
+    if (_firstComeUserCenterVC && index == 0)
+    {
+        //动画显示推出用户中心
+        [self pushTheUserCenterVCByAnimation];
+        [self.navigationController setNavigationBarHidden:NO];
+        
+        return;
+    }
+    if (index == 0)
+    {
+        _firstComeUserCenterVC = YES;
+    }
+    [super tabBar:tabBar didSelectIndex:index];
+}
+
+//动画显示用户中心
+- (void) pushTheUserCenterVCByAnimation
+{
+        CATransition *animation = [CATransition animation];
+        [animation setDuration:1.0];
+        [animation setType:kCATransitionFade]; //淡入淡出
+        [animation setSubtype:kCATransitionFromLeft];
+        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
+        [self.navigationController.view.layer addAnimation:animation forKey:nil];
+
+        [self.navigationController pushViewController:[self.viewControllers objectAtIndex:0] animated:NO];
+}
+
+//重用父类方法，实现用户中心的导航条推出方式-2
+- (void)loadContentViews
+{
+    [super loadContentViews];  //父类方法中屏蔽了导航条设置  -3
+    [self.navigationController setNavigationBarHidden:YES];
+}
 
 @end

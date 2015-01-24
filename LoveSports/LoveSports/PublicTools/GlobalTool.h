@@ -79,6 +79,7 @@
 #define kButtonFontSize       [UIFont systemFontOfSize:19]         //按钮字体大小
 #define kButtonBackgroundColor kRGB(248.0, 194.0, 40.0)   //按钮默认背景色
 #define kLabelTitleDefaultColor kRGBAlpha(0, 0, 0, 0.8)  //默认label文字颜色
+#define kButtonBackGroundImage @"btn_bg"    //按钮默认背景图片
 
 #define kTitleFontSize        [UIFont systemFontOfSize:20]            //标题字体
 #define kTextFeildFontSize     [UIFont systemFontOfSize:12]             //输入框字体大小
@@ -86,6 +87,8 @@
 
 #define kDefaultPlaceholderImage  @"default-holdpic.jpg"    //通用背景placeHolde图片
 #define kDefaultPlaceholderImage_Long  @"default-holdpic-long.jpg"    //通用背景placeHolde长图片
+
+#define kDefaultHeadPhoto  @"头像"        //默认头像
 
 
 #pragma mark ---------------- 请求相关------------
@@ -105,6 +108,17 @@
  */
 #define kLastLoginUserName             @"LoginSuccess_userName"   //前一次登录用户名
 #define kLastLoginUserInfo                      @"kLastLoginUserInfo"      //上次登录用户的信息 用于持续登录
+
+//用户信息相关key
+#define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像
+#define kUserInfoOfNickNameKey  @"userInfo002"  //昵称
+#define kUserInfoOfAgeKey  @"userInfo003"  //年龄
+#define kUserInfoOfSexKey  @"userInfo004"  //性别
+#define kUserInfoOfHeightKey  @"userInfo005"  //身高
+#define kUserInfoOfWeightKey  @"userInfo006"  //体重
+#define kUserInfoOfInterestingKey  @"userInfo007"  //兴趣点
+#define kUserInfoOfAreaKey  @"userInfo008"  //地区
+#define kUserInfoOfDeclarationKey  @"userInfo009"  //宣言
 
 /*
  缓存信息
@@ -133,9 +147,26 @@ typedef enum{
 #pragma mark ---------------- 描述文字、默认业务字符------------
 #define kCustomerServicePhoneNumber   @"0591-8888888"  //客服电话号码
 
-#define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字
+#define kShopUrl  @"http://www.baidu.com"   //爱运动商城URL
 
-#define kMultiMediaDownLoadOverPath  @"Library/WuxiaMusic/Over"  //最终完成后的存储目录
+
+#define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字
+#define kPasswordPlaceHoldText @"请输入您的密码"              //密码holdplace文字
+#define kSMSPlaceHoldText @"请输入验证码"                   //验证码...
+#define kPhonePlaceHoldText @"请输入您的手机号码"                 //手机号码...
+#define kNickNamePlaceHoldText @"请输入您的昵称，最多16位"              //昵称...
+#define kNewPasswordPlaceHoldText  @"请输入您的密码，至少6位"          //新密码...
+#define kNewPassword2PlaceHoldText @"请再次输入您的密码，至少6位"          //新密码确认密码
+
+#define kPasswordErrorMessage @"密码长度为8~20位，由6至20位的字母或数字组成"  //密码错误时提示
+
+#define kUpdateNickNamePlaceHoldText @"请输入您的昵称，最多16位"         //昵称修改
+#define kUpdateEmailPlaceHoldText @"请输入您电子邮箱"         //邮箱修改
+#define kUpdatePasswordPlaceHoldText @"请输入旧密码，由6至20位的字母或数字组成"         //密码修改
+
+
+
+
 
 
 #endif
