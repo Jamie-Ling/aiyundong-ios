@@ -56,7 +56,7 @@
 //页面通用背景颜色
 #define kBackgroundColor kHexRGB(0xFFFFFF)
 //导航栏背景颜色值
-#define kNavigationBarColor kHexRGB(0x111923)
+#define kNavigationBarColor kRGB(237, 147, 102)
 //导航栏字体颜色值：#FFFFFF;
 #define kNavigationBarTitleColor kHexRGB(0xFFFFFF)
 //页面字体颜色
@@ -106,8 +106,9 @@
 /*
  用户信息
  */
-#define kLastLoginUserName             @"LoginSuccess_userName"   //前一次登录用户名
-#define kLastLoginUserInfo                      @"kLastLoginUserInfo"      //上次登录用户的信息 用于持续登录
+#define kLastLoginUserInfoDictionaryKey                      @"LastLoginUserInfoDictionaryKey"      //存储上次登录用户信息的key 用于持续登录
+#define kAllLoginUserInfoKeyArray                  @"AllLoginUserInfoArray"        //存储所有已登录的用户的key的数组
+
 
 //用户信息相关key
 #define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像
@@ -161,6 +162,7 @@ typedef enum{
 #define kPasswordErrorMessage @"密码长度为8~20位，由6至20位的字母或数字组成"  //密码错误时提示
 
 #define kUpdateNickNamePlaceHoldText @"请输入您的昵称，最多16位"         //昵称修改
+#define kUpdateInterestingPlaceHoldText @"请输入您的兴趣爱好"         //昵称修改
 #define kUpdateEmailPlaceHoldText @"请输入您电子邮箱"         //邮箱修改
 #define kUpdatePasswordPlaceHoldText @"请输入旧密码，由6至20位的字母或数字组成"         //密码修改
 

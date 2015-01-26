@@ -568,18 +568,18 @@ static ObjectCTools *_tools = nil;
  *  得到一个圆形按钮
  *
  *  @param theSize    按钮的边长
- *  @param imagetName 按钮图片名字
+ *  @param withImageUrl 按钮图片url
  *
  *  @return 返回生成的这个圆形按钮
  */
 - (FlatRoundedButton *) getARoundedButtonWithSize:(CGFloat ) theSize
-                                    withImageName: (NSString *) imagetName
+                                    withImageUrl: (NSString *) imaUrl
 {
     FlatRoundedButton *userImageButton = [[FlatRoundedButton alloc] initWithFrame:CGRectMake(0, 0, theSize, theSize)];
-    if (![NSString isNilOrEmpty:imagetName])
+    if (![NSString isNilOrEmpty:imaUrl])
     {
-        // 不做缓存
-        [userImageButton setImage:[UIImage imageNamed:imagetName] forState:UIControlStateNormal];
+        // 缓存
+        [self setURLImage:imaUrl placeholderImage:kDefaultHeadPhoto withButton:userImageButton];
     }
     else
     {
@@ -592,7 +592,159 @@ static ObjectCTools *_tools = nil;
     return userImageButton;
 }
 
+/**
+ *  快速设置按钮的缓存图片
+ *
+ *  @param urlImage         图片地址
+ *  @param placeholderImage placeholderImage
+ *  @param button           按钮
+ */
+- (void) setURLImage:(NSString*)urlImage placeholderImage:(NSString*)placeholderImage withButton:(UIButton *) button
+{
+    //设置缓存头像
+    UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:urlImage];
+    if (image)
+    {
+        [button setImage:image forState:UIControlStateNormal];
+        return;
+    }
+    [button sd_setImageWithURL:[NSURL URLWithString:urlImage] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:kDefaultHeadPhoto] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (cacheType == SDImageCacheTypeNone)
+        {
+            [[SDImageCache sharedImageCache] storeImage:image forKey:urlImage toDisk:YES];
+        }
+        [button setImage:image forState:UIControlStateNormal];
+    }];
+}
+
+
 #pragma mark ---------------- 缓存数据plist读、写、清除(个人信息数据)-----------------
+/**
+ *  添加一条用户信息（添加帐号）
+ *
+ *  @param userInfoDictionary 此用户信息字典
+ */
+- (void) userAddUserInfo:(NSDictionary *)userInfoDictionary
+{
+    if (!userInfoDictionary)
+    {
+        return;
+    }
+    NSMutableArray *userInfoValueArray = [self userGetAllUserInfo];
+    if (userInfoValueArray.count == 0)
+    {
+        [userInfoValueArray addObject:userInfoDictionary];
+    }
+    else
+    {
+        [userInfoValueArray insertObject:userInfoDictionary atIndex:0];
+    }
+   
+    NSMutableArray *userInfoKeyArray = [[NSMutableArray alloc] initWithCapacity:32];
+    
+    for (int i = 0; i < userInfoValueArray.count; i++)
+    {
+        NSString *key = kLastLoginUserInfoDictionaryKey;
+        if (i != 0)
+        {
+            key = [NSString stringWithFormat:@"%@_%d",kLastLoginUserInfoDictionaryKey, i];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:[userInfoValueArray objectAtIndex:i] forKey:key];
+        [userInfoKeyArray addObject:key];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:userInfoKeyArray forKey:kAllLoginUserInfoKeyArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+/**
+ *  设置某个用户信息为当前登录用户（选择帐号）
+ *
+ *  @param keyIndex 此用户信息key所在位置
+ */
+- (void) userChoiceOneUserInfo:(NSUInteger ) keyIndex
+{
+    if (keyIndex == 0)
+    {
+        return;
+    }
+    NSMutableArray *userInfoValueArray = [NSMutableArray arrayWithArray:[self userGetAllUserInfo]];
+    NSDictionary *tempDictionary = [[userInfoValueArray objectAtIndex:keyIndex] copy];
+    [userInfoValueArray removeObjectAtIndex:keyIndex];
+    [userInfoValueArray insertObject:tempDictionary atIndex:0];
+    
+    NSMutableArray *userInfoKeyArray = [[NSMutableArray alloc] initWithCapacity:32];
+    for (int i = 0; i < userInfoValueArray.count; i++)
+    {
+        NSString *key = kLastLoginUserInfoDictionaryKey;
+        if (i != 0)
+        {
+            key = [NSString stringWithFormat:@"%@_%d",kLastLoginUserInfoDictionaryKey, i];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:[userInfoValueArray objectAtIndex:i] forKey:key];
+        [userInfoKeyArray addObject:key];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:userInfoKeyArray forKey:kAllLoginUserInfoKeyArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+/**
+ *  删除某个用户信息为当前登录用户（删除帐号）
+ *
+ *  @param keyIndex 此用户信息key所在位置
+ */
+- (void) userDeletOneUserInfo:(NSUInteger ) keyIndex
+{
+    NSMutableArray *userInfoValueArray = [self userGetAllUserInfo];
+    
+    if (userInfoValueArray.count == 0)
+    {
+        return;
+    }
+    
+    [userInfoValueArray removeObjectAtIndex:keyIndex];
+    
+    NSMutableArray *userInfoKeyArray = [NSMutableArray arrayWithArray:[self userGetAllUserInfoKey]];
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[userInfoKeyArray objectAtIndex:keyIndex]];
+    
+    [userInfoKeyArray removeObjectAtIndex:keyIndex];
+ 
+    [[NSUserDefaults standardUserDefaults] setObject:userInfoKeyArray forKey:kAllLoginUserInfoKeyArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+/**
+ *  得到用户信息存储的key数组
+ *
+ *  @return 返回此key数组
+ */
+- (NSArray *) userGetAllUserInfoKey
+{
+   return  [[NSUserDefaults standardUserDefaults] objectForKey:kAllLoginUserInfoKeyArray];
+}
+
+/**
+ *  得到所有的用户信息
+ *
+ *  @param userInfoValueArray 用户信息数组
+ */
+- (NSMutableArray *) userGetAllUserInfo
+{
+    NSMutableArray *userInfoArray = [[NSMutableArray alloc] initWithCapacity:32];
+    NSArray *keyArray = [self userGetAllUserInfoKey];
+    if (!keyArray)
+    {
+        return userInfoArray;
+    }
+    for (int i = 0; i < keyArray.count; i++)
+    {
+        [userInfoArray addObject:[[NSUserDefaults standardUserDefaults] objectForKey:[keyArray objectAtIndex:i]]];
+    }
+    return userInfoArray;
+}
+
+
 /**
  *  写入一条数据到plist文件(个人信息数据)
  *
@@ -676,12 +828,12 @@ static ObjectCTools *_tools = nil;
 - (BOOL) refreshTheUserInfoDictionaryWithKey:(NSString *) key
                                    withValue: (NSString *) value
 {
-    NSDictionary *userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfo];
+    NSDictionary *userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
     if (userInfoDictionary)
     {
         NSMutableDictionary *newUserInfoDictionary = [NSMutableDictionary dictionaryWithDictionary:userInfoDictionary];
         [newUserInfoDictionary setObject:value forKey:key];
-        [[NSUserDefaults standardUserDefaults] setObject:newUserInfoDictionary forKey:kLastLoginUserInfo];
+        [[NSUserDefaults standardUserDefaults] setObject:newUserInfoDictionary forKey:kLastLoginUserInfoDictionaryKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
         return YES;
     }

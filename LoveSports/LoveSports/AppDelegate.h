@@ -19,6 +19,12 @@
 
 
 /**
+ @brief 添加登录页（用于非持续登录或退出当前用户后跳转回登录页）
+ @param animated  BOOL: YES表示动画的形式添加，NO表示非动画形式添加
+ */
+- (void)addLoginView: (BOOL)animated;
+
+/**
  *  退出登录
  */
 - (void) signOut;

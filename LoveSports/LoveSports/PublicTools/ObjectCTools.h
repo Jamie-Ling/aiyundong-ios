@@ -243,15 +243,52 @@
  *  得到一个圆形按钮
  *
  *  @param theSize    按钮的边长
- *  @param imagetName 按钮图片名字
+ *  @param withImageUrl 按钮图片url
  *
  *  @return 返回生成的这个圆形按钮
  */
 - (FlatRoundedButton *) getARoundedButtonWithSize:(CGFloat ) theSize
-                                    withImageName: (NSString *) imagetName;
+                                     withImageUrl: (NSString *) imaUrl;
+
+
 
 
 #pragma mark ---------------- 数据持久化 ---缓存数据plist读、写、清除(个人信息数据)，文件存储等-----------------
+/**
+ *  添加一条用户信息（添加帐号）
+ *
+ *  @param userInfoDictionary 此用户信息字典
+ */
+- (void) userAddUserInfo:(NSDictionary *)userInfoDictionary;
+
+/**
+ *  设置某个用户信息为当前登录用户（选择帐号）
+ *
+ *  @param keyIndex 此用户信息key所在位置
+ */
+- (void) userChoiceOneUserInfo:(NSUInteger ) keyIndex;
+
+
+/**
+ *  删除某个用户信息为当前登录用户（删除帐号）
+ *
+ *  @param keyIndex 此用户信息key所在位置
+ */
+- (void) userDeletOneUserInfo:(NSUInteger ) keyIndex;
+
+/**
+ *  得到用户信息存储的key数组
+ *
+ *  @return 返回此key数组
+ */
+- (NSArray *) userGetAllUserInfoKey;
+
+/**
+ *  得到所有的用户信息
+ *
+ *  @param userInfoValueArray 用户信息数组
+ */
+- (NSMutableArray *) userGetAllUserInfo;
 
 /**
  *  写入一条数据到plist文件(个人信息数据)

@@ -63,11 +63,9 @@
         [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateSelected];
        
         //注意，头像按钮是用户设置的（来自服务器或本地设置）  --- jamie
-        //测试头像
-        NSString *testUserHeadPhoto = @"testImage.jpg";
         if (i == 0)
         {
-            button = [[ObjectCTools shared] getARoundedButtonWithSize:40 withImageName:testUserHeadPhoto];
+            button = [[ObjectCTools shared] getARoundedButtonWithSize:40 withImageUrl:[[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey]];
         }
         //--------------------------------------------------------
         

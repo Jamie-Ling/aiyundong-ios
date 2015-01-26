@@ -12,7 +12,7 @@
 #define vVersionAlertTag    3993  //版本提示框tag
 #define vCacheAlertTag      3994  //缓存提示框Tag
 
-#define vTableViewMoveLeftX 20  //tableview向左移20,快速弥补少了的分割线
+#define vTableViewMoveLeftX 0  //tableview向左移20,可快速弥补少了的分割线
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
@@ -21,6 +21,7 @@
 #import "ALBatteryView.h"
 #import "UserInfoViewController.h"
 #import "MSCustomWebViewController.h"
+#import "AccountManageViewController.h"
 
 @interface UserCenterVC()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -29,6 +30,7 @@
     NSArray *_cellImageArray;       //左侧图标数组
     UIWebView *_phoneCallWebView;
     UserInfoViewController *_userInfoVC;
+    AccountManageViewController *_AccountManageVC;
 }
 @property (nonatomic, assign) CGFloat _dumpEnergy;  //剩余电量
 
@@ -59,8 +61,11 @@
 {
     [super viewWillAppear:animated];
     
-    //测试， 设定得到的头像和电量
-    _userHeadPhoto = @"testImage.jpg";
+    
+    _userHeadPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey];
+    
+    //测试， 设定得到电量
+    NSLog(@"电量在此设置");
     _dumpEnergy = 0.92;
     
     //刷新界面
@@ -97,6 +102,11 @@
 - (void) accountManage
 {
     NSLog(@"账号管理");
+    if (!_AccountManageVC)
+    {
+        _AccountManageVC = [[AccountManageViewController alloc] init];
+    }
+    [self.navigationController pushViewController:_AccountManageVC animated:YES];
 }
 
 - (void) intelligentBracelet
@@ -176,6 +186,14 @@
     _listTableView.separatorColor = kHoldPlacerColor;
     [self.view addSubview:_listTableView];
     
+    
+    //解决分割线左侧短-1
+    if ([_listTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_listTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_listTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_listTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 /**
@@ -253,7 +271,7 @@
     {
         case 0:
         {
-            FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageName:_userHeadPhoto];
+            FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:_userHeadPhoto];
             [userImageButton setCenter:CGPointMake(rightImageView.x - userImageButton.width / 2.0 - 12.0, vOneCellHeight / 2.0)];
             
             userImageButton.userInteractionEnabled = NO;
@@ -410,6 +428,14 @@
     }
     
     [cell setBackgroundColor:backGroundColor];
+    
+    //解决分割线左侧短-2
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 @end

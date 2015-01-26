@@ -1,5 +1,5 @@
 //
-//  UserInfoViewController.m
+//  BraceletInfoViewController.m
 //  Woyoli
 //
 //  Created by jamie on 14-12-2.
@@ -22,7 +22,7 @@
 #define vWeightMin   20
 #define vWeightMax   250
 
-#import "UserInfoViewController.h"
+#import "BraceletInfoViewController.h"
 #import "FlatRoundedButton.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "UpdateNickNameViewController.h"
@@ -34,14 +34,10 @@
 #import "BSModalPickerView.h"
 #import "BSModalDatePickerView.h"
 
-@interface UserInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     
     NSArray *_cellTitleArray;
-    NSArray *_cellTitleKeyArray;
-    
-    NSMutableArray *_heightMutableArray;
-    NSMutableArray *_weightMutableArray;
     
     NSDictionary *_userInfoDictionary;
     UpdateNickNameViewController *_updateNickNameVC;
@@ -57,7 +53,7 @@
 
 @end
 
-@implementation UserInfoViewController
+@implementation BraceletInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,23 +63,8 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"兴趣爱好 ：", @"常出没地区 ：", @"运动宣言 ：", nil];
-    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
-    
-    _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vHeightMin; i <= vHeightMax; i++)
-    {
-        NSString *heightString = [NSString stringWithFormat:@"%d cm", i];
-        [_heightMutableArray addObject:heightString];
-    }
-    
-    _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vWeightMin; i <= vWeightMax; i++)
-    {
-        NSString *weightString = [NSString stringWithFormat:@"%d kg", i];
-        [_weightMutableArray addObject:weightString];
-    }
-    
+    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久座提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", nil];
+
     //tableview
     [self addTableView];
 }
@@ -139,7 +120,7 @@
 }
 
 
-
+/*
 
 #pragma mark ---------------- User-choice -----------------
 //返回上一页
@@ -191,7 +172,7 @@
     }
     _updateInterestingVC._lastInteresting = [_userInfoDictionary objectForKey:kUserInfoOfInterestingKey];
     [self.navigationController pushViewController:_updateInterestingVC animated:YES];
-
+    
 }
 
 - (void) changeBirth
@@ -260,7 +241,7 @@
     }
     
     pickerView.selectedIndex = lastIndex;
-//    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -282,7 +263,7 @@
 - (void) changeWeight
 {
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_weightMutableArray];
-
+    
     long lastIndex;
     NSString *lastWeight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
     if ([NSString isNilOrEmpty:lastWeight])
@@ -295,7 +276,7 @@
     }
     
     pickerView.selectedIndex = lastIndex;
-//    pickerView.selectedValue = [NSString stringWithFormat:@"%@ kg", lastWeight];
+    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ kg", lastWeight];
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -330,7 +311,7 @@
     }
     _signatureVC._signatureString = [_userInfoDictionary objectForKey:kUserInfoOfDeclarationKey];
     [self.navigationController pushViewController:_signatureVC animated:YES];
-
+    
 }
 
 - (void) changePassword
@@ -451,7 +432,7 @@
             if (nameString.length >= 15)
             {
                 nameString = [NSString stringWithFormat:@"%@...", [nameString substringToIndex:12]];
-//                NSLog(@"name = %@", nameString);
+                //                NSLog(@"name = %@", nameString);
             }
             [rightTitle setText:nameString];
         }
@@ -670,5 +651,5 @@
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
     [self reloadUserInfoTableView];
 }
-
+*/
 @end

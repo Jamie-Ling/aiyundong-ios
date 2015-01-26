@@ -21,6 +21,9 @@
 {
     // Override point for customization after application launch.
     
+    //添加测试数据
+    [self addTestData];
+    
     _vc = [HomeVC custom];
     self._mainNavigationController = [[UINavigationController alloc] initWithRootViewController: _vc];
     
@@ -28,6 +31,7 @@
     
     //导航条设置
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
+    
     
     //添加介绍页
     [self addIntroView];
@@ -70,21 +74,6 @@
     if (![[ObjectCTools shared] objectForKey:@"introViewShow"])
     {
         [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
-        
-        //测试--给一个本地的测试用户信息
-        NSDictionary *testUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      @"", kUserInfoOfHeadPhotoKey,
-                                      @"1987-01-01", kUserInfoOfAgeKey,
-                                      @"深圳长沙", kUserInfoOfAreaKey,
-                                      @"天将降大任于斯人也，必先苦其心志...", kUserInfoOfDeclarationKey,
-                                      @"172", kUserInfoOfHeightKey,
-                                      @"上网、爬山、蹦极", kUserInfoOfInterestingKey,
-                                      @"一休哥", kUserInfoOfNickNameKey,
-                                      @"男", kUserInfoOfSexKey,
-                                      @"56", kUserInfoOfWeightKey, nil
-                                      ];
-        [[NSUserDefaults standardUserDefaults] setObject:testUserInfo forKey:kLastLoginUserInfo];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -95,5 +84,104 @@
     [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"introViewShow"];
 }
 
+
+#pragma mark ---------------- 登录  &  退出-----------------
+//准备去登录（包括持续登录校验）
+- (void) readyToLogin: (BOOL) animated
+{
+    //token不显式保存
+    NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+    if (!userInfo)
+    {
+        [self addLoginView: animated];
+    }
+    else
+    {
+        NSLog(@"持续登录...");
+        //持续登录
+        //            println("持续登录token字典为== \(userToken)");
+        //            println("将本地个人信息凭证发送服务器进行验证,通过后直接广播刷新所有用户相关信息，进入主页")
+    }
+}
+
+/**
+ @brief 添加登录页（用于非持续登录或退出当前用户后跳转回登录页）
+ @param animated  BOOL: YES表示动画的形式添加，NO表示非动画形式添加
+ */
+- (void) addLoginView: (BOOL) animated
+{
+    NSLog(@"添加登录页面");
+}
+
+/**
+ @brief 注销登录
+ */
+- (void) signOut
+{
+    //先确保服务器退出，再本地退出
+    [self localSignOut];
+    
+}
+
+
+//本地退出
+- (void) localSignOut
+{
+    [self addLoginView:YES];
+}
+
+
+#pragma mark ---------------- 测试数据构造  -----------------
+- (void) addTestData
+{
+    if (![[ObjectCTools shared] objectForKey:@"addTestDataForTest"])
+    {
+        [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
+        
+        //测试--给一个本地现在登录的测试用户信息
+        NSDictionary *testUserInfoNow = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         @"http://www.woyo.li/statics/users/avatar/59/thumbs/200_200_59.jpg?1419043871", kUserInfoOfHeadPhotoKey,
+                                         @"1987-01-01", kUserInfoOfAgeKey,
+                                         @"深圳 长沙", kUserInfoOfAreaKey,
+                                         @"天将降大任于斯人也，必先苦其心志...", kUserInfoOfDeclarationKey,
+                                         @"178", kUserInfoOfHeightKey,
+                                         @"上网、爬山、蹦极", kUserInfoOfInterestingKey,
+                                         @"一休哥", kUserInfoOfNickNameKey,
+                                         @"男", kUserInfoOfSexKey,
+                                         @"56", kUserInfoOfWeightKey, nil
+                                         ];
+        [[ObjectCTools shared] userAddUserInfo:testUserInfoNow];
+        
+        //测试--给另外2个曾经登录的测试用户信息
+        NSDictionary *testUserInfo01 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
+                                        @"1989-06-06", kUserInfoOfAgeKey,
+                                        @"广州 佛山", kUserInfoOfAreaKey,
+                                        @"红雨漂泊泛起了回忆怎么浅...", kUserInfoOfDeclarationKey,
+                                        @"168", kUserInfoOfHeightKey,
+                                        @"KTV", kUserInfoOfInterestingKey,
+                                        @"关淑南", kUserInfoOfNickNameKey,
+                                        @"女", kUserInfoOfSexKey,
+                                        @"47", kUserInfoOfWeightKey, nil
+                                        ];
+        
+        
+        NSDictionary *testUserInfo02 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"http://www.woyo.li/statics/users/avatar/62/thumbs/200_200_62.jpg?1418642044", kUserInfoOfHeadPhotoKey,
+                                        @"1977-01-01", kUserInfoOfAgeKey,
+                                        @"少林寺", kUserInfoOfAreaKey,
+                                        @"花开堪折直须折，莫待无花空折枝", kUserInfoOfDeclarationKey,
+                                        @"172", kUserInfoOfHeightKey,
+                                        @"男", kUserInfoOfInterestingKey,
+                                        @"大叔", kUserInfoOfNickNameKey,
+                                        @"男", kUserInfoOfSexKey,
+                                        @"66", kUserInfoOfWeightKey, nil
+                                        ];
+        [[ObjectCTools shared] userAddUserInfo:testUserInfo02];
+        [[ObjectCTools shared] userAddUserInfo:testUserInfo01];
+        
+        [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addTestDataForTest"];
+    }
+}
 
 @end
