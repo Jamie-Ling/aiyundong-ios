@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         _data = [[NSMutableArray alloc] initWithCapacity:64];
-        self.requestHelper = [[RequestHelper alloc] initWithHostName:@"s3-us-west-1.amazonaws.com" customHeaderFields:@{@"x-client-identifier" : @"iOS"}];
+        self.requestHelper = [[RequestHelper alloc] initWithHostName:@"isport.3322.org:300" customHeaderFields:@{@"x-client-identifier" : @"iOS"}];
       //  [self.requestHelper emptyCache];
         
         self.requestHelper.freezable = NO;

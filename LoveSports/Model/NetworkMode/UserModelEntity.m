@@ -19,52 +19,36 @@ DEF_SINGLETON(UserModelEntity)
     {
         [self.requestHelper useCache];
         [self createLinkArray];
-        [self loadVideoArray];
     }
     return self;
 }
 
 - (void)createLinkArray
 {
+    _baseLink = @[@"/app_register", @"/app_logon",
+                  @"/app_upload", @"/app_download",
+                  @"/app_addnote", @"/app_foodnote"];
+    
+    _leftArgus = @[@[@"username", @"password", @"email", @"mobile"],
+                   @[@"username", @"password"],
+                   @[],
+                   @[],
+                   @[@"Username", @"Datetime", @"Picture", @"text"],
+                   @[@"Username", @"Datetime"]];
 }
 
-- (void)loadVideoArray
-{
-    /*
-    NSArray *array = @[@"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4",
-                       @"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4",
-                       @"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4",
-                       @"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4",
-                       @"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4"];
-    
-    NSMutableArray *muArray = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i = 0; i < 5; i++)
-    {
-        VideoInfoModel *model = [[VideoInfoModel alloc] init];
-        
-        model.downloadUrl = array[i];
-        model.coverImage = @"Ac_Twerking_Video.jpg";
-        model.serialNumber = [NSString stringWithFormat:@"%d", i];
-        model.nameOfVideo = [NSString stringWithFormat:@"sample--%d", i];
-        model.videoIntroduction = @"https://twerkingbutt.files.wordpress.com/2014/12/lextwerkout_how_to_1_-_youtube.mp4";
-        
-        [muArray addObject:model];
-        [model saveToDB];
-    }
-    
-    _videoArray = muArray;
-    
-    NSArray *getArray;
-     */
-    
-
-}
-
-- (void)userModelRequestWithBaseLink:(NSString *)link withRequestType:(UserModelEntityRequest)requestType
+- (void)userModelRequestWithRighArgus:(NSArray *)rightArray withRequestType:(UserModelEntityRequest)requestType
 {
     [self.requestHelper emptyCache];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:0];
     
-    HttpRequest *hr = [self.requestHelper get:link];
+    // 传入的右边的参数个数必须与初始化左边的参数个数相等
+    for (int i = 0; i < rightArray.count; i++)
+    {
+        [dict setObject:[rightArray objectAtIndex:i] forKey:[_leftArgus[requestType] objectAtIndex:i]];
+    }
+    
+    HttpRequest *hr = [self.requestHelper post:_baseLink[requestType] params:dict];
 
     [hr succeed:^(MKNetworkOperation *op) {
         NSString *str = [op responseString];
@@ -72,8 +56,6 @@ DEF_SINGLETON(UserModelEntity)
         if (str)
         {
             [self saveData:str withRequestType:requestType];
-            
-            [self requestSuccessWithString:str withRequestType:requestType];
         }
     } failed:^(MKNetworkOperation *op, NSError *err) {
         
@@ -85,7 +67,42 @@ DEF_SINGLETON(UserModelEntity)
 
 - (void)saveData:(NSString *)string withRequestType:(UserModelEntityRequest)requestType
 {
-   
+    switch (requestType)
+    {
+        case UserModelEntityRequestRegister:
+        {
+        
+        }
+            break;
+        case UserModelEntityRequestLogin:
+        {
+            
+        }
+            break;
+        case UserModelEntityRequestUpload:
+        {
+            
+        }
+            break;
+        case UserModelEntityRequestDownload:
+        {
+            
+        }
+            break;
+        case UserModelEntityRequestAddNote:
+        {
+            
+        }
+            break;
+        case UserModelEntityRequestFoodnote:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)requestSuccessWithString:(NSString *)string withRequestType:(UserModelEntityRequest)requestType

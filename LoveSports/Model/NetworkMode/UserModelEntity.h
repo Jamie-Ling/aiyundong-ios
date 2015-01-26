@@ -21,10 +21,16 @@ typedef enum {
 @interface UserModelEntity : BaseModelEntity
 
 @property (nonatomic, strong) NSArray *baseLink;
+@property (nonatomic, strong) NSArray *leftArgus;
 @property (nonatomic, assign) CGFloat currentBLVersion;
 
 AS_SINGLETON(UserModelEntity)
 
-- (void)userModelRequestWithBaseLink:(NSString *)link withRequestType:(UserModelEntityRequest)requestType;
+/*
+ rightArray:传入url链接的？后面字典部分的右边，即所有的value.
+ 个数要和leftArguments对应, 如果数据是空就传入@""或者0, 由数据类型决定
+ requestType:请求类型
+ */
+- (void)userModelRequestWithRighArgus:(NSArray *)rightArray withRequestType:(UserModelEntityRequest)requestType;
 
 @end

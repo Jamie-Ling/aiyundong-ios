@@ -124,6 +124,11 @@
 		69EFC2E41A760CD700B5BC53 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D41A760CD600B5BC53 /* UIImageView+HighlightedWebCache.m */; };
 		69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D61A760CD600B5BC53 /* UIImageView+WebCache.m */; };
 		69EFC2E61A760CD700B5BC53 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D81A760CD600B5BC53 /* UIView+WebCacheOperation.m */; };
+		F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529C61A7662BF002A5382 /* UserModelEntity.m */; };
+		F49529D11A766E03002A5382 /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CA1A766E03002A5382 /* BLTManager.m */; };
+		F49529D21A766E03002A5382 /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CC1A766E03002A5382 /* BLTModel.m */; };
+		F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CE1A766E03002A5382 /* BLTPeripheral.m */; };
+		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
 		F4B692F41A6F3EBC00B42395 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F31A6F3EBC00B42395 /* main.m */; };
 		F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F61A6F3EBC00B42395 /* AppDelegate.m */; };
 		F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F91A6F3EBC00B42395 /* ViewController.m */; };
@@ -380,6 +385,16 @@
 		69EFC2D61A760CD600B5BC53 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		69EFC2D71A760CD600B5BC53 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		69EFC2D81A760CD600B5BC53 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		F49529C51A7662BF002A5382 /* UserModelEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelEntity.h; sourceTree = "<group>"; };
+		F49529C61A7662BF002A5382 /* UserModelEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModelEntity.m; sourceTree = "<group>"; };
+		F49529C91A766E03002A5382 /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
+		F49529CA1A766E03002A5382 /* BLTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTManager.m; sourceTree = "<group>"; };
+		F49529CB1A766E03002A5382 /* BLTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTModel.h; sourceTree = "<group>"; };
+		F49529CC1A766E03002A5382 /* BLTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTModel.m; sourceTree = "<group>"; };
+		F49529CD1A766E03002A5382 /* BLTPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTPeripheral.h; sourceTree = "<group>"; };
+		F49529CE1A766E03002A5382 /* BLTPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTPeripheral.m; sourceTree = "<group>"; };
+		F49529CF1A766E03002A5382 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
+		F49529D01A766E03002A5382 /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
 		F4B692EE1A6F3EBC00B42395 /* LoveSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoveSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B692F21A6F3EBC00B42395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4B692F31A6F3EBC00B42395 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -936,6 +951,21 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		F49529C81A766E03002A5382 /* BLTClasses */ = {
+			isa = PBXGroup;
+			children = (
+				F49529C91A766E03002A5382 /* BLTManager.h */,
+				F49529CA1A766E03002A5382 /* BLTManager.m */,
+				F49529CB1A766E03002A5382 /* BLTModel.h */,
+				F49529CC1A766E03002A5382 /* BLTModel.m */,
+				F49529CD1A766E03002A5382 /* BLTPeripheral.h */,
+				F49529CE1A766E03002A5382 /* BLTPeripheral.m */,
+				F49529CF1A766E03002A5382 /* BLTUUID.h */,
+				F49529D01A766E03002A5382 /* BLTUUID.m */,
+			);
+			path = BLTClasses;
+			sourceTree = "<group>";
+		};
 		F4B692E51A6F3EBC00B42395 = {
 			isa = PBXGroup;
 			children = (
@@ -1030,6 +1060,7 @@
 		F4B6931A1A6F3F2B00B42395 /* ThirdClasses */ = {
 			isa = PBXGroup;
 			children = (
+				F49529C81A766E03002A5382 /* BLTClasses */,
 				69EFC2BB1A760CD600B5BC53 /* SDWebImage */,
 				698A90AC1A6FEB54005BABE6 /* MSIntroView */,
 				F4B693AF1A6F404A00B42395 /* PopView */,
@@ -1319,6 +1350,8 @@
 			children = (
 				F4BF5F4F1A6F4802004C433D /* BaseModelEntity.h */,
 				F4BF5F501A6F4802004C433D /* BaseModelEntity.m */,
+				F49529C51A7662BF002A5382 /* UserModelEntity.h */,
+				F49529C61A7662BF002A5382 /* UserModelEntity.m */,
 			);
 			path = NetworkMode;
 			sourceTree = "<group>";
@@ -1683,11 +1716,14 @@
 				698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */,
 				F4B693E31A6F40D200B42395 /* NSString+Extension.m in Sources */,
 				F4B693981A6F403400B42395 /* FMDatabase.m in Sources */,
+				F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */,
 				F4B693AB1A6F403400B42395 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				69EFC21A1A738BD600B5BC53 /* FlatRoundedImageView.m in Sources */,
+				F49529D21A766E03002A5382 /* BLTModel.m in Sources */,
 				69EFC2B11A75D11900B5BC53 /* BSModalPickerBase.m in Sources */,
 				69EFC19B1A7377EC00B5BC53 /* PieChartView.m in Sources */,
 				69EFC2DB1A760CD600B5BC53 /* SDWebImageCompat.m in Sources */,
+				F49529D41A766E03002A5382 /* BLTUUID.m in Sources */,
 				F4BF5F6C1A6F529E004C433D /* ZKKBaseObject.m in Sources */,
 				F4BF5F511A6F4802004C433D /* BaseModelEntity.m in Sources */,
 				F4BF5F6A1A6F529E004C433D /* XYSystemInfo.m in Sources */,
@@ -1701,6 +1737,7 @@
 				F4B6939D1A6F403400B42395 /* LKDB+Manager.m in Sources */,
 				F4B693A31A6F403400B42395 /* NSObject+LKModel.m in Sources */,
 				F4B693A91A6F403400B42395 /* RequestHelper.m in Sources */,
+				F49529D11A766E03002A5382 /* BLTManager.m in Sources */,
 				F4B6939A1A6F403400B42395 /* FMDatabasePool.m in Sources */,
 				F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */,
 				F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */,
@@ -1743,6 +1780,7 @@
 				F4B693AD1A6F403400B42395 /* MKNetworkOperation.m in Sources */,
 				F4B693A81A6F403400B42395 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				F4B6939E1A6F403400B42395 /* LKDB+Mapping.m in Sources */,
+				F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */,
 				F4B693AC1A6F403400B42395 /* MKNetworkEngine.m in Sources */,
 				69EFC2391A73A3AD00B5BC53 /* UserInfoViewController.m in Sources */,
 				69EFC2461A73A3E600B5BC53 /* UpdateNickNameViewController.m in Sources */,
