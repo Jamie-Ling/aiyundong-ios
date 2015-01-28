@@ -51,4 +51,20 @@
     [self.layer addAnimation:animationKey forKey:@"TextFieldShake"];
 }
 
++ (UITextField *)textFieldCustomWithFrame:(CGRect)rect
+                          withPlaceholder:(NSString *)placeholder
+{
+    UITextField *textField = [[UITextField alloc] initWithFrame:rect];
+    
+    textField.backgroundColor = [UIColor clearColor];
+    textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textField.spellCheckingType = UITextSpellCheckingTypeNo;
+    textField.placeholder = placeholder;
+    textField.font = [UIFont systemFontOfSize:18.0];
+    
+    return textField;
+}
+
 @end

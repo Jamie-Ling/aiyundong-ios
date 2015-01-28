@@ -14,18 +14,34 @@
 typedef void(^BLTManagerUpdateModel)(BLTModel *model);
 typedef void(^BLTManagerUpdateValue)(NSData *data);
 typedef void(^BLTManagerDisConnect)();
+typedef void(^BLTManagerConnect)();
 
 @property (nonatomic, strong) BLTModel *model;
 @property (nonatomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
 @property (nonatomic, strong) BLTManagerUpdateValue updateValueBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
+@property (nonatomic, strong) BLTManagerConnect connectBlock;
 
 AS_SINGLETON(BLTManager)
 
 // 开始扫描或者是重新扫描
 - (void)startCan;
-- (void)senderDataToPeripheral:(void *)charData withLength:(NSInteger)length;
+
+/**
+ *  连接指定的设备
+ *
+ *  @param model 设备模型 BLTModel
+ */
+- (void)repareConnectedDevice:(BLTModel *)model;
+
+/**
+ *  发送数据给固件
+ *
+ *  @param data 二进制数据
+ */
+- (void)senderDataToPeripheral:(NSData *)data;
+
 // 主动断开链接
 - (void)dismissLink;
 

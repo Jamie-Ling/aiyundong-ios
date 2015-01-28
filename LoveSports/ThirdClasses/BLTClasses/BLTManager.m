@@ -10,6 +10,7 @@
 #import "BLTManager.h"
 #import "BLTPeripheral.h"
 #import "BLTUUID.h"
+#import "BLTSendData.h"
 
 @interface BLTManager () <CBCentralManagerDelegate>
 
@@ -47,12 +48,15 @@ DEF_SINGLETON(BLTManager)
 }
 
 #pragma mark --- 对设备发送命令 ---
-// 获取设备信息
+// 设备连接完毕
 - (void)getCurrentDeviceInfo
 {
-    UInt8 val[4] = {0xA6, 0x27, 0xAA, 0x00};
-
-    [self senderDataToPeripheral:&val withLength:4];
+    // [BLTSendData sendBasicSetOfInformationData:nil];
+    
+    if (_connectBlock)
+    {
+        _connectBlock();
+    }
 }
 
 #pragma mark --- 外围设备数据更新了触发的回调 ---
@@ -60,20 +64,6 @@ DEF_SINGLETON(BLTManager)
 {
     UInt8 val[100] = {0};
     [data getBytes:&val length:data.length];
-    
-    int infoId = val[3];
-
-    if (infoId == 0x00)
-    {
-        _model.bltID = [NSString stringWithFormat:@"%d", val[4] + (val[5] << 8)];
-        _model.bltElec = [NSString stringWithFormat:@"%d", val[6]];
-        _model.bltVersion = [NSString stringWithFormat:@"%d", val[7]];
-        
-        if (_updateModelBlock)
-        {
-            _updateModelBlock(_model);
-        }
-    }
  
     if (_updateValueBlock)
     {
@@ -127,12 +117,13 @@ DEF_SINGLETON(BLTManager)
     }
     
     [_allWareArray removeAllObjects];
-    [self.centralManager scanForPeripheralsWithServices:@[BLTUUID.uartServiceUUID]
-                                                options:@{CBCentralManagerScanOptionAllowDuplicatesKey : @YES}];
+    [self.centralManager scanForPeripheralsWithServices:nil
+                                                options:nil];
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
+    NSLog(@"..%@", advertisementData);
     if (peripheral.name == NULL)
     {
         return;
@@ -173,6 +164,13 @@ DEF_SINGLETON(BLTManager)
                 [_allWareArray addObject:model];
             }
             
+            
+            if (_updateModelBlock)
+            {
+                _updateModelBlock(_model);
+            }
+            
+            /*
             // 目前是直接连。。。实际上是需要展示的。。。
             if (self.discoverPeripheral != peripheral && !self.discoverPeripheral)
             {
@@ -180,14 +178,19 @@ DEF_SINGLETON(BLTManager)
                 self.discoverPeripheral = peripheral;
                 [self.centralManager connectPeripheral:peripheral options:nil];
                 [self.centralManager stopScan];
-                
-                if (_updateModelBlock)
-                {
-                    _updateModelBlock(_model);
-                }
+              
             }
+             */
         }
     }
+}
+
+- (void)repareConnectedDevice:(BLTModel *)model
+{
+    NSLog(@"开始链接...");
+    self.discoverPeripheral = model.peripheral;
+    [self.centralManager connectPeripheral:model.peripheral options:nil];
+    [self.centralManager stopScan];
 }
 
 - (BLTModel *)checkIsAddInAllWareWithID:(NSString *)idString
@@ -231,12 +234,10 @@ DEF_SINGLETON(BLTManager)
 }
 
 #pragma mark --- 向外围设备发送数据 ---
-- (void)senderDataToPeripheral:(void *)charData withLength:(NSInteger)length
+- (void)senderDataToPeripheral:(NSData *)data
 {
     if (self.discoverPeripheral.state == CBPeripheralStateConnected)
     {
-        NSData *data = [[NSData alloc] initWithBytes:charData length:length];
-        
         CBUUID *serviceUUID = BLTUUID.uartServiceUUID;
         CBUUID *charaUUID = BLTUUID.txCharacteristicUUID;
         

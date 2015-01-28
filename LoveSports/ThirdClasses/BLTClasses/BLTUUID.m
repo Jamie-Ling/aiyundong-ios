@@ -14,19 +14,19 @@
 // 服务特征
 + (CBUUID *)uartServiceUUID
 {
-    return [CBUUID UUIDWithString:@"00000a60-0000-1000-8000-00805f9b34fb"];
+    return [CBUUID UUIDWithString:@"D0A2FF00-2996-D38B-E214-86515DF5A1DF"];
 }
 
 // 写
 + (CBUUID *)txCharacteristicUUID
 {
-    return [CBUUID UUIDWithString:@"00000a66-0000-1000-8000-00805f9b34fb"];
+    return [CBUUID UUIDWithString:@"D0A2FF01-2996-D38B-E214-86515DF5A1DF"];
 }
 
 // 读
 + (CBUUID *)rxCharacteristicUUID
 {
-    return [CBUUID UUIDWithString:@"00000a67-0000-1000-8000-00805f9b34fb"];
+    return [CBUUID UUIDWithString:@"D0A2FF02-2996-D38B-E214-86515DF5A1DF"];
 }
 
 // 硬件绑定的特征

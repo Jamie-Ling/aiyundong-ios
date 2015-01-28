@@ -1,0 +1,222 @@
+//
+//  RegisterVC.m
+//  ZKKLogin
+//
+//  Created by zorro on 15-1-15.
+//  Copyright (c) 2015年 zorro. All rights reserved.
+//
+
+#define RegisterVC_TextField_Tag 3000
+#import "RegisterVC.h"
+#import "UserModelEntity.h"
+
+@interface RegisterVC () <UITextFieldDelegate, EntityModelDelegate>
+
+@property (nonatomic, strong) UIView *groundView;
+
+@end
+
+@implementation RegisterVC
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [UserModelEntity sharedInstance].delegate = nil;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    /*
+     需要注意文件冲突
+     上次热水器和本次相同的文件有
+     /Model/Network/Header.h
+     /ThirdClasses/MBProgressHUD/ZKKBaseObject.h
+     */
+    
+    /*
+     注册的时候出现问题.
+     可能原因是字段不对, 注册时由移动端还是服务器进行md5。
+     */
+    
+    self.view.backgroundColor = [UIColor colorWithRed:224.0 / 255 green:234.0 / 255 blue:238.0 / 255 alpha:1.0];
+    // 这里添加背景图片
+    self.view.layer.contents = (id)[UIImage imageNamed:@""].CGImage;
+    [[IQKeyboardManager sharedManager] setEnable:YES];
+
+    [self loadTextFileds];
+    [self loadButtons];
+}
+
+- (void)loadTextFileds
+{
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.27, self.view.frame.size.width, 88 * 2)];
+    _groundView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_groundView];
+    
+    for (int i = 0; i < 3; i++)
+    {
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20.0, _groundView.frame.size.height * (1 + i) / 4 - 1, _groundView.frame.size.width - 40.0, 2)];
+        line.backgroundColor = [UIColor colorWithRed:241.0 / 255 green:241.0 / 255 blue:241.0 / 255 alpha:1.0];
+        [_groundView addSubview:line];
+    }
+    
+    // 自行添加左边2个图片的名字.
+    NSArray *leftViewImage = @[@"", @"", @"", @""];
+    NSArray *placeholder = @[@"请输入昵称", @"请输入邮箱", @"请输入密码", @"请再次输入密码"];
+    for (int i = 0; i < 4; i++)
+    {
+        CGRect viewRect = CGRectMake(20.0, (_groundView.frame.size.height * (i / 4.0 + 1 / 8.0) - 18), 36, 36);
+        CGRect textRect = CGRectMake(72, _groundView.frame.size.height * (i / 4.0), _groundView.frame.size.width - 100.0, _groundView.frame.size.height / 4);
+        
+        UIView *leftView = [[UIView alloc] initWithFrame:viewRect];
+        leftView.backgroundColor = [UIColor redColor];
+        leftView.layer.contents = (id)[UIImage imageNamed:leftViewImage[i]].CGImage;
+        [_groundView addSubview:leftView];
+        
+        UITextField *textfield = [UITextField textFieldCustomWithFrame:textRect withPlaceholder:placeholder[i]];
+        
+        textfield.delegate = self;
+        textfield.tag = RegisterVC_TextField_Tag + i;
+        [_groundView addSubview:textfield];
+        
+        if (i == 2 || i == 3)
+        {
+            textfield.secureTextEntry = YES;
+        }
+    }
+}
+
+- (void)loadButtons
+{
+    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.1, _groundView.frame.size.height + _groundView.frame.origin.y + 20.0, self.view.frame.size.width * 0.8, 44)];
+    loginButton.backgroundColor = [UIColor colorWithRed:17.0 / 255 green:141.0 / 255 blue:223.0 / 255 alpha:1.0];
+    loginButton.layer.cornerRadius = 20.0;
+    [loginButton setTitle:@"注册" forState:UIControlStateNormal];
+    [loginButton addTarget:self action:@selector(registerButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:loginButton];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 1.0)];
+    line.backgroundColor = [UIColor colorWithRed:127.0 / 255 green:180.0 / 255 blue:195.0 / 255 alpha:0.7];
+    [self.view addSubview:line];
+    
+    UIButton *forgotButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40.0, self.view.frame.size.width, 40.0)];
+    forgotButton.backgroundColor = [UIColor clearColor];
+    [forgotButton setTitle:@"返回登录" forState:UIControlStateNormal];
+    [forgotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [forgotButton addTarget:self action:@selector(backLoginVC) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:forgotButton];
+}
+
+- (void)registerButton
+{
+    UITextField *textField1 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag];
+    UITextField *textField2 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 1];
+    UITextField *textField3 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 2];
+    UITextField *textField4 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 3];
+    
+    // 注册的昵称和密码如果有什么要求可自行另外添加。这里只判断不为空
+    
+    if ((!textField1 || textField1.text.length == 0)
+        || (!textField2 || textField2.text.length == 0)
+        || (!textField3 || textField2.text.length == 0)
+        || (!textField4 || textField2.text.length == 0))
+    {
+        SHOWMBProgressHUD(@"请正确输入", nil, nil, NO, 2.0);
+        return;
+    }
+    
+    /*
+    if (![textField2.text isEmail])
+    {
+        SHOWMBProgressHUD(@"邮箱格式不对", nil, nil, NO, 2.0);
+        return;
+    }
+    */
+    
+    if (![textField3.text isEqualToString:textField4.text])
+    {
+        SHOWMBProgressHUD(@"密码不一致", nil, nil, NO, 2.0);
+        return;
+    }
+    
+    [UserModelEntity sharedInstance].delegate = self;
+    [[UserModelEntity sharedInstance]  userModelRequestWithRighArgus:@[] withRequestType:UserModelEntityRequestRegister];
+    
+    SHOWMBProgressHUDIndeterminate(nil, @"注册中...", NO);
+}
+
+// 模态推出注册界面。可以自行改为push根据业务需求
+- (void)backLoginVC
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark --- 键盘消失 ---
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    
+    UITextField *textField1 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag];
+    UITextField *textField2 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 1];
+    UITextField *textField3 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 2];
+    UITextField *textField4 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 3];
+    
+    if (!CGRectContainsPoint(textField1.frame, point)
+        && !CGRectContainsPoint(textField2.frame, point)
+        && !CGRectContainsPoint(textField3.frame, point)
+        && !CGRectContainsPoint(textField4.frame, point))
+    {
+        [self.view endEditing:YES];
+    }
+}
+
+#pragma mark --- EntityModelDelegate ---
+// 请求成功
+- (void)entityModelRefreshFromServerSucceed:(BaseModelEntity *)em withTag:(NSInteger)tag
+{
+    if (tag == 0)
+    {
+        // 登录成功。看需要推到哪个界面。自行操作..
+    }
+}
+
+// 请求失败
+- (void)entityModelRefreshFromServerFailed:(BaseModelEntity *)em error:(NSError *)err withTag:(NSInteger)tag
+{
+    
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

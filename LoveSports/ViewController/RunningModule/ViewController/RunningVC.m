@@ -11,6 +11,7 @@
 #import "PieChartView.h"
 #import "FSLineChart.h"
 #import "UIColor+FSPalette.h"
+#import "ShowWareView.h"
 
 @interface RunningVC () <PieChartViewDelegate, PieChartViewDataSource>
 

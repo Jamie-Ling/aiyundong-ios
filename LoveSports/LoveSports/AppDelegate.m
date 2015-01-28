@@ -200,4 +200,20 @@
     }
 }
 
+- (void)pushToContentVC
+{
+    _vc = [HomeVC custom];
+    self._mainNavigationController = [[UINavigationController alloc] initWithRootViewController: _vc];
+    
+    self.window.rootViewController = self._mainNavigationController;
+}
+
+- (void)pushToLoginVC
+{
+    LoginVC *login = [[LoginVC alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: login];
+    
+    self.window.rootViewController = nav;
+}
+
 @end

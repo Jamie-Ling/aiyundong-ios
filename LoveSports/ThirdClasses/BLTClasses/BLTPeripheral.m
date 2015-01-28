@@ -94,12 +94,15 @@ DEF_SINGLETON(BLTPeripheral)
         if ([service.UUID isEqual:BLTUUID.uartServiceUUID])
         {
             // self.blService = service;
+            //[_peripheral discoverCharacteristics:nil forService:service];
             [_peripheral discoverCharacteristics:@[BLTUUID.txCharacteristicUUID, BLTUUID.rxCharacteristicUUID] forService:service];
+
         }
         else if ([service.UUID isEqual:BLTUUID.deviceInformationServiceUUID])
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.hardwareRevisionStringUUID] forService:service];
         }
+        
         
         NSLog(@"service.UUID. = .%@.", service.UUID);
     }
@@ -118,7 +121,6 @@ DEF_SINGLETON(BLTPeripheral)
         if ([charac.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
-            
             if (_deviceInfoBlock)
             {
                 _deviceInfoBlock();
@@ -126,13 +128,14 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
+         
         }
         else if ([charac.UUID isEqual:BLTUUID.hardwareRevisionStringUUID]) // 绑定
         {
             NSLog(@"硬件信息.");
         }
         
-        NSLog(@"charac. = .%@..", charac.UUID);
+        NSLog(@"charac. = .%@..", charac);
     }
 }
 
@@ -161,7 +164,7 @@ DEF_SINGLETON(BLTPeripheral)
 {
     if (error)
     {
-        NSLog(@"写数据时发生错误...");
+        NSLog(@"写数据时发生错误...%@", error);
     }
     else
     {

@@ -136,6 +136,13 @@
 		69EFC2E41A760CD700B5BC53 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D41A760CD600B5BC53 /* UIImageView+HighlightedWebCache.m */; };
 		69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D61A760CD600B5BC53 /* UIImageView+WebCache.m */; };
 		69EFC2E61A760CD700B5BC53 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC2D81A760CD600B5BC53 /* UIView+WebCacheOperation.m */; };
+		F445F7991A79377F00D5B170 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7961A79377F00D5B170 /* LoginVC.m */; };
+		F445F79A1A79377F00D5B170 /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7981A79377F00D5B170 /* RegisterVC.m */; };
+		F445F7A01A79378D00D5B170 /* ShowWareView.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F79D1A79378D00D5B170 /* ShowWareView.m */; };
+		F445F7A11A79378D00D5B170 /* TimeZoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F79F1A79378D00D5B170 /* TimeZoneView.m */; };
+		F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A31A7937C800D5B170 /* NSDate+XY.m */; };
+		F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A61A79381C00D5B170 /* BLTAcceptData.m */; };
+		F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A81A79381C00D5B170 /* BLTSendData.m */; };
 		F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529C61A7662BF002A5382 /* UserModelEntity.m */; };
 		F49529D11A766E03002A5382 /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CA1A766E03002A5382 /* BLTManager.m */; };
 		F49529D21A766E03002A5382 /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CC1A766E03002A5382 /* BLTModel.m */; };
@@ -412,6 +419,20 @@
 		69EFC2D61A760CD600B5BC53 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		69EFC2D71A760CD600B5BC53 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		69EFC2D81A760CD600B5BC53 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		F445F7951A79377F00D5B170 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
+		F445F7961A79377F00D5B170 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		F445F7971A79377F00D5B170 /* RegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterVC.h; sourceTree = "<group>"; };
+		F445F7981A79377F00D5B170 /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
+		F445F79C1A79378D00D5B170 /* ShowWareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowWareView.h; sourceTree = "<group>"; };
+		F445F79D1A79378D00D5B170 /* ShowWareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowWareView.m; sourceTree = "<group>"; };
+		F445F79E1A79378D00D5B170 /* TimeZoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeZoneView.h; sourceTree = "<group>"; };
+		F445F79F1A79378D00D5B170 /* TimeZoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeZoneView.m; sourceTree = "<group>"; };
+		F445F7A21A7937C800D5B170 /* NSDate+XY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+XY.h"; sourceTree = "<group>"; };
+		F445F7A31A7937C800D5B170 /* NSDate+XY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+XY.m"; sourceTree = "<group>"; };
+		F445F7A51A79381C00D5B170 /* BLTAcceptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTAcceptData.h; sourceTree = "<group>"; };
+		F445F7A61A79381C00D5B170 /* BLTAcceptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTAcceptData.m; sourceTree = "<group>"; };
+		F445F7A71A79381C00D5B170 /* BLTSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendData.h; sourceTree = "<group>"; };
+		F445F7A81A79381C00D5B170 /* BLTSendData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendData.m; sourceTree = "<group>"; };
 		F49529C51A7662BF002A5382 /* UserModelEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelEntity.h; sourceTree = "<group>"; };
 		F49529C61A7662BF002A5382 /* UserModelEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModelEntity.m; sourceTree = "<group>"; };
 		F49529C91A766E03002A5382 /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
@@ -993,6 +1014,36 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		F445F7931A79377F00D5B170 /* LoginModule */ = {
+			isa = PBXGroup;
+			children = (
+				F445F7941A79377F00D5B170 /* ViewCotroller */,
+			);
+			path = LoginModule;
+			sourceTree = "<group>";
+		};
+		F445F7941A79377F00D5B170 /* ViewCotroller */ = {
+			isa = PBXGroup;
+			children = (
+				F445F7951A79377F00D5B170 /* LoginVC.h */,
+				F445F7961A79377F00D5B170 /* LoginVC.m */,
+				F445F7971A79377F00D5B170 /* RegisterVC.h */,
+				F445F7981A79377F00D5B170 /* RegisterVC.m */,
+			);
+			path = ViewCotroller;
+			sourceTree = "<group>";
+		};
+		F445F79B1A79378D00D5B170 /* TestView */ = {
+			isa = PBXGroup;
+			children = (
+				F445F79C1A79378D00D5B170 /* ShowWareView.h */,
+				F445F79D1A79378D00D5B170 /* ShowWareView.m */,
+				F445F79E1A79378D00D5B170 /* TimeZoneView.h */,
+				F445F79F1A79378D00D5B170 /* TimeZoneView.m */,
+			);
+			path = TestView;
+			sourceTree = "<group>";
+		};
 		F49529C81A766E03002A5382 /* BLTClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,6 +1055,10 @@
 				F49529CE1A766E03002A5382 /* BLTPeripheral.m */,
 				F49529CF1A766E03002A5382 /* BLTUUID.h */,
 				F49529D01A766E03002A5382 /* BLTUUID.m */,
+				F445F7A51A79381C00D5B170 /* BLTAcceptData.h */,
+				F445F7A61A79381C00D5B170 /* BLTAcceptData.m */,
+				F445F7A71A79381C00D5B170 /* BLTSendData.h */,
+				F445F7A81A79381C00D5B170 /* BLTSendData.m */,
 			);
 			path = BLTClasses;
 			sourceTree = "<group>";
@@ -1126,6 +1181,7 @@
 		F4B6931C1A6F3F2B00B42395 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F445F7931A79377F00D5B170 /* LoginModule */,
 				F4BF5FF81A6FD123004C433D /* HomeModule */,
 				F4BF5FD91A6FC42C004C433D /* CoffeeModule */,
 				F4BF5FDB1A6FC42C004C433D /* MapMoudel */,
@@ -1351,6 +1407,8 @@
 				F4BF5F531A6F4C69004C433D /* UIView+Frame.m */,
 				F4BF5F551A6F4E42004C433D /* UIColor+RGB.h */,
 				F4BF5F561A6F4E42004C433D /* UIColor+RGB.m */,
+				F445F7A21A7937C800D5B170 /* NSDate+XY.h */,
+				F445F7A31A7937C800D5B170 /* NSDate+XY.m */,
 				69EFC2501A73A8EA00B5BC53 /* UITextField+_extra.h */,
 				69EFC2511A73A8EA00B5BC53 /* UITextField+_extra.m */,
 				F4BF5F581A6F5197004C433D /* UITableView+Animation.h */,
@@ -1426,6 +1484,7 @@
 		F4BF5F711A6F5418004C433D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F445F79B1A79378D00D5B170 /* TestView */,
 				69EFC1911A7377EC00B5BC53 /* FSLineChart */,
 				69EFC1961A7377EC00B5BC53 /* PieChart */,
 			);
@@ -1723,6 +1782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4B693AA1A6F403400B42395 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
+				F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */,
 				69EFC2361A73A26500B5BC53 /* MSCustomWebViewController.m in Sources */,
 				69EFC2B21A75D11900B5BC53 /* BSModalPickerView.m in Sources */,
 				69EFC28D1A73E84C00B5BC53 /* ProvinceInfo.m in Sources */,
@@ -1751,6 +1811,7 @@
 				F4BF5F511A6F4802004C433D /* BaseModelEntity.m in Sources */,
 				F4BF5F6A1A6F529E004C433D /* XYSystemInfo.m in Sources */,
 				69EFC19A1A7377EC00B5BC53 /* UIColor+FSPalette.m in Sources */,
+				F445F7A01A79378D00D5B170 /* ShowWareView.m in Sources */,
 				F4B693551A6F401A00B42395 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */,
 				69EFC22A1A7397C600B5BC53 /* UIView+ALQuickFrame.m in Sources */,
@@ -1758,6 +1819,7 @@
 				F4BF5FEB1A6FC462004C433D /* MoreVC.m in Sources */,
 				69EFC2271A7397C600B5BC53 /* ALBatteryView.m in Sources */,
 				F4B693A91A6F403400B42395 /* RequestHelper.m in Sources */,
+				F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */,
 				F49529D11A766E03002A5382 /* BLTManager.m in Sources */,
 				F4B6939A1A6F403400B42395 /* FMDatabasePool.m in Sources */,
 				F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */,
@@ -1773,6 +1835,7 @@
 				69EFC28E1A73E84C00B5BC53 /* ProvinceViewController.m in Sources */,
 				69EFC28F1A73E84C00B5BC53 /* CityViewController.m in Sources */,
 				69EFC2191A738BD600B5BC53 /* FlatRoundedButton.m in Sources */,
+				F445F79A1A79377F00D5B170 /* RegisterVC.m in Sources */,
 				69EFC2E11A760CD700B5BC53 /* UIButton+WebCache.m in Sources */,
 				F4BF5FFC1A6FD13D004C433D /* HomeVC.m in Sources */,
 				69EFC2E41A760CD700B5BC53 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1799,6 +1862,7 @@
 				F4B692F41A6F3EBC00B42395 /* main.m in Sources */,
 				698A90BF1A6FEB54005BABE6 /* readme.md in Sources */,
 				69EFC2B01A75D11900B5BC53 /* BSModalDatePickerView.m in Sources */,
+				F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */,
 				F4B693AD1A6F403400B42395 /* MKNetworkOperation.m in Sources */,
 				F4B693A81A6F403400B42395 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */,
@@ -1831,6 +1895,7 @@
 				69EFC28C1A73E84C00B5BC53 /* CityInfo.m in Sources */,
 				69EFC2DF1A760CD700B5BC53 /* SDWebImageManager.m in Sources */,
 				69EFC29C1A74D7AE00B5BC53 /* UpSignatureViewController.m in Sources */,
+				F445F7A11A79378D00D5B170 /* TimeZoneView.m in Sources */,
 				698A90C21A6FEB54005BABE6 /* README.md in Sources */,
 				69EFC2961A7496B400B5BC53 /* UpdateInterestingViewController.m in Sources */,
 				69EFC1991A7377EC00B5BC53 /* FSLineChart.m in Sources */,
@@ -1844,6 +1909,7 @@
 				69EFC2B61A75D44500B5BC53 /* AccountManageViewController.m in Sources */,
 				F4BF5FF41A6FC95C004C433D /* ZKKTabBar.m in Sources */,
 				F4BF5FE81A6FC457004C433D /* NightVC.m in Sources */,
+				F445F7991A79377F00D5B170 /* LoginVC.m in Sources */,
 				F4BF5FF11A6FC478004C433D /* CoffeeVC.m in Sources */,
 				F4B693991A6F403400B42395 /* FMDatabaseAdditions.m in Sources */,
 			);
@@ -1969,15 +2035,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Missionsky Co. Limited/";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Missionsky Co. Limited/";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfed3ac6-df6d-4662-820b-31c04f3f130b";
+				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
 			};
 			name = Debug;
 		};
@@ -1985,14 +2051,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Missionsky Co. Limited/";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bfed3ac6-df6d-4662-820b-31c04f3f130b";
+				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
 			};
 			name = Release;
 		};

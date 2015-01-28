@@ -14,5 +14,7 @@
  * @brief 抖动
  */
 - (void) shake;
++ (UITextField *)textFieldCustomWithFrame:(CGRect)rect
+                          withPlaceholder:(NSString *)placeholder;
 
 @end

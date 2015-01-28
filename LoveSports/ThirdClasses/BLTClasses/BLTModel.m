@@ -25,4 +25,13 @@
     return self;
 }
 
+- (void)forgeFirmwareInformation
+{
+    _bltName = [NSString stringWithFormat:@"Device %d", arc4random() % 100];
+    _bltID = @"sjdfkjsdfjskdfsdfsdfsdfsdf";
+    _bltVersion = @"45";
+    _bltElec = @"30";
+    _bltRSSI = @"888";
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeVC.h"
+#import "LoginVC.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -28,6 +29,9 @@
  *  退出登录
  */
 - (void) signOut;
+
+- (void)pushToContentVC;
+- (void)pushToLoginVC;
 
 @end
 

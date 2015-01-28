@@ -21,4 +21,9 @@
 
 @property (nonatomic, assign) NSInteger bltElecState;   // 充电状态
 
+/**
+ *  伪造固件信息
+ */
+- (void)forgeFirmwareInformation;
+
 @end
