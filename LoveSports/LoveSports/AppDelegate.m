@@ -25,10 +25,13 @@
     //添加测试数据
     [self addTestData];
     
-    _vc = [HomeVC custom];
-    self._mainNavigationController = [[UINavigationController alloc] initWithRootViewController: _vc];
-    
-    self.window.rootViewController = self._mainNavigationController;
+    /*
+     _vc = [HomeVC custom];
+     self._mainNavigationController = [[UINavigationController alloc] initWithRootViewController: _vc];
+     
+     self.window.rootViewController = self._mainNavigationController;
+     */
+    [self pushToLoginVC];
     
     //导航条设置
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
