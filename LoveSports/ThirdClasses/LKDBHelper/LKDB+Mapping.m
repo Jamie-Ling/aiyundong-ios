@@ -34,10 +34,13 @@
 {
     __strong NSMutableDictionary* _proNameDic;
     __strong NSMutableDictionary* _sqlNameDic;
-    __strong NSMutableArray* _primaryKeys;
+    __strong NSArray* _primaryKeys;
 }
 -(void)removeWithColumnName:(NSString*)columnName;
 -(void)addDBPropertyWithType:(NSString *)type cname:(NSString *)column_name ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype;
+
+-(void)updateProperty:(LKDBProperty*)property sqlColumnName:(NSString*)columnName;
+-(void)updateProperty:(LKDBProperty*)property propertyName:(NSString*)propertyName;
 @end
 
 #pragma mark- LKDBProperty
@@ -98,10 +101,15 @@
         return;
     }
     
+    Class clazz = NSClassFromString(propertyTypeName);
     LKModelInfos* infos = [self getModelInfos];
-    for (int i=0; i<infos.count; i++) {
+    for (NSInteger i=0; i<infos.count; i++) {
         LKDBProperty* property = [infos objectWithIndex:i];
-        if([property.propertyType isEqualToString:propertyTypeName])
+        
+        Class p_cls = NSClassFromString(property.propertyType);
+        BOOL isSubClass = ((p_cls && clazz) && [p_cls isSubclassOfClass:clazz]);
+        BOOL isNameEqual = [property.propertyType isEqualToString:propertyTypeName];
+        if(isSubClass || isNameEqual)
         {
             [property enableUserCalculate];
         }
@@ -116,16 +124,31 @@
     
     LKDBProperty* property = [infos objectWithPropertyName:propertyName];
     if(property==nil)
+    {
         return;
+    }
     
     LKDBProperty* column = [infos objectWithSqlColumnName:columnName];
     if(column)
     {
-        column.propertyName = propertyName;
+        [infos updateProperty:column propertyName:propertyName];
         column.propertyType = property.propertyType;
     }
-    else{
+    else if([property.sqlColumnName isEqualToString:property.propertyName])
+    {
+        [infos updateProperty:property sqlColumnName:columnName];
+    }
+    else
+    {
         [infos addDBPropertyWithType:LKSQL_Mapping_Binding cname:columnName ctype:LKSQL_Type_Text pname:propertyName ptype:property.propertyType];
+    }
+}
++(void)removePropertyWithColumnNameArray:(NSArray *)columnNameArray
+{
+    LKModelInfos* infos = [self getModelInfos];
+    for (NSString* columnName in columnNameArray)
+    {
+        [infos removeWithColumnName:columnName];
     }
 }
 +(void)removePropertyWithColumnName:(NSString *)columnName
@@ -142,7 +165,7 @@
     self = [super init];
     if (self) {
         
-        _primaryKeys = [primaryKeys copy];
+        _primaryKeys = [NSArray arrayWithArray:primaryKeys];
         
         _proNameDic = [[NSMutableDictionary alloc]init];
         _sqlNameDic = [[NSMutableDictionary alloc]init];
@@ -152,7 +175,7 @@
         {
             NSArray* sql_names = keyMapping.allKeys;
             
-            for (int i =0; i< sql_names.count; i++) {
+            for (NSInteger i =0; i< sql_names.count; i++) {
                 
                 type = column_name = column_type = property_name = property_type = nil;
                 
@@ -198,7 +221,7 @@
         }
         else
         {
-            for (int i=0; i<propertyNames.count; i++) {
+            for (NSInteger i=0; i<propertyNames.count; i++) {
                 
                 type = LKSQL_Mapping_Inherit;
                 
@@ -212,7 +235,13 @@
             }
         }
         
-        for (NSString* pkname in _primaryKeys) {
+        if(_primaryKeys.count == 0)
+        {
+            _primaryKeys = [NSArray arrayWithObject:@"rowid"];
+        }
+        
+        for (NSString* pkname in _primaryKeys)
+        {
             if([pkname.lowercaseString isEqualToString:@"rowid"])
             {
                 if([self objectWithSqlColumnName:pkname] == nil)
@@ -232,7 +261,8 @@
     {
         [_proNameDic setObject:db_property forKey:db_property.propertyName];
     }
-    if(db_property.sqlColumnName){
+    if(db_property.sqlColumnName)
+    {
         [_sqlNameDic setObject:db_property forKey:db_property.sqlColumnName];
     }
 }
@@ -244,7 +274,7 @@
 {
     return _sqlNameDic.count;
 }
--(LKDBProperty *)objectWithIndex:(int)index
+-(LKDBProperty *)objectWithIndex:(NSInteger)index
 {
     if(index < _sqlNameDic.count)
     {
@@ -260,6 +290,19 @@
 -(LKDBProperty *)objectWithSqlColumnName:(NSString *)columnName
 {
     return [_sqlNameDic objectForKey:columnName];
+}
+
+-(void)updateProperty:(LKDBProperty*)property propertyName:(NSString*)propertyName
+{
+    [_proNameDic removeObjectForKey:property.propertyName];
+    property.propertyName = propertyName;
+    [_proNameDic setObject:property forKey:propertyName];
+}
+-(void)updateProperty:(LKDBProperty*)property sqlColumnName:(NSString*)columnName
+{
+    [_sqlNameDic removeObjectForKey:property.sqlColumnName];
+    property.sqlColumnName = columnName;
+    [_sqlNameDic setObject:property forKey:columnName];
 }
 -(void)removeWithColumnName:(NSString*)columnName
 {

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BraceletInfoModel.h"
 
 @interface BraceletInfoViewController : UIViewController
+
+@property (nonatomic, strong) BraceletInfoModel *_thisBraceletInfoModel;  //本VC显示的Model
 
 @end

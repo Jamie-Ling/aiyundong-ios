@@ -16,21 +16,28 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
+
+
 #import "UserCenterVC.h"
 #import "FlatRoundedButton.h"
 #import "ALBatteryView.h"
 #import "UserInfoViewController.h"
 #import "MSCustomWebViewController.h"
 #import "AccountManageViewController.h"
+#import "BraceletInfoModel.h"
+#import "BraceletInfoViewController.h"
+#import "BindIngDeviceViewController.h"
 
 @interface UserCenterVC()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_listTableView;
-    NSArray *_cellTitleArray;       //左侧标题文字数组
+    NSMutableArray *_cellTitleArray;       //左侧标题文字数组
     NSArray *_cellImageArray;       //左侧图标数组
     UIWebView *_phoneCallWebView;
     UserInfoViewController *_userInfoVC;
     AccountManageViewController *_AccountManageVC;
+    BraceletInfoViewController *_braceletInfoVC;
+    BraceletInfoModel *_showModel;
 }
 @property (nonatomic, assign) CGFloat _dumpEnergy;  //剩余电量
 
@@ -50,7 +57,9 @@
     _cellImageArray = [NSArray arrayWithObjects:@"头像",@"", @"头像", @"头像", @"", @"头像", @"头像",@"", @"头像", @"头像", @"", @"头像", @"头像", @"头像", nil];
     
     
-    _cellTitleArray = [NSArray arrayWithObjects:@"账号管理",@"", @"爱运动手环x", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关与爱运动+", nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动智能手环", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关与爱运动+", nil];
+    
+
     
     //tableview
     [self addTableView];
@@ -61,12 +70,17 @@
 {
     [super viewWillAppear:animated];
     
-    
+    //头像
     _userHeadPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey];
     
-    //测试， 设定得到电量
+    //得到现在的手环,先删除旧手环信息
+    [_cellTitleArray removeObjectAtIndex:2];
+    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+    [_cellTitleArray insertObject:_showModel._name atIndex:2];
+    
+    //得到电量
     NSLog(@"电量在此设置");
-    _dumpEnergy = 0.92;
+    _dumpEnergy = _showModel._deviceElectricity;
     
     //刷新界面
     [self refreshMainPage];
@@ -112,11 +126,19 @@
 - (void) intelligentBracelet
 {
     NSLog(@"爱运动手环");
+    if (!_braceletInfoVC)
+    {
+        _braceletInfoVC = [[BraceletInfoViewController alloc] init];
+    }
+    _braceletInfoVC._thisBraceletInfoModel = _showModel;
+    [self.navigationController pushViewController:_braceletInfoVC animated:YES];
 }
 
 - (void) bindingDevice
 {
     NSLog(@"绑定硬件");
+    BindIngDeviceViewController *bindIngDeviceVC = [[BindIngDeviceViewController alloc] init];
+    [self.navigationController pushViewController:bindIngDeviceVC animated:YES];
 }
 
 - (void) message
@@ -437,5 +459,7 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+
 
 @end

@@ -19,16 +19,21 @@
  */
 +(NSDictionary*)getTableMapping;
 
-//simple set a column as "LKSQL_Mapping_UserCalculate"
-//column name
+/***
+ simple set a column as "LKSQL_Mapping_UserCalculate"
+ column name
+*/
 +(void)setUserCalculateForCN:(NSString*)columnName;
-//property type name
+
+///property type name
 +(void)setUserCalculateForPTN:(NSString*)propertyTypeName;
 
+///binding columnName to PropertyName
 +(void)setTableColumnName:(NSString*)columnName bindingPropertyName:(NSString*)propertyName;
 
-//remove unwanted binding property
+///remove unwanted binding property
 +(void)removePropertyWithColumnName:(NSString*)columnName;
++(void)removePropertyWithColumnNameArray:(NSArray*)columnNameArray;
 @end
 
 @interface LKDBProperty:NSObject
@@ -41,12 +46,12 @@
 @property(readonly,nonatomic)NSString* propertyName;
 @property(readonly,nonatomic)NSString* propertyType;
 
-//创建表的时候 使用
+///creating table's column
 @property BOOL isUnique;
 @property BOOL isNotNull;
 @property(strong,nonatomic) NSString* defaultValue;
 @property(strong,nonatomic) NSString* checkValue;
-@property int length;
+@property NSInteger length;
 
 
 -(BOOL)isUserCalculate;
@@ -60,7 +65,7 @@
 @property(readonly,nonatomic)NSUInteger count;
 @property(readonly,nonatomic)NSArray* primaryKeys;
 
--(LKDBProperty*)objectWithIndex:(int)index;
+-(LKDBProperty*)objectWithIndex:(NSInteger)index;
 -(LKDBProperty*)objectWithPropertyName:(NSString*)propertyName;
 -(LKDBProperty*)objectWithSqlColumnName:(NSString*)columnName;
 

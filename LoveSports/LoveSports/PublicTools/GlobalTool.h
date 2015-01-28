@@ -106,11 +106,14 @@
 /*
  用户信息
  */
-#define kLastLoginUserInfoDictionaryKey                      @"LastLoginUserInfoDictionaryKey"      //存储上次登录用户信息的key 用于持续登录
+#define kLastLoginUserInfoDictionaryKey                      @"LastLoginUserInfoDictionaryKey"        //存储上次登录用户信息的key 用于持续登录
+#define kAllLoginUserInfoKeyArray                  @"AllLoginUserInfoArray"        //存储所有已登录的用户的key的数组
+
+#define kLastChocieBraceletInfoDictionaryKey                      @"LastChocieBraceletInfoDictionaryKey"      //存储上次选择智能手环的key
 #define kAllLoginUserInfoKeyArray                  @"AllLoginUserInfoArray"        //存储所有已登录的用户的key的数组
 
 
-//用户信息相关key
+//用户信息相关key---得到接口后再对应设置
 #define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像
 #define kUserInfoOfNickNameKey  @"userInfo002"  //昵称
 #define kUserInfoOfAgeKey  @"userInfo003"  //年龄
@@ -149,6 +152,10 @@ typedef enum{
 #define kCustomerServicePhoneNumber   @"0591-8888888"  //客服电话号码
 
 #define kShopUrl  @"http://www.baidu.com"   //爱运动商城URL
+
+#define kBraceletDefaultNamePrefixion  @"爱运动智能手环"  //智能手环默认名字前缀
+
+#define kBraceletLongSetRemind  @"每隔45分钟\n8:00~18:00"  //久坐提醒
 
 
 #define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字

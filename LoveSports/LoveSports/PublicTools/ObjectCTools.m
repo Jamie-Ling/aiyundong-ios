@@ -576,6 +576,7 @@ static ObjectCTools *_tools = nil;
                                     withImageUrl: (NSString *) imaUrl
 {
     FlatRoundedButton *userImageButton = [[FlatRoundedButton alloc] initWithFrame:CGRectMake(0, 0, theSize, theSize)];
+    [userImageButton setImage:[UIImage imageNamed:kDefaultHeadPhoto] forState:UIControlStateNormal];
     if (![NSString isNilOrEmpty:imaUrl])
     {
         // 缓存

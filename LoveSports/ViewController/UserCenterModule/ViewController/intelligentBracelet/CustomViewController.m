@@ -1,14 +1,10 @@
 //
-//  BraceletInfoViewController.m
-//  Woyoli
+//  CustomViewController.m
+//  LoveSports
 //
-//  Created by jamie on 14-12-2.
-//  Copyright (c) 2014年 Missionsky. All rights reserved.
+//  Created by jamie on 15/1/27.
+//  Copyright (c) 2015年 zorro. All rights reserved.
 //
-#define vGenderChoiceAciotnSheetTag  1234   //性别选择sheet  Tag
-#define vPhotoGetAciotnSheetTag    1235  //相片选择sheet  tag
-
-#define v_signOutButtonHeight (kIPhone4s ? 45 : 55.0 ) //退出按钮高度
 
 #define vTableViewLeaveTop   0   //tableView距离顶部的距离
 
@@ -16,49 +12,44 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
-#define vHeightMin   60
-#define vHeightMax   220
+#define vSectionHeight    30
 
-#define vWeightMin   20
-#define vWeightMax   250
-
-#import "BraceletInfoViewController.h"
-
-#import "TargetViewController.h"
 #import "CustomViewController.h"
 
-@interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface CustomViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
+    NSArray *_titleArray;
+    NSArray *_cellImageArray;
     
-    NSArray *_cellTitleArray;
     UITableView *_listTableView;
-    
-    BOOL _haveNewVersion;   //是否有新版本
-    
-    TargetViewController *_targetVC;
-    CustomViewController *_customVC;
-    
+    BOOL _showDistance;
 }
-@property (nonatomic, strong) UIActionSheet *actionSheet;
-@property (nonatomic, strong) UIDatePicker *datePicker;
 
 @end
 
-@implementation BraceletInfoViewController
-@synthesize _thisBraceletInfoModel;
+@implementation CustomViewController
+@synthesize _thisModel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"用户信息";
+    
+    self.title = @"自定义";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
-    //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久坐提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", nil];
-
-    //tableview
+    NSArray *list1Array = [NSArray arrayWithObjects:@"手环名称 ：", @"佩戴方向 ：", nil];
+    NSArray *list2Array = [NSArray arrayWithObjects:@"时间", @"步数", @"卡路里", @"距离", @"公制", nil];
+    _titleArray = [NSArray arrayWithObjects:list1Array, list2Array, nil];
+    
+    _cellImageArray = [NSArray arrayWithObjects:@"头像",@"头像", @"头像", @"头像", @"头像", nil];
+    
     [self addTableView];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -67,18 +58,13 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
     
-    NSLog(@"在此请求是否有新固件版本，请求完后再做标记并刷新list");
-    //假设有
-    _haveNewVersion = YES;
+    _showDistance = _thisModel._showDistance;
     [self reloadUserInfoTableView];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    //将要消失时更新存储
-    [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisBraceletInfoModel];
 }
 
 - (void) reloadUserInfoTableView
@@ -86,11 +72,6 @@
     [_listTableView reloadData];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addTableView
@@ -121,62 +102,57 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) goToTarget
+- (void) choiceMetricSystem
 {
-    NSLog(@"设置每日目标");
-    
-    if (!_targetVC)
-    {
-        _targetVC = [[TargetViewController alloc] init];
-    }
-    _targetVC._thisModel = _thisBraceletInfoModel;
-    [self.navigationController pushViewController:_targetVC animated:YES];
-}
-
-- (void) goToCustom
-{
-    NSLog(@"设置自定义");
-    
-    if (!_customVC)
-    {
-        _customVC = [[CustomViewController alloc] init];
-    }
-    _customVC._thisModel = _thisBraceletInfoModel;
-    [self.navigationController pushViewController:_customVC animated:YES];
-}
-
-- (void) goToTimeAndClock
-{
-    NSLog(@"设置时间和闹钟");
+    NSLog(@"设置是否是公制");
     
 }
 
-- (void) goToUpdateSystem
+- (void) setNickName
 {
-    NSLog(@"固件升级");
+    NSLog(@"设置昵称");
+    
 }
 
-- (void) goToRecoverDefaultSet
+- (void) choiceHand
 {
-    NSLog(@"恢复默认设置");
+    NSLog(@"设置带左手还是右手");
+    
 }
+
 
 - (void) changeSwith:(UISwitch *) theSwitch
 {
-    if (theSwitch.tag == 4)
+    if (theSwitch.tag == 0)
     {
-        NSLog(@"更改久坐提醒的状态：%d", theSwitch.on);
-        _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
+        NSLog(@"更改是否显示时间的状态：%d", theSwitch.on);
+        _thisModel._showTime = theSwitch.on;
         
         return;
     }
-    if (theSwitch.tag == 5)
+    if (theSwitch.tag == 1)
     {
-        NSLog(@"更改防丢提醒的状态：%d", theSwitch.on);
-        _thisBraceletInfoModel._PreventLossRemind = theSwitch.on;
+        NSLog(@"更改是否显示步数的状态：%d", theSwitch.on);
+        _thisModel._showSteps = theSwitch.on;
         
         return;
     }
+    if (theSwitch.tag == 2)
+    {
+        NSLog(@"更改是否显示卡路里的状态：%d", theSwitch.on);
+        _thisModel._showKa = theSwitch.on;
+        
+        return;
+    }
+    if (theSwitch.tag == 3)
+    {
+        NSLog(@"更改是否显示距离的状态：%d", theSwitch.on);
+        _thisModel._showDistance = theSwitch.on;
+        _showDistance = theSwitch.on;
+        [self reloadUserInfoTableView];
+        return;
+    }
+
 }
 
 #pragma mark ---------------- UIAlertView delegate -----------------
@@ -193,12 +169,16 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_cellTitleArray count];
+    if (section == 1 && !_showDistance)
+    {
+        return [[_titleArray objectAtIndex:section] count] - 1;
+    }
+    return [[_titleArray objectAtIndex:section] count];
 }
 
 
@@ -206,17 +186,12 @@
 {
     //不使用复用机制
     UITableViewCell *oneCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myCell"];
-    if ([NSString isNilOrEmpty:[_cellTitleArray objectAtIndex:indexPath.row]])
-    {
-        oneCell.userInteractionEnabled = NO;
-        return oneCell;
-    }
     
     //label
     CGRect titleFrame = CGRectMake(0, 0, 100, vOneCellHeight);
     UILabel *title = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                  backgroundColor:[UIColor clearColor]
-                                                            text:[_cellTitleArray objectAtIndex:indexPath.row]
+                                                            text:[[_titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]
                                                        textColor:kLabelTitleDefaultColor
                                                             font:[UIFont systemFontOfSize:14]
                                                    textAlignment:NSTextAlignmentLeft
@@ -236,8 +211,8 @@
                                                       backgroundColor:[UIColor clearColor]
                                                                  text:@""
                                                             textColor:kLabelTitleDefaultColor
-                                                                 font:[UIFont systemFontOfSize:12]
-                                                        textAlignment:NSTextAlignmentCenter
+                                                                 font:[UIFont systemFontOfSize:14]
+                                                        textAlignment:NSTextAlignmentLeft
                                                         lineBreakMode:NSLineBreakByCharWrapping
                                                         numberOfLines:2];
     
@@ -252,43 +227,84 @@
     [slideSwitchH addTarget:self action:@selector(changeSwith:) forControlEvents:UIControlEventValueChanged];
     
     
-    switch (indexPath.row)
+    //图标
+    UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 32.0, vOneCellHeight / 2.0) withImageName:[_cellImageArray objectAtIndex:indexPath.row] withImageZoomSize:1.0];
+    
+    
+    if (indexPath.section == 0)
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    
+                    [rightTitle setText:_thisModel._name];
+                    [rightTitle sizeToFit];
+                    [rightTitle setCenter:CGPointMake(title.right + 5 + rightTitle.width / 2.0, vOneCellHeight / 2.0)];
+                    [oneCell.contentView addSubview:rightTitle];
+                }
+                    break;
+                case 1:
+                {
+                    NSString *handString = @"左手";
+                    if (!_thisModel._isLeftHand)
+                    {
+                        handString = @"右手";
+                    }
+                    [rightTitle setText:handString];
+                    [rightTitle sizeToFit];
+                    [rightTitle setCenter:CGPointMake(rightImageView.x - 20 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
+                    [oneCell.contentView addSubview:rightTitle];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+    
+    if ((indexPath.section == 1) && (indexPath.row != [[_titleArray objectAtIndex:1] count] - 1))
     {
-        case 4:
+        [oneCell.contentView addSubview:actionImageView];
+        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+        
+        [rightImageView setHidden:YES];
+        oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
+        [oneCell.contentView addSubview:slideSwitchH];
+        
+        switch (indexPath.row)
         {
-            [rightTitle setText:kBraceletLongSetRemind];
-            [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
-            [oneCell.contentView addSubview:rightTitle];
-            
-            slideSwitchH.on = _thisBraceletInfoModel._longTimeSetRemind;
-            [oneCell.contentView addSubview:slideSwitchH];
-            
-            [rightImageView setHidden:YES];
-            
-            oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
+            case 0:
+            {
+                slideSwitchH.on = _thisModel._showTime;
+            }
+                break;
+            case 1:
+            {
+                slideSwitchH.on = _thisModel._showSteps;
+            }
+                break;
+            case 2:
+            {
+                slideSwitchH.on = _thisModel._showKa;
+            }
+                break;
+            case 3:
+            {
+                slideSwitchH.on = _thisModel._showDistance;
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 5:
-        {
-            slideSwitchH.on = _thisBraceletInfoModel._PreventLossRemind;
-            [oneCell.contentView addSubview:slideSwitchH];
-            
-            [rightImageView setHidden:YES];
-            
-            oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
-        }
-            break;
-        case 6:
-        {
-            [rightTitle setText:_thisBraceletInfoModel._deviceVersion];
-            [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
-            [oneCell.contentView addSubview:rightTitle];
-        }
-            break;
-            
-        default:
-            break;
+        
     }
+    
+    
+    if ((indexPath.section == 1) && (indexPath.row == [[_titleArray objectAtIndex:1] count] - 1))
+    {
+        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+    }
+    
     
     
     //设置点选颜色
@@ -306,33 +322,38 @@
     //去除点击的选中色
     [tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
     
-    switch (indexPath.row )
+    if (indexPath.section == 0)
     {
-        case 0:
-            [self goToTarget];
-            break;
-        case 1:
-            [self goToCustom];
-            break;
-            
-        case 3:
-            [self goToTimeAndClock];
-            break;
-            
-        case 6:
-            [self goToUpdateSystem];
-            break;
-        case 7:
-            [self goToRecoverDefaultSet];
-            break;
-        default:
-            break;
+        switch (indexPath.row )
+        {
+            case 0:
+                [self setNickName];
+                break;
+            case 1:
+                [self choiceHand];
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (indexPath.section == 1)
+    {
+        switch (indexPath.row )
+        {
+            case 4:
+                //_isShowMetricSystem
+                [self choiceMetricSystem];
+                break;
+            default:
+                break;
+        }
     }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([NSString isNilOrEmpty:[_cellTitleArray objectAtIndex:indexPath.row]])
+    if ([NSString isNilOrEmpty:[[_titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]])
     {
         return 13.0;
     }
@@ -352,7 +373,7 @@
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *backGroundColor = kBackgroundColor;
-    if ([NSString isNilOrEmpty:[_cellTitleArray objectAtIndex:indexPath.row]])
+    if ([NSString isNilOrEmpty:[[_titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]])
     {
         backGroundColor = kRGB(243.0, 243.0, 243.0);
     }
@@ -368,6 +389,29 @@
     }
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 1)
+    {
+        return vSectionHeight;
+    }
+    return 0;
+}
 
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, vOneCellWidth, vSectionHeight)];
+    [sectionView setBackgroundColor:kRGB(243.0, 243.0, 243.0)];
+    
+    UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(vTableViewMoveLeftX + 16.0, 0, vOneCellWidth - (vTableViewMoveLeftX + 16.0), vSectionHeight)];
+    [aLabel setBackgroundColor:[UIColor clearColor]];
+    [aLabel setTextColor:kPageTitleColor];
+    [aLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [aLabel setText:@"显示项目"];
+    
+    [sectionView addSubview: aLabel];
+    
+    return sectionView;
+}
 
 @end
