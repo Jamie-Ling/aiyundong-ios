@@ -5,6 +5,9 @@
 //  Created by jamie on 15/1/27.
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
+#define vMetricSystemTag   10099
+#define vHandTag   10100
+
 
 #define vTableViewLeaveTop   0   //tableView距离顶部的距离
 
@@ -15,8 +18,10 @@
 #define vSectionHeight    30
 
 #import "CustomViewController.h"
+#import "UpdateBraceletNameViewController.h"
 
-@interface CustomViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@interface CustomViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 {
     NSArray *_titleArray;
     NSArray *_cellImageArray;
@@ -62,14 +67,17 @@
     [self reloadUserInfoTableView];
 }
 
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 - (void) reloadUserInfoTableView
 {
     [_listTableView reloadData];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    //将要消失时更新存储
+    [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisModel];
 }
 
 
@@ -105,18 +113,35 @@
 - (void) choiceMetricSystem
 {
     NSLog(@"设置是否是公制");
-    
+    UIActionSheet * aciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"取消"
+                                                            destructiveButtonTitle:@"公制"
+                                                                 otherButtonTitles:@"英制", nil];
+    aciotnSheet.tag = vMetricSystemTag;
+    [aciotnSheet showInView:self.view];
 }
 
 - (void) setNickName
 {
-    NSLog(@"设置昵称");
+    NSLog(@"修改手环名字");
+    UpdateBraceletNameViewController *updateBraceletNameVC = [[UpdateBraceletNameViewController alloc] init];
+    updateBraceletNameVC._thisModel = _thisModel;
+    updateBraceletNameVC._lastNickName = _thisModel._name;
+    [self.navigationController pushViewController:updateBraceletNameVC animated:YES];
     
 }
 
 - (void) choiceHand
 {
     NSLog(@"设置带左手还是右手");
+    UIActionSheet * aciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                              delegate:self
+                                                     cancelButtonTitle:@"取消"
+                                                destructiveButtonTitle:@"左手"
+                                                     otherButtonTitles:@"右手", nil];
+    aciotnSheet.tag = vHandTag;
+    [aciotnSheet showInView:self.view];
     
 }
 
@@ -164,6 +189,93 @@
         
     }
 }
+
+#pragma mark ---------------- actionSheet delegate -----------------
+-(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == vMetricSystemTag)
+    {
+        switch (buttonIndex)
+        {
+            case  0:
+            {
+                if (_thisModel._isShowMetricSystem)
+                {
+                    return;
+                }
+                else
+                {
+                    NSLog(@"改成公制");
+                    _thisModel._isShowMetricSystem = YES;
+                    [self reloadUserInfoTableView];
+                }
+            }
+                break;
+            case 1:
+            {
+                if (!_thisModel._isShowMetricSystem)
+                {
+                    return;
+                }
+                else
+                {
+                    NSLog(@"改成英制");
+                    _thisModel._isShowMetricSystem = NO;
+                    [self reloadUserInfoTableView];
+                }
+            }
+                break;
+            case 2:
+                return;
+                break;
+            default:
+                break;
+        }
+        return;
+    }
+    if (actionSheet.tag == vHandTag)
+    {
+        switch (buttonIndex)
+        {
+            case  0:
+            {
+                if (_thisModel._isLeftHand)
+                {
+                    return;
+                }
+                else
+                {
+                    NSLog(@"改成左手");
+                    _thisModel._isLeftHand = YES;
+                    [self reloadUserInfoTableView];
+                }
+            }
+                break;
+            case 1:
+            {
+                if (!_thisModel._isLeftHand)
+                {
+                    return;
+                }
+                else
+                {
+                    NSLog(@"改成右手");
+                    _thisModel._isLeftHand = NO;
+                    [self reloadUserInfoTableView];
+                }
+            }
+                break;
+            case 2:
+                return;
+                break;
+            default:
+                break;
+        }
+        return;
+    }
+
+}
+
 
 #pragma mark ---------------- TableView delegate -----------------
 
@@ -214,7 +326,7 @@
                                                                  font:[UIFont systemFontOfSize:14]
                                                         textAlignment:NSTextAlignmentLeft
                                                         lineBreakMode:NSLineBreakByCharWrapping
-                                                        numberOfLines:2];
+                                                        numberOfLines:1];
     
     [rightTitle setWidth:rightImageView.x - title.right - 2 - 18];
     //    NSLog(@"lent = %f", rightTitle.width);
@@ -302,6 +414,12 @@
     
     if ((indexPath.section == 1) && (indexPath.row == [[_titleArray objectAtIndex:1] count] - 1))
     {
+        NSString *gongzhi = @"公制";
+        if (!_thisModel._isShowMetricSystem)
+        {
+            gongzhi = @"英制";
+        }
+        [title setText:gongzhi];
         title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
     }
     

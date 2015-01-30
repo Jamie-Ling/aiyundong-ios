@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		692B842E1A7931EC00685219 /* BindIngDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 692B842D1A7931EC00685219 /* BindIngDeviceViewController.m */; };
+		692B84311A793C7A00685219 /* UpdateBraceletNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 692B84301A793C7A00685219 /* UpdateBraceletNameViewController.m */; };
 		698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */; };
 		698A90BD1A6FEB54005BABE6 /* EAIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90B11A6FEB54005BABE6 /* EAIntroView.m */; };
 		698A90BE1A6FEB54005BABE6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 698A90B41A6FEB54005BABE6 /* LICENSE */; };
@@ -30,6 +31,7 @@
 		699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 699242101A77425200EFF121 /* game_button_select_Normal@2x.png */; };
 		699242151A77734500EFF121 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 699242141A77734500EFF121 /* CustomViewController.m */; };
 		69A0DD561A76448500C2AB15 /* BraceletInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0DD551A76448500C2AB15 /* BraceletInfoViewController.m */; };
+		69E42F8E1A7A684800B3DFB1 /* TimeAndClockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E42F8D1A7A684800B3DFB1 /* TimeAndClockViewController.m */; };
 		69E46A021A7671AE00FCDFA4 /* BraceletInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E46A011A7671AE00FCDFA4 /* BraceletInfoModel.m */; };
 		69EFC1991A7377EC00B5BC53 /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC1931A7377EC00B5BC53 /* FSLineChart.m */; };
 		69EFC19A1A7377EC00B5BC53 /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EFC1951A7377EC00B5BC53 /* UIColor+FSPalette.m */; };
@@ -235,6 +237,8 @@
 /* Begin PBXFileReference section */
 		692B842C1A7931EC00685219 /* BindIngDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindIngDeviceViewController.h; sourceTree = "<group>"; };
 		692B842D1A7931EC00685219 /* BindIngDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindIngDeviceViewController.m; sourceTree = "<group>"; };
+		692B842F1A793C7A00685219 /* UpdateBraceletNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateBraceletNameViewController.h; sourceTree = "<group>"; };
+		692B84301A793C7A00685219 /* UpdateBraceletNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateBraceletNameViewController.m; sourceTree = "<group>"; };
 		698A90AE1A6FEB54005BABE6 /* EAIntroPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroPage.h; sourceTree = "<group>"; };
 		698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAIntroPage.m; sourceTree = "<group>"; };
 		698A90B01A6FEB54005BABE6 /* EAIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroView.h; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 		699242141A77734500EFF121 /* CustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
 		69A0DD541A76448500C2AB15 /* BraceletInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BraceletInfoViewController.h; sourceTree = "<group>"; };
 		69A0DD551A76448500C2AB15 /* BraceletInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BraceletInfoViewController.m; sourceTree = "<group>"; };
+		69E42F8C1A7A684800B3DFB1 /* TimeAndClockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeAndClockViewController.h; sourceTree = "<group>"; };
+		69E42F8D1A7A684800B3DFB1 /* TimeAndClockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeAndClockViewController.m; sourceTree = "<group>"; };
 		69E46A001A7671AE00FCDFA4 /* BraceletInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BraceletInfoModel.h; sourceTree = "<group>"; };
 		69E46A011A7671AE00FCDFA4 /* BraceletInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BraceletInfoModel.m; sourceTree = "<group>"; };
 		69EFC1921A7377EC00B5BC53 /* FSLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLineChart.h; sourceTree = "<group>"; };
@@ -887,6 +893,10 @@
 				6992420A1A77357400EFF121 /* TargetViewController.m */,
 				699242131A77734500EFF121 /* CustomViewController.h */,
 				699242141A77734500EFF121 /* CustomViewController.m */,
+				692B842F1A793C7A00685219 /* UpdateBraceletNameViewController.h */,
+				692B84301A793C7A00685219 /* UpdateBraceletNameViewController.m */,
+				69E42F8C1A7A684800B3DFB1 /* TimeAndClockViewController.h */,
+				69E42F8D1A7A684800B3DFB1 /* TimeAndClockViewController.m */,
 			);
 			path = intelligentBracelet;
 			sourceTree = "<group>";
@@ -1815,6 +1825,7 @@
 				F4B693551A6F401A00B42395 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */,
 				69EFC22A1A7397C600B5BC53 /* UIView+ALQuickFrame.m in Sources */,
+				692B84311A793C7A00685219 /* UpdateBraceletNameViewController.m in Sources */,
 				698A90C31A6FEB54005BABE6 /* MSIntroView.m in Sources */,
 				F4BF5FEB1A6FC462004C433D /* MoreVC.m in Sources */,
 				69EFC2271A7397C600B5BC53 /* ALBatteryView.m in Sources */,
@@ -1906,6 +1917,7 @@
 				69EFC2D91A760CD600B5BC53 /* NSData+ImageContentType.m in Sources */,
 				F4B693AE1A6F403400B42395 /* Reachability.m in Sources */,
 				F4BF5F751A6F5430004C433D /* RunningVC.m in Sources */,
+				69E42F8E1A7A684800B3DFB1 /* TimeAndClockViewController.m in Sources */,
 				69EFC2B61A75D44500B5BC53 /* AccountManageViewController.m in Sources */,
 				F4BF5FF41A6FC95C004C433D /* ZKKTabBar.m in Sources */,
 				F4BF5FE81A6FC457004C433D /* NightVC.m in Sources */,

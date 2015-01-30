@@ -155,8 +155,8 @@ typedef enum{
 
 #define kBraceletDefaultNamePrefixion  @"爱运动智能手环"  //智能手环默认名字前缀
 
-#define kBraceletLongSetRemind  @"每隔45分钟\n8:00~18:00"  //久坐提醒
-
+#define kBraceletLongSetRemind24  @"每隔45分钟\n8:00 ~ 18:00"  //久坐提醒  // 24小时制
+#define kBraceletLongSetRemind  @"每隔45分钟\n上午 8:00 ~ 下午 6:00"  //久坐提醒  // 12小时制
 
 #define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字
 #define kPasswordPlaceHoldText @"请输入您的密码"              //密码holdplace文字
@@ -169,6 +169,7 @@ typedef enum{
 #define kPasswordErrorMessage @"密码长度为8~20位，由6至20位的字母或数字组成"  //密码错误时提示
 
 #define kUpdateNickNamePlaceHoldText @"请输入您的昵称，最多16位"         //昵称修改
+#define kUpdateBraceletNamePlaceHoldText @"请输入您的手环名称"         //手环名称
 #define kUpdateInterestingPlaceHoldText @"请输入您的兴趣爱好"         //昵称修改
 #define kUpdateEmailPlaceHoldText @"请输入您电子邮箱"         //邮箱修改
 #define kUpdatePasswordPlaceHoldText @"请输入旧密码，由6至20位的字母或数字组成"         //密码修改

@@ -26,6 +26,7 @@
 
 #import "TargetViewController.h"
 #import "CustomViewController.h"
+#import "TimeAndClockViewController.h"
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -37,6 +38,7 @@
     
     TargetViewController *_targetVC;
     CustomViewController *_customVC;
+    TimeAndClockViewController *_timeAndClockVC;
     
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -149,6 +151,13 @@
 {
     NSLog(@"设置时间和闹钟");
     
+    if (!_timeAndClockVC)
+    {
+        _timeAndClockVC = [[TimeAndClockViewController alloc] init];
+    }
+    _timeAndClockVC._thisModel = _thisBraceletInfoModel;
+    [self.navigationController pushViewController:_timeAndClockVC animated:YES];
+    
 }
 
 - (void) goToUpdateSystem
@@ -256,7 +265,15 @@
     {
         case 4:
         {
-            [rightTitle setText:kBraceletLongSetRemind];
+            if (_thisBraceletInfoModel._is24HoursTime)
+            {
+                [rightTitle setText:kBraceletLongSetRemind24];
+            }
+            else
+            {
+                [rightTitle setText:kBraceletLongSetRemind];
+            }
+            
             [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
             

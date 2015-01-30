@@ -44,6 +44,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    //将要消失时更新存储
+    [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisModel];
+}
+
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addChoices
 {
@@ -99,6 +107,8 @@
 {
     [self resetButtonImage];
     [item setSelectButtonImage:@"game_button_select_Highlighted.png"];
+    
+    _thisModel._target = [NSString stringWithFormat:@"%ld", (long)index];
 }
 
 - (void)resetButtonImage

@@ -13,6 +13,15 @@
 @property (nonatomic, strong) NSString *_setTime;
 @property (nonatomic, assign) BOOL _isOpen;
 
+/**
+ *  得到显示时间（根据是否是24小时制）
+ *
+ *  @param _is24HoursTime 是否是24小时置
+ *
+ *  @return 返回的显示时间
+ */
+- (NSString *) getShowTimeWithIs24HoursTime: (BOOL) _is24HoursTime;
+
 @end
 
 @interface BraceletInfoModel : NSObject
@@ -26,7 +35,9 @@
 @property (nonatomic, assign) BOOL _showDistance;
 @property (nonatomic, assign) BOOL _isShowMetricSystem;  //是否是公制
 @property (nonatomic, assign) BOOL _isAutomaticAlarmClock;    //是否自动闹钟
+@property (nonatomic, assign) BOOL _isHandAlarmClock;    //是否自动闹钟
 @property (nonatomic, strong) NSMutableArray *_allHandSetAlarmClock;  //手动设置的闹钟
+@property (nonatomic, strong) NSMutableArray *_allAutomaticSetAlarmClock;  //自动设置的闹钟
 @property (nonatomic, assign) BOOL _is24HoursTime;  //是否是24小时制
 
 @property (nonatomic, assign) BOOL _longTimeSetRemind;  //久坐提醒
@@ -45,7 +56,7 @@
 - (void) initAllSet;
 
 /**
- *  //取仓库已有的智能手环，计算个数,设置名字及id
+ *  设置名字,id,以及遗传闹钟(手动和自动)---因为是通过计算数据库个数来设置，所以不能和Init放一起
  */
 - (void) setDefaultNameAndOrderID;
 

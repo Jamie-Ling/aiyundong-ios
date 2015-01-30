@@ -56,10 +56,7 @@
     //初始化
     _cellImageArray = [NSArray arrayWithObjects:@"头像",@"", @"头像", @"头像", @"", @"头像", @"头像",@"", @"头像", @"头像", @"", @"头像", @"头像", @"头像", nil];
     
-    
     _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动智能手环", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关与爱运动+", nil];
-    
-
     
     //tableview
     [self addTableView];
