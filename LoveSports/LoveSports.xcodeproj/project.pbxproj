@@ -145,6 +145,9 @@
 		F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A31A7937C800D5B170 /* NSDate+XY.m */; };
 		F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A61A79381C00D5B170 /* BLTAcceptData.m */; };
 		F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A81A79381C00D5B170 /* BLTSendData.m */; };
+		F45F84021A7B65A3004246E8 /* HardWareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F84011A7B65A3004246E8 /* HardWareVC.m */; };
+		F45F840B1A7B6698004246E8 /* NoPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F84081A7B6698004246E8 /* NoPasteTextField.m */; };
+		F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F840A1A7B6698004246E8 /* SaveHelper.m */; };
 		F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529C61A7662BF002A5382 /* UserModelEntity.m */; };
 		F49529D11A766E03002A5382 /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CA1A766E03002A5382 /* BLTManager.m */; };
 		F49529D21A766E03002A5382 /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CC1A766E03002A5382 /* BLTModel.m */; };
@@ -439,6 +442,12 @@
 		F445F7A61A79381C00D5B170 /* BLTAcceptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTAcceptData.m; sourceTree = "<group>"; };
 		F445F7A71A79381C00D5B170 /* BLTSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendData.h; sourceTree = "<group>"; };
 		F445F7A81A79381C00D5B170 /* BLTSendData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendData.m; sourceTree = "<group>"; };
+		F45F84001A7B65A3004246E8 /* HardWareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardWareVC.h; sourceTree = "<group>"; };
+		F45F84011A7B65A3004246E8 /* HardWareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HardWareVC.m; sourceTree = "<group>"; };
+		F45F84071A7B6698004246E8 /* NoPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPasteTextField.h; sourceTree = "<group>"; };
+		F45F84081A7B6698004246E8 /* NoPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPasteTextField.m; sourceTree = "<group>"; };
+		F45F84091A7B6698004246E8 /* SaveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveHelper.h; sourceTree = "<group>"; };
+		F45F840A1A7B6698004246E8 /* SaveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveHelper.m; sourceTree = "<group>"; };
 		F49529C51A7662BF002A5382 /* UserModelEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelEntity.h; sourceTree = "<group>"; };
 		F49529C61A7662BF002A5382 /* UserModelEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModelEntity.m; sourceTree = "<group>"; };
 		F49529C91A766E03002A5382 /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
@@ -880,6 +889,8 @@
 			children = (
 				692B842C1A7931EC00685219 /* BindIngDeviceViewController.h */,
 				692B842D1A7931EC00685219 /* BindIngDeviceViewController.m */,
+				F45F84001A7B65A3004246E8 /* HardWareVC.h */,
+				F45F84011A7B65A3004246E8 /* HardWareVC.m */,
 			);
 			path = bindingDevice;
 			sourceTree = "<group>";
@@ -1054,6 +1065,17 @@
 			path = TestView;
 			sourceTree = "<group>";
 		};
+		F45F84061A7B6698004246E8 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				F45F84071A7B6698004246E8 /* NoPasteTextField.h */,
+				F45F84081A7B6698004246E8 /* NoPasteTextField.m */,
+				F45F84091A7B6698004246E8 /* SaveHelper.h */,
+				F45F840A1A7B6698004246E8 /* SaveHelper.m */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
 		F49529C81A766E03002A5382 /* BLTClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -1156,8 +1178,8 @@
 		F4B693181A6F3F2B00B42395 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F45F84061A7B6698004246E8 /* DataModel */,
 				F4BF5F5B1A6F529E004C433D /* BaseClass */,
-				F4B693E91A6F442B00B42395 /* DataModel */,
 				F4B693EA1A6F442B00B42395 /* NetworkMode */,
 				F4B693D01A6F40D200B42395 /* Category */,
 			);
@@ -1425,13 +1447,6 @@
 				F4BF5F591A6F5197004C433D /* UITableView+Animation.m */,
 			);
 			path = Category;
-			sourceTree = "<group>";
-		};
-		F4B693E91A6F442B00B42395 /* DataModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataModel;
 			sourceTree = "<group>";
 		};
 		F4B693EA1A6F442B00B42395 /* NetworkMode */ = {
@@ -1860,6 +1875,7 @@
 				69EFC2471A73A3E600B5BC53 /* UpdatePasswordViewController.m in Sources */,
 				F4B6931E1A6F3F3E00B42395 /* README.md in Sources */,
 				F4BF5FEE1A6FC46E004C433D /* MapVC.m in Sources */,
+				F45F840B1A7B6698004246E8 /* NoPasteTextField.m in Sources */,
 				69EFC2DA1A760CD600B5BC53 /* SDImageCache.m in Sources */,
 				699242151A77734500EFF121 /* CustomViewController.m in Sources */,
 				F4BF5F6E1A6F529E004C433D /* ZKKViewController.m in Sources */,
@@ -1869,6 +1885,7 @@
 				69EFC2351A73A26500B5BC53 /* MSCustomWebView.m in Sources */,
 				F4B6934E1A6F401A00B42395 /* IQKeyboardManager.m in Sources */,
 				F4BF5F5A1A6F5197004C433D /* UITableView+Animation.m in Sources */,
+				F45F84021A7B65A3004246E8 /* HardWareVC.m in Sources */,
 				F4B693E71A6F40D200B42395 /* UILabel+Custom.m in Sources */,
 				F4B692F41A6F3EBC00B42395 /* main.m in Sources */,
 				698A90BF1A6FEB54005BABE6 /* readme.md in Sources */,
@@ -1891,6 +1908,7 @@
 				F4BF5F571A6F4E42004C433D /* UIColor+RGB.m in Sources */,
 				698A90C01A6FEB54005BABE6 /* SMPageControl.m in Sources */,
 				69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */,
+				F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
 				F4B693A71A6F403400B42395 /* NSDictionary+RequestEncoding.m in Sources */,
 				F4B6939C1A6F403400B42395 /* FMResultSet.m in Sources */,

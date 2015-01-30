@@ -20,6 +20,7 @@
 @property (nonatomic, strong) CBPeripheral *peripheral;
 
 @property (nonatomic, assign) NSInteger bltElecState;   // 充电状态
+@property (nonatomic, assign) BOOL isBinding;
 
 /**
  *  伪造固件信息

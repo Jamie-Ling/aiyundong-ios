@@ -7,7 +7,6 @@
 //
 
 #import "BLTAcceptData.h"
-#import "BLTManager.h"
 
 @implementation BLTAcceptData
 
@@ -31,7 +30,9 @@ DEF_SINGLETON(BLTAcceptData)
     UInt8 val[100] = {0};
     [data getBytes:&val length:data.length];
     
+    id object = nil;
     int order = val[2];
+    NSLog(@"%0x, %0x, %0x, %0x", val[0], val[1], val[2], val[3]);
     
     if (val[0] == 0xDE)
     {
@@ -39,6 +40,10 @@ DEF_SINGLETON(BLTAcceptData)
         {
             if (order == 0x01)
             {
+                SHOWMBProgressHUD(@"设置成功...", nil, nil, NO, 2);
+                [LS_SettingBaseInfo setBOOLValue:YES];
+                NSLog(@"设置成功.%d",  [LS_SettingBaseInfo getBOOLValue]);
+
                 // 设定基本信息成功.
             }
             else if (order == 0x02)
@@ -49,6 +54,16 @@ DEF_SINGLETON(BLTAcceptData)
                 }
                 else if (val[3] == 0xFB)
                 {
+                    
+                    _type = BLTAcceptDataTypeWareTime;
+                    
+                    for (int i = 0; i < 16; i++)
+                    {
+                        NSLog(@"....%d", val[i]);
+                    }
+                    
+                    NSString *string = [NSString stringWithFormat:@"当前设备时间: \n%d月%d日 %d:%d \n时区:%d", val[6], val[7], val[10], val[11], val[9]];
+                    object = string;
                     // 计步器发送时间到手机.
                 }
             }
@@ -157,6 +172,11 @@ DEF_SINGLETON(BLTAcceptData)
     else
     {
     
+    }
+    
+    if (_updateValue)
+    {
+        _updateValue(object, _type);
     }
 }
 

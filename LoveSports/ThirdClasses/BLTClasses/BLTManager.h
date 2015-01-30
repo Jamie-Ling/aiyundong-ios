@@ -17,7 +17,7 @@ typedef void(^BLTManagerDisConnect)();
 typedef void(^BLTManagerConnect)();
 
 @property (nonatomic, strong) BLTModel *model;
-@property (nonatomic, strong) NSMutableArray *allWareArray;
+@property (atomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
 @property (nonatomic, strong) BLTManagerUpdateValue updateValueBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
@@ -27,6 +27,9 @@ AS_SINGLETON(BLTManager)
 
 // 开始扫描或者是重新扫描
 - (void)startCan;
+
+// 在不取消当前设备的情况下扫描其他的设备。
+- (void)checkOtherDevices;
 
 /**
  *  连接指定的设备

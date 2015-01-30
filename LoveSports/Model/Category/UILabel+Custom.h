@@ -11,6 +11,12 @@
 @interface UILabel (Custom)
 
 + (UILabel *)customLabelWithRect:(CGRect)rect;
++ (UILabel *)customLabelWithRect:(CGRect)rect
+                       withColor:(UIColor *)color
+                   withAlignment:(NSTextAlignment)alignment
+                    withFontSize:(CGFloat)size
+                        withText:(NSString *)text
+                   withTextColor:(UIColor *)textColor;
 
 // 返回估计的尺寸
 - (CGSize)estimateUISizeByHeight:(CGFloat)height;

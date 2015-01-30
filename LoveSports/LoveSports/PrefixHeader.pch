@@ -37,3 +37,10 @@
 
 
 #endif
+
+// 当前绑定的设备ID
+#define LS_BindingID @"LS_BindingID"
+// 是否已经设置过基本时区和度量
+#define LS_SettingBaseInfo @"LS_SettingBaseInfo"
+
+

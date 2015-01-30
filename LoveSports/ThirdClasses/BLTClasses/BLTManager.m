@@ -10,7 +10,7 @@
 #import "BLTManager.h"
 #import "BLTPeripheral.h"
 #import "BLTUUID.h"
-#import "BLTSendData.h"
+#import "BLTAcceptData.h"
 
 @interface BLTManager () <CBCentralManagerDelegate>
 
@@ -29,6 +29,11 @@ DEF_SINGLETON(BLTManager)
     self = [super init];
     if (self)
     {
+        if (![LS_BindingID getObjectValue])
+        {
+            [LS_BindingID setObjectValue:@""];
+        }
+        
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         [BLTPeripheral sharedInstance].updateBlock = ^(NSData *data) {
@@ -51,8 +56,6 @@ DEF_SINGLETON(BLTManager)
 // 设备连接完毕
 - (void)getCurrentDeviceInfo
 {
-    // [BLTSendData sendBasicSetOfInformationData:nil];
-    
     if (_connectBlock)
     {
         _connectBlock();
@@ -98,6 +101,11 @@ DEF_SINGLETON(BLTManager)
     [self scan];
 }
 
+- (void)checkOtherDevices
+{
+    [self scan];
+}
+
 #pragma mark --- CBCentralManagerDelegate ---
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
@@ -116,7 +124,15 @@ DEF_SINGLETON(BLTManager)
         return;
     }
     
-    [_allWareArray removeAllObjects];
+    for (int i = 0; i < _allWareArray.count; i++)
+    {
+        BLTModel *model = _allWareArray[i];
+        if (model.peripheral != self.discoverPeripheral)
+        {
+            [_allWareArray removeObject:model];
+        }
+    }
+    
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
 }
@@ -134,7 +150,6 @@ DEF_SINGLETON(BLTManager)
     NSRange userNameRange = [peripheral.name rangeOfCharacterFromSet:nameCharacters];
     if (userNameRange.location != NSNotFound)
     {
-        
         return;
     }
     
@@ -142,7 +157,7 @@ DEF_SINGLETON(BLTManager)
     if (uuidArray.count > 0)
     {
         CBUUID *currentUUID = [uuidArray lastObject];
-        if ([currentUUID isEqual:[BLTUUID uartServiceUUID]])
+        if ([currentUUID isEqual:[BLTUUID uartServiceUUID]] || 1)
         {
             NSString *idString = [peripheral.identifier UUIDString];
             
@@ -162,8 +177,12 @@ DEF_SINGLETON(BLTManager)
                 model.peripheral = peripheral;
                 
                 [_allWareArray addObject:model];
+                
+                if ([idString isEqualToString:[LS_BindingID getObjectValue]])
+                {
+                    [self repareConnectedDevice:model];
+                }
             }
-            
             
             if (_updateModelBlock)
             {
@@ -188,9 +207,13 @@ DEF_SINGLETON(BLTManager)
 - (void)repareConnectedDevice:(BLTModel *)model
 {
     NSLog(@"开始链接...");
-    self.discoverPeripheral = model.peripheral;
-    [self.centralManager connectPeripheral:model.peripheral options:nil];
-    [self.centralManager stopScan];
+    
+    if (self.discoverPeripheral != model.peripheral && !self.discoverPeripheral)
+    {
+        self.discoverPeripheral = model.peripheral;
+        [self.centralManager connectPeripheral:model.peripheral options:nil];
+        [self.centralManager stopScan];
+    }
 }
 
 - (BLTModel *)checkIsAddInAllWareWithID:(NSString *)idString
@@ -226,6 +249,14 @@ DEF_SINGLETON(BLTManager)
 {
     NSLog(@"失去链接");
     [self startCan];
+    
+    for (BLTModel *model in _allWareArray)
+    {
+        if ([model.bltID isEqualToString:[peripheral.identifier UUIDString]])
+        {
+            [_allWareArray removeObject:model];
+        }
+    }
     
     if (_disConnectBlock)
     {

@@ -53,4 +53,17 @@
  */
 + (BOOL )isNilOrEmpty: (NSString *) str;
 
+/**
+ *  轻量级的存储关系
+ *
+ *  @return
+ */
+- (id)getObjectValue;
+- (NSInteger)getIntValue;
+- (BOOL)getBOOLValue;
+- (void)setObjectValue:(id)value;
+- (void)setIntValue:(NSInteger)value;
+- (void)setBOOLValue:(BOOL)value;
+
+
 @end

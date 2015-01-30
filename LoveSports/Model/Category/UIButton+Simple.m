@@ -23,4 +23,18 @@
     return button;
 }
 
++ (UIButton *)simpleWithRect:(CGRect)rect
+                   withTitle:(NSString *)title
+             withSelectTitle:(NSString *)selTitle
+                   withColor:(UIColor *)color
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:rect];
+    
+    button.backgroundColor = color;
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitle:selTitle forState:UIControlStateSelected];
+    
+    return button;
+}
+
 @end

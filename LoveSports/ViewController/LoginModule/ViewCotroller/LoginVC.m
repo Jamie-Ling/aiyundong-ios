@@ -9,9 +9,6 @@
 #define LoginVC_TextField_Tag 2000
 
 #import "LoginVC.h"
-#import "ShowWareView.h"
-#import "BLTManager.h"
-#import "TimeZoneView.h"
 #import "UserModelEntity.h"
 #import "RegisterVC.h"
 #import "AppDelegate.h"
@@ -19,9 +16,6 @@
 @interface LoginVC () <UITextFieldDelegate, EntityModelDelegate>
 
 @property (nonatomic, strong) UIView *groundView;
-
-@property (nonatomic, strong) ShowWareView *wareView;
-@property (nonatomic, strong) TimeZoneView *timeView;
 
 @end
 
@@ -35,12 +29,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     // [self loadShowWareView];
-    
-    __weak LoginVC *safeSelf = self;
-    [BLTManager sharedInstance].connectBlock = ^() {
-        [safeSelf bltIsConnect];
-    };
-    
+   
     [self loadTextFileds];
     [self loadButtons];
 }
@@ -57,7 +46,7 @@
     
     // 自行添加左边2个图片的名字.
     NSArray *leftViewImage = @[@"", @""];
-    NSArray *placeholder = @[@"请输入账号, 测试阶段, 直接登录进入", @"请输入密码"];
+    NSArray *placeholder = @[@"请输入账号, 测试阶段", @"直接登录进入"];
     NSArray *textArray = @[@"fly_it@qq.com", @"123456"];
     for (int i = 0; i < 2; i++)
     {
@@ -207,24 +196,6 @@
     
 }
 
-- (void)loadShowWareView
-{
-    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, 200, 300)];
-    
-    _wareView.backgroundColor = [UIColor whiteColor];
-    _wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-    [_wareView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
-}
-
-- (void)bltIsConnect
-{
-    _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
-    
-    _timeView.backgroundColor = [UIColor whiteColor];
-    _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-    [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -236,11 +207,6 @@
     [super viewWillDisappear:animated];
     
     [UserModelEntity sharedInstance].delegate = nil;
-}
-
-- (void)dealloc
-{
-    [BLTManager sharedInstance].connectBlock = nil;
 }
 
 /*

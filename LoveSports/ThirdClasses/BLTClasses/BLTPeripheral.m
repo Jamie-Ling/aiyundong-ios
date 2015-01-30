@@ -120,7 +120,7 @@ DEF_SINGLETON(BLTPeripheral)
     {
         if ([charac.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {
-            [_peripheral setNotifyValue:YES forCharacteristic:charac];
+            // [_peripheral setNotifyValue:YES forCharacteristic:charac];
             if (_deviceInfoBlock)
             {
                 _deviceInfoBlock();
@@ -128,13 +128,14 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
-         
+            [_peripheral setNotifyValue:YES forCharacteristic:charac];
+
         }
         else if ([charac.UUID isEqual:BLTUUID.hardwareRevisionStringUUID]) // 绑定
         {
             NSLog(@"硬件信息.");
         }
-        
+
         NSLog(@"charac. = .%@..", charac);
     }
 }
@@ -168,19 +169,23 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
+        NSLog(@"写入成功。");
     }
 }
 
 // 外围设备数据有更新时会触发该方法
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
+    NSLog(@"...有数据更新...");
+
     if (error)
     {
         NSLog(@"数据更新错误...");
     }
     else
     {
-        if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
+        NSLog(@"%@", characteristic.value);
+        if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
             [self cleanMutableData:_receiveData];
             [_receiveData appendData:characteristic.value];

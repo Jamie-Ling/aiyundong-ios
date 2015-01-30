@@ -142,4 +142,56 @@
     return YES;
 }
 
+/**
+ *  通过key设置value或者取value
+ *
+ *  @param key
+ *
+ *  @return
+ */
+- (id)getObjectValue
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    return [UD objectForKey:self];
+}
+
+- (NSInteger)getIntValue
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    return [UD integerForKey:self];
+}
+
+- (BOOL)getBOOLValue
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    return [UD boolForKey:self];
+}
+
+- (void)setObjectValue:(id)value
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    [UD setObject:value forKey:self];
+    [UD synchronize];
+}
+
+- (void)setIntValue:(NSInteger)value
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    [UD setInteger:value forKey:self];
+    [UD synchronize];
+}
+
+- (void)setBOOLValue:(BOOL)value
+{
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    
+    [UD setBool:value forKey:self];
+    [UD synchronize];
+}
+
 @end

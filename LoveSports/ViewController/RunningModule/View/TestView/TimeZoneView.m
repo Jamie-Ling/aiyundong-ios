@@ -34,12 +34,14 @@
     _seg1.backgroundColor = [UIColor lightGrayColor];
     [_seg1 addTarget:self action:@selector(changeSeg1:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_seg1];
+    _seg1.selectedSegmentIndex = 0;
     
     _seg2 = [[UISegmentedControl alloc] initWithItems:@[@"12H制", @"24H制"]];
     _seg2.frame = CGRectMake((self.width - 100) / 2, 95, 100, 40);
     _seg2.backgroundColor = [UIColor lightGrayColor];
     [_seg2 addTarget:self action:@selector(changeSeg2:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:_seg2];
+    _seg2.selectedSegmentIndex = 0;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake((self.width - 60) / 2, 145, 60, 48)];
     button.backgroundColor = [UIColor redColor];
@@ -70,6 +72,13 @@
     if (buttonIndex == 1)
     {
         [BLTSendData sendBasicSetOfInformationData:_seg1.selectedSegmentIndex withHourly:_seg2.selectedSegmentIndex withJetLag:8];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
         [self dismissPopup];
     }
 }

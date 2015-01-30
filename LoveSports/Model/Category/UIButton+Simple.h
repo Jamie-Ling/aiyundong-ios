@@ -14,4 +14,8 @@
                    withImage:(NSString *)image
              withSelectImage:(NSString *)selImage;
 
++ (UIButton *)simpleWithRect:(CGRect)rect
+                   withTitle:(NSString *)title
+             withSelectTitle:(NSString *)selTitle
+                   withColor:(UIColor *)color;
 @end

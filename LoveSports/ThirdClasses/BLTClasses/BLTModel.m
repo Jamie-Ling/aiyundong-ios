@@ -20,6 +20,7 @@
         _bltVersion = @"";
         _bltElec = @"";
         _bltRSSI = @"";
+        _isBinding = NO;
     }
     
     return self;

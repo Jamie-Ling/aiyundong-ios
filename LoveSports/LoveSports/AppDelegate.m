@@ -10,6 +10,8 @@
 #import "ZKKNavigationController.h"
 #import "MSIntroView.h"
 #import "BraceletInfoModel.h"
+#import "BLTManager.h"
+#import "BLTAcceptData.h"
 
 @interface AppDelegate ()<EAIntroDelegate>
 
@@ -21,6 +23,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // 启动蓝牙并自动接受数据
+    [BLTAcceptData sharedInstance];
     
     //添加测试数据
     [self addTestData];

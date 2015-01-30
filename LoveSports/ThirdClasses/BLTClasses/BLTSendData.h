@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLTAcceptData.h"
 
 @interface BLTSendData : NSObject
 
@@ -22,27 +23,33 @@
                            withHourly:(NSInteger)hourly
                            withJetLag:(NSInteger)lag;
 
-
 /**
  *  本地时间，时区等等设定
  *
- *  @param data
+ *  @param date
  */
-+ (void)sendLocalTimeInformationData:(NSData *)data;
++ (void)sendLocalTimeInformationData:(NSDate *)date
+                          withHourly:(NSInteger)hourly;
 
 /**
  *  设定用户身体信息，体重，步距
  *
- *  @param data
+ *  @param date   生日
+ *  @param weight 体重
+ *  @param target 目标步数
+ *  @param step   步距
  */
-+ (void)sendUserInformationBodyData:(NSData *)data;
++ (void)sendUserInformationBodyDataWithBirthDay:(NSDate *)date
+                                     withWeight:(NSInteger)weight
+                                     withTarget:(NSInteger)target
+                                   withStepAway:(NSInteger)step;
 
 /**
  *  手机请求计步器的时间, 查看计步器的时间.
  *
  *  @param data 
  */
-+ (void)sendCheckDateOfHardwareData:(NSData *)data;
++ (void)sendCheckDateOfHardwareData;
 
 /**
  *  查询计步器的身体信息.

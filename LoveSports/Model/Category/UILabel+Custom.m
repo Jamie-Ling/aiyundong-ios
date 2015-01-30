@@ -22,6 +22,25 @@
     return label;
 }
 
++ (UILabel *)customLabelWithRect:(CGRect)rect
+                       withColor:(UIColor *)color
+                   withAlignment:(NSTextAlignment)alignment
+                    withFontSize:(CGFloat)size
+                        withText:(NSString *)text
+                   withTextColor:(UIColor *)textColor
+
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:rect];
+    
+    label.backgroundColor = color;
+    label.textAlignment = alignment;
+    label.font = [UIFont systemFontOfSize:size];
+    label.text = text;
+    label.textColor = textColor;
+    
+    return label;
+}
+
 #define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
 sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 

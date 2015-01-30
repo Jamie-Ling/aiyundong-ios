@@ -75,8 +75,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BLTModel *model = [BLTManager sharedInstance].allWareArray[indexPath.row];
-    [[BLTManager sharedInstance] repareConnectedDevice:model];
-    [self dismissPopup];
+    
+    if ([_delegate respondsToSelector:@selector(showWareViewSelectHardware:withModel:)])
+    {
+        [_delegate showWareViewSelectHardware:self withModel:model];
+    }
 }
 
 - (void)dealloc
