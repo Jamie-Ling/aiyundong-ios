@@ -19,7 +19,6 @@
 		698A90C31A6FEB54005BABE6 /* MSIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90BB1A6FEB54005BABE6 /* MSIntroView.m */; };
 		698A90CD1A6FEF76005BABE6 /* ObjectCTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90CC1A6FEF76005BABE6 /* ObjectCTools.m */; };
 		698A90EB1A6FF91D005BABE6 /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90EA1A6FF91D005BABE6 /* UIView_extra.m */; };
-		698A90EE1A7007D4005BABE6 /* NoPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90ED1A7007D4005BABE6 /* NoPasteTextField.m */; };
 		699242041A768BDF00EFF121 /* LKDB+Mapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 699241FB1A768BDF00EFF121 /* LKDB+Mapping.m */; };
 		699242051A768BDF00EFF121 /* LKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 699241FD1A768BDF00EFF121 /* LKDBHelper.m */; };
 		699242061A768BDF00EFF121 /* LKDBUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 699241FF1A768BDF00EFF121 /* LKDBUtils.m */; };
@@ -1850,7 +1849,6 @@
 				F4B6939A1A6F403400B42395 /* FMDatabasePool.m in Sources */,
 				F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */,
 				F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */,
-				698A90EE1A7007D4005BABE6 /* NoPasteTextField.m in Sources */,
 				69EFC2DD1A760CD600B5BC53 /* SDWebImageDownloader.m in Sources */,
 				69A0DD561A76448500C2AB15 /* BraceletInfoViewController.m in Sources */,
 				F4B693521A6F401A00B42395 /* IQBarButtonItem.m in Sources */,
@@ -2065,7 +2063,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iOS Development: dony xie (MG4TYSZ964)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
@@ -2073,7 +2071,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "f9a5890e-baee-4af2-9eb5-c66fd57d6d07";
 			};
 			name = Debug;
 		};
@@ -2081,7 +2079,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iOS Development: dony xie (MG4TYSZ964)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
@@ -2089,7 +2087,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "f9a5890e-baee-4af2-9eb5-c66fd57d6d07";
 			};
 			name = Release;
 		};

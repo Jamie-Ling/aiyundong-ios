@@ -67,8 +67,6 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    //将要消失时更新存储
     [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisModel];
 }
 
@@ -196,9 +194,39 @@
                             }
                         }
                     }];
+}
+
+- (void) addOneHandClock
+{
+    NSDate *theDate = [NSDate date];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];     //大写HH，强制24小时
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    [dateFormatter setTimeZone:timeZone];
+    NSString *nowTimeString = [dateFormatter stringFromDate:theDate];
+    
+    HandSetAlarmClock *newHandSetAlarmClock = [[HandSetAlarmClock alloc] init];
+    newHandSetAlarmClock._setTime = nowTimeString;
+    newHandSetAlarmClock._isOpen = YES;
+    
+    [_thisModel._allHandSetAlarmClock addObject:newHandSetAlarmClock];
+    
+    [self reloadUserInfoTableView];
     
 }
 
+- (UILabel *) getALabel
+{
+     return [[ObjectCTools shared] getACustomLableFrame:CGRectMake(0, 0, vOneCellWidth, vOneCellWidth)
+                                backgroundColor:[UIColor clearColor]
+                                           text:@""
+                                      textColor:kLabelTitleDefaultColor
+                                           font:[UIFont systemFontOfSize:14]
+                                  textAlignment:NSTextAlignmentLeft
+                                  lineBreakMode:NSLineBreakByCharWrapping
+                                  numberOfLines:1];
+}
 
 
 #pragma mark ---------------- TableView delegate -----------------
@@ -210,6 +238,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"1- 1");
     switch (section) {
         case 0:
         {
@@ -254,6 +283,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"row--------= %ld", (long)indexPath.row);
     //不使用复用机制
     UITableViewCell *oneCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myCell"];
     
@@ -280,7 +310,7 @@
                                                                  text:@""
                                                             textColor:kLabelTitleDefaultColor
                                                                  font:[UIFont systemFontOfSize:14]
-                                                        textAlignment:NSTextAlignmentCenter
+                                                        textAlignment:NSTextAlignmentLeft
                                                         lineBreakMode:NSLineBreakByCharWrapping
                                                         numberOfLines:0];
     
@@ -317,22 +347,17 @@
                 break;
             case 2:
             {
-                NSMutableString *showAutomaticCloclString = [[NSMutableString alloc] init];
                 for (int i = 0; i < _thisModel._allAutomaticSetAlarmClock.count; i++)
                 {
                     HandSetAlarmClock *clockTime = [_thisModel._allAutomaticSetAlarmClock objectAtIndex:i];
-                    [showAutomaticCloclString appendFormat:@"     %@      ", [clockTime getShowTimeWithIs24HoursTime:_thisModel._is24HoursTime]];
-                    if (i % 2)
-                    {
-                        [showAutomaticCloclString appendString:@"\n"];
-                    }
+                    
+                    UILabel *clockLabel = [self getALabel];
+                    [clockLabel setText:[clockTime getShowTimeWithIs24HoursTime:_thisModel._is24HoursTime]];
+                    [clockLabel sizeToFit];
+                    [clockLabel setX:((i + 1 ) % 2 ? vOneCellHeight * 1.5 : (vOneCellWidth - vOneCellHeight * 2.5 ))];
+                    [clockLabel setCenterY:(kStatusBarHeight + kStatusBarHeight * ( i / 2))];
+                    [oneCell.contentView addSubview:clockLabel];
                 }
-                if (!(_thisModel._allAutomaticSetAlarmClock.count % 2))
-                {
-                    [showAutomaticCloclString appendString:@"               "];
-                }
-                [rightTitle setText:showAutomaticCloclString];
-                [oneCell.contentView addSubview:rightTitle];
                 
                 [slideSwitchH setHidden:YES];
             }
@@ -373,8 +398,18 @@
             [customButton2 setBackgroundColor:[UIColor clearColor]];
             [customButton2 setTitle:@"添加" forState:UIControlStateNormal];
             [customButton2 setTitleColor:kRGBAlpha(0, 122, 255, 1.0) forState:UIControlStateNormal];
+            [customButton2 addTarget:self action:@selector(addOneHandClock) forControlEvents:UIControlEventTouchUpInside];
             [customButton2.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
             [oneCell.contentView addSubview:customButton2];
+            
+            if (_isEditing)
+            {
+                [customButton2 setHidden:YES];
+            }
+            else
+            {
+                [customButton2 setHidden:NO];
+            }
         }
         else
         {
@@ -415,14 +450,23 @@
     {
         [self changeTimeWithIndex:indexPath.row - 2];
     }
-}
+    
 
+}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 2)
     {
-        return  ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2) * vOneCellHeight;
+//        return  ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2) * vOneCellHeight;
+        
+        NSInteger number = ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2);
+        CGFloat textHeight = number * kStatusBarHeight + (number - 1) * kStatusBarHeight;
+        if (number == 1)
+        {
+            textHeight += kStatusBarHeight;
+        }
+        return textHeight;
     }
     return vOneCellHeight;
 }
@@ -488,7 +532,14 @@
     {
         //删除帐号
         [_thisModel._allHandSetAlarmClock removeObjectAtIndex:indexPath.row - 2];
-        [self reloadUserInfoTableView];
+        NSLog(@"delete----");
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self reloadUserInfoTableView];
+            
+        });
+       
     }
 }
 

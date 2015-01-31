@@ -1003,6 +1003,16 @@ static ObjectCTools *_tools = nil;
     view = nil;
 }
 
+#pragma mark ---------------- GUID -----------------
+/**
+ * 生成一个几乎不可能重复GUID
+ */
+- (NSString *)generateUuidString
+{
+    NSString *uuidString =[[NSUUID UUID] UUIDString];
+    return uuidString;
+}
+
 #pragma mark ---------------- 摄像头和相册相关的公共类 -----------------
 // 判断设备是否有摄像头
 - (BOOL) isCameraAvailable

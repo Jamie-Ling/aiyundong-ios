@@ -189,23 +189,33 @@
         [[ObjectCTools shared] userAddUserInfo:testUserInfo02];
         [[ObjectCTools shared] userAddUserInfo:testUserInfo01];
         
-        //测试 添加 搜索到的设备 3 个
-        for (int i = 0; i < 3; i++)
-        {
-            BraceletInfoModel *oneBraceletInfoModel = [[BraceletInfoModel alloc] init];
-            
-            //初始化后需要设置默认名,版本号以及电量，设备id等
-            [oneBraceletInfoModel setDefaultNameAndOrderID];
-            oneBraceletInfoModel._deviceVersion = @"VB 1.01";
-            oneBraceletInfoModel._deviceElectricity = 0.85 / (i + 1.0);
-            oneBraceletInfoModel._deviceID = [NSString stringWithFormat:@"test000000000%d", i];
-            
-            //存储到DB， 商家不做存储
-            [[BraceletInfoModel getUsingLKDBHelper] insertToDB:oneBraceletInfoModel];
-        }
+//        //测试 添加 搜索到的设备 3 个
+//        for (int i = 0; i < 3; i++)
+//        {
+//            BraceletInfoModel *oneBraceletInfoModel = [[BraceletInfoModel alloc] init];
+//            //,版本号以及电量，设备id
+//            oneBraceletInfoModel._deviceVersion = @"VB 1.01";
+//            oneBraceletInfoModel._deviceElectricity = 0.85 / (i + 1.0);
+//            oneBraceletInfoModel._deviceID = [NSString stringWithFormat:@"test000000000%d", i];
+//            
+//            //初始化后需要设置默认名等,并存入DB
+//            [oneBraceletInfoModel setNameAndSaveToDB];
+//        }
+        
         //只设置一次测试数据
         [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addTestDataForTest"];
+        
     }
+    
+    BraceletInfoModel *oneBraceletInfoModel = [[BraceletInfoModel alloc] init];
+    //,版本号以及电量，设备id
+    oneBraceletInfoModel._deviceVersion = @"VB 1.01";
+    oneBraceletInfoModel._deviceElectricity = 0.85 / (1 + 1.0);
+    oneBraceletInfoModel._deviceID = @"test0000000001324";
+    
+    //初始化后需要设置默认名等,并存入DB
+    [oneBraceletInfoModel setNameAndSaveToDB];
+    
 }
 
 - (void)pushToContentVC

@@ -49,6 +49,8 @@
 @property (nonatomic, strong) NSString *_deviceVersion;  //硬件版本
 @property (nonatomic, assign) CGFloat _deviceElectricity;  //电量
 
+@property (nonatomic, strong) NSString *_defaultName; //默认名字
+
 
 /**
  *  还原所有设置
@@ -56,9 +58,16 @@
 - (void) initAllSet;
 
 /**
- *  设置名字,id,以及遗传闹钟(手动和自动)---因为是通过计算数据库个数来设置，所以不能和Init放一起
+ *  初始化模型时---设置名字,id,以及遗传闹钟(手动和自动)等，同时存入DB---因为是通过计算数据库个数来设置，所以不能和Init放一起（初始化设置模型后用此方法）
  */
-- (void) setDefaultNameAndOrderID;
+- (void) setNameAndSaveToDB;
+
+/**
+ *  选择某个智能手环模型为当前使用模型（初始化时不要用此方法，切换手环时用此方法）
+ *
+ *  @param showModel 选择的模型
+ */
++ (void) choiceOneModelShow: (BraceletInfoModel *)showModel;
 
 
 @end
