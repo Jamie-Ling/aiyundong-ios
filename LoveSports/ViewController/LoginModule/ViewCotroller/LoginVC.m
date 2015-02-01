@@ -16,11 +16,19 @@
 @interface LoginVC () <UITextFieldDelegate, EntityModelDelegate>
 
 @property (nonatomic, strong) UIView *groundView;
+@property (nonatomic, strong) UIImageView *headImage;
+@property (nonatomic, assign) CGFloat intervalY;
 
 @end
 
 @implementation LoginVC
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+}
 
 - (void)viewDidLoad
 {
@@ -30,33 +38,38 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // [self loadShowWareView];
    
+    _intervalY = self.view.height * 0.02;
+    NSLog(@"%f", _intervalY);
     [self loadTextFileds];
     [self loadButtons];
+    [self loadLinkLoginButtton];
 }
 
 - (void)loadTextFileds
 {
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.27, self.view.frame.size.width, 88)];
-    _groundView.backgroundColor = [UIColor whiteColor];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    _groundView.backgroundColor = [UIColor clearColor];
+    _groundView.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
     [self.view addSubview:_groundView];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20.0, _groundView.frame.size.height / 2 + 1, _groundView.frame.size.width - 40.0, 2)];
-    line.backgroundColor = [UIColor colorWithRed:241.0 / 255 green:241.0 / 255 blue:241.0 / 255 alpha:1.0];
-    [_groundView addSubview:line];
-    
-    // 自行添加左边2个图片的名字.
-    NSArray *leftViewImage = @[@"", @""];
+    _headImage = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.width - 120)/2, self.view.height * 0.07, 120, 120)];
+    _headImage.backgroundColor = [UIColor redColor];
+    _headImage.layer.masksToBounds = YES;
+    _headImage.layer.cornerRadius = _headImage.width / 2;
+    [_groundView addSubview:_headImage];
+
+    NSArray *viewImages = @[@"username_1_07@2x.png", @"password_1_10@2x.png"];
     NSArray *placeholder = @[@"请输入账号, 测试阶段", @"直接登录进入"];
     NSArray *textArray = @[@"fly_it@qq.com", @"123456"];
     for (int i = 0; i < 2; i++)
     {
-        CGRect viewRect = CGRectMake(20.0, (_groundView.frame.size.height * (i / 2.0 + 1 / 4.0) - 18), 36, 36);
-        CGRect textRect = CGRectMake(72, _groundView.frame.size.height * (i / 2.0), _groundView.frame.size.width - 100.0, _groundView.frame.size.height / 2);
+        CGRect viewRect = CGRectMake(20.0, _groundView.frame.size.height * 0.12 + 120 + i * (41 + _intervalY), self.view.width - 40, 41);
+        CGRect textRect = CGRectMake(60, _groundView.frame.size.height * 0.12 + 120 + i * (41 + _intervalY), _groundView.frame.size.width - 80.0, 41);
         
-        UIView *leftView = [[UIView alloc] initWithFrame:viewRect];
-        leftView.backgroundColor = [UIColor redColor];
-        leftView.layer.contents = (id)[UIImage imageNamed:leftViewImage[i]].CGImage;
-        [_groundView addSubview:leftView];
+        UIView *view = [[UIView alloc] initWithFrame:viewRect];
+        view.backgroundColor = [UIColor clearColor];
+        view.layer.contents = (id)[UIImage imageNamed:viewImages[i]].CGImage;
+        [_groundView addSubview:view];
         
         UITextField *textfield = [UITextField textFieldCustomWithFrame:textRect withPlaceholder:placeholder[i]];
         
@@ -74,34 +87,76 @@
 
 - (void)loadButtons
 {
-    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.1, _groundView.frame.size.height + _groundView.frame.origin.y + 60.0, self.view.frame.size.width * 0.8, 44)];
-    loginButton.backgroundColor = [UIColor colorWithRed:17.0 / 255 green:141.0 / 255 blue:223.0 / 255 alpha:1.0];
-    loginButton.layer.cornerRadius = 20.0;
+    UITextField *textFiled = (UITextField *)[_groundView viewWithTag:LoginVC_TextField_Tag + 1];
+    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(20, textFiled.totalHeight + _intervalY, self.view.frame.size.width - 40.0, 44)];
+    loginButton.backgroundColor = UIColorRGB(253, 180, 30);
     [loginButton setTitle:@"登录" forState:UIControlStateNormal];
+    [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [loginButton addTarget:self action:@selector(clickLoginButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:loginButton];
+    [_groundView addSubview:loginButton];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 1.0)];
-    line.backgroundColor = [UIColor colorWithRed:127.0 / 255 green:180.0 / 255 blue:195.0 / 255 alpha:0.7];
-    [self.view addSubview:line];
+    UIButton *visitorButton = [[UIButton alloc] initWithFrame:CGRectMake(20, loginButton.totalHeight, 100, 40)];
+    visitorButton.backgroundColor = [UIColor clearColor];
+    [visitorButton setTitle:@"访客模式" forState:UIControlStateNormal];
+    [visitorButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [visitorButton addTarget:self action:@selector(clickVisitorButton) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:visitorButton];
     
-    line = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 + 1, self.view.frame.size.height - 41, 1, 40)];
-    line.backgroundColor = [UIColor colorWithRed:127.0 / 255 green:180.0 / 255 blue:195.0 / 255 alpha:0.7];
-    [self.view addSubview:line];
+    UIButton *regiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 120, loginButton.totalHeight, 100, 40)];
+    regiButton.backgroundColor = [UIColor clearColor];
+    [regiButton setTitle:@"立即注册" forState:UIControlStateNormal];
+    [regiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [regiButton addTarget:self action:@selector(registerAccount) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:regiButton];
+}
+
+// 加载关联账号登录...
+- (void)loadLinkLoginButtton
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.width * 0.15, self.view.height * 0.75 + 15, 40, 1)];
+    view.backgroundColor = [UIColor whiteColor];
+    [_groundView addSubview:view];
     
-    UIButton *forgotButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width / 2, 40)];
+    view = [[UIView alloc] initWithFrame:CGRectMake(self.view.width * 0.85 - 40, self.view.height * 0.75 + 15, 40, 1)];
+    view.backgroundColor = [UIColor whiteColor];
+    [_groundView addSubview:view];
+    
+    UILabel *label = [UILabel customLabelWithRect:CGRectMake(0, self.view.height * 0.75, self.view.width, 30)
+                                        withColor:[UIColor clearColor]
+                                    withAlignment:NSTextAlignmentCenter
+                                     withFontSize:20.0
+                                         withText:@"关联账号登录"
+                                    withTextColor:[UIColor whiteColor]];
+    [_groundView addSubview:label];
+    
+    CGFloat interval = ((self.view.width - 44 * 3) - 80) / 2;
+    
+    UIButton *weiChatButton = [[UIButton alloc] initWithFrame:CGRectMake(40, self.view.height * 0.75 + 40, 44, 44)];
+    weiChatButton.backgroundColor = [UIColor clearColor];
+    [weiChatButton setImage:[UIImage image:@"微信.png"] forState:UIControlStateNormal];
+    [weiChatButton addTarget:self action:@selector(clickWeiChatButton) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:weiChatButton];
+    
+    UIButton *qqButton = [[UIButton alloc] initWithFrame:CGRectMake(40 + 44 +interval, self.view.height * 0.75 + 40, 44, 44)];
+    qqButton.backgroundColor = [UIColor clearColor];
+    qqButton.backgroundColor = [UIColor clearColor];
+    [qqButton setImage:[UIImage image:@"QQ.png"] forState:UIControlStateNormal];
+    [qqButton addTarget:self action:@selector(clickQQButton) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:qqButton];
+    
+    UIButton *sinaButton = [[UIButton alloc] initWithFrame:CGRectMake(40 + (44 +interval) * 2, self.view.height * 0.75 + 40, 44, 44)];
+    sinaButton.backgroundColor = [UIColor clearColor];
+    sinaButton.backgroundColor = [UIColor clearColor];
+    [sinaButton setImage:[UIImage image:@"微博@2x.png"] forState:UIControlStateNormal];
+    [sinaButton addTarget:self action:@selector(clickSinaButton) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:sinaButton];
+    
+    UIButton *forgotButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 120, self.view.height - 40, 100, 40)];
     forgotButton.backgroundColor = [UIColor clearColor];
     [forgotButton setTitle:@"忘记密码" forState:UIControlStateNormal];
-    [forgotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [forgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [forgotButton addTarget:self action:@selector(forgotPassword) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:forgotButton];
-    
-    UIButton *regiButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2, self.view.frame.size.height - 40, self.view.frame.size.width / 2, 40)];
-    regiButton.backgroundColor = [UIColor clearColor];
-    [regiButton setTitle:@"注册" forState:UIControlStateNormal];
-    [regiButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [regiButton addTarget:self action:@selector(registerAccount) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:regiButton];
+    [_groundView addSubview:forgotButton];
 }
 
 - (void)clickLoginButton
@@ -144,9 +199,9 @@
     [app pushToContentVC];
 }
 
-- (void)forgotPassword
+- (void)clickVisitorButton
 {
-    // 忘记密码这里暂时没有界面
+   
 }
 
 // 模态推出注册界面。可以自行改为push根据业务需求
@@ -155,6 +210,26 @@
     RegisterVC *regiVc = [[RegisterVC alloc] init];
     
     [self presentViewController:regiVc animated:YES completion:nil];
+}
+
+- (void)clickWeiChatButton
+{
+    
+}
+
+- (void)clickQQButton
+{
+    
+}
+
+- (void)clickSinaButton
+{
+    
+}
+
+- (void)forgotPassword
+{
+    // 忘记密码这里暂时没有界面
 }
 
 #pragma mark --- 键盘消失 ---
