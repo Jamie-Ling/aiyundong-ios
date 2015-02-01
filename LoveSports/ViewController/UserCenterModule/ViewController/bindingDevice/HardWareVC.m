@@ -97,15 +97,13 @@
 
 - (void)testClick
 {
-    [BLTSendData sendCheckDateOfHardwareData];
-    
-    __weak HardWareVC *safeSelf = self;
-    [BLTAcceptData sharedInstance].updateValue = ^(id object, BLTAcceptDataType type) {
+    DEF_WEAKSELF_(HardWareVC)
+    [BLTSendData sendCheckDateOfHardwareDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeWareTime)
         {
-            [safeSelf changeTestLabelText:object];
+            [weakSelf changeTestLabelText:object];
         }
-    };
+    }];
 }
 
 - (void)changeTestLabelText:(NSString *)text
@@ -116,8 +114,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [BLTAcceptData sharedInstance].updateValue = nil;
 }
 
 - (void)didReceiveMemoryWarning

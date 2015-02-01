@@ -120,7 +120,7 @@ DEF_SINGLETON(BLTPeripheral)
     {
         if ([charac.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {
-            // [_peripheral setNotifyValue:YES forCharacteristic:charac];
+            [_peripheral setNotifyValue:YES forCharacteristic:charac];
             if (_deviceInfoBlock)
             {
                 _deviceInfoBlock();
@@ -192,6 +192,15 @@ DEF_SINGLETON(BLTPeripheral)
             if (_updateBlock)
             {
                 _updateBlock(_receiveData);
+            }
+        }
+        if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
+        {
+            [self cleanMutableData:_receiveData];
+            [_receiveData appendData:characteristic.value];
+            if (_updateBigDataBlock)
+            {
+                _updateBigDataBlock(_receiveData);
             }
         }
     }

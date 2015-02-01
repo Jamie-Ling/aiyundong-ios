@@ -9,8 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "BLTAcceptData.h"
 
-@interface BLTSendData : NSObject
+@interface AlarmClockModel : NSObject
 
+@property (nonatomic, assign) NSInteger hour;
+@property (nonatomic, assign) NSInteger minutes;
+@property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, assign) UInt8 repeat;
+
+@end
+
+@interface BLTSendData : NSObject
 
 /**
 *  设置用户基本信息
@@ -21,7 +29,8 @@
 */
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
                            withHourly:(NSInteger)hourly
-                           withJetLag:(NSInteger)lag;
+                           withJetLag:(NSInteger)lag
+                      withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  本地时间，时区等等设定
@@ -29,7 +38,8 @@
  *  @param date
  */
 + (void)sendLocalTimeInformationData:(NSDate *)date
-                          withHourly:(NSInteger)hourly;
+                          withHourly:(NSInteger)hourly
+                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  设定用户身体信息，体重，步距
@@ -42,56 +52,73 @@
 + (void)sendUserInformationBodyDataWithBirthDay:(NSDate *)date
                                      withWeight:(NSInteger)weight
                                      withTarget:(NSInteger)target
-                                   withStepAway:(NSInteger)step;
+                                   withStepAway:(NSInteger)step
+                                withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  手机请求计步器的时间, 查看计步器的时间.
  *
  *  @param data 
  */
-+ (void)sendCheckDateOfHardwareData;
++ (void)sendCheckDateOfHardwareDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  查询计步器的身体信息.
  *
  *  @param data
  */
-+ (void)sendLookBodyInformationData:(NSData *)data;
++ (void)sendLookBodyInformationDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  设定屏幕颜色和待机..
  *
  *  @param data
  */
-+ (void)sendSetHardwareScreenData:(NSData *)data;
++ (void)sendSetHardwareScreenDataWithDisplay:(BOOL)black
+                                 withWaiting:(BOOL)noWaiting
+                             withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  设定密码保护.
  *
  *  @param data
  */
-+ (void)sendPasswordProtectionData:(NSData *)data;
++ (void)sendPasswordProtectionDataWithOpen:(BOOL)open
+                          withPassword:(NSString *)password
+                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  固件启动方式
  *
- *  @param data
+ *  @param model 启动模式
+ *  @param times 启定时动得时间点，传入时间:(分钟)。
+ *  @param block 回调
  */
-+ (void)sendHardwareStartupModeData:(NSData *)data;
++ (void)sendHardwareStartupModelDataWithModel:(NSInteger)model
+                                    withTimes:(NSArray *)times
+                              withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  智能睡眠提醒设定
  *
- *  @param data
+ *  @param open    是否开启
+ *  @param plan    计划时间－分钟
+ *  @param advance 提前时间－分钟
+ *  @param block   回调
  */
-+ (void)sendSleepToRemindData:(NSData *)data;
++ (void)sendSleepToRemindDataWithOpen:(BOOL)open
+                             withPlan:(NSInteger)plan
+                          withAdvance:(NSInteger)advance
+                      withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  自定义显示界面, 显示界面.
  *
- *  @param data
+ *  @param orders 显示得画面编号数组
+ *  @param block  回调
  */
-+ (void)sendCustomDisplayInterfaceData:(NSData *)data;
++ (void)sendCustomDisplayInterfaceDataWithOrder:(NSArray *)orders
+                                withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 //+ (void)sendBasicSetOfInformationData:(NSData *)data;
 /**
@@ -99,42 +126,58 @@
  *
  *  @param data 按照蓝牙协议的格式发送.
  */
-+ (void)sendAlarmClockData:(NSData *)data;
+/**
+ *  设定闹钟
+ *
+ *  @param open   闹铃是否开启
+ *  @param alarms AlarmClockModel 数组
+ *  @param block  回调
+ */
++ (void)sendAlarmClockDataWithOpen:(UInt8)open
+                         withAlarm:(NSArray *)alarms
+                   withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  久坐提醒
  *
- *  @param data 按照蓝牙协议的格式发送. 20个字节。
+ *  @param open  是否开启
+ *  @param times AlarmClockModel 数组 , 主要是时和分
+ *                  数据组成为开始1-结束1-开始2-结束2-开始3-结束3-静止
+ *  @param block 回调
  */
-+ (void)sendSedentaryRemindData:(NSData *)data;
++ (void)sendSedentaryRemindDataWithOpen:(BOOL)open
+                              withTimes:(NSArray *)times
+                        withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  设定出厂模式
  *
  *  @param data
  */
-+ (void)sendSetFactoryModelData:(NSData *)data;
++ (void)sendSetFactoryModelDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  修改设备名称
  *
- *  @param data
+ *  @param name  将修改得名字
+ *  @param block 回调
  */
-+ (void)sendModifyDeviceNameData:(NSData *)data;
++ (void)sendModifyDeviceNameDataWithName:(NSString *)name
+                         withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  手机查询计步器当前密码
  *
  *  @param data
  */
-+ (void)sendQueryCurrentPasswordData:(NSData *)data;
++ (void)sendQueryCurrentPasswordDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
- *  固件显示当前密码
+ *  手机请求硬件显示当前密码
  *
  *  @param data 
  */
-+ (void)sendQShowCurrentPasswordData:(NSData *)data;
++ (void)sendQShowCurrentPasswordDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  智能起床设定
@@ -159,30 +202,34 @@
 + (void)sendSetWearingWayData:(NSData *)data;
 
 /**
- *  进入行针校正模式....
- */
-
-/**
  *  行针校正命令
  *
- *  @param data
  */
-+ (void)sendCorrectionCommandData:(NSData *)data;
++ (void)sendCorrectionCommandDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  发送指针当前位置给计步器
  *
- *  @param data
+ *  @param hour   指针时
+ *  @param minute 指针分
+ *  @param second 指针秒
+ *  @param block  回调
  */
-+ (void)sendCurrentPositionData:(NSData *)data;
++ (void)sendCurrentPositionDataWithHour:(NSInteger)hour
+                            withMinute:(NSInteger)minute
+                             withSecond:(NSInteger)second
+                        withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  用户同步世界时间. 第二城市时间.
  *
- *  @param data
+ *  @param date   日期
+ *  @param hourly 时区
+ *  @param block  回调
  */
-+ (void)sendSynchronousWorldTimeData:(NSData *)data;
-
++ (void)sendSynchronousWorldTimeData:(NSDate *)date
+                          withHourly:(NSInteger)hourly
+                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 /**
  *  W240 专用
  */
@@ -190,9 +237,10 @@
 /**
  *  设定佩戴方式
  *
- *  @param data
+ *  @param right 默认为左手。右手为YES
  */
-+ (void)sendSetWearingWayData:(NSData *)data;
++ (void)sendSetWearingWayDataWithRightHand:(BOOL)right
+                           withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *  W286 专用
@@ -200,21 +248,59 @@
 
 /**
  *  开启背光设定
- *
- *  @param data
+ *  @param open  是否开启
+ *  @param times AlarmClockModel 数组 , 主要是时和分
+ *                  数据组成为开始-结束
+ *  @param block 回调
  */
-+ (void)sendOpenBacklightSetData:(NSData *)data;
++ (void)sendOpenBacklightSetDataWithOpen:(BOOL)open
+                               withTimes:(NSArray *)times
+                         withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
  *           传输运动数据.
  */
 
 /**
- *  手机请求计步器运动数据
+ *  手机请求计步器历史运动数据
  *
- *  @param data
+ *  @param date  日期
+ *  @param block 回调
  */
-+ (void)sendRequestDataMovementData:(NSData *)data;
++ (void)sendRequestSportDataWithDate:(NSDate *)date
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
+/**
+ *  删除运动数据
+ *
+ *  @param date  开始日期
+ *  @param block 回调
+ */
++ (void)sendDeleteSportDataWithDate:(NSDate *)date
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
+/**
+ *  请求当天的运动数据。
+ *
+ *  @param order 时间序号
+ *  @param block 回调
+ */
++ (void)sendRequestTodaySportDataWithOrder:(NSInteger)order
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
+/**
+ *  开始实时传输运动数据
+ *
+ *  @param block 回调
+ */
++ (void)sendRealtimeTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
+/**
+ *  关闭实时传输运动数据
+ *
+ *  @param block 回调
+ */
++ (void)sendCloseTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /*
 + (void)sendOpenBacklightSetData:(NSData *)data;

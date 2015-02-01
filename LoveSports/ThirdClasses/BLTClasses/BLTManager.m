@@ -8,7 +8,6 @@
 //
 
 #import "BLTManager.h"
-#import "BLTPeripheral.h"
 #import "BLTUUID.h"
 #import "BLTAcceptData.h"
 
@@ -36,9 +35,7 @@ DEF_SINGLETON(BLTManager)
         
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-        [BLTPeripheral sharedInstance].updateBlock = ^(NSData *data) {
-            [self peripheralUpdate:data];
-        };
+     
         [BLTPeripheral sharedInstance].deviceInfoBlock = ^() {
             [self getCurrentDeviceInfo];
         };
@@ -63,17 +60,6 @@ DEF_SINGLETON(BLTManager)
 }
 
 #pragma mark --- 外围设备数据更新了触发的回调 ---
-- (void)peripheralUpdate:(NSData *)data
-{
-    UInt8 val[100] = {0};
-    [data getBytes:&val length:data.length];
- 
-    if (_updateValueBlock)
-    {
-        _updateValueBlock(data);
-    }
-}
-
 - (void)updateRSSI:(NSInteger)RSSI
 {
     _model.bltRSSI = [NSString stringWithFormat:@"%ld", (long)RSSI];
@@ -208,7 +194,7 @@ DEF_SINGLETON(BLTManager)
 {
     NSLog(@"开始链接...");
     
-    if (self.discoverPeripheral != model.peripheral && !self.discoverPeripheral)
+    if (self.discoverPeripheral != model.peripheral)
     {
         self.discoverPeripheral = model.peripheral;
         [self.centralManager connectPeripheral:model.peripheral options:nil];

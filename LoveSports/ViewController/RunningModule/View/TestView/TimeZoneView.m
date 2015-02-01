@@ -71,7 +71,9 @@
 {
     if (buttonIndex == 1)
     {
-        [BLTSendData sendBasicSetOfInformationData:_seg1.selectedSegmentIndex withHourly:_seg2.selectedSegmentIndex withJetLag:8];
+        [BLTSendData sendBasicSetOfInformationData:_seg1.selectedSegmentIndex
+                                        withHourly:_seg2.selectedSegmentIndex
+                                        withJetLag:8 withUpdateBlock:nil];
     }
 }
 

@@ -22,6 +22,8 @@
 #define IOS8_OR_LATER		( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending )
 #define IOS7_OR_LATER		( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 
+#define DEF_WEAKSELF __weak __typeof(self) weakSelf = self;
+#define DEF_WEAKSELF_( __CLASSNAME__ ) __weak typeof( __CLASSNAME__ *) weakSelf = self;
 /**************************************************************/
 // 单例模式
 #undef	AS_SINGLETON

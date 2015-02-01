@@ -32,7 +32,6 @@
 
 @protocol MBProgressHUDDelegate;
 
-
 typedef enum {
 	/** Progress is shown using an UIActivityIndicatorView. This is the default. */
 	MBProgressHUDModeIndeterminate,

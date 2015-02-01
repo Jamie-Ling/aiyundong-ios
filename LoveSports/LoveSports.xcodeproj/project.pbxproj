@@ -258,8 +258,6 @@
 		698A90CC1A6FEF76005BABE6 /* ObjectCTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectCTools.m; sourceTree = "<group>"; };
 		698A90E91A6FF91D005BABE6 /* UIView_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_extra.h; sourceTree = "<group>"; };
 		698A90EA1A6FF91D005BABE6 /* UIView_extra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_extra.m; sourceTree = "<group>"; };
-		698A90EC1A7007D4005BABE6 /* NoPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoPasteTextField.h; path = ../NoPasteTextField.h; sourceTree = "<group>"; };
-		698A90ED1A7007D4005BABE6 /* NoPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoPasteTextField.m; path = ../NoPasteTextField.m; sourceTree = "<group>"; };
 		699241FA1A768BDF00EFF121 /* LKDB+Mapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LKDB+Mapping.h"; sourceTree = "<group>"; };
 		699241FB1A768BDF00EFF121 /* LKDB+Mapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LKDB+Mapping.m"; sourceTree = "<group>"; };
 		699241FC1A768BDF00EFF121 /* LKDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKDBHelper.h; sourceTree = "<group>"; };
@@ -1465,8 +1463,6 @@
 				69EFC2A91A75D11900B5BC53 /* BSModealPicker */,
 				69EFC21D1A7397C600B5BC53 /* 电池电量 */,
 				69EFC2141A738BD600B5BC53 /* RoundedImageView */,
-				698A90EC1A7007D4005BABE6 /* NoPasteTextField.h */,
-				698A90ED1A7007D4005BABE6 /* NoPasteTextField.m */,
 				F4BF5F5C1A6F529E004C433D /* Header.h */,
 				F4BF5F5D1A6F529E004C433D /* XYSandbox.h */,
 				F4BF5F5E1A6F529E004C433D /* XYSandbox.m */,

@@ -17,8 +17,26 @@ DEF_SINGLETON(BLTAcceptData)
     self = [super init];
     if (self)
     {
-        [BLTManager sharedInstance].updateValueBlock = ^(NSData *data) {
+        /**
+         *  普通数据得更新
+         *
+         *  @param data 传入得数据data
+         *
+         *  @return
+         */
+        [BLTPeripheral sharedInstance].updateBlock = ^(NSData *data) {
             [self acceptData:data];
+        };
+        
+        /**
+         *  同步时传入得大数据。
+         *
+         *  @param data 
+         *
+         *  @return
+         */
+        [BLTPeripheral sharedInstance].updateBigDataBlock = ^(NSData *data) {
+            [self updateBigData:data];
         };
     }
     
@@ -165,7 +183,42 @@ DEF_SINGLETON(BLTAcceptData)
         {
             if (order == 0x01)
             {
-                // 请求运动数据完毕.
+                if (val[3] == 0xED)
+                {
+                    // 请求历史运动数据完毕.
+                }
+                else if (val[3] == 0x06)
+                {
+                    // 无数据
+                }
+            }
+            else if (order == 0x02)
+            {
+                if (val[3] == 0xED)
+                {
+                    // 删除运动数据
+                }
+            }
+            else if (order == 0x03)
+            {
+                if (val[3] == 0xED)
+                {
+                    // 请求当天数据完毕
+                }
+            }
+            else if (order == 0x04)
+            {
+                if (val[3] == 0xED)
+                {
+                    // 计步器收到开始实时传输数据的命令
+                }
+            }
+            else if (order == 0x05)
+            {
+                if (val[3] == 0xED)
+                {
+                    // 计步器收到关闭实时传输数据的命令
+                }
             }
         }
     }
@@ -178,6 +231,11 @@ DEF_SINGLETON(BLTAcceptData)
     {
         _updateValue(object, _type);
     }
+}
+
+- (void)updateBigData:(NSData *)data
+{
+
 }
 
 @end

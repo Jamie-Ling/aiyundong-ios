@@ -7,19 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLTPeripheral.h"
 #import "BLTModel.h"
 
 @interface BLTManager : NSObject
 
 typedef void(^BLTManagerUpdateModel)(BLTModel *model);
-typedef void(^BLTManagerUpdateValue)(NSData *data);
 typedef void(^BLTManagerDisConnect)();
 typedef void(^BLTManagerConnect)();
 
 @property (nonatomic, strong) BLTModel *model;
 @property (atomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
-@property (nonatomic, strong) BLTManagerUpdateValue updateValueBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
 @property (nonatomic, strong) BLTManagerConnect connectBlock;
 
