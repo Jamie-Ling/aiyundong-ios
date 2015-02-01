@@ -35,4 +35,30 @@
     _bltRSSI = @"888";
 }
 
+- (BLTModel *)getCurrentModelFromDB
+{
+    NSString *where = [NSString stringWithFormat:@"bltID = '%@'", self.bltID];
+    BLTModel *model = [BLTModel searchSingleWithWhere:where orderBy:nil];
+    
+    return model;
+}
+
+// 主键
++ (NSString *) getPrimaryKey
+{
+    return @"bltID";
+}
+
+// 表名
++ (NSString *) getTableName
+{
+    return @"HardwareInfo";
+}
+
+// 表版本
++ (int) getTableVersion
+{
+    return 1;
+}
+
 @end

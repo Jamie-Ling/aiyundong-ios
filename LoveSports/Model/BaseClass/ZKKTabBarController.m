@@ -26,7 +26,6 @@
         self.viewControllers = vcs;
         self.tempItems = items;
         
-       
     }
     
     return self;

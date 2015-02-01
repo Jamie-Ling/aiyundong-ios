@@ -8,6 +8,7 @@
 
 #import "ShowWareView.h"
 #import "BLTManager.h"
+#import "WareInfoCell.h"
 
 @implementation ShowWareView
 
@@ -16,7 +17,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self loadLabel];
+        self.backgroundColor = [UIColor clearColor];
+        self.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
         [self loadTableView];
         
         __weak ShowWareView *safeSelf = self;
@@ -32,7 +34,6 @@
     return self;
 }
 
-
 - (void)loadLabel
 {
     _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 20)];
@@ -44,25 +45,26 @@
 
 - (void)loadTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, self.width, self.height - 20)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_tableView];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellString = @"wareCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellString];
+    WareInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellString];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
+        cell = [[WareInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
     }
     
-    
     BLTModel *model = [BLTManager sharedInstance].allWareArray[indexPath.row];
-    cell.textLabel.text = model.bltName;
+    [cell updateContentForWareInfoCell:model withHeight:60.0];
     
     return cell;
 }
@@ -70,6 +72,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [BLTManager sharedInstance].allWareArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

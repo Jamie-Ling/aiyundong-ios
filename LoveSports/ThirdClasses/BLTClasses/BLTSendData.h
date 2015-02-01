@@ -121,11 +121,7 @@
                                 withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 //+ (void)sendBasicSetOfInformationData:(NSData *)data;
-/**
- *  设定闹钟
- *
- *  @param data 按照蓝牙协议的格式发送.
- */
+
 /**
  *  设定闹钟
  *

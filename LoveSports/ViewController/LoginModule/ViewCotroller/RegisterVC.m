@@ -47,9 +47,7 @@
      可能原因是字段不对, 注册时由移动端还是服务器进行md5。
      */
     
-    self.view.backgroundColor = [UIColor colorWithRed:224.0 / 255 green:234.0 / 255 blue:238.0 / 255 alpha:1.0];
-    // 这里添加背景图片
-    self.view.layer.contents = (id)[UIImage imageNamed:@""].CGImage;
+    self.view.backgroundColor = [UIColor whiteColor];
     [[IQKeyboardManager sharedManager] setEnable:YES];
 
     [self loadTextFileds];
@@ -58,24 +56,33 @@
 
 - (void)loadTextFileds
 {
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height * 0.27, self.view.frame.size.width, 88 * 2)];
-    _groundView.backgroundColor = [UIColor whiteColor];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    _groundView.backgroundColor = [UIColor clearColor];
+    _groundView.layer.contents = (id)[UIImage imageNamed:@"login_background@2x.jpg"].CGImage;
     [self.view addSubview:_groundView];
     
-    for (int i = 0; i < 3; i++)
+    UILabel *label = [UILabel customLabelWithRect:CGRectMake(0, self.view.height * 0.3 - 75, self.view.width, 30)
+                                        withColor:[UIColor clearColor]
+                                    withAlignment:NSTextAlignmentCenter
+                                     withFontSize:20.0
+                                         withText:@"注册"
+                                    withTextColor:[UIColor whiteColor]];
+    [_groundView addSubview:label];
+    
+    for (int i = 0; i < 5; i++)
     {
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20.0, _groundView.frame.size.height * (1 + i) / 4 - 1, _groundView.frame.size.width - 40.0, 2)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20.0, _groundView.frame.size.height * 0.3 + i * 50 , _groundView.frame.size.width - 40.0, 1)];
         line.backgroundColor = [UIColor colorWithRed:241.0 / 255 green:241.0 / 255 blue:241.0 / 255 alpha:1.0];
         [_groundView addSubview:line];
     }
     
     // 自行添加左边2个图片的名字.
-    NSArray *leftViewImage = @[@"", @"", @"", @""];
-    NSArray *placeholder = @[@"请输入昵称", @"请输入邮箱", @"请输入密码", @"请再次输入密码"];
-    for (int i = 0; i < 4; i++)
+    NSArray *leftViewImage = @[@"", @"", @"", @"", @""];
+    NSArray *placeholder = @[@"用户名", @"请输入密码", @"请再次输入密码", @"请输入邮箱", @"请输入手机号码"];
+    for (int i = 0; i < 5; i++)
     {
-        CGRect viewRect = CGRectMake(20.0, (_groundView.frame.size.height * (i / 4.0 + 1 / 8.0) - 18), 36, 36);
-        CGRect textRect = CGRectMake(72, _groundView.frame.size.height * (i / 4.0), _groundView.frame.size.width - 100.0, _groundView.frame.size.height / 4);
+        CGRect viewRect = CGRectMake(20.0, _groundView.frame.size.height * 0.3 - 44 + i * 50, 0, 44);
+        CGRect textRect = CGRectMake(viewRect.origin.x + viewRect.size.width + 3.0, _groundView.frame.size.height * 0.3 - 44 + i * 50, _groundView.frame.size.width - (viewRect.origin.x + viewRect.size.width + 23.0), 44);
         
         UIView *leftView = [[UIView alloc] initWithFrame:viewRect];
         leftView.backgroundColor = [UIColor redColor];
@@ -97,10 +104,11 @@
 
 - (void)loadButtons
 {
-    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.1, _groundView.frame.size.height + _groundView.frame.origin.y + 20.0, self.view.frame.size.width * 0.8, 44)];
-    loginButton.backgroundColor = [UIColor colorWithRed:17.0 / 255 green:141.0 / 255 blue:223.0 / 255 alpha:1.0];
-    loginButton.layer.cornerRadius = 20.0;
-    [loginButton setTitle:@"注册" forState:UIControlStateNormal];
+    UITextField *textFiled = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 4];
+    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(20, textFiled.totalHeight + 20.0, self.view.frame.size.width - 40, 44)];
+    loginButton.backgroundColor = UIColorRGB(253, 180, 30);
+    [loginButton setTitle:@"立即注册" forState:UIControlStateNormal];
+    [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [loginButton addTarget:self action:@selector(registerButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginButton];
     
@@ -111,7 +119,7 @@
     UIButton *forgotButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40.0, self.view.frame.size.width, 40.0)];
     forgotButton.backgroundColor = [UIColor clearColor];
     [forgotButton setTitle:@"返回登录" forState:UIControlStateNormal];
-    [forgotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [forgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [forgotButton addTarget:self action:@selector(backLoginVC) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:forgotButton];
 }

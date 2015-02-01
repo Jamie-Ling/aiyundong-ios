@@ -31,6 +31,8 @@
     [self.tabBar setBackgroundImage:[UIImage imageNamed:@"1_01"]];
     
     [self setSelectedIndex:1];
+    
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated

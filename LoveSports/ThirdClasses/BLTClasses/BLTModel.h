@@ -17,14 +17,19 @@
 @property (nonatomic, strong) NSString *bltVersion;   // 硬件版本
 @property (nonatomic, strong) NSString *bltElec;      // 电量
 @property (nonatomic, strong) NSString *bltRSSI;    // RSSI
-@property (nonatomic, strong) CBPeripheral *peripheral;
+@property (nonatomic, strong) CBPeripheral *peripheral; // 外围设备对象
 
 @property (nonatomic, assign) NSInteger bltElecState;   // 充电状态
 @property (nonatomic, assign) BOOL isBinding;
+
+@property (nonatomic, assign) BOOL isLock; // 是否设备了密码，被锁了
+@property (nonatomic, assign) BOOL isConnected; // 是否已经连接
+@property (nonatomic, assign) BOOL isIgnore; // 是否被忽略
 
 /**
  *  伪造固件信息
  */
 - (void)forgeFirmwareInformation;
+- (BLTModel *)getCurrentModelFromDB;
 
 @end

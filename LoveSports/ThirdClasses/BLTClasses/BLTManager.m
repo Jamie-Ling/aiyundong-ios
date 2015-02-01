@@ -156,13 +156,24 @@ DEF_SINGLETON(BLTManager)
             {
                 model = [[BLTModel alloc] init];
                 
-                model.bltID = [peripheral.identifier UUIDString];
+                model.bltID = [peripheral.identifier UUIDString] ? [peripheral.identifier UUIDString] : @"";
                 NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
                 model.bltName = adverString ? adverString : @"";
                 model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI];
                 model.peripheral = peripheral;
                 
-                [_allWareArray addObject:model];
+                BLTModel *DBModel = [model getCurrentModelFromDB];
+                if (!DBModel)
+                {
+                    [_allWareArray addObject:model];
+                }
+                else
+                {
+                    if (!DBModel.isIgnore)
+                    {
+                        [_allWareArray addObject:model];
+                    }
+                }
                 
                 if ([idString isEqualToString:[LS_BindingID getObjectValue]])
                 {

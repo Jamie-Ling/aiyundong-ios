@@ -40,9 +40,8 @@
 
 - (void)loadShowWareView
 {
-    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width , 300)];
+    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width , self.view.height)];
     
-    _wareView.backgroundColor = [UIColor whiteColor];
     _wareView.delegate = self;
     //_wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
     //[_wareView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:nil dismissBlock:nil];

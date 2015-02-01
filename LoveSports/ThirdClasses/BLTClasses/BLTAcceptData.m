@@ -45,7 +45,7 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)acceptData:(NSData *)data
 {
-    UInt8 val[100] = {0};
+    UInt8 val[20] = {0};
     [data getBytes:&val length:data.length];
     
     id object = nil;
@@ -72,8 +72,7 @@ DEF_SINGLETON(BLTAcceptData)
                 }
                 else if (val[3] == 0xFB)
                 {
-                    
-                    _type = BLTAcceptDataTypeWareTime;
+                    _type = BLTAcceptDataTypeCheckWareTime;
                     
                     for (int i = 0; i < 16; i++)
                     {

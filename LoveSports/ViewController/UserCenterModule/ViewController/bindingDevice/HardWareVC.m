@@ -11,14 +11,17 @@
 #import "BLTSendData.h"
 #import "BLTAcceptData.h"
 
-@interface HardWareVC ()
+@interface HardWareVC () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) BLTModel *model;
 
 @property (nonatomic, strong) UIButton *bindingButton;
-@property (nonatomic, strong) UIButton *removeButton;
 @property (nonatomic, strong) UIButton *testButton;
 @property (nonatomic, strong) UILabel *testLabel;
+
+@property (nonatomic, strong) UILabel *wareUUID;
+@property (nonatomic, strong) UILabel *wareName;
+@property (nonatomic, strong) UIButton *removeButton;
 
 @end
 
@@ -41,8 +44,77 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = _model.bltName;
+    self.view.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
     
-    [self loadButtons];
+    [self loadLabels];
+    
+    if (_model.isBinding)
+    {
+        [self loadBindingSetting];
+    }
+    else
+    {
+        [self loadNoBindingSetting];
+    }
+}
+
+- (void)loadLabels
+{
+    NSArray *leftText = @[@"设备ID", @"设备名称"];
+    NSArray *rightText = @[_model.bltID, _model.bltName];
+    for (int i = 0; i < 2; i++)
+    {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 15 + i * (80), self.view.width, 75)];
+        view.backgroundColor = UIColorRGB(253, 180, 30);
+        [self.view addSubview:view];
+        
+        UILabel *label = [UILabel customLabelWithRect:CGRectMake(20, 15 + i * (80), 100, 75)
+                                            withColor:[UIColor clearColor]
+                                        withAlignment:NSTextAlignmentLeft
+                                         withFontSize:18.0
+                                             withText:leftText[i]
+                                        withTextColor:[UIColor blackColor]];
+        [self.view addSubview:label];
+        
+        label = [UILabel customLabelWithRect:CGRectMake(self.view.width * 0.4, 15 + i * (80), self.view.width * 0.6, 75)
+                                   withColor:[UIColor clearColor]
+                               withAlignment:NSTextAlignmentLeft
+                                withFontSize:18.0
+                                    withText:rightText[i]
+                               withTextColor:[UIColor blackColor]];
+        label.numberOfLines = 3;
+        [self.view addSubview:label];
+    }
+}
+
+- (void)loadBindingSetting
+{
+    _removeButton = [UIButton
+                     simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                     withTitle:@"解除绑定"
+                     withSelectTitle:@"解除绑定"
+                     withColor:UIColorRGB(253, 180, 30)];
+    [_removeButton addTarget:self action:@selector(removeHardWare) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_removeButton];
+}
+
+- (void)loadNoBindingSetting
+{
+    UIButton *ignoreButton = [UIButton
+                              simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                              withTitle:@"忽略此设备"
+                              withSelectTitle:@"忽略此设备"
+                              withColor:UIColorRGB(253, 180, 30)];
+    [ignoreButton addTarget:self action:@selector(clickIgnoreButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:ignoreButton];
+    
+    _bindingButton = [UIButton
+                      simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
+                      withTitle:@"绑定连接"
+                      withSelectTitle:@"绑定连接"
+                      withColor:UIColorRGB(253, 180, 30)];
+    [_bindingButton addTarget:self action:@selector(bindingHardWare) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_bindingButton];
 }
 
 - (void)loadButtons
@@ -54,15 +126,8 @@
                       withColor:[UIColor redColor]];
     [_bindingButton addTarget:self action:@selector(bindingHardWare) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_bindingButton];
-    
-    _removeButton = [UIButton
-                      simpleWithRect:CGRectMake(20, 80, 160, 40)
-                      withTitle:@"解除绑定"
-                      withSelectTitle:@"解除绑定"
-                      withColor:[UIColor redColor]];
-    [_removeButton addTarget:self action:@selector(removeHardWare) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_removeButton];
-    
+ 
+    /*
     _testButton = [UIButton
                      simpleWithRect:CGRectMake(20, 160, 200, 40)
                      withTitle:@"测试点击获取固件时间"
@@ -78,6 +143,7 @@
                                 withTextColor:[UIColor blackColor]];
     _testLabel.numberOfLines = 4;
     [self.view addSubview:_testLabel];
+     */
 }
 
 - (void)bindingHardWare
@@ -95,11 +161,20 @@
     [LS_BindingID setObjectValue:@""];
 }
 
+// 忽略该设备
+- (void)clickIgnoreButton
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"重要提示" message:@"忽略此设备以后将无法搜到该设备." delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"取人", nil];
+    
+    alertView.delegate = self;
+    [alertView show];
+}
+
 - (void)testClick
 {
     DEF_WEAKSELF_(HardWareVC)
     [BLTSendData sendCheckDateOfHardwareDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
-        if (type == BLTAcceptDataTypeWareTime)
+        if (type == BLTAcceptDataTypeCheckWareTime)
         {
             [weakSelf changeTestLabelText:object];
         }
@@ -109,6 +184,16 @@
 - (void)changeTestLabelText:(NSString *)text
 {
     _testLabel.text = text;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        _model.isIgnore = YES;
+        [[BLTManager sharedInstance].allWareArray removeObject:_model];
+        [_model saveToDB];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
