@@ -306,9 +306,8 @@
 #pragma mark ---------------- UIAlertView delegate -----------------
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag == vCacheAlertTag)
+    if (alertView.tag == vCacheAlertTag && buttonIndex == 1)
     {
-
         [self clearAllCache];
     }
 }
