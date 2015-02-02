@@ -21,13 +21,34 @@
    {
       //initialization
       self.backgroundColor = [UIColor clearColor];
-      //self.layer.shadowColor = [[UIColor blackColor] CGColor];
-      //self.layer.shadowOffset = CGSizeMake(0.0f, 2.5f);
-      //self.layer.shadowRadius = 1.9f;
-      //self.layer.shadowOpacity = 0.9f;
+      //    self.layer.shadowColor = [[UIColor blackColor] CGColor];
+      //    self.layer.shadowOffset = CGSizeMake(0.0f, 2.5f);
+      //    self.layer.shadowRadius = 1.9f;
+      //    self.layer.shadowOpacity = 0.9f;
+       
+       [self loadLabels];
    }
     
    return self;
+}
+
+- (void)loadLabels
+{
+    _signView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width * 0.35, self.height / 5, self.width * 0.3, self.height / 6.6)];
+    _signView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_signView];
+    
+    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"07:30" withTextColor:[UIColor whiteColor]];
+    [self addSubview:_timeLabel];
+    
+    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.35, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"MIN" withTextColor:[UIColor whiteColor]];
+    [self addSubview:_minLabel];
+    
+    _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"目标" withTextColor:[UIColor whiteColor]];
+    [self addSubview:_targetLabel];
+    
+    _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"8小时" withTextColor:[UIColor whiteColor]];
+    [self addSubview:_durationLabel];
 }
 
 -(void)reloadData

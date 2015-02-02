@@ -15,6 +15,11 @@
 
 @property (nonatomic, assign) id <PieChartViewDataSource> datasource;
 @property (nonatomic, assign) id <PieChartViewDelegate> delegate;
+@property (nonatomic, strong) UIImageView *signView;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *minLabel;
+@property (nonatomic, strong) UILabel *targetLabel;
+@property (nonatomic, strong) UILabel *durationLabel;
 
 -(void)reloadData;
 
