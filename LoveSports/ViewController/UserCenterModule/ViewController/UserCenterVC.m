@@ -27,6 +27,8 @@
 #import "BraceletInfoModel.h"
 #import "BraceletInfoViewController.h"
 #import "BindIngDeviceViewController.h"
+#import "HomeVC.h"
+#import "AboutUSViewController.h"
 
 @interface UserCenterVC()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -38,6 +40,7 @@
     AccountManageViewController *_AccountManageVC;
     BraceletInfoViewController *_braceletInfoVC;
     BraceletInfoModel *_showModel;
+    AboutUSViewController *_aboutUSVC;
 }
 @property (nonatomic, assign) CGFloat _dumpEnergy;  //剩余电量
 
@@ -100,14 +103,25 @@
         [animation setType:kCATransitionFade]; //淡入淡出
         [animation setSubtype:kCATransitionFromLeft];
         [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
-        [self.navigationController.view.layer addAnimation:animation forKey:nil];
+        [self.navigationController.view.layer addAnimation:animation forKey:nil ];
         
         [self.navigationController popViewControllerAnimated:NO];
+        
+        HomeVC *temoHomeVC = [ObjectCTools shared].getAppDelegate._mainNavigationController.viewControllers.firstObject;
+        [temoHomeVC.tabBar setUserInteractionEnabled:NO];
+        
+        [self performSelector:@selector(setNavigationBarUserEnabled) withObject:nil afterDelay:0.8];
         return;
     }
     
     [self.navigationController popViewControllerAnimated:YES];
 
+}
+
+- (void) setNavigationBarUserEnabled
+{
+    HomeVC *temoHomeVC = [ObjectCTools shared].getAppDelegate._mainNavigationController.viewControllers.firstObject;
+    [temoHomeVC.tabBar setUserInteractionEnabled:YES];
 }
 
 - (void) accountManage
@@ -173,17 +187,83 @@
 
 - (void) praise
 {
-    NSLog(@"求点赞");
+    NSLog(@"求点赞,跳转至测试");
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/jie-zou-da-shi/id493901993?mt=8"]];
 }
 
 - (void) clearCache
 {
     NSLog(@"清除缓存");
+    UIAlertView *cacheAlert =  [[UIAlertView alloc]initWithTitle:@"确定清除缓存?"
+                                                         message:@""
+                                                        delegate:self
+                                               cancelButtonTitle:@"取消"
+                                               otherButtonTitles:@"确定", nil];
+    [cacheAlert setTag:vCacheAlertTag];
+    [cacheAlert show];
+    
 }
+
+- (void) clearAllCache
+{
+    
+    // 获取Caches目录路径
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesDir = [paths objectAtIndex:0];
+    
+    NSString *filePath = cachesDir;
+    
+    //     清除图片缓存：
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    
+    //清除剩下的缓存
+    [self clearFileWithPath:filePath withExtension:nil];
+    
+    [UIView showAlertView:@"清除缓存成功" andMessage:nil];
+    
+}
+
+- (void) clearFileWithPath: (NSString *) fullPath withExtension: (NSString *) extension
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *homePath = NSHomeDirectory();
+    //    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = homePath;
+    if (![NSString isNilOrEmpty:fullPath ])
+    {
+        filePath = fullPath;
+    }
+    
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:filePath error:NULL];
+    NSEnumerator *e = [contents objectEnumerator];
+    NSString *filename;
+    while ((filename = [e nextObject])) {
+        
+        if ([NSString isNilOrEmpty:extension ])
+        {
+            [fileManager removeItemAtPath:[filePath stringByAppendingPathComponent:filename] error:NULL];
+        }
+        else if ([[filename pathExtension] isEqualToString:extension])
+        {
+            
+            [fileManager removeItemAtPath:[filePath stringByAppendingPathComponent:filename] error:NULL];
+        }
+    }
+}
+
+
 
 - (void) aboutUs
 {
     NSLog(@"关与爱运动");
+    if (!_aboutUSVC)
+    {
+        _aboutUSVC = [[AboutUSViewController alloc] init];
+    }
+    [self.navigationController pushViewController:_aboutUSVC animated:YES];
 }
 
 
@@ -226,7 +306,11 @@
 #pragma mark ---------------- UIAlertView delegate -----------------
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
+    if (alertView.tag == vCacheAlertTag)
+    {
+
+        [self clearAllCache];
+    }
 }
 
 #pragma mark ---------------- TableView delegate -----------------

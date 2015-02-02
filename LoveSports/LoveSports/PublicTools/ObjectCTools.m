@@ -593,18 +593,11 @@ static ObjectCTools *_tools = nil;
     return userImageButton;
 }
 
-/**
- *  快速设置按钮的缓存图片
- *
- *  @param urlImage         图片地址
- *  @param placeholderImage placeholderImage
- *  @param button           按钮
- */
 - (void) setURLImage:(NSString*)urlImage placeholderImage:(NSString*)placeholderImage withButton:(UIButton *) button
 {
     //设置缓存头像
     UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:urlImage];
-    if (image)
+    if (image || [image isKindOfClass:[NSNull class]])
     {
         [button setImage:image forState:UIControlStateNormal];
         return;

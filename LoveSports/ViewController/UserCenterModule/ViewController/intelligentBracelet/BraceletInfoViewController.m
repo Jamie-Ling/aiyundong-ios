@@ -27,8 +27,11 @@
 #import "TargetViewController.h"
 #import "CustomViewController.h"
 #import "TimeAndClockViewController.h"
+#import "JSBadgeView.h"
+#import "VersionInfoModel.h"
+#import "DeviceUpdateViewController.h"
 
-@interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     
     NSArray *_cellTitleArray;
@@ -39,6 +42,10 @@
     TargetViewController *_targetVC;
     CustomViewController *_customVC;
     TimeAndClockViewController *_timeAndClockVC;
+    DeviceUpdateViewController *_deviceUpdateVC;
+    
+    JSBadgeView *_badgeView;   //新礼物标记
+    VersionInfoModel *_newVersionInfoModel;
     
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -52,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"用户信息";
+    self.title = _thisBraceletInfoModel._name;
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
@@ -66,12 +73,30 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
     
     NSLog(@"在此请求是否有新固件版本，请求完后再做标记并刷新list");
     //假设有
-    _haveNewVersion = YES;
+    static BOOL have = YES;
+    _haveNewVersion = have;
+    _newVersionInfoModel = [[VersionInfoModel alloc] init];
+    if (_haveNewVersion)
+    {
+        _newVersionInfoModel._versionID = @"VB 2.1.3";
+        _newVersionInfoModel._versionSize = @"80KB";
+        _newVersionInfoModel._versionUpdatInfo = @"本更新改进了算法，提升了精确度";
+
+    }
+    else
+    {
+        _newVersionInfoModel._versionID = _thisBraceletInfoModel._deviceVersion;
+        _newVersionInfoModel._versionSize = @"";
+        _newVersionInfoModel._versionUpdatInfo = @"已经是最新版本";
+    }
+        have = !have;
+    
     [self reloadUserInfoTableView];
 }
 
@@ -85,6 +110,8 @@
 
 - (void) reloadUserInfoTableView
 {
+    self.title = _thisBraceletInfoModel._name;
+
     [_listTableView reloadData];
 }
 
@@ -163,11 +190,24 @@
 - (void) goToUpdateSystem
 {
     NSLog(@"固件升级");
+    
+    if (!_deviceUpdateVC)
+    {
+        _deviceUpdateVC = [[DeviceUpdateViewController alloc] init];
+    }
+    _deviceUpdateVC._thisBraceletInfoModel = _thisBraceletInfoModel;
+    _deviceUpdateVC._thisVersionInfoModel = _newVersionInfoModel;
+    [self.navigationController pushViewController:_deviceUpdateVC animated:YES];
+    
 }
 
 - (void) goToRecoverDefaultSet
 {
     NSLog(@"恢复默认设置");
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"恢复到默认设置?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+    [alert setTag:100861];
+    [alert show];
 }
 
 - (void) changeSwith:(UISwitch *) theSwitch
@@ -194,8 +234,33 @@
     NSLog(@"check index = %ld", (long)buttonIndex);
     if (buttonIndex == 1)
     {
-        
+        if (alertView.tag == 100861) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+            alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
+            alert.tag = 100862;
+            [alert show];
+            return;
+        }
+        if (alertView.tag == 100862) {
+            //得到输入框
+            UITextField *tf=[alertView textFieldAtIndex:0];
+            if ([NSString isNilOrEmpty:tf.text])
+            {
+                [UIView showAlertView:@"密码不能为空" andMessage:@"校验身份失败"];
+                return;
+            }
+            NSLog(@"发送请求校验身份吧，密码为  %@", tf.text);
+            [_thisBraceletInfoModel initAllSet];  //初始化所有设置
+            
+            [_thisBraceletInfoModel setNameAndSaveToDB];
+            
+            [self reloadUserInfoTableView];
+            
+            return;
+        }
     }
+    
+
 }
 
 #pragma mark ---------------- TableView delegate -----------------
@@ -300,6 +365,26 @@
             [rightTitle setText:_thisBraceletInfoModel._deviceVersion];
             [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
+            
+            //添加未读礼物标记
+            _badgeView = [[JSBadgeView alloc] initWithParentView:rightImageView alignment:JSBadgeViewAlignmentTopLeft];;
+            [_badgeView setBadgePositionAdjustment:CGPointMake(_badgeView.x - 20 , _badgeView.y + 6)];
+            [_badgeView setBadgeBackgroundColor:kNavigationBarColor];
+            //    [_badgeView setBadgeStrokeWidth:3.5];
+            [_badgeView setBadgeTextFont:[UIFont systemFontOfSize:10]];
+            [_badgeView setBadgeTextColor:[UIColor blackColor]];
+            [_badgeView setUserInteractionEnabled:NO];
+            
+            if (!_haveNewVersion)
+            {
+                _badgeView.hidden = YES;
+            }
+            else
+            {
+                _badgeView.hidden = NO;
+                _badgeView.badgeText = @"1";
+            }
+
         }
             break;
             
