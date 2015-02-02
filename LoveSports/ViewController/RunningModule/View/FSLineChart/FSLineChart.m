@@ -39,69 +39,44 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
+        self.clipsToBounds = NO;
         [self setDefaultParameters];
     }
+    
     return self;
 }
 
 - (void)setChartData:(NSArray *)chartData
 {
+    for (UIView *view in self.subviews)
+    {
+        [view removeFromSuperview];
+    }
+    
     _data = [NSMutableArray arrayWithArray:chartData];
     
     [self computeBounds];
     
-    CGFloat minBound = MIN(_min, 0);
-    CGFloat maxBound = MAX(_max, 0);
-    
     // No data
-    if(isnan(_max)) {
+    if(isnan(_max))
+    {
         _max = 1;
     }
     
     [self strokeChart];
+    [self strokeDataPoints];
     
-    if(_displayDataPoint) {
-        [self strokeDataPoints];
-    }
-    
-    if(_labelForValue) {
-        for(int i=0;i<_verticalGridStep;i++) {
-            CGPoint p = CGPointMake(_margin + (_valueLabelPosition == ValueLabelRight ? _axisWidth : 0), _axisHeight + _margin - (i + 1) * _axisHeight / _verticalGridStep);
-            
-            NSString* text = _labelForValue(minBound + (maxBound - minBound) / _verticalGridStep * (i + 1));
-            
-            if(!text)
-                continue;
-            
-            CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
-            
-            float width =
-            [text
-             boundingRectWithSize:rect.size
-             options:NSStringDrawingUsesLineFragmentOrigin
-             attributes:@{ NSFontAttributeName:_valueLabelFont }
-             context:nil]
-            .size.width;
-            
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width - 6, p.y + 2, width + 2, 14)];
-            label.text = text;
-            label.font = _valueLabelFont;
-            label.textColor = _valueLabelTextColor;
-            label.textAlignment = NSTextAlignmentCenter;
-            label.backgroundColor = _valueLabelBackgroundColor;
-            
-            [self addSubview:label];
-        }
-    }
-    
-    if(_labelForIndex) {
+    if(_labelForIndex)
+    {
         float scale = 1.0f;
         int q = (int)_data.count / _horizontalGridStep;
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
         
-        for(int i=0;i<_horizontalGridStep + 1;i++) {
+        for(int i = 0;i< _horizontalGridStep + 1; i++)
+        {
             NSInteger itemIndex = q * i;
             if(itemIndex >= _data.count)
             {
@@ -114,22 +89,18 @@
                 continue;
             
             CGPoint p = CGPointMake(_margin + i * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
-            
             CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
             
-            float width =
-            [text
-             boundingRectWithSize:rect.size
-             options:NSStringDrawingUsesLineFragmentOrigin
-             attributes:@{ NSFontAttributeName:_indexLabelFont }
-             context:nil]
-            .size.width;
+            float width =[text boundingRectWithSize:rect.size
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                         attributes:@{NSFontAttributeName:_indexLabelFont}
+                                            context:nil].size.width;
             
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - 4.0f, p.y + 2, width + 2, 14)];
+            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 14)];
             label.text = text;
             label.font = _indexLabelFont;
-            label.textColor = _indexLabelTextColor;
-            label.backgroundColor = _indexLabelBackgroundColor;
+            label.textColor = [UIColor whiteColor];
+            label.backgroundColor = [UIColor clearColor];
             
             [self addSubview:label];
         }
@@ -147,61 +118,51 @@
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     UIGraphicsPushContext(ctx);
-    CGContextSetLineWidth(ctx, _axisLineWidth);
-    CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
+    CGContextSetLineWidth(ctx, 6);
+    CGContextSetStrokeColorWithColor(ctx, UIColorRGBA(155, 40, 16, 0.5).CGColor);
+    CGFloat height = [_data[0] floatValue] * _axisHeight;
     
     // draw coordinate axis
-    CGContextMoveToPoint(ctx, _margin, _margin);
-    CGContextAddLineToPoint(ctx, _margin, _axisHeight + _margin + 3);
+    CGContextMoveToPoint(ctx, 5, _axisHeight + 3);
+    CGContextAddLineToPoint(ctx, 5, _axisHeight + 8 - height);
+    CGContextStrokePath(ctx);
+    
+    height = [_data[_data.count - 1] floatValue] * _axisHeight;
+    CGContextMoveToPoint(ctx, self.width - 5, _axisHeight + 3);
+    CGContextAddLineToPoint(ctx, self.width - 5, _axisHeight + 8 - height);
     CGContextStrokePath(ctx);
     
     float scale = 1.0f;
     int q = (int)_data.count / _horizontalGridStep;
     scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
     
-    
     CGFloat minBound = MIN(_min, 0);
     CGFloat maxBound = MAX(_max, 0);
     
     // draw grid
-    if(_drawInnerGrid) {
-        for(int i=0;i<_horizontalGridStep;i++) {
+    if(_drawInnerGrid)
+    {
+        for(int i = 0;i < _horizontalGridStep + 1; i++)
+        {
             CGContextSetStrokeColorWithColor(ctx, [_innerGridColor CGColor]);
-            CGContextSetLineWidth(ctx, _innerGridLineWidth);
+            CGContextSetLineWidth(ctx, 1);
             
-            CGPoint point = CGPointMake((1 + i) * _axisWidth / _horizontalGridStep * scale + _margin, _margin);
+            CGPoint point = CGPointMake((i) * _axisWidth / _horizontalGridStep * scale + _margin, _margin);
             
-            CGContextMoveToPoint(ctx, point.x, point.y);
-            CGContextAddLineToPoint(ctx, point.x, _axisHeight + _margin);
-            CGContextStrokePath(ctx);
-            
-            CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
-            CGContextSetLineWidth(ctx, _axisLineWidth);
-            CGContextMoveToPoint(ctx, point.x - 0.5f, _axisHeight + _margin);
-            CGContextAddLineToPoint(ctx, point.x - 0.5f, _axisHeight + _margin + 3);
+            CGContextMoveToPoint(ctx, point.x, self.height - 5);
+            CGContextAddLineToPoint(ctx, point.x, self.height);
             CGContextStrokePath(ctx);
         }
         
-        for(int i=0;i<_verticalGridStep + 1;i++) {
-            // If the value is zero then we display the horizontal axis
-            CGFloat v = maxBound - (maxBound - minBound) / _verticalGridStep * i;
-            
-            if(v == 0) {
-                CGContextSetLineWidth(ctx, _axisLineWidth);
-                CGContextSetStrokeColorWithColor(ctx, [_axisColor CGColor]);
-            } else {
-                CGContextSetStrokeColorWithColor(ctx, [_innerGridColor CGColor]);
-                CGContextSetLineWidth(ctx, _innerGridLineWidth);
-            }
-            
-            CGPoint point = CGPointMake(_margin, (i) * _axisHeight / _verticalGridStep + _margin);
-            
-            CGContextMoveToPoint(ctx, point.x, point.y);
-            CGContextAddLineToPoint(ctx, _axisWidth + _margin, point.y);
-            CGContextStrokePath(ctx);
-        }
-    }
+        // If the value is zero then we display the horizontal axis
     
+        CGContextSetStrokeColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
+        CGContextSetLineWidth(ctx, 2);
+        
+        CGContextMoveToPoint(ctx, 0, self.height - 5);
+        CGContextAddLineToPoint(ctx, self.width, self.height - 5);
+        CGContextStrokePath(ctx);
+    }
 }
 
 - (void)strokeChart
@@ -214,7 +175,7 @@
     CGFloat minBound = MIN(_min, 0);
     CGFloat maxBound = MAX(_max, 0);
     
-    CGFloat scale = _axisHeight / (maxBound - minBound);
+    CGFloat scale = _axisHeight; // (maxBound - minBound);
     
     noPath = [self getLinePath:0 withSmoothing:_bezierSmoothing close:NO];
     path = [self getLinePath:scale withSmoothing:_bezierSmoothing close:NO];
@@ -222,78 +183,68 @@
     noFill = [self getLinePath:0 withSmoothing:_bezierSmoothing close:YES];
     fill = [self getLinePath:scale withSmoothing:_bezierSmoothing close:YES];
     
-    if(_fillColor) {
+    if(_fillColor)
+    {
         CAShapeLayer *fillLayer = [CAShapeLayer layer];
-        fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
+        fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height - 8.0);
         fillLayer.bounds = self.bounds;
         fillLayer.path = fill.CGPath;
         fillLayer.strokeColor = nil;
-        fillLayer.fillColor = _fillColor.CGColor;
+        fillLayer.fillColor = UIColorRGB(235, 106, 10).CGColor;
         fillLayer.lineWidth = 0;
         fillLayer.lineJoin = kCALineJoinRound;
         
         [self.layer addSublayer:fillLayer];
-        
-        CABasicAnimation *fillAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
-        fillAnimation.duration = _animationDuration;
-        fillAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        fillAnimation.fillMode = kCAFillModeForwards;
-        fillAnimation.fromValue = (id)noFill.CGPath;
-        fillAnimation.toValue = (id)fill.CGPath;
-        [fillLayer addAnimation:fillAnimation forKey:@"path"];
     }
     
     CAShapeLayer *pathLayer = [CAShapeLayer layer];
     pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
     pathLayer.bounds = self.bounds;
     pathLayer.path = path.CGPath;
-    pathLayer.strokeColor = [_color CGColor];
+    pathLayer.strokeColor = UIColorRGB(155, 40, 16).CGColor;
     pathLayer.fillColor = nil;
-    pathLayer.lineWidth = _lineWidth;
+    pathLayer.lineWidth = 3.0;
     pathLayer.lineJoin = kCALineJoinRound;
     
     [self.layer addSublayer:pathLayer];
-    
-    if(_fillColor) {
-        CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
-        pathAnimation.duration = _animationDuration;
-        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pathAnimation.fromValue = (__bridge id)(noPath.CGPath);
-        pathAnimation.toValue = (__bridge id)(path.CGPath);
-        [pathLayer addAnimation:pathAnimation forKey:@"path"];
-    } else {
-        CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        pathAnimation.duration = _animationDuration;
-        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-        pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
-        [pathLayer addAnimation:pathAnimation forKey:@"path"];
-    }
-    
 }
 
+//   画点。
 - (void)strokeDataPoints
 {
     CGFloat minBound = MIN(_min, 0);
     CGFloat maxBound = MAX(_max, 0);
     
-    CGFloat scale = _axisHeight / (maxBound - minBound);
+    NSLog(@"....%f..%f", minBound, maxBound);
+    CGFloat scale = _axisHeight; // (maxBound - minBound);
     
     //CAShapeLayer *dataPointsLayer = [CAShapeLayer layer];
     
-    for(int i=0;i<_data.count;i++) {
+    for(int i = 0; i < _data.count; i++)
+    {
         CGPoint p = [self getPointForIndex:i withScale:scale];
+        
+        UILabel *label  = [UILabel customLabelWithRect:CGRectMake(0, 0, 40, 20)
+                                              withColor:[UIColor clearColor]
+                                          withAlignment:NSTextAlignmentCenter
+                                           withFontSize:12.0
+                                               withText:@""
+                                         withTextColor:[UIColor whiteColor]];
+        [self addSubview:label];
+        label.center = CGPointMake(p.x, p.y - 15);
+        label.text = [NSString stringWithFormat:@"%0.0f", [_data[i] floatValue] * 10000];
+        
         p.y +=  minBound * scale;
 
-        UIBezierPath* circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(p.x - _dataPointRadius, p.y - _dataPointRadius, _dataPointRadius * 2, _dataPointRadius * 2)];
+        UIBezierPath* circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(p.x - _dataPointRadius * 3, p.y - _dataPointRadius * 3, _dataPointRadius * 6, _dataPointRadius * 6)];
         
         CAShapeLayer *fillLayer = [CAShapeLayer layer];
         fillLayer.frame = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
         fillLayer.bounds = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
         fillLayer.path = circle.CGPath;
-        fillLayer.strokeColor = _dataPointColor.CGColor;
-        fillLayer.fillColor = _dataPointBackgroundColor.CGColor;
-        fillLayer.lineWidth = 1;
+        fillLayer.strokeColor = UIColorRGB(165, 24, 16).CGColor;
+        fillLayer.fillColor = UIColorRGB(165, 24, 16).CGColor;
+        fillLayer.lineWidth = 3;
         fillLayer.lineJoin = kCALineJoinRound;
         
         [self.layer addSublayer:fillLayer];
@@ -326,11 +277,11 @@
     // Labels attributes
     _indexLabelBackgroundColor = [UIColor clearColor];
     _indexLabelTextColor = [UIColor grayColor];
-    _indexLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+    _indexLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
     
     _valueLabelBackgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
     _valueLabelTextColor = [UIColor grayColor];
-    _valueLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+    _valueLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
     _valueLabelPosition = ValueLabelRight;
 }
 
@@ -396,7 +347,6 @@
             _max = _min;
             _min = tmp;
         }
-        
     }
 }
 
@@ -431,7 +381,8 @@
         return CGPointZero;
     
     // Compute the point in the view from the data with a set scale
-    NSNumber* number = _data[idx];
+    NSNumber *number = _data[idx];
+    NSLog(@"....%@...%f..%f", number, [number floatValue] * scale, scale);
     return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - [number floatValue] * scale);
 }
 
@@ -439,8 +390,9 @@
 {
     UIBezierPath* path = [UIBezierPath bezierPath];
     
-    if(smoothed) {
-        for(int i=0;i<_data.count - 1;i++) {
+    if(smoothed)
+    {
+        for(int i = 0;i < _data.count - 1; i++) {
             CGPoint controlPoint[2];
             CGPoint p = [self getPointForIndex:i withScale:scale];
             
@@ -506,7 +458,5 @@
     
     return path;
 }
-
-
 
 @end
