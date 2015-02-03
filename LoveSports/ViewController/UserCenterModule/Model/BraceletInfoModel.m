@@ -32,7 +32,7 @@
     
     if (hour > 13)
     {
-        return [NSString stringWithFormat:@"下午 %ld:%@", (long)hour, [timeArray lastObject]];
+        return [NSString stringWithFormat:@"下午 %ld:%@", (long)hour - 12, [timeArray lastObject]];
     }
     return [NSString stringWithFormat:@"上午 %@",_setTime];
 }

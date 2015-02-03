@@ -120,6 +120,7 @@
 - (void) addLoginView: (BOOL) animated
 {
     NSLog(@"添加登录页面");
+    [self pushToLoginVC];
 }
 
 /**

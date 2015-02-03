@@ -152,11 +152,17 @@ typedef enum{
 #define kCustomerServicePhoneNumber   @"0591-8888888"  //客服电话号码
 
 #define kShopUrl  @"http://www.baidu.com"   //爱运动商城URL
+#define kOpinionUrl  @"http://www.baidu.com"   //意见反馈URL
+#define kHelpUrl  @"http://www.baidu.com"   //帮助URL
 
 #define kBraceletDefaultNamePrefixion  @"爱运动智能手环"  //智能手环默认名字前缀
 
-#define kBraceletLongSetRemind24  @"每隔45分钟\n8:00 ~ 18:00"  //久坐提醒  // 24小时制
-#define kBraceletLongSetRemind  @"每隔45分钟\n上午 8:00 ~ 下午 6:00"  //久坐提醒  // 12小时制
+//久坐提醒---
+#define kBraceletLongSetBeginTime @"8:00"
+#define kBraceletLongSetOverTime24 @"18:00"
+#define kBraceletLongSetOverTime @"6:00"
+#define kBraceletLongSetRemind24  [NSString stringWithFormat:@"每隔45分钟\n%@ ~ %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime24]  //久坐提醒  // 24小时制
+#define kBraceletLongSetRemind  [NSString stringWithFormat:@"每隔45分钟\n上午 %@ ~ 下午 %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime] //久坐提醒  // 12小时制
 
 #define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字
 #define kPasswordPlaceHoldText @"请输入您的密码"              //密码holdplace文字

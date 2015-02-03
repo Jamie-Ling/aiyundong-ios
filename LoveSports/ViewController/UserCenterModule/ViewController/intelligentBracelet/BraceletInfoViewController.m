@@ -30,6 +30,7 @@
 #import "JSBadgeView.h"
 #import "VersionInfoModel.h"
 #import "DeviceUpdateViewController.h"
+#import "BLTSendData.h"
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
@@ -216,6 +217,19 @@
     {
         NSLog(@"更改久坐提醒的状态：%d", theSwitch.on);
         _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
+        
+        AlarmClockModel *oneClockBeginModel = [[AlarmClockModel alloc] init];
+        [oneClockBeginModel setAllTimeFromTimeString:kBraceletLongSetBeginTime withRepeatUntStringArray:nil withFullWeekDay:YES];
+        
+        AlarmClockModel *oneClockOverModel = [[AlarmClockModel alloc] init];
+        [oneClockOverModel setAllTimeFromTimeString:kBraceletLongSetOverTime24 withRepeatUntStringArray:nil withFullWeekDay:YES];
+        
+        [BLTSendData sendSedentaryRemindDataWithOpen:_thisBraceletInfoModel._longTimeSetRemind withTimes:[NSArray arrayWithObjects:oneClockBeginModel, oneClockOverModel, nil] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            if (type == BLTAcceptDataTypeSetSedentaryRemind)
+            {
+                NSLog(@"更新久坐提醒状态成功");
+            }
+        }];
         
         return;
     }
