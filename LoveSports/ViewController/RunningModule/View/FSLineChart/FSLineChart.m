@@ -27,10 +27,14 @@
 
 @property (nonatomic, strong) NSMutableArray* data;
 
-@property (nonatomic) CGFloat min;
-@property (nonatomic) CGFloat max;
-@property (nonatomic) CGMutablePathRef initialPath;
-@property (nonatomic) CGMutablePathRef newPath;
+@property (nonatomic, assign) CGFloat min;
+@property (nonatomic, assign) CGFloat max;
+@property (nonatomic, assign) CGMutablePathRef initialPath;
+@property (nonatomic, assign) CGMutablePathRef newPath;
+
+@property (nonatomic, strong) CAShapeLayer *fillLayer;
+@property (nonatomic, strong) CAShapeLayer *pathLayer;
+@property (nonatomic, strong) CAShapeLayer *pointLayer;
 
 @end
 
@@ -185,28 +189,34 @@
     
     if(_fillColor)
     {
-        CAShapeLayer *fillLayer = [CAShapeLayer layer];
-        fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height - 8.0);
-        fillLayer.bounds = self.bounds;
-        fillLayer.path = fill.CGPath;
-        fillLayer.strokeColor = nil;
-        fillLayer.fillColor = UIColorRGB(235, 106, 10).CGColor;
-        fillLayer.lineWidth = 0;
-        fillLayer.lineJoin = kCALineJoinRound;
+        if (!_fillLayer)
+        {
+            _fillLayer = [CAShapeLayer layer];
+            [self.layer addSublayer:_fillLayer];
+        }
         
-        [self.layer addSublayer:fillLayer];
+        _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height - 8.0);
+        _fillLayer.bounds = self.bounds;
+        _fillLayer.path = fill.CGPath;
+        _fillLayer.strokeColor = nil;
+        _fillLayer.fillColor = UIColorRGB(235, 106, 10).CGColor;
+        _fillLayer.lineWidth = 0;
+        _fillLayer.lineJoin = kCALineJoinRound;
     }
     
-    CAShapeLayer *pathLayer = [CAShapeLayer layer];
-    pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
-    pathLayer.bounds = self.bounds;
-    pathLayer.path = path.CGPath;
-    pathLayer.strokeColor = UIColorRGB(155, 40, 16).CGColor;
-    pathLayer.fillColor = nil;
-    pathLayer.lineWidth = 3.0;
-    pathLayer.lineJoin = kCALineJoinRound;
+    if (!_pathLayer)
+    {
+        _pathLayer = [CAShapeLayer layer];
+        [self.layer addSublayer:_pathLayer];
+    }
     
-    [self.layer addSublayer:pathLayer];
+    _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
+    _pathLayer.bounds = self.bounds;
+    _pathLayer.path = path.CGPath;
+    _pathLayer.strokeColor = UIColorRGB(155, 40, 16).CGColor;
+    _pathLayer.fillColor = nil;
+    _pathLayer.lineWidth = 3.0;
+    _pathLayer.lineJoin = kCALineJoinRound;
 }
 
 //   画点。
@@ -238,16 +248,19 @@
 
         UIBezierPath* circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(p.x - _dataPointRadius * 3, p.y - _dataPointRadius * 3, _dataPointRadius * 6, _dataPointRadius * 6)];
         
-        CAShapeLayer *fillLayer = [CAShapeLayer layer];
-        fillLayer.frame = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
-        fillLayer.bounds = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
-        fillLayer.path = circle.CGPath;
-        fillLayer.strokeColor = UIColorRGB(165, 24, 16).CGColor;
-        fillLayer.fillColor = UIColorRGB(165, 24, 16).CGColor;
-        fillLayer.lineWidth = 3;
-        fillLayer.lineJoin = kCALineJoinRound;
+        if (!_pointLayer)
+        {
+            _pointLayer = [CAShapeLayer layer];
+            [self.layer addSublayer:_pointLayer];
+        }
         
-        [self.layer addSublayer:fillLayer];
+        _pointLayer.frame = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
+        _pointLayer.bounds = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);
+        _pointLayer.path = circle.CGPath;
+        _pointLayer.strokeColor = UIColorRGB(165, 24, 16).CGColor;
+        _pointLayer.fillColor = UIColorRGB(165, 24, 16).CGColor;
+        _pointLayer.lineWidth = 3;
+        _pointLayer.lineJoin = kCALineJoinRound;
     }
 }
 

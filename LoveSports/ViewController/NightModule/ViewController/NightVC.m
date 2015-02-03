@@ -9,16 +9,20 @@
 #import "NightVC.h"
 #import "PieChartView.h"
 #import "CalendarHomeView.h"
+#import "BarGraphView.h"
 
 @interface NightVC () <PieChartViewDelegate, PieChartViewDataSource>
 
 @property (nonatomic, strong) PieChartView *chartView;
+@property (nonatomic, strong) BarGraphView *barView;;
 @property (nonatomic, strong) UILabel *weekLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 
 @property (nonatomic) CalendarHomeView *calenderView;
 
 @property (nonatomic, assign) NSInteger percent;
+
+@property (nonatomic, assign) CGFloat offsetY;
 
 @end
 
@@ -31,16 +35,20 @@
     self.view.backgroundColor = [UIColor clearColor];
     self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
+    NSLog(@"..%f..%f",self.view.totalHeight, self.view.height);
+    _offsetY = (self.view.height < 485.0) ? 25.0 : 0.0;
     _percent = 25;
+    
     [self loadPieChartView];
     [self loadCalendarButton];
     [self loadDateLabel];
+    [self loadBarGraphView];
     [self loadShareButton];
 }
 
 - (void)loadPieChartView
 {
-    CGRect rect = CGRectMake((self.view.width - 200) / 2, 85, 200, 200);
+    CGRect rect = CGRectMake((self.view.width - 200) / 2, 85 - _offsetY * 1.2, 200, 200);
     _chartView = [[PieChartView alloc] initWithFrame:rect];
     _chartView.delegate = self;
     _chartView.datasource = self;
@@ -51,7 +59,7 @@
 
 - (void)loadCalendarButton
 {
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(0, 15, 90, 70)
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(0, 15 - _offsetY, 90, 70)
                                               withImage:@"日历.png"
                                         withSelectImage:@"日历.png"];
     
@@ -88,7 +96,7 @@
 
 - (void)loadDateLabel
 {
-    _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.view.width, 30)
+    _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 25 - _offsetY, self.view.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
@@ -96,13 +104,41 @@
                                 withTextColor:[UIColor whiteColor]];
     [self.view addSubview:_weekLabel];
     
-    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 50, self.view.width, 30)
+    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 50 - _offsetY, self.view.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
                                      withText:@"2015/2/2"
                                 withTextColor:[UIColor whiteColor]];
     [self.view addSubview:_dateLabel];
+}
+
+- (void)loadBarGraphView
+{
+    _barView = [[BarGraphView alloc] initWithFrame:CGRectMake((self.view.width - 280) / 2, 300 - _offsetY * 1.5, 280, 160 - _offsetY)];
+    
+    [self.view addSubview:_barView];
+    [self updateContentForBarGraphView];
+}
+
+- (void)updateContentForBarGraphView
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 10; i++)
+    {
+        DataModel *model = [[DataModel alloc] init];
+        
+        model.width = arc4random() % 30 + 5;
+        model.height = arc4random() % 180 + 20;
+        model.color = [UIColor colorWithRed:(arc4random() % 200 + 20) / 255.0
+                                      green:(arc4random() % 200 + 20) / 255.0
+                                       blue:(arc4random() % 200 + 20) / 255.0
+                                      alpha:1.0];
+        
+        [array addObject:model];
+    }
+    
+    _barView.array = array;
 }
 
 - (void)loadShareButton
@@ -148,6 +184,25 @@
 - (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index
 {
     return 100 / 10;
+}
+
+#pragma mark --- 重写父类方法 ---
+- (void)leftSwipe
+{
+    NSLog(@"..左扫..");
+    
+    _percent = arc4random() % 70 + 20;
+    [_chartView reloadData];
+    [self updateContentForBarGraphView];
+}
+
+- (void)rightSwipe
+{
+    NSLog(@"..右扫..");
+    
+    _percent = arc4random() % 70 + 20;
+    [_chartView reloadData];
+    [self updateContentForBarGraphView];
 }
 
 @end

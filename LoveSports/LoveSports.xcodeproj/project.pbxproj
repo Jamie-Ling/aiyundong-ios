@@ -153,6 +153,9 @@
 		69FD42281A7FCC2C0023B74D /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FC1A7FCC2C0023B74D /* UpdatePasswordViewController.m */; };
 		69FD42291A7FCC2C0023B74D /* UpSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */; };
 		69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */; };
+		F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F432BE511A80F8BE0058F87D /* LandscapeVC.m */; };
+		F43F8EDF1A81065B008A431B /* BarGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43F8EDE1A81065B008A431B /* BarGraphView.m */; };
+		F43F8EE31A8106ED008A431B /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F43F8EE21A8106ED008A431B /* DataModel.m */; };
 		F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A31A7937C800D5B170 /* NSDate+XY.m */; };
 		F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A61A79381C00D5B170 /* BLTAcceptData.m */; };
 		F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A81A79381C00D5B170 /* BLTSendData.m */; };
@@ -161,22 +164,22 @@
 		F470E7A11A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7641A7FAD680009E649 /* background.jpg */; };
 		F470E7A21A7FAD680009E649 /* t3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7651A7FAD680009E649 /* t3.jpg */; };
 		F470E7A31A7FAD680009E649 /* 分享@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7661A7FAD680009E649 /* 分享@2x.png */; };
-		F470E7A41A7FAD680009E649 /* 周.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7671A7FAD680009E649 /* 周.png */; };
-		F470E7A51A7FAD680009E649 /* 周选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7681A7FAD680009E649 /* 周选中.png */; };
+		F470E7A41A7FAD680009E649 /* 周@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7671A7FAD680009E649 /* 周@2x.png */; };
+		F470E7A51A7FAD680009E649 /* 周选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7681A7FAD680009E649 /* 周选中@2x.png */; };
 		F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7691A7FAD680009E649 /* 奖杯.png */; };
-		F470E7A71A7FAD680009E649 /* 日.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76A1A7FAD680009E649 /* 日.png */; };
+		F470E7A71A7FAD680009E649 /* 日@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76A1A7FAD680009E649 /* 日@2x.png */; };
 		F470E7A81A7FAD680009E649 /* 日历@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76B1A7FAD680009E649 /* 日历@2x.png */; };
-		F470E7A91A7FAD680009E649 /* 日选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76C1A7FAD680009E649 /* 日选中.png */; };
+		F470E7A91A7FAD680009E649 /* 日选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76C1A7FAD680009E649 /* 日选中@2x.png */; };
 		F470E7AA1A7FAD680009E649 /* 更多.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76D1A7FAD680009E649 /* 更多.png */; };
-		F470E7AB1A7FAD680009E649 /* 月.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76E1A7FAD680009E649 /* 月.png */; };
-		F470E7AC1A7FAD680009E649 /* 月选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76F1A7FAD680009E649 /* 月选中.png */; };
-		F470E7AD1A7FAD680009E649 /* 竖屏.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7701A7FAD680009E649 /* 竖屏.png */; };
-		F470E7AE1A7FAD680009E649 /* 能量.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7711A7FAD680009E649 /* 能量.png */; };
-		F470E7AF1A7FAD680009E649 /* 能量选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7721A7FAD680009E649 /* 能量选中.png */; };
-		F470E7B01A7FAD680009E649 /* 足迹-选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7731A7FAD680009E649 /* 足迹-选中.png */; };
-		F470E7B11A7FAD680009E649 /* 足迹.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7741A7FAD680009E649 /* 足迹.png */; };
-		F470E7B21A7FAD680009E649 /* 路程.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7751A7FAD680009E649 /* 路程.png */; };
-		F470E7B31A7FAD680009E649 /* 路程选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7761A7FAD680009E649 /* 路程选中.png */; };
+		F470E7AB1A7FAD680009E649 /* 月@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76E1A7FAD680009E649 /* 月@2x.png */; };
+		F470E7AC1A7FAD680009E649 /* 月选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76F1A7FAD680009E649 /* 月选中@2x.png */; };
+		F470E7AD1A7FAD680009E649 /* 竖屏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7701A7FAD680009E649 /* 竖屏@2x.png */; };
+		F470E7AE1A7FAD680009E649 /* 能量@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7711A7FAD680009E649 /* 能量@2x.png */; };
+		F470E7AF1A7FAD680009E649 /* 能量选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7721A7FAD680009E649 /* 能量选中@2x.png */; };
+		F470E7B01A7FAD680009E649 /* 足迹-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7731A7FAD680009E649 /* 足迹-选中@2x.png */; };
+		F470E7B11A7FAD680009E649 /* 足迹@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7741A7FAD680009E649 /* 足迹@2x.png */; };
+		F470E7B21A7FAD680009E649 /* 路程@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7751A7FAD680009E649 /* 路程@2x.png */; };
+		F470E7B31A7FAD680009E649 /* 路程选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7761A7FAD680009E649 /* 路程选中@2x.png */; };
 		F470E7B41A7FAD680009E649 /* 顶部四格1.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7771A7FAD680009E649 /* 顶部四格1.png */; };
 		F470E7B51A7FAD680009E649 /* 顶部四格2.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7781A7FAD680009E649 /* 顶部四格2.png */; };
 		F470E7B61A7FAD680009E649 /* 顶部四格3.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7791A7FAD680009E649 /* 顶部四格3.png */; };
@@ -531,6 +534,12 @@
 		69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpSignatureViewController.m; sourceTree = "<group>"; };
 		69FD41FF1A7FCC2C0023B74D /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		F432BE501A80F8BE0058F87D /* LandscapeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeVC.h; sourceTree = "<group>"; };
+		F432BE511A80F8BE0058F87D /* LandscapeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeVC.m; sourceTree = "<group>"; };
+		F43F8EDD1A81065B008A431B /* BarGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarGraphView.h; sourceTree = "<group>"; };
+		F43F8EDE1A81065B008A431B /* BarGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarGraphView.m; sourceTree = "<group>"; };
+		F43F8EE11A8106ED008A431B /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		F43F8EE21A8106ED008A431B /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		F445F7A21A7937C800D5B170 /* NSDate+XY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+XY.h"; sourceTree = "<group>"; };
 		F445F7A31A7937C800D5B170 /* NSDate+XY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+XY.m"; sourceTree = "<group>"; };
 		F445F7A51A79381C00D5B170 /* BLTAcceptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTAcceptData.h; sourceTree = "<group>"; };
@@ -544,22 +553,22 @@
 		F470E7641A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E7651A7FAD680009E649 /* t3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t3.jpg; sourceTree = "<group>"; };
 		F470E7661A7FAD680009E649 /* 分享@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分享@2x.png"; sourceTree = "<group>"; };
-		F470E7671A7FAD680009E649 /* 周.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周.png"; sourceTree = "<group>"; };
-		F470E7681A7FAD680009E649 /* 周选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中.png"; sourceTree = "<group>"; };
+		F470E7671A7FAD680009E649 /* 周@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周@2x.png"; sourceTree = "<group>"; };
+		F470E7681A7FAD680009E649 /* 周选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中@2x.png"; sourceTree = "<group>"; };
 		F470E7691A7FAD680009E649 /* 奖杯.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "奖杯.png"; sourceTree = "<group>"; };
-		F470E76A1A7FAD680009E649 /* 日.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日.png"; sourceTree = "<group>"; };
+		F470E76A1A7FAD680009E649 /* 日@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日@2x.png"; sourceTree = "<group>"; };
 		F470E76B1A7FAD680009E649 /* 日历@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历@2x.png"; sourceTree = "<group>"; };
-		F470E76C1A7FAD680009E649 /* 日选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日选中.png"; sourceTree = "<group>"; };
+		F470E76C1A7FAD680009E649 /* 日选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日选中@2x.png"; sourceTree = "<group>"; };
 		F470E76D1A7FAD680009E649 /* 更多.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "更多.png"; sourceTree = "<group>"; };
-		F470E76E1A7FAD680009E649 /* 月.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月.png"; sourceTree = "<group>"; };
-		F470E76F1A7FAD680009E649 /* 月选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月选中.png"; sourceTree = "<group>"; };
-		F470E7701A7FAD680009E649 /* 竖屏.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏.png"; sourceTree = "<group>"; };
-		F470E7711A7FAD680009E649 /* 能量.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量.png"; sourceTree = "<group>"; };
-		F470E7721A7FAD680009E649 /* 能量选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量选中.png"; sourceTree = "<group>"; };
-		F470E7731A7FAD680009E649 /* 足迹-选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "足迹-选中.png"; sourceTree = "<group>"; };
-		F470E7741A7FAD680009E649 /* 足迹.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "足迹.png"; sourceTree = "<group>"; };
-		F470E7751A7FAD680009E649 /* 路程.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "路程.png"; sourceTree = "<group>"; };
-		F470E7761A7FAD680009E649 /* 路程选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "路程选中.png"; sourceTree = "<group>"; };
+		F470E76E1A7FAD680009E649 /* 月@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月@2x.png"; sourceTree = "<group>"; };
+		F470E76F1A7FAD680009E649 /* 月选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月选中@2x.png"; sourceTree = "<group>"; };
+		F470E7701A7FAD680009E649 /* 竖屏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏@2x.png"; sourceTree = "<group>"; };
+		F470E7711A7FAD680009E649 /* 能量@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量@2x.png"; sourceTree = "<group>"; };
+		F470E7721A7FAD680009E649 /* 能量选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量选中@2x.png"; sourceTree = "<group>"; };
+		F470E7731A7FAD680009E649 /* 足迹-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "足迹-选中@2x.png"; sourceTree = "<group>"; };
+		F470E7741A7FAD680009E649 /* 足迹@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "足迹@2x.png"; sourceTree = "<group>"; };
+		F470E7751A7FAD680009E649 /* 路程@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "路程@2x.png"; sourceTree = "<group>"; };
+		F470E7761A7FAD680009E649 /* 路程选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "路程选中@2x.png"; sourceTree = "<group>"; };
 		F470E7771A7FAD680009E649 /* 顶部四格1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格1.png"; sourceTree = "<group>"; };
 		F470E7781A7FAD680009E649 /* 顶部四格2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格2.png"; sourceTree = "<group>"; };
 		F470E7791A7FAD680009E649 /* 顶部四格3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格3.png"; sourceTree = "<group>"; };
@@ -1184,6 +1193,8 @@
 		69FD41A91A7FCC2C0023B74D /* NightModule */ = {
 			isa = PBXGroup;
 			children = (
+				F43F8EE01A8106D6008A431B /* Model */,
+				F43F8EDC1A810608008A431B /* View */,
 				69FD41AA1A7FCC2C0023B74D /* ViewController */,
 			);
 			path = NightModule;
@@ -1255,6 +1266,8 @@
 			children = (
 				69FD41BF1A7FCC2C0023B74D /* RunningVC.h */,
 				69FD41C01A7FCC2C0023B74D /* RunningVC.m */,
+				F432BE501A80F8BE0058F87D /* LandscapeVC.h */,
+				F432BE511A80F8BE0058F87D /* LandscapeVC.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1399,6 +1412,24 @@
 			path = UserInfo;
 			sourceTree = "<group>";
 		};
+		F43F8EDC1A810608008A431B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F43F8EDD1A81065B008A431B /* BarGraphView.h */,
+				F43F8EDE1A81065B008A431B /* BarGraphView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F43F8EE01A8106D6008A431B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F43F8EE11A8106ED008A431B /* DataModel.h */,
+				F43F8EE21A8106ED008A431B /* DataModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F45F84061A7B6698004246E8 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1428,22 +1459,22 @@
 				F470E7641A7FAD680009E649 /* background.jpg */,
 				F470E7651A7FAD680009E649 /* t3.jpg */,
 				F470E7661A7FAD680009E649 /* 分享@2x.png */,
-				F470E7671A7FAD680009E649 /* 周.png */,
-				F470E7681A7FAD680009E649 /* 周选中.png */,
+				F470E7671A7FAD680009E649 /* 周@2x.png */,
+				F470E7681A7FAD680009E649 /* 周选中@2x.png */,
 				F470E7691A7FAD680009E649 /* 奖杯.png */,
-				F470E76A1A7FAD680009E649 /* 日.png */,
+				F470E76A1A7FAD680009E649 /* 日@2x.png */,
 				F470E76B1A7FAD680009E649 /* 日历@2x.png */,
-				F470E76C1A7FAD680009E649 /* 日选中.png */,
+				F470E76C1A7FAD680009E649 /* 日选中@2x.png */,
 				F470E76D1A7FAD680009E649 /* 更多.png */,
-				F470E76E1A7FAD680009E649 /* 月.png */,
-				F470E76F1A7FAD680009E649 /* 月选中.png */,
-				F470E7701A7FAD680009E649 /* 竖屏.png */,
-				F470E7711A7FAD680009E649 /* 能量.png */,
-				F470E7721A7FAD680009E649 /* 能量选中.png */,
-				F470E7731A7FAD680009E649 /* 足迹-选中.png */,
-				F470E7741A7FAD680009E649 /* 足迹.png */,
-				F470E7751A7FAD680009E649 /* 路程.png */,
-				F470E7761A7FAD680009E649 /* 路程选中.png */,
+				F470E76E1A7FAD680009E649 /* 月@2x.png */,
+				F470E76F1A7FAD680009E649 /* 月选中@2x.png */,
+				F470E7701A7FAD680009E649 /* 竖屏@2x.png */,
+				F470E7711A7FAD680009E649 /* 能量@2x.png */,
+				F470E7721A7FAD680009E649 /* 能量选中@2x.png */,
+				F470E7731A7FAD680009E649 /* 足迹-选中@2x.png */,
+				F470E7741A7FAD680009E649 /* 足迹@2x.png */,
+				F470E7751A7FAD680009E649 /* 路程@2x.png */,
+				F470E7761A7FAD680009E649 /* 路程选中@2x.png */,
 				F470E7771A7FAD680009E649 /* 顶部四格1.png */,
 				F470E7781A7FAD680009E649 /* 顶部四格2.png */,
 				F470E7791A7FAD680009E649 /* 顶部四格3.png */,
@@ -2006,7 +2037,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F470E7A31A7FAD680009E649 /* 分享@2x.png in Resources */,
-				F470E7B11A7FAD680009E649 /* 足迹.png in Resources */,
+				F470E7B11A7FAD680009E649 /* 足迹@2x.png in Resources */,
 				69EFC1FC1A737ABD00B5BC53 /* 微信@2x.png in Resources */,
 				69FD42151A7FCC2C0023B74D /* ProvincesAndCities.plist in Resources */,
 				F470E7D31A7FAD680009E649 /* 更多.png in Resources */,
@@ -2037,7 +2068,7 @@
 				69FD42171A7FCC2C0023B74D /* region.json in Resources */,
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
 				F470E7A11A7FAD680009E649 /* background.jpg in Resources */,
-				F470E7AE1A7FAD680009E649 /* 能量.png in Resources */,
+				F470E7AE1A7FAD680009E649 /* 能量@2x.png in Resources */,
 				699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */,
 				69EFC2071A737ABD00B5BC53 /* 1_10.png in Resources */,
 				69EFC2081A737ABD00B5BC53 /* 1_11.png in Resources */,
@@ -2050,18 +2081,18 @@
 				69EFC1FB1A737ABD00B5BC53 /* QQ@2x.png in Resources */,
 				F470E7CB1A7FAD680009E649 /* 顶部四格1.png in Resources */,
 				F4B692FD1A6F3EBC00B42395 /* Main.storyboard in Resources */,
-				F470E7AD1A7FAD680009E649 /* 竖屏.png in Resources */,
+				F470E7AD1A7FAD680009E649 /* 竖屏@2x.png in Resources */,
 				69EFC2091A737ABD00B5BC53 /* 1_12.png in Resources */,
 				69EFC2041A737ABD00B5BC53 /* 1_07.png in Resources */,
 				F470E7C11A7FAD680009E649 /* 更多.png in Resources */,
 				F470E7B51A7FAD680009E649 /* 顶部四格2.png in Resources */,
 				69EFC2291A7397C600B5BC53 /* battery@2x.png in Resources */,
-				F470E7A71A7FAD680009E649 /* 日.png in Resources */,
+				F470E7A71A7FAD680009E649 /* 日@2x.png in Resources */,
 				69EFC1EA1A737ABD00B5BC53 /* bg1@2x.png in Resources */,
 				F470E7B41A7FAD680009E649 /* 顶部四格1.png in Resources */,
 				F470E7C61A7FAD680009E649 /* 能量选中.png in Resources */,
 				69EFC2001A737ABD00B5BC53 /* 1_03.png in Resources */,
-				F470E7B21A7FAD680009E649 /* 路程.png in Resources */,
+				F470E7B21A7FAD680009E649 /* 路程@2x.png in Resources */,
 				F470E7CE1A7FAD680009E649 /* 顶部四格4.png in Resources */,
 				F470E7DA1A7FAD680009E649 /* 顶部四格3.png in Resources */,
 				69EFC1DD1A737ABD00B5BC53 /* nav@2x.png in Resources */,
@@ -2069,7 +2100,7 @@
 				F470E7D61A7FAD680009E649 /* 起床.png in Resources */,
 				F470E7D41A7FAD680009E649 /* 睡觉@2x.png in Resources */,
 				F470E7BC1A7FAD680009E649 /* 周选中.png in Resources */,
-				F470E7AC1A7FAD680009E649 /* 月选中.png in Resources */,
+				F470E7AC1A7FAD680009E649 /* 月选中@2x.png in Resources */,
 				F470E7C01A7FAD680009E649 /* 日选中.png in Resources */,
 				F470E7D21A7FAD680009E649 /* 日历.png in Resources */,
 				69FD42111A7FCC2C0023B74D /* CitiesList.plist in Resources */,
@@ -2081,7 +2112,7 @@
 				F470E7BE1A7FAD680009E649 /* 日.png in Resources */,
 				69EFC21C1A738E4A00B5BC53 /* testImage.jpg in Resources */,
 				F470E7C21A7FAD680009E649 /* 月.png in Resources */,
-				F470E7A51A7FAD680009E649 /* 周选中.png in Resources */,
+				F470E7A51A7FAD680009E649 /* 周选中@2x.png in Resources */,
 				F470E7C71A7FAD680009E649 /* 足迹-选中.png in Resources */,
 				F470E7DB1A7FAD680009E649 /* 顶部四格4.png in Resources */,
 				69EFC20A1A737ABD00B5BC53 /* 1_13.png in Resources */,
@@ -2102,7 +2133,7 @@
 				F470E7D51A7FAD680009E649 /* 睡觉2.png in Resources */,
 				69EFC2061A737ABD00B5BC53 /* 1_09.png in Resources */,
 				69EFC1E91A737ABD00B5BC53 /* 顶部四格4@2x.png in Resources */,
-				F470E7A91A7FAD680009E649 /* 日选中.png in Resources */,
+				F470E7A91A7FAD680009E649 /* 日选中@2x.png in Resources */,
 				69EFC2121A737ABD00B5BC53 /* backArrow@2x.png in Resources */,
 				F470E7BA1A7FAD680009E649 /* 分享.png in Resources */,
 				F4B693021A6F3EBC00B42395 /* LaunchScreen.xib in Resources */,
@@ -2113,7 +2144,7 @@
 				69EFC20B1A737ABD00B5BC53 /* 1_14.png in Resources */,
 				F470E7BD1A7FAD680009E649 /* 奖杯.png in Resources */,
 				69EFC1DB1A737ABD00B5BC53 /* background@2x.jpg in Resources */,
-				F470E7AF1A7FAD680009E649 /* 能量选中.png in Resources */,
+				F470E7AF1A7FAD680009E649 /* 能量选中@2x.png in Resources */,
 				69EFC1EC1A737ABD00B5BC53 /* bg3@2x.png in Resources */,
 				69EFC1F61A737ABD00B5BC53 /* title4@2x.png in Resources */,
 				69EFC1F71A737ABD00B5BC53 /* username_1_07@2x.png in Resources */,
@@ -2134,12 +2165,12 @@
 				F470E7D11A7FAD680009E649 /* 分享.png in Resources */,
 				69EFC1F41A737ABD00B5BC53 /* title2@2x.png in Resources */,
 				69EFC1ED1A737ABD00B5BC53 /* bg4@2x.png in Resources */,
-				F470E7AB1A7FAD680009E649 /* 月.png in Resources */,
-				F470E7B01A7FAD680009E649 /* 足迹-选中.png in Resources */,
+				F470E7AB1A7FAD680009E649 /* 月@2x.png in Resources */,
+				F470E7B01A7FAD680009E649 /* 足迹-选中@2x.png in Resources */,
 				F470E7C91A7FAD680009E649 /* 路程.png in Resources */,
-				F470E7B31A7FAD680009E649 /* 路程选中.png in Resources */,
+				F470E7B31A7FAD680009E649 /* 路程选中@2x.png in Resources */,
 				69EFC2BA1A75EB0A00B5BC53 /* 选择按钮@2x.png in Resources */,
-				F470E7A41A7FAD680009E649 /* 周.png in Resources */,
+				F470E7A41A7FAD680009E649 /* 周@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2170,6 +2201,7 @@
 				69EFC2DC1A760CD600B5BC53 /* SDWebImageDecoder.m in Sources */,
 				69EFC2DE1A760CD700B5BC53 /* SDWebImageDownloaderOperation.m in Sources */,
 				69FD42081A7FCC2C0023B74D /* FSLineChart.m in Sources */,
+				F43F8EDF1A81065B008A431B /* BarGraphView.m in Sources */,
 				F4B693BB1A6F404A00B42395 /* XYPopupViewHelper.m in Sources */,
 				F4B693B81A6F404A00B42395 /* MBHUBAutoPop.m in Sources */,
 				69FD42091A7FCC2C0023B74D /* UIColor+FSPalette.m in Sources */,
@@ -2199,6 +2231,7 @@
 				F4B693551A6F401A00B42395 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */,
 				69EFC22A1A7397C600B5BC53 /* UIView+ALQuickFrame.m in Sources */,
+				F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */,
 				698A90C31A6FEB54005BABE6 /* MSIntroView.m in Sources */,
 				69EFC2271A7397C600B5BC53 /* ALBatteryView.m in Sources */,
 				F4B693A91A6F403400B42395 /* RequestHelper.m in Sources */,
@@ -2276,6 +2309,7 @@
 				698A90C01A6FEB54005BABE6 /* SMPageControl.m in Sources */,
 				69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */,
 				F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */,
+				F43F8EE31A8106ED008A431B /* DataModel.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
 				69FD421E1A7FCC2C0023B74D /* HardWareVC.m in Sources */,
 				69FD42201A7FCC2C0023B74D /* CustomViewController.m in Sources */,
@@ -2364,8 +2398,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2385,7 +2419,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2408,8 +2442,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2422,7 +2456,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2433,15 +2467,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 			};
 			name = Debug;
 		};
@@ -2449,15 +2483,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 			};
 			name = Release;
 		};
@@ -2465,8 +2499,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2478,7 +2512,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Debug;
@@ -2487,8 +2521,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2496,7 +2530,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "593de6d2-4e3c-4605-8f74-0d44e7215ec4";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Release;

@@ -110,14 +110,13 @@ DEF_SINGLETON(BLTManager)
         return;
     }
     
-    for (int i = 0; i < _allWareArray.count; i++)
-    {
-        BLTModel *model = _allWareArray[i];
-        if (model.peripheral != self.discoverPeripheral)
+    [_allWareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BLTModel *model = obj;
+        if (_model != model)
         {
             [_allWareArray removeObject:model];
         }
-    }
+    }];
     
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];

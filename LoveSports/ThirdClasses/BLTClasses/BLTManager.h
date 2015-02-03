@@ -17,7 +17,7 @@ typedef void(^BLTManagerDisConnect)();
 typedef void(^BLTManagerConnect)();
 
 @property (nonatomic, strong) BLTModel *model;
-@property (atomic, strong) NSMutableArray *allWareArray;
+@property (nonatomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
 @property (nonatomic, strong) BLTManagerConnect connectBlock;
