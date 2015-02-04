@@ -109,6 +109,7 @@
     [item setSelectButtonImage:@"game_button_select_Highlighted.png"];
     
     _thisModel._target = [NSString stringWithFormat:@"%ld", (long)index];
+    
 }
 
 - (void)resetButtonImage

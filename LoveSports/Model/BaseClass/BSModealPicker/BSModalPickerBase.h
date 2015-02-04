@@ -15,6 +15,7 @@
 #define BSMODALPICKER_BACKDROP_OPACITY 0.5
 
 #import <UIKit/UIKit.h>
+#import "WeekView.h"
 
 typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
@@ -26,6 +27,12 @@ typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
 /* Determines whether to display the opaque backdrop view.  By default, this is YES. */
 @property (nonatomic) BOOL presentBackdropView;
+
+@property (nonatomic, strong) NSArray *_dayArray;
+@property (nonatomic, strong) WeekView *_weekView;
+
+
+- (void)presentWithWeekDayInView:(UIView *)view  withUpdatWeedArray: (NSArray *) weedDayArray withBlock:(BSModalPickerViewCallback)callback;
 
 /* Presents the control embedded in the provided view.
  Arguments:

@@ -11,7 +11,7 @@
 
 @implementation HandSetAlarmClock
 
-@synthesize _isOpen, _setTime;
+@synthesize _isOpen, _setTime, _weekDayArray;
 
 
 /**
@@ -128,10 +128,13 @@
     HandSetAlarmClock *oneHandSetAlarmClock1 = [[HandSetAlarmClock alloc] init];
     oneHandSetAlarmClock1._setTime = @"7:00";
     oneHandSetAlarmClock1._isOpen = isOpen;
+    oneHandSetAlarmClock1._weekDayArray = [NSArray arrayWithObjects: @"1", @"2", @"3", @"4", @"5", nil];
+    
     
     HandSetAlarmClock *oneHandSetAlarmClock2 = [[HandSetAlarmClock alloc] init];
     oneHandSetAlarmClock2._setTime = @"23:00";
     oneHandSetAlarmClock2._isOpen = isOpen;
+    oneHandSetAlarmClock2._weekDayArray = [NSArray arrayWithObjects:@"1", @"2", @"3", @"4", @"5", nil];
     
     [_allHandSetAlarmClock addObject:oneHandSetAlarmClock1];
     [_allHandSetAlarmClock addObject:oneHandSetAlarmClock2];

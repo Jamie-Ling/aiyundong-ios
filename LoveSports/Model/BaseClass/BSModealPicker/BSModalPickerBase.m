@@ -20,6 +20,7 @@
 @end
 
 @implementation BSModalPickerBase
+@synthesize _dayArray, _weekView;
 
 #pragma mark - Designated Initializer
 
@@ -116,6 +117,62 @@
 }
 
 #pragma mark - Instance Methods
+
+- (void)presentWithWeekDayInView:(UIView *)view  withUpdatWeedArray: (NSArray *) weedDayArray withBlock:(BSModalPickerViewCallback)callback {
+    self.frame = view.bounds;
+    self.callbackBlock = callback;
+    
+    [self.panel removeFromSuperview];
+    [self.backdropView removeFromSuperview];
+    
+   
+    
+    self.panel = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - BSMODALPICKER_PANEL_HEIGHT, self.bounds.size.width, BSMODALPICKER_PANEL_HEIGHT)];
+    self.panel.autoresizesSubviews = YES;
+    self.panel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    
+    if (self.presentBackdropView) {
+        [self addSubview:self.backdropView];
+    }
+    
+    CGRect rect = self.picker.frame;
+    rect.size.width = self.panel.frame.size.width;
+    self.picker.frame = rect;
+    [self.panel addSubview:self.picker];
+    [self.panel addSubview:self.toolbar];
+    
+    
+    [self.picker setCenterY:self.picker.centerY - kNavigationBarHeight];
+    [self.toolbar setCenterY:self.toolbar.centerY - kNavigationBarHeight];
+    
+    [self.panel setHeight:self.panel.height + kNavigationBarHeight];
+    [self.panel setCenterY:self.panel.centerY - kNavigationBarHeight];
+    
+    _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.frame.size.width * 0, self.panel.frame.size.height  - kNavigationBarHeight, self.panel.frame.size.width * 1.0, kNavigationBarHeight) withWeekBlock:^(WeekView *weekView) {
+        _dayArray = weekView.selArray;
+    }];
+    
+    [self.panel addSubview:_weekView];
+    [_weekView updateSelButtonForWeekView:weedDayArray];
+    
+    [self addSubview:self.panel];
+    [view addSubview:self];
+    
+    CGRect oldFrame = self.panel.frame;
+    CGRect newFrame = self.panel.frame;
+    newFrame.origin.y += newFrame.size.height;
+    self.panel.frame = newFrame;
+    
+    [UIView animateWithDuration:0.25 delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.panel.frame = oldFrame;
+                         self.backdropView.alpha = 1;
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+}
+
 
 - (void)presentInView:(UIView *)view withBlock:(BSModalPickerViewCallback)callback {
     self.frame = view.bounds;

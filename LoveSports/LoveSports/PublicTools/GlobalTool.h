@@ -164,6 +164,8 @@ typedef enum{
 #define kBraceletLongSetRemind24  [NSString stringWithFormat:@"每隔45分钟\n%@ ~ %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime24]  //久坐提醒  // 24小时制
 #define kBraceletLongSetRemind  [NSString stringWithFormat:@"每隔45分钟\n上午 %@ ~ 下午 %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime] //久坐提醒  // 12小时制
 
+#define kBLTSendFaileMessage  @"请检查蓝牙连接情况"  //蓝牙控制失败提示
+
 #define kUserNamePlaceHoldText @"请输入您的手机号或Email"              //用户名holdplace文字
 #define kPasswordPlaceHoldText @"请输入您的密码"              //密码holdplace文字
 #define kSMSPlaceHoldText @"请输入验证码"                   //验证码...

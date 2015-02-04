@@ -79,7 +79,6 @@
     [_cellTitleArray insertObject:_showModel._name atIndex:2];
     
     //得到电量
-    NSLog(@"电量在此设置");
     _dumpEnergy = _showModel._deviceElectricity;
     
     //刷新界面

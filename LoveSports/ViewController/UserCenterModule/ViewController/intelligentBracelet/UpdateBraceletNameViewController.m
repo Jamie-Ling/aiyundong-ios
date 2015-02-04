@@ -118,9 +118,19 @@
     [self.view endEditing:YES];
     
     _thisModel._name = _nickNameTextField.text;
+    [BLTSendData sendModifyDeviceNameDataWithName:_thisModel._name withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeChangeWareName)
+        {
+            [UIView showAlertView:@"手环名称修改成功" andMessage:nil];
+            [self goBackPrePage];
+        }
+        else
+        {
+            [UIView showAlertView:@"手环名称修改失败" andMessage:kBLTSendFaileMessage];
+        }
+    }];
     
-    [UIView showAlertView:@"手环名称修改成功" andMessage:nil];
-    [self goBackPrePage];
+   
 }
 
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6970ED121A826266009572D5 /* WeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6970ED111A826266009572D5 /* WeekView.m */; };
+		6970ED141A826974009572D5 /* 周选中1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED131A826973009572D5 /* 周选中1.png */; };
+		6970ED161A826A2D009572D5 /* 休选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED151A826A2D009572D5 /* 休选中.png */; };
 		698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */; };
 		698A90BD1A6FEB54005BABE6 /* EAIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90B11A6FEB54005BABE6 /* EAIntroView.m */; };
 		698A90BE1A6FEB54005BABE6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 698A90B41A6FEB54005BABE6 /* LICENSE */; };
@@ -313,6 +316,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6970ED101A826266009572D5 /* WeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekView.h; sourceTree = "<group>"; };
+		6970ED111A826266009572D5 /* WeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekView.m; sourceTree = "<group>"; };
+		6970ED131A826973009572D5 /* 周选中1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中1.png"; sourceTree = "<group>"; };
+		6970ED151A826A2D009572D5 /* 休选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "休选中.png"; sourceTree = "<group>"; };
 		698A90AE1A6FEB54005BABE6 /* EAIntroPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroPage.h; sourceTree = "<group>"; };
 		698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAIntroPage.m; sourceTree = "<group>"; };
 		698A90B01A6FEB54005BABE6 /* EAIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroView.h; sourceTree = "<group>"; };
@@ -963,6 +970,8 @@
 		69EFC1D81A737ABD00B5BC53 /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
+				6970ED151A826A2D009572D5 /* 休选中.png */,
+				6970ED131A826973009572D5 /* 周选中1.png */,
 				6992420F1A77425200EFF121 /* game_button_select_Highlighted@2x.png */,
 				699242101A77425200EFF121 /* game_button_select_Normal@2x.png */,
 				69EFC2B71A75EB0A00B5BC53 /* 添加按钮@2x.png */,
@@ -1039,6 +1048,8 @@
 				69EFC2AD1A75D11900B5BC53 /* BSModalPickerBase.m */,
 				69EFC2AE1A75D11900B5BC53 /* BSModalPickerView.h */,
 				69EFC2AF1A75D11900B5BC53 /* BSModalPickerView.m */,
+				6970ED101A826266009572D5 /* WeekView.h */,
+				6970ED111A826266009572D5 /* WeekView.m */,
 			);
 			path = BSModealPicker;
 			sourceTree = "<group>";
@@ -2060,6 +2071,8 @@
 				F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */,
 				69EFC1E61A737ABD00B5BC53 /* 顶部四格1@2x.png in Resources */,
 				F470E7CD1A7FAD680009E649 /* 顶部四格3.png in Resources */,
+				6970ED141A826974009572D5 /* 周选中1.png in Resources */,
+				6970ED161A826A2D009572D5 /* 休选中.png in Resources */,
 				69EFC2031A737ABD00B5BC53 /* 1_06.png in Resources */,
 				69EFC1F11A737ABD00B5BC53 /* icon3@2x.png in Resources */,
 				F470E7C41A7FAD680009E649 /* 横屏.png in Resources */,
@@ -2261,6 +2274,7 @@
 				69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */,
 				F4B693A51A6F403400B42395 /* NSData+MKBase64.m in Sources */,
 				F4B693A61A6F403400B42395 /* NSDate+RFC1123.m in Sources */,
+				6970ED121A826266009572D5 /* WeekView.m in Sources */,
 				F4B6935E1A6F402A00B42395 /* MBProgressHUD.m in Sources */,
 				F4B6931E1A6F3F3E00B42395 /* README.md in Sources */,
 				69FD42231A7FCC2C0023B74D /* TimeAndClockViewController.m in Sources */,

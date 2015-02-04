@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *_setTime;
 @property (nonatomic, assign) BOOL _isOpen;
+@property (nonatomic, strong) NSArray *_weekDayArray;  //重复星期数组，如【@“1“， @”2”】，代表每周一二重复
 
 /**
  *  得到显示时间（根据是否是24小时制）

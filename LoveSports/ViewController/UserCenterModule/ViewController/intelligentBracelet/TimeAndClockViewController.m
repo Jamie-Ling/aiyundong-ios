@@ -178,7 +178,8 @@
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
     datePicker.showTodayButton = NO;
     datePicker.mode = UIDatePickerModeTime;
-    [datePicker presentInView:self.view
+    [datePicker presentWithWeekDayInView:self.view
+                      withUpdatWeedArray:[tempHandClock._weekDayArray copy]
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
                             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -186,12 +187,29 @@
                             NSTimeZone *timeZone = [NSTimeZone localTimeZone];
                             [dateFormatter setTimeZone:timeZone];
                             NSString *choiceString = [dateFormatter stringFromDate:datePicker.selectedDate];
-                            if (![choiceString isEqualToString:setTimeString])
+                            NSLog(@"dayarray = %@", datePicker._dayArray);
+//                            if (![choiceString isEqualToString:setTimeString] )
                             {
                                 NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
+                                tempHandClock._weekDayArray = datePicker._dayArray;
                                 tempHandClock._setTime = choiceString;
                                 [self reloadUserInfoTableView];
                             }
+                            
+                            AlarmClockModel *oneClockOverModel = [[AlarmClockModel alloc] init];
+                            
+                            [oneClockOverModel setAllTimeFromTimeString:choiceString withRepeatUntStringArray:nil withFullWeekDay:NO];
+                            
+                            [BLTSendData sendAlarmClockDataWithOpen:tempHandClock._isOpen withAlarm:tempHandClock._weekDayArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                if (type == BLTAcceptDataTypeSetSedentaryRemind)
+                                {
+                                    NSLog(@"设置闹钟成功");
+                                }
+                                else
+                                {
+                                    NSLog(@"设置闹钟失败");
+                                }
+                            }];
                         }
                     }];
 }

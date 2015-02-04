@@ -30,7 +30,7 @@
 #import "JSBadgeView.h"
 #import "VersionInfoModel.h"
 #import "DeviceUpdateViewController.h"
-#import "BLTSendData.h"
+
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
@@ -228,6 +228,10 @@
             if (type == BLTAcceptDataTypeSetSedentaryRemind)
             {
                 NSLog(@"更新久坐提醒状态成功");
+            }
+            else
+            {
+                NSLog(@"更新久坐提醒状态失败");
             }
         }];
         
