@@ -30,6 +30,7 @@
 #import "JSBadgeView.h"
 #import "VersionInfoModel.h"
 #import "DeviceUpdateViewController.h"
+#import "TestBLTViewController.h"
 
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
@@ -47,6 +48,7 @@
     
     JSBadgeView *_badgeView;   //新礼物标记
     VersionInfoModel *_newVersionInfoModel;
+    TestBLTViewController *_testBLTVC;
     
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -65,7 +67,7 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久坐提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", nil];
+    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久坐提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", @"测试蓝牙其它接口", nil];
 
     //tableview
     [self addTableView];
@@ -232,6 +234,8 @@
             else
             {
                 NSLog(@"更新久坐提醒状态失败");
+                theSwitch.on = !_thisBraceletInfoModel._longTimeSetRemind;
+                _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
             }
         }];
         
@@ -244,6 +248,15 @@
         
         return;
     }
+}
+
+- (void) testBLT
+{
+    if (!_testBLTVC)
+    {
+        _testBLTVC = [[TestBLTViewController alloc] init];
+    }
+    [self.navigationController pushViewController:_testBLTVC animated:YES];
 }
 
 #pragma mark ---------------- UIAlertView delegate -----------------
@@ -313,7 +326,7 @@
                                                             font:[UIFont systemFontOfSize:14]
                                                    textAlignment:NSTextAlignmentLeft
                                                    lineBreakMode:0
-                                                   numberOfLines:0];
+                                                   numberOfLines:1];
     [title sizeToFit];
     title.center = CGPointMake(vTableViewMoveLeftX + 16.0 + title.width / 2.0, vOneCellHeight / 2.0);
     [oneCell.contentView addSubview:title];
@@ -444,6 +457,9 @@
             break;
         case 7:
             [self goToRecoverDefaultSet];
+            break;
+        case 8:
+            [self testBLT];
             break;
         default:
             break;

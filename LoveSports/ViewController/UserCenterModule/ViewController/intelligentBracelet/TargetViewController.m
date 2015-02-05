@@ -19,6 +19,7 @@
 @interface TargetViewController ()<PAGameAnswerItemDelegate>
 {
     NSArray *_titleArray;
+    NSDictionary *_userInfoDictionary;
 }
 
 @end
@@ -42,6 +43,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    [self reloadUserInfoTableView];
+}
+
+- (void) reloadUserInfoTableView
+{
+    _userInfoDictionary = nil;
+    _userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+    
+    if (!_userInfoDictionary)
+    {
+        NSLog(@"用户信息出错");
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -108,8 +128,56 @@
     [self resetButtonImage];
     [item setSelectButtonImage:@"game_button_select_Highlighted.png"];
     
+    NSString *tempTarget = _thisModel._target;
     _thisModel._target = [NSString stringWithFormat:@"%ld", (long)index];
     
+    //生日
+    NSDate *theDate = [NSDate date];
+    NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
+    if (![NSString isNilOrEmpty:birthdayString ])
+    {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+        [dateFormatter setTimeZone:timeZone];
+        theDate = [dateFormatter dateFromString:birthdayString];
+    }
+    
+    //体重
+    NSString *weight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
+    if ([NSString isNilOrEmpty:weight])
+    {
+        weight = @"50";
+    }
+    
+    //步长, 假设为身高的1/3
+    NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
+    if ([NSString isNilOrEmpty:height])
+    {
+        height = @"178";
+    }
+    
+    //步数
+    NSInteger targetSums = 10000;
+    if ([_thisModel._target integerValue] == 2)
+    {
+        targetSums = 13000;
+    }
+    if (([_thisModel._target integerValue] == 3)) {
+        targetSums = 12000;
+    }
+    
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:(int)([height integerValue] / 3 ) withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeSetUserInfo)
+        {
+            NSLog(@"更新目标成功");
+        }
+        else
+        {
+            NSLog(@"更新目标失败");
+            _thisModel._target = tempTarget;
+        }
+    }];
 }
 
 - (void)resetButtonImage

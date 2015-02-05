@@ -53,6 +53,10 @@
 @property (nonatomic, strong) NSString *_defaultName; //默认名字
 
 
+//界面上没有的，测试使用
+@property (nonatomic, assign) NSInteger _timeAbsoluteValue;  //时区绝对值
+@property (nonatomic, assign) BOOL _timeZone;  //是否是正时区
+
 /**
  *  还原所有设置
  */

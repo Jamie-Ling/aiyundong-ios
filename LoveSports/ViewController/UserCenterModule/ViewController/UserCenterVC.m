@@ -181,6 +181,7 @@
     {
         _userInfoVC = [[UserInfoViewController alloc] init];
     }
+    _userInfoVC._thisModel = _showModel;
     [self.navigationController pushViewController:_userInfoVC animated:YES];
 }
 

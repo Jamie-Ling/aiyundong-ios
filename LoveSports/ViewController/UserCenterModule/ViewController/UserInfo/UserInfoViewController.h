@@ -7,7 +7,10 @@
 //  个人信息
 
 #import <UIKit/UIKit.h>
+#import "BraceletInfoModel.h"
 
 @interface UserInfoViewController : UIViewController
+
+@property (nonatomic, weak) BraceletInfoModel *_thisModel;
 
 @end

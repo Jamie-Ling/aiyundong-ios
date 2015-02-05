@@ -122,6 +122,18 @@
         {
             NSLog(@"更改是否24时制的状态：%d", theSwitch.on);
             _thisModel._is24HoursTime = theSwitch.on;
+            
+            [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withJetLag:_thisModel._timeAbsoluteValue withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                if (type == BLTAcceptDataTypeSetBaseInfo) {
+                    NSLog(@"设置24小时制成功");
+                }
+                else
+                {
+                    NSLog(@"设置24小时制失败");
+                    theSwitch.on = !_thisModel._is24HoursTime;
+                    _thisModel._is24HoursTime = theSwitch.on;
+                }
+            }];
         }
         if (theSwitch.tag == 1)
         {
@@ -132,10 +144,19 @@
             {
                 _thisModel._isHandAlarmClock = NO;
             }
+            
+            [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:NO success:^(bool success) {
+                if (!success)
+                {
+                    theSwitch.on = !_thisModel._isAutomaticAlarmClock;
+                    _thisModel._isAutomaticAlarmClock = theSwitch.on;
+                }
+            }];
         }
         [self reloadUserInfoTableView];
         
         return;
+        
     }
     else
     {
@@ -148,15 +169,28 @@
             {
                 _thisModel._isAutomaticAlarmClock = NO;
             }
-             [self reloadUserInfoTableView];
+            [self reloadUserInfoTableView];
+            [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:theSwitch.on success:^(bool success) {
+                if (!success)
+                {
+                    theSwitch.on = !_thisModel._isHandAlarmClock;
+                    _thisModel._isHandAlarmClock = theSwitch.on;
+                }
+            }];
         }
         else
         {
             HandSetAlarmClock __weak *tempModel = [_thisModel._allHandSetAlarmClock objectAtIndex:theSwitch.tag % 1000 - 2];
             tempModel._isOpen = theSwitch.on;
-            
+            [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:theSwitch.on success:^(bool success) {
+                if (!success)
+                {
+                    theSwitch.on = !tempModel._isOpen;
+                    tempModel._isOpen = theSwitch.on;
+                }
+            }];
         }
-       
+        
     }
     
 }
@@ -180,38 +214,32 @@
     datePicker.mode = UIDatePickerModeTime;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:[tempHandClock._weekDayArray copy]
-                    withBlock:^(BOOL madeChoice) {
-                        if (madeChoice) {
-                            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                            [dateFormatter setDateFormat:@"HH:mm"];     //大写HH，强制24小时
-                            NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-                            [dateFormatter setTimeZone:timeZone];
-                            NSString *choiceString = [dateFormatter stringFromDate:datePicker.selectedDate];
-                            NSLog(@"dayarray = %@", datePicker._dayArray);
-//                            if (![choiceString isEqualToString:setTimeString] )
-                            {
-                                NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
-                                tempHandClock._weekDayArray = datePicker._dayArray;
-                                tempHandClock._setTime = choiceString;
-                                [self reloadUserInfoTableView];
-                            }
-                            
-                            AlarmClockModel *oneClockOverModel = [[AlarmClockModel alloc] init];
-                            
-                            [oneClockOverModel setAllTimeFromTimeString:choiceString withRepeatUntStringArray:nil withFullWeekDay:NO];
-                            
-                            [BLTSendData sendAlarmClockDataWithOpen:tempHandClock._isOpen withAlarm:tempHandClock._weekDayArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                if (type == BLTAcceptDataTypeSetSedentaryRemind)
-                                {
-                                    NSLog(@"设置闹钟成功");
-                                }
-                                else
-                                {
-                                    NSLog(@"设置闹钟失败");
-                                }
-                            }];
-                        }
-                    }];
+                               withBlock:^(BOOL madeChoice) {
+                                   if (madeChoice) {
+                                       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                       [dateFormatter setDateFormat:@"HH:mm"];     //大写HH，强制24小时
+                                       NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+                                       [dateFormatter setTimeZone:timeZone];
+                                       NSString *choiceString = [dateFormatter stringFromDate:datePicker.selectedDate];
+                                       NSLog(@"dayarray = %@", datePicker._dayArray);
+                                       //                            if (![choiceString isEqualToString:setTimeString] )
+                                       //                            {
+                                       NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
+                                       NSArray *tempArray = tempHandClock._weekDayArray;
+                                       tempHandClock._weekDayArray = datePicker._dayArray;
+                                       tempHandClock._setTime = choiceString;
+                                       [self reloadUserInfoTableView];
+                                       //                            }
+                                       [self sendAlarmClockDataWithAlarm:_thisModel._allHandSetAlarmClock withOpen:YES orSetWithByEverySet:YES success:^(bool success) {
+                                           if (!success)
+                                           {
+                                               tempHandClock._setTime = setTimeString;
+                                               tempHandClock._weekDayArray = tempArray;
+                                           }
+                                       }];
+                                       
+                                   }
+                               }];
 }
 
 - (void) addOneHandClock
@@ -236,14 +264,14 @@
 
 - (UILabel *) getALabel
 {
-     return [[ObjectCTools shared] getACustomLableFrame:CGRectMake(0, 0, vOneCellWidth, vOneCellWidth)
-                                backgroundColor:[UIColor clearColor]
-                                           text:@""
-                                      textColor:kLabelTitleDefaultColor
-                                           font:[UIFont systemFontOfSize:14]
-                                  textAlignment:NSTextAlignmentLeft
-                                  lineBreakMode:NSLineBreakByCharWrapping
-                                  numberOfLines:1];
+    return [[ObjectCTools shared] getACustomLableFrame:CGRectMake(0, 0, vOneCellWidth, vOneCellWidth)
+                                       backgroundColor:[UIColor clearColor]
+                                                  text:@""
+                                             textColor:kLabelTitleDefaultColor
+                                                  font:[UIFont systemFontOfSize:14]
+                                         textAlignment:NSTextAlignmentLeft
+                                         lineBreakMode:NSLineBreakByCharWrapping
+                                         numberOfLines:1];
 }
 
 
@@ -406,7 +434,7 @@
             [customButton setTitleColor:kRGBAlpha(0, 122, 255, 1.0) forState:UIControlStateNormal];
             [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
             [customButton addTarget:self action:@selector(setEdit:) forControlEvents:UIControlEventTouchUpInside];
-//            [rightImageView setImage:[UIImage imageNamed:@"添加按钮"]];
+            //            [rightImageView setImage:[UIImage imageNamed:@"添加按钮"]];
             [oneCell.contentView addSubview:customButton];
             
             [slideSwitchH setHidden:YES];
@@ -441,7 +469,7 @@
             [oneCell.contentView addSubview:rightTitle];
             slideSwitchH.on = clockTime._isOpen;
             [slideSwitchH setX:vOneCellWidth - vOneCellHeight - slideSwitchH.width];
-//            [oneCell.contentView addSubview:rightImageView];
+            //            [oneCell.contentView addSubview:rightImageView];
             
         }
         return oneCell;
@@ -469,14 +497,14 @@
         [self changeTimeWithIndex:indexPath.row - 2];
     }
     
-
+    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 2)
     {
-//        return  ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2) * vOneCellHeight;
+        //        return  ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2) * vOneCellHeight;
         
         NSInteger number = ((_thisModel._allAutomaticSetAlarmClock.count + 1) / 2);
         CGFloat textHeight = number * kStatusBarHeight + (number - 1) * kStatusBarHeight;
@@ -557,7 +585,7 @@
             [self reloadUserInfoTableView];
             
         });
-       
+        
     }
 }
 
@@ -565,6 +593,78 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
 }
+
+#pragma mark ---------------- 蓝牙对接 -----------------
+/**
+ *  设置蓝牙设备的闹钟
+ *
+ *  @param alarms          HandSetAlarmClock 数组
+ *  @param isOpen          是否全部开、全部关（选择此开关的前提是下一个开关是关着的）
+ *  @param isSetByEverySet 是否按数组内每个元素的开关来设置
+ */
+- (void)sendAlarmClockDataWithAlarm:(NSArray *)alarms
+                           withOpen:(BOOL) isOpen
+                orSetWithByEverySet: (BOOL) isSetByEverySet
+                            success: (void (^)(bool success))resultBack
+{
+    NSMutableArray *setOpenArray = [[NSMutableArray alloc] initWithCapacity:32];
+    NSMutableArray *setCloseArray = [[NSMutableArray alloc] initWithCapacity:32];
+    
+    for (HandSetAlarmClock *tempModel in alarms)
+    {
+        AlarmClockModel *oneClockOverModel = [[AlarmClockModel alloc] init];
+        [oneClockOverModel setAllTimeFromTimeString:tempModel._setTime withRepeatUntStringArray:tempModel._weekDayArray withFullWeekDay:NO];
+        if (!isSetByEverySet)
+        {
+            if (isOpen)
+            {
+                [setOpenArray addObject:oneClockOverModel];
+            }
+            else
+            {
+                [setCloseArray addObject:oneClockOverModel];
+            }
+        }
+        else
+        {
+            if (tempModel._isOpen)
+            {
+                [setOpenArray addObject:oneClockOverModel];
+            }
+            else
+            {
+                [setCloseArray addObject:oneClockOverModel];
+            }
+        }
+    }
+    
+    [BLTSendData sendAlarmClockDataWithOpen:00000001 withAlarm:setOpenArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeSetSedentaryRemind)
+        {
+            NSLog(@"设置打开闹钟成功");
+            resultBack(YES);
+        }
+        else
+        {
+            NSLog(@"设置打开闹钟失败");
+            resultBack(NO);
+        }
+    }];
+    
+    [BLTSendData sendAlarmClockDataWithOpen:00000000 withAlarm:setCloseArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeSetSedentaryRemind)
+        {
+            NSLog(@"设置关闭闹钟成功");
+            resultBack(YES);
+        }
+        else
+        {
+            NSLog(@"设置关闭闹钟失败");
+            resultBack(NO);
+        }
+    }];
+}
+
 
 
 @end

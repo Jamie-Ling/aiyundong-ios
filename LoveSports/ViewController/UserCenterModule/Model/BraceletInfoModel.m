@@ -51,6 +51,8 @@
 
 @synthesize _defaultName;
 
+@synthesize _timeAbsoluteValue, _timeZone;
+
 - (instancetype)init
 {
     self = [super init];

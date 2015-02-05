@@ -207,7 +207,6 @@
                 {
                     NSLog(@"改成公制");
                     _thisModel._isShowMetricSystem = YES;
-                    [self reloadUserInfoTableView];
                 }
             }
                 break;
@@ -221,7 +220,7 @@
                 {
                     NSLog(@"改成英制");
                     _thisModel._isShowMetricSystem = NO;
-                    [self reloadUserInfoTableView];
+                    
                 }
             }
                 break;
@@ -231,6 +230,18 @@
             default:
                 break;
         }
+        [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withJetLag:_thisModel._timeAbsoluteValue withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            if (type == BLTAcceptDataTypeSetBaseInfo) {
+                NSLog(@"设置公英制成功");
+                [self reloadUserInfoTableView];
+            }
+            else
+            {
+                NSLog(@"设置公英制失败");
+                _thisModel._isShowMetricSystem = !_thisModel._isShowMetricSystem;
+            }
+        }];
+       
         return;
     }
     if (actionSheet.tag == vHandTag)

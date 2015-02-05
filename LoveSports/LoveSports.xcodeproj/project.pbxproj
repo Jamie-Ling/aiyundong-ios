@@ -10,6 +10,7 @@
 		6970ED121A826266009572D5 /* WeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6970ED111A826266009572D5 /* WeekView.m */; };
 		6970ED141A826974009572D5 /* 周选中1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED131A826973009572D5 /* 周选中1.png */; };
 		6970ED161A826A2D009572D5 /* 休选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED151A826A2D009572D5 /* 休选中.png */; };
+		6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6970ED261A83B152009572D5 /* TestBLTViewController.m */; };
 		698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */; };
 		698A90BD1A6FEB54005BABE6 /* EAIntroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90B11A6FEB54005BABE6 /* EAIntroView.m */; };
 		698A90BE1A6FEB54005BABE6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 698A90B41A6FEB54005BABE6 /* LICENSE */; };
@@ -320,6 +321,8 @@
 		6970ED111A826266009572D5 /* WeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekView.m; sourceTree = "<group>"; };
 		6970ED131A826973009572D5 /* 周选中1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中1.png"; sourceTree = "<group>"; };
 		6970ED151A826A2D009572D5 /* 休选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "休选中.png"; sourceTree = "<group>"; };
+		6970ED251A83B152009572D5 /* TestBLTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBLTViewController.h; sourceTree = "<group>"; };
+		6970ED261A83B152009572D5 /* TestBLTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBLTViewController.m; sourceTree = "<group>"; };
 		698A90AE1A6FEB54005BABE6 /* EAIntroPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroPage.h; sourceTree = "<group>"; };
 		698A90AF1A6FEB54005BABE6 /* EAIntroPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAIntroPage.m; sourceTree = "<group>"; };
 		698A90B01A6FEB54005BABE6 /* EAIntroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAIntroView.h; sourceTree = "<group>"; };
@@ -799,6 +802,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6970ED241A83B0EA009572D5 /* TestBLT */ = {
+			isa = PBXGroup;
+			children = (
+				6970ED251A83B152009572D5 /* TestBLTViewController.h */,
+				6970ED261A83B152009572D5 /* TestBLTViewController.m */,
+			);
+			path = TestBLT;
+			sourceTree = "<group>";
+		};
 		698A90AC1A6FEB54005BABE6 /* MSIntroView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1349,6 +1361,7 @@
 			children = (
 				69FD41DC1A7FCC2C0023B74D /* aboutUS */,
 				69FD41DF1A7FCC2C0023B74D /* accountManage */,
+				6970ED241A83B0EA009572D5 /* TestBLT */,
 				69FD41E21A7FCC2C0023B74D /* bindingDevice */,
 				69FD41E71A7FCC2C0023B74D /* intelligentBracelet */,
 				69FD41F41A7FCC2C0023B74D /* UserCenterVC.h */,
@@ -2316,6 +2329,7 @@
 				69FD42051A7FCC2C0023B74D /* MapVC.m in Sources */,
 				69FD42271A7FCC2C0023B74D /* UpdateNickNameViewController.m in Sources */,
 				F4BF5F6D1A6F529E004C433D /* ZKKNavigationController.m in Sources */,
+				6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */,
 				69FD42191A7FCC2C0023B74D /* MSCustomWebViewController.m in Sources */,
 				F4B693A41A6F403400B42395 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				69FD42061A7FCC2C0023B74D /* MoreVC.m in Sources */,
