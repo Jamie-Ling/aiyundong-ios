@@ -123,13 +123,12 @@ DEF_SINGLETON(BLTPeripheral)
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
             if (_deviceInfoBlock)
             {
-                _deviceInfoBlock();
+             //   _deviceInfoBlock();
             }
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
-
         }
         else if ([charac.UUID isEqual:BLTUUID.hardwareRevisionStringUUID]) // 绑定
         {
@@ -184,7 +183,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        NSLog(@"%@", characteristic.value);
+        NSLog(@"数据更新%@\n", characteristic.value);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
             [self cleanMutableData:_receiveData];
@@ -198,6 +197,7 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [self cleanMutableData:_receiveData];
             [_receiveData appendData:characteristic.value];
+            
             if (_updateBigDataBlock)
             {
                 _updateBigDataBlock(_receiveData);

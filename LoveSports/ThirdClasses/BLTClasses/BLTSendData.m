@@ -84,6 +84,8 @@
 
 @implementation BLTSendData
 
+DEF_SINGLETON(BLTSendData)
+
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
                            withHourly:(NSInteger)hourly
                            withJetLag:(NSInteger)lag
@@ -390,13 +392,18 @@
  *           传输运动数据.
  */
 
-+ (void)sendRequestSportDataWithDate:(NSDate *)date
++ (void)sendRequestHistorySportDataWithDate:(NSDate *)date
+                           withOrder:(NSInteger)order
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSInteger order = (date.hour * 60 + date.minute) / 15;
     UInt8 val[10] = {0xBE, 0x02, 0x01, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year,
         date.month, date.day, (UInt8)(order >> 8), (UInt8)order};
+    
+    for (int i = 0; i < 10; i++)
+    {
+        NSLog(@"%x", val[i]);
+    }
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
@@ -407,12 +414,18 @@
     UInt8 val[10] = {0xBE, 0x02, 0x02, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year,
         date.month, date.day, (UInt8)(order >> 8), (UInt8)order};
+    
+    for (int i = 0; i < 10; i++)
+    {
+        NSLog(@"%x", val[i]);
+    }
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
 + (void)sendRequestTodaySportDataWithOrder:(NSInteger)order
                            withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    NSLog(@"%d..%d", (UInt8)(order >> 8), (UInt8)order);
     UInt8 val[6] = {0xBE, 0x02, 0x03, 0xFE, (UInt8)(order >> 8), (UInt8)order};
     [self sendDataToWare:&val withLength:6 withUpdate:block];
 }
@@ -436,6 +449,87 @@
     
     NSData *sData = [[NSData alloc] initWithBytes:val length:length];
     [[BLTManager sharedInstance] senderDataToPeripheral:sData];
+}
+
+// 同步今天数据
+- (void)synTodayData
+{
+    _waitTime = 0;
+    _failCount = 0;
+    [BLTSendData sendRequestHistorySportDataWithDate:[NSDate date]
+                                           withOrder:0
+                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                         if (type == BLTAcceptDataTypeRequestHistorySportsData)
+                                         {
+                                             
+                                         }
+    }];
+}
+
+// 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
+- (void)synHistoryData
+{
+   // [self startTimer];
+    [self syncInBackGround];
+    // [self performSelectorInBackground:@selector(syncInBackGround) withObject:nil];
+}
+
+- (void)syncInBackGround
+{
+    _waitTime = 0;
+    _failCount = 0;
+    [[BLTAcceptData sharedInstance] cleanMutableData];
+    NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:-1];
+    [BLTSendData sendRequestHistorySportDataWithDate:date
+                                           withOrder:0
+                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                         if (type == BLTAcceptDataTypeRequestHistorySportsData)
+                                         {
+                                             
+                                         }
+                                     }];
+    
+    
+    if ([date isSameWithDate:[NSDate date]])
+    {
+        _isStopSync = YES;
+    }
+    else
+    {
+        _isStopSync = NO;
+    }
+}
+
+- (void)startTimer
+{
+    if (!_timer)
+    {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(supervisionSync) userInfo:nil repeats:YES];
+    }
+}
+
+// 监察同步状态
+- (void)supervisionSync
+{
+    _waitTime ++;
+    
+    if (_waitTime > 5 || _failCount > 5)
+    {
+        // 停止同步数据因意外情况
+        [self stopTimer];
+    }
+}
+
+- (void)stopTimer
+{
+    if (_timer)
+    {
+        if ([_timer isValid])
+        {
+            [_timer invalidate];
+            _timer = nil;
+        }
+    }
 }
 
 @end

@@ -43,5 +43,6 @@
 #define LS_BindingID @"LS_BindingID"
 // 是否已经设置过基本时区和度量
 #define LS_SettingBaseInfo @"LS_SettingBaseInfo"
-
+// 最后同步的时间
+#define LS_LastSyncDate @"LS_LastSyncDate"
 

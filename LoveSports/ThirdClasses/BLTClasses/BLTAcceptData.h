@@ -54,8 +54,14 @@ typedef void(^BLTAcceptDataUpdateValue)(id object, BLTAcceptDataType type);
 
 @property (nonatomic, strong) BLTAcceptDataUpdateValue updateValue;
 @property (nonatomic, assign) BLTAcceptDataType type;
+@property (nonatomic, strong) NSMutableData *syncData;
 
 AS_SINGLETON(BLTAcceptData)
+
+/**
+ *  清空数据。
+ */
+- (void)cleanMutableData;
 
 @end
 

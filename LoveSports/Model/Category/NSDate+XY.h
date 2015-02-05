@@ -45,5 +45,7 @@
 - (NSString *)resetStringCache;
 - (NSString *)dateToString;
 + (NSDate *)stringToDate:(NSString *)timeString;
+- (NSArray *)dateToArray;
+- (BOOL)isSameWithDate:(NSDate *)date;
 
 @end

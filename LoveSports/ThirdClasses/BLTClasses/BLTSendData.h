@@ -42,6 +42,13 @@
 
 @interface BLTSendData : NSObject
 
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) NSInteger waitTime;
+@property (nonatomic, assign) NSInteger failCount;
+@property (nonatomic, assign) BOOL isStopSync;
+
+AS_SINGLETON(BLTSendData)
+
 /**
 *  设置用户基本信息
 *
@@ -285,7 +292,8 @@
  *  @param date  日期
  *  @param block 回调
  */
-+ (void)sendRequestSportDataWithDate:(NSDate *)date
++ (void)sendRequestHistorySportDataWithDate:(NSDate *)date
+                           withOrder:(NSInteger)order
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /**
@@ -325,5 +333,10 @@
 + (void)sendOpenBacklightSetData:(NSData *)data;
 + (void)sendOpenBacklightSetData:(NSData *)data;
  */
+
+/**
+ *  同步数据, 无论今天还是历史。
+ */
+- (void)synHistoryData;
 
 @end

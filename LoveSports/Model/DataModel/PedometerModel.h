@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSString *wareUUID;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *dateString;
+@property (nonatomic, assign) NSInteger totalBytes;
 @property (nonatomic, assign) NSInteger totalSteps; // 当天的总步数
 @property (nonatomic, assign) NSInteger totalCalories; // 当天的总卡路里
 

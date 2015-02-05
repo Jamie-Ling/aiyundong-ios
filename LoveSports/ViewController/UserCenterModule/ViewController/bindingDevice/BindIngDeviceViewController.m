@@ -8,14 +8,12 @@
 
 #import "BindIngDeviceViewController.h"
 #import "ShowWareView.h"
-#import "TimeZoneView.h"
 #import "BLTManager.h"
 #import "HardWareVC.h"
 
 @interface BindIngDeviceViewController () <ShowWareViewDelegate>
 
 @property (nonatomic, strong) ShowWareView *wareView;
-@property (nonatomic, strong) TimeZoneView *timeView;
 
 @end
 
@@ -31,11 +29,6 @@
     
     [self loadShowWareView];
     [[BLTManager sharedInstance] checkOtherDevices];
-    
-    __weak BindIngDeviceViewController *safeSelf = self;
-    [BLTManager sharedInstance].connectBlock = ^() {
-        [safeSelf bltIsConnect];
-    };
 }
 
 - (void)loadShowWareView
@@ -48,19 +41,7 @@
     [self.view addSubview:_wareView];
 }
 
-- (void)bltIsConnect
-{
-    HIDDENMBProgressHUD;
-    
-    if (![LS_SettingBaseInfo getBOOLValue])
-    {
-        _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
-        
-        _timeView.backgroundColor = [UIColor whiteColor];
-        _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-        [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
-    }
-}
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -78,11 +59,6 @@
 - (void) goBackPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)dealloc
-{
-    [BLTManager sharedInstance].connectBlock = nil;
 }
 
 - (void)showWareViewSelectHardware:(ShowWareView *)wareView withModel:(BLTModel *)model

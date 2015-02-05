@@ -33,6 +33,11 @@ DEF_SINGLETON(BLTManager)
             [LS_BindingID setObjectValue:@""];
         }
         
+        if (![LS_LastSyncDate getObjectValue])
+        {
+            [LS_LastSyncDate setObjectValue:[NSDate date]];
+        }
+        
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
      
@@ -84,12 +89,13 @@ DEF_SINGLETON(BLTManager)
         _discoverPeripheral = nil;
     }
     
+    _model = nil;
     [self scan];
 }
 
 - (void)checkOtherDevices
 {
-    [self scan];
+   // [self scan];
 }
 
 #pragma mark --- CBCentralManagerDelegate ---
@@ -125,10 +131,12 @@ DEF_SINGLETON(BLTManager)
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
     NSLog(@"..%@", advertisementData);
+    /*
     if (peripheral.name == NULL)
     {
         return;
     }
+    
     
     NSCharacterSet *nameCharacters = [[NSCharacterSet
                                        characterSetWithCharactersInString:@"-_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.:"] invertedSet];
@@ -137,6 +145,7 @@ DEF_SINGLETON(BLTManager)
     {
         return;
     }
+     */
     
     NSArray *uuidArray = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
     if (uuidArray.count > 0)
@@ -173,11 +182,11 @@ DEF_SINGLETON(BLTManager)
                         [_allWareArray addObject:model];
                     }
                 }
-                
-                if ([idString isEqualToString:[LS_BindingID getObjectValue]])
-                {
-                    [self repareConnectedDevice:model];
-                }
+            }
+            
+            if ([idString isEqualToString:[LS_BindingID getObjectValue]])
+            {
+                [self repareConnectedDevice:model];
             }
             
             if (_updateModelBlock)
@@ -193,7 +202,6 @@ DEF_SINGLETON(BLTManager)
                 self.discoverPeripheral = peripheral;
                 [self.centralManager connectPeripheral:peripheral options:nil];
                 [self.centralManager stopScan];
-              
             }
              */
         }
@@ -206,6 +214,7 @@ DEF_SINGLETON(BLTManager)
     
     if (self.discoverPeripheral != model.peripheral)
     {
+        _model = model;
         self.discoverPeripheral = model.peripheral;
         [self.centralManager connectPeripheral:model.peripheral options:nil];
         [self.centralManager stopScan];
@@ -243,7 +252,7 @@ DEF_SINGLETON(BLTManager)
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
-    NSLog(@"失去链接");
+    NSLog(@"失去链接..%@", error);
     [self startCan];
     
     for (BLTModel *model in _allWareArray)
@@ -283,6 +292,7 @@ DEF_SINGLETON(BLTManager)
             return;
         }
         
+        NSLog(@"..发送数据.....");
         [self.discoverPeripheral writeValue:data forCharacteristic:chara type:CBCharacteristicWriteWithResponse];
     }
 }

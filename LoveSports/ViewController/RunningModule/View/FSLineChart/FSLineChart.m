@@ -395,7 +395,6 @@
     
     // Compute the point in the view from the data with a set scale
     NSNumber *number = _data[idx];
-    NSLog(@"....%@...%f..%f", number, [number floatValue] * scale, scale);
     return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - [number floatValue] * scale);
 }
 

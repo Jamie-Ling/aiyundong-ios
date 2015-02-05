@@ -13,6 +13,8 @@
 #import "RegisterVC.h"
 #import "AppDelegate.h"
 
+#import "BLTSendData.h"
+
 @interface LoginVC () <UITextFieldDelegate, EntityModelDelegate>
 
 @property (nonatomic, strong) UIView *groundView;
@@ -43,7 +45,52 @@
     [self loadTextFileds];
     [self loadButtons];
     [self loadLinkLoginButtton];
+    
+    UIButton *regiButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 100, 40)];
+    regiButton.backgroundColor = [UIColor redColor];
+    [regiButton setTitle:@"test1" forState:UIControlStateNormal];
+    [regiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [regiButton addTarget:self action:@selector(timeSetting) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:regiButton];
+    
+    regiButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 70, 100, 40)];
+    regiButton.backgroundColor = [UIColor redColor];
+    [regiButton setTitle:@"test2" forState:UIControlStateNormal];
+    [regiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [regiButton addTarget:self action:@selector(synData) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:regiButton];
+    
+    regiButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 120, 100, 40)];
+    regiButton.backgroundColor = [UIColor redColor];
+    [regiButton setTitle:@"test3" forState:UIControlStateNormal];
+    [regiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [regiButton addTarget:self action:@selector(checkTime) forControlEvents:UIControlEventTouchUpInside];
+    [_groundView addSubview:regiButton];
 }
+
+- (void)timeSetting
+{
+    [[BLTSendData sharedInstance] synHistoryData];
+}
+
+- (void)synData
+{
+//    [BLTSendData sendRequestTodaySportDataWithOrder:10 withUpdateBlock:^(id object, BLTAcceptDataType type) {
+//        NSLog(@"同步大数据");
+//    }];
+    
+    [BLTSendData sendRequestHistorySportDataWithDate:[NSDate dateWithTimeIntervalSinceNow:0] withOrder:0 withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        NSLog(@"数据在哪儿");
+    }];
+}
+
+- (void)checkTime
+{
+[BLTSendData sendCheckDateOfHardwareDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
+    NSLog(@"时间。。。");
+}];
+}
+
 
 - (void)loadTextFileds
 {
@@ -268,7 +315,7 @@
 // 请求失败
 - (void)entityModelRefreshFromServerFailed:(BaseModelEntity *)em error:(NSError *)err withTag:(NSInteger)tag
 {
-    
+ 
 }
 
 - (void)didReceiveMemoryWarning

@@ -43,7 +43,6 @@
     CGContextRef con = UIGraphicsGetCurrentContext();
     for (DataModel *model in _array)
     {
-        NSLog(@".width = .%f.。。。。。model.width =.%f", width, model.width);
         CGMutablePathRef path = CGPathCreateMutable();
         CGRect rectAngle = CGRectMake(width, self.frame.size.height - model.height, model.width, model.height);
         CGPathAddRect(path, NULL, rectAngle);

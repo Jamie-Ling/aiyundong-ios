@@ -10,6 +10,7 @@
 #import "BLTManager.h"
 #import "BLTSendData.h"
 #import "BLTAcceptData.h"
+#import "TimeZoneView.h"
 
 @interface HardWareVC () <UIAlertViewDelegate>
 
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) UILabel *wareUUID;
 @property (nonatomic, strong) UILabel *wareName;
 @property (nonatomic, strong) UIButton *removeButton;
+
+@property (nonatomic, strong) TimeZoneView *timeView;
 
 @end
 
@@ -55,6 +58,11 @@
     else
     {
         [self loadNoBindingSetting];
+        
+        __weak HardWareVC *safeSelf = self;
+        [BLTManager sharedInstance].connectBlock = ^() {
+            [safeSelf bltIsConnect];
+        };
     }
 }
 
@@ -196,6 +204,20 @@
     }
 }
 
+- (void)bltIsConnect
+{
+    HIDDENMBProgressHUD;
+    
+    if (![LS_SettingBaseInfo getBOOLValue])
+    {
+        _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
+        
+        _timeView.backgroundColor = [UIColor whiteColor];
+        _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
+        [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -205,6 +227,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [BLTManager sharedInstance].connectBlock = nil;
 }
 
 /*

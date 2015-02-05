@@ -7,6 +7,7 @@
 //
 
 #import "BLTAcceptData.h"
+#import "PedometerModel.h"
 
 @implementation BLTAcceptData
 
@@ -17,6 +18,10 @@ DEF_SINGLETON(BLTAcceptData)
     self = [super init];
     if (self)
     {
+        _syncData = [[NSMutableData alloc] init];
+        // 直接启动蓝牙
+        [BLTManager sharedInstance];
+        
         /**
          *  普通数据得更新
          *
@@ -50,7 +55,7 @@ DEF_SINGLETON(BLTAcceptData)
     
     id object = nil;
     int order = val[2];
-    NSLog(@"%0x, %0x, %0x, %0x", val[0], val[1], val[2], val[3]);
+    NSLog(@"--------%0x, %0x, %0x, %0x", val[0], val[1], val[2], val[3]);
     
     if (val[0] == 0xDE)
     {
@@ -82,6 +87,8 @@ DEF_SINGLETON(BLTAcceptData)
                     }
                     
                     NSString *string = [NSString stringWithFormat:@"当前设备时间: \n%d月%d日 %d:%d \n时区:%d", val[6], val[7], val[10], val[11], val[9]];
+                    
+                    NSLog(@"%d", (val[4] << 8) | (val[5]));
                     object = string;
                     // 计步器发送时间到手机.
                 }
@@ -207,6 +214,8 @@ DEF_SINGLETON(BLTAcceptData)
                 {
                     // 请求历史运动数据完毕.
                     _type = BLTAcceptDataTypeRequestHistorySportsData;
+                    
+                    
                 }
                 else if (val[3] == 0x06)
                 {
@@ -261,7 +270,27 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)updateBigData:(NSData *)data
 {
+    _type = BLTAcceptDataTypeRequestHistorySportsData;
 
+    UInt8 val[20] = {0};
+    [data getBytes:&val length:data.length];
+    
+    if (_updateValue)
+    {
+        _updateValue(_syncData, _type);
+    }
 }
+
+- (void)saveSyncDataToModel
+{
+}
+
+#pragma mark --- syncData 数据清空 ---
+- (void)cleanMutableData
+{
+    [_syncData resetBytesInRange:NSMakeRange(0, _syncData.length)];
+    [_syncData setLength:0];
+}
+
 
 @end

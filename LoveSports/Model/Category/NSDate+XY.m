@@ -252,6 +252,16 @@ DUMMY_CLASS(NSDate_XY);
     return dateString;
 }
 
+- (NSArray *)dateToArray
+{
+    return [[self dateToString] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"- :"]];
+}
+
+- (BOOL)isSameWithDate:(NSDate *)date
+{
+    return [NSDate twoDateIsSameDay:self second:date];
+}
+
 + (NSDate *)stringToDate:(NSString *)timeString
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -269,6 +279,7 @@ DUMMY_CLASS(NSDate_XY);
     
     return date;
 }
+
 
 /* 判断date_是否在当前星期 */
 
