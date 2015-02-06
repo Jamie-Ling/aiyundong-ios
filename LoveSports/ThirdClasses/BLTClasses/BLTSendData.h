@@ -49,7 +49,7 @@
 
 AS_SINGLETON(BLTSendData)
 
-/**
+/** // 不用写
 *  设置用户基本信息
 *
 *  @param scale  公/英制
@@ -61,7 +61,7 @@ AS_SINGLETON(BLTSendData)
                            withJetLag:(NSInteger)lag
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 无需界面，只需点击
  *  本地时间，时区等等设定
  *
  *  @param date
@@ -70,7 +70,7 @@ AS_SINGLETON(BLTSendData)
                           withHourly:(NSInteger)hourly
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 你已经写了。是个人信息得
  *  设定用户身体信息，体重，步距
  *
  *  @param date   生日
@@ -84,21 +84,21 @@ AS_SINGLETON(BLTSendData)
                                    withStepAway:(NSInteger)step
                                 withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  手机请求计步器的时间, 查看计步器的时间.
  *
  *  @param data 
  */
 + (void)sendCheckDateOfHardwareDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  查询计步器的身体信息.
  *
  *  @param data
  */
 + (void)sendLookBodyInformationDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 2个segement。
  *  设定屏幕颜色和待机..
  *
  *  @param data
@@ -107,7 +107,7 @@ AS_SINGLETON(BLTSendData)
                                  withWaiting:(BOOL)noWaiting
                              withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 需要个uialertview
  *  设定密码保护.
  *
  *  @param data
@@ -116,7 +116,7 @@ AS_SINGLETON(BLTSendData)
                           withPassword:(NSString *)password
                        withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 需要界面。
  *  固件启动方式
  *
  *  @param model 启动模式
@@ -127,7 +127,7 @@ AS_SINGLETON(BLTSendData)
                                     withTimes:(NSArray *)times
                               withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 需要界面。
  *  智能睡眠提醒设定
  *
  *  @param open    是否开启
@@ -140,7 +140,7 @@ AS_SINGLETON(BLTSendData)
                           withAdvance:(NSInteger)advance
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 无需实现
  *  自定义显示界面, 显示界面.
  *
  *  @param orders 显示得画面编号数组
@@ -151,7 +151,7 @@ AS_SINGLETON(BLTSendData)
 
 //+ (void)sendBasicSetOfInformationData:(NSData *)data;
 
-/**
+/** // 需要界面
  *  设定闹钟
  *
  *  @param open   闹铃是否开启
@@ -162,7 +162,7 @@ AS_SINGLETON(BLTSendData)
                          withAlarm:(NSArray *)alarms
                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 需要界面
  *  久坐提醒
  *
  *  @param open  是否开启
@@ -174,14 +174,14 @@ AS_SINGLETON(BLTSendData)
                               withTimes:(NSArray *)times
                         withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击
  *  设定出厂模式
  *
  *  @param data
  */
 + (void)sendSetFactoryModelDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // uialertview
  *  修改设备名称
  *
  *  @param name  将修改得名字
@@ -190,7 +190,7 @@ AS_SINGLETON(BLTSendData)
 + (void)sendModifyDeviceNameDataWithName:(NSString *)name
                          withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 需要uilabel显示。
  *  手机查询计步器当前密码
  *
  *  @param data
@@ -204,21 +204,21 @@ AS_SINGLETON(BLTSendData)
  */
 + (void)sendQShowCurrentPasswordDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 无需实现
  *  智能起床设定
  *
  *  @param data
  */
 + (void)sendIntelligentGetupSetData:(NSData *)data;
 
-/**
+/** // 无需实现
  *  发送联系人的名字给设备.
  *
  *  @param data
  */
 + (void)sendNameOfContactData:(NSData *)data;
 
-/**
+/** // 无需实现
  *  发送联系人的电话给设备
  *
  *  @param data
@@ -226,13 +226,13 @@ AS_SINGLETON(BLTSendData)
 + (void)sendContactTelephoneNumberData:(NSData *)data;
 + (void)sendSetWearingWayData:(NSData *)data;
 
-/**
+/** // 只需点击事件
  *  行针校正命令
  *
  */
 + (void)sendCorrectionCommandDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  发送指针当前位置给计步器
  *
  *  @param hour   指针时
@@ -245,7 +245,7 @@ AS_SINGLETON(BLTSendData)
                              withSecond:(NSInteger)second
                         withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  用户同步世界时间. 第二城市时间.
  *
  *  @param date   日期
@@ -259,7 +259,7 @@ AS_SINGLETON(BLTSendData)
  *  W240 专用
  */
 
-/**
+/** // 需要界面。
  *  设定佩戴方式
  *
  *  @param right 默认为左手。右手为YES
@@ -271,7 +271,7 @@ AS_SINGLETON(BLTSendData)
  *  W286 专用
  */
 
-/**
+/** // 需要界面。
  *  开启背光设定
  *  @param open  是否开启
  *  @param times AlarmClockModel 数组 , 主要是时和分
@@ -286,7 +286,7 @@ AS_SINGLETON(BLTSendData)
  *           传输运动数据.
  */
 
-/**
+/** // 无需界面
  *  手机请求计步器历史运动数据
  *
  *  @param date  日期
@@ -296,7 +296,7 @@ AS_SINGLETON(BLTSendData)
                            withOrder:(NSInteger)order
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  删除运动数据
  *
  *  @param date  开始日期
@@ -305,7 +305,7 @@ AS_SINGLETON(BLTSendData)
 + (void)sendDeleteSportDataWithDate:(NSDate *)date
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 无需实现
  *  请求当天的运动数据。
  *
  *  @param order 时间序号
@@ -314,14 +314,14 @@ AS_SINGLETON(BLTSendData)
 + (void)sendRequestTodaySportDataWithOrder:(NSInteger)order
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  开始实时传输运动数据
  *
  *  @param block 回调
  */
 + (void)sendRealtimeTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/**
+/** // 只需点击事件
  *  关闭实时传输运动数据
  *
  *  @param block 回调
@@ -334,7 +334,7 @@ AS_SINGLETON(BLTSendData)
 + (void)sendOpenBacklightSetData:(NSData *)data;
  */
 
-/**
+/** // 无需实现
  *  同步数据, 无论今天还是历史。
  */
 - (void)synHistoryData;
