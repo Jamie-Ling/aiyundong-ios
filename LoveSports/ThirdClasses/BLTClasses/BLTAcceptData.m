@@ -326,5 +326,4 @@ DEF_SINGLETON(BLTAcceptData)
     }
 }
 
-
 @end

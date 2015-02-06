@@ -41,17 +41,14 @@ DEF_SINGLETON(BLTManager)
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
      
-        [BLTPeripheral sharedInstance].deviceInfoBlock = ^() {
-            [self getCurrentDeviceInfo];
+        [BLTPeripheral sharedInstance].connectBlock = ^() {
+            if (_connectBlock)
+            {
+                _connectBlock();
+            }
         };
         [BLTPeripheral sharedInstance].RSSIBlock = ^(NSInteger RSSI) {
             [self updateRSSI:RSSI];
-        };
-        [BLTPeripheral sharedInstance].failBlock = ^(NSInteger RSSI) {
-            if (_failBlock)
-            {
-                _failBlock();
-            }
         };
         
         _model = [[BLTModel alloc] init];
@@ -60,17 +57,7 @@ DEF_SINGLETON(BLTManager)
     return self;
 }
 
-#pragma mark --- 对设备发送命令 ---
-// 设备连接完毕
-- (void)getCurrentDeviceInfo
-{
-    if (_connectBlock)
-    {
-        _connectBlock();
-    }
-}
-
-#pragma mark --- 外围设备数据更新了触发的回调 ---
+#pragma mark --- 外围设备信号更新触发的回调 ---
 - (void)updateRSSI:(NSInteger)RSSI
 {
     _model.bltRSSI = [NSString stringWithFormat:@"%ld", (long)RSSI];
@@ -89,10 +76,10 @@ DEF_SINGLETON(BLTManager)
 {
     if (_discoverPeripheral)
     {
-        [BLTPeripheral sharedInstance].peripheral = nil;
         _discoverPeripheral.delegate = nil;
         [_centralManager cancelPeripheralConnection:_discoverPeripheral];
         _discoverPeripheral = nil;
+        [BLTPeripheral sharedInstance].peripheral = nil;
     }
     
     _model = nil;
@@ -101,7 +88,7 @@ DEF_SINGLETON(BLTManager)
 
 - (void)checkOtherDevices
 {
-   // [self scan];
+    [self scan];
 }
 
 #pragma mark --- CBCentralManagerDelegate ---
@@ -134,24 +121,12 @@ DEF_SINGLETON(BLTManager)
                                                 options:nil];
 }
 
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
+- (void)centralManager:(CBCentralManager *)central
+ didDiscoverPeripheral:(CBPeripheral *)peripheral
+     advertisementData:(NSDictionary *)advertisementData
+                  RSSI:(NSNumber *)RSSI
 {
     NSLog(@"..%@", advertisementData);
-    /*
-    if (peripheral.name == NULL)
-    {
-        return;
-    }
-    
-    
-    NSCharacterSet *nameCharacters = [[NSCharacterSet
-                                       characterSetWithCharactersInString:@"-_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.:"] invertedSet];
-    NSRange userNameRange = [peripheral.name rangeOfCharacterFromSet:nameCharacters];
-    if (userNameRange.location != NSNotFound)
-    {
-        return;
-    }
-     */
     
     NSArray *uuidArray = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
     if (uuidArray.count > 0)
@@ -199,17 +174,6 @@ DEF_SINGLETON(BLTManager)
             {
                 _updateModelBlock(_model);
             }
-            
-            /*
-            // 目前是直接连。。。实际上是需要展示的。。。
-            if (self.discoverPeripheral != peripheral && !self.discoverPeripheral)
-            {
-                NSLog(@"开始链接...");
-                self.discoverPeripheral = peripheral;
-                [self.centralManager connectPeripheral:peripheral options:nil];
-                [self.centralManager stopScan];
-            }
-             */
         }
     }
 }
@@ -240,9 +204,9 @@ DEF_SINGLETON(BLTManager)
     return nil;
 }
 
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+- (void)centralManager:(CBCentralManager *)central
+  didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    NSLog(@"didConnectPeripheral");
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
     [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
@@ -250,34 +214,27 @@ DEF_SINGLETON(BLTManager)
     [BLTPeripheral sharedInstance].peripheral = _discoverPeripheral;
 }
 
-- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+- (void)centralManager:(CBCentralManager *)central
+didFailToConnectPeripheral:(CBPeripheral *)peripheral
+                 error:(NSError *)error
 {
     NSLog(@"链接失败");
     [self startCan];
 }
 
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+- (void)centralManager:(CBCentralManager *)central
+didDisconnectPeripheral:(CBPeripheral *)peripheral
+                 error:(NSError *)error
 {
     NSLog(@"失去链接..%@", error);
     [self startCan];
-    
-    for (BLTModel *model in _allWareArray)
-    {
-        if ([model.bltID isEqualToString:[peripheral.identifier UUIDString]])
-        {
-            [_allWareArray removeObject:model];
-        }
-    }
     
     if (_disConnectBlock)
     {
         _disConnectBlock();
     }
     
-    if (_failBlock)
-    {
-        _failBlock();
-    }
+    [[BLTPeripheral sharedInstance] errorMessage];
 }
 
 #pragma mark --- 向外围设备发送数据 ---

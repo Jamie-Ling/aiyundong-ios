@@ -172,7 +172,7 @@
 // 忽略该设备
 - (void)clickIgnoreButton
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"重要提示" message:@"忽略此设备以后将无法搜到该设备." delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"取人", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"重要提示" message:@"忽略此设备以后将无法搜到该设备." delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     
     alertView.delegate = self;
     [alertView show];

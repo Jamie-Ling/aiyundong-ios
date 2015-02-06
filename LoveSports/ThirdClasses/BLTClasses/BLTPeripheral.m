@@ -121,14 +121,15 @@ DEF_SINGLETON(BLTPeripheral)
         if ([charac.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
-            if (_deviceInfoBlock)
-            {
-             //   _deviceInfoBlock();
-            }
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
+            
+            if (_connectBlock)
+            {
+                _connectBlock();
+            }
         }
         else if ([charac.UUID isEqual:BLTUUID.hardwareRevisionStringUUID]) // 绑定
         {
@@ -179,8 +180,6 @@ DEF_SINGLETON(BLTPeripheral)
 // 外围设备数据有更新时会触发该方法
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
-    NSLog(@"...有数据更新...");
-
     if (error)
     {
         NSLog(@"数据更新错误...");
@@ -220,6 +219,15 @@ DEF_SINGLETON(BLTPeripheral)
 {
     [data resetBytesInRange:NSMakeRange(0, data.length)];
     [data setLength:0];
+}
+
+// 错误信息提示
+- (void)errorMessage
+{
+    if (_failBlock)
+    {
+        _failBlock();
+    }
 }
 
 @end

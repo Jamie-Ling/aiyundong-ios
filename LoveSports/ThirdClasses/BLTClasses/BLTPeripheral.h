@@ -13,14 +13,14 @@
 
 typedef CBPeripheral *(^BLTPeripheralPeripheral)();
 typedef void(^BLTPeripheralUpdate)(NSData *data);
-typedef void(^BLTPeripheralGetDeviceInfo)();
+typedef void(^BLTPeripheralDidConnect)();
 typedef void(^BLTPeripheralRSSI)(NSInteger RSSI);
 typedef void(^BLTPeripheralUpdateBIgdata)(NSData *data);
 typedef void(^BLTPeripheralFail)();
 
 @property (nonatomic, strong) BLTPeripheralUpdate updateBlock;
 @property (nonatomic, strong) BLTPeripheralUpdateBIgdata updateBigDataBlock;
-@property (nonatomic, strong) BLTPeripheralGetDeviceInfo deviceInfoBlock;
+@property (nonatomic, strong) BLTPeripheralDidConnect connectBlock;
 @property (nonatomic, strong) BLTPeripheralRSSI RSSIBlock;
 @property (nonatomic, strong) BLTPeripheralFail failBlock;
 
@@ -28,6 +28,7 @@ typedef void(^BLTPeripheralFail)();
 
 AS_SINGLETON(BLTPeripheral)
 
+- (void)errorMessage;
 - (void)startUpdateRSSI;
 - (void)stopUpdateRSSI;
 
