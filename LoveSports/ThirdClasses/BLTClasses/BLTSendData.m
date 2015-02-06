@@ -86,22 +86,27 @@
 
 DEF_SINGLETON(BLTSendData)
 
++ (UInt8)timeZone
+{
+    UInt8 sign = [NSDate timeZone] > 0 ? 0 : (0x01 << 7);
+    return (UInt8)(sign | abs([NSDate timeZone]));
+}
+
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
                            withHourly:(NSInteger)hourly
-                           withJetLag:(NSInteger)lag
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[7] = {0xBE, 0x01, 0x01, 0xFE, scale, hourly, (UInt8)((0x01 << 7) | (lag * 2))};
+    UInt8 val[7] = {0xBE, 0x01, 0x01, 0xFE, scale, hourly, [self timeZone]};
     [self sendDataToWare:&val withLength:7 withUpdate:block];
 }
 
+// 设置本地时间，每次开程序都需要。
 + (void)sendLocalTimeInformationData:(NSDate *)date
-                          withHourly:(NSInteger)hourly
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
-                    date.weekday, 8, date.hour, date.minute, date.second};
+                    date.weekday, [self timeZone], date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:13 withUpdate:block];
 }
 
@@ -470,6 +475,13 @@ DEF_SINGLETON(BLTSendData)
 // 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
 - (void)synHistoryData
 {
+    [BLTSendData sendRequestTodaySportDataWithOrder:0 withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeRequestTodaySportsData)
+        {
+            
+        }
+    }];
+
    // [self startTimer];
     [self syncInBackGround];
     // [self performSelectorInBackground:@selector(syncInBackGround) withObject:nil];

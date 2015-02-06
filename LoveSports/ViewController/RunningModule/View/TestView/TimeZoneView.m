@@ -73,7 +73,7 @@
     {
         [BLTSendData sendBasicSetOfInformationData:_seg1.selectedSegmentIndex
                                         withHourly:_seg2.selectedSegmentIndex
-                                        withJetLag:8 withUpdateBlock:nil];
+                                   withUpdateBlock:nil];
     }
 }
 

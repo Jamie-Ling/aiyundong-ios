@@ -158,7 +158,7 @@
                 return;
             }
             NSDate *nowDate = [NSDate date];
-            [BLTSendData sendLocalTimeInformationData:nowDate withHourly:_thisModel._timeZone withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [BLTSendData sendLocalTimeInformationData:nowDate withUpdateBlock:^(id object, BLTAcceptDataType type) {
                 if (type == BLTAcceptDataTypeSetLocTime)
                 {
                     NSLog(@"修改时区成功");
@@ -292,7 +292,7 @@
                                     NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                                     
                                     _thisModel._timeAbsoluteValue = [nowSelectedString integerValue];
-                                    [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withJetLag:_thisModel._timeAbsoluteValue withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                    [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                         if (type == BLTAcceptDataTypeSetBaseInfo) {
                                             NSLog(@"设置时差绝对值成功");
                                         }

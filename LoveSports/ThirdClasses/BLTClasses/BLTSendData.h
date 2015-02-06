@@ -58,16 +58,14 @@ AS_SINGLETON(BLTSendData)
 */
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
                            withHourly:(NSInteger)hourly
-                           withJetLag:(NSInteger)lag
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/** // 无需界面，只需点击
+/** // 不用写，每次打开程序会自动发送
  *  本地时间，时区等等设定
  *
  *  @param date
  */
 + (void)sendLocalTimeInformationData:(NSDate *)date
-                          withHourly:(NSInteger)hourly
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /** // 你已经写了。是个人信息得

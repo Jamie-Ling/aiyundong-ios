@@ -47,5 +47,6 @@
 + (NSDate *)stringToDate:(NSString *)timeString;
 - (NSArray *)dateToArray;
 - (BOOL)isSameWithDate:(NSDate *)date;
++ (NSInteger)timeZone;
 
 @end

@@ -123,7 +123,7 @@
             NSLog(@"更改是否24时制的状态：%d", theSwitch.on);
             _thisModel._is24HoursTime = theSwitch.on;
             
-            [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withJetLag:_thisModel._timeAbsoluteValue withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withUpdateBlock:^(id object, BLTAcceptDataType type) {
                 if (type == BLTAcceptDataTypeSetBaseInfo) {
                     NSLog(@"设置24小时制成功");
                 }

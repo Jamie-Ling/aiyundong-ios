@@ -280,6 +280,12 @@ DUMMY_CLASS(NSDate_XY);
     return date;
 }
 
++ (NSInteger)timeZone
+{
+    NSTimeZone *tz = [NSTimeZone systemTimeZone];
+    
+    return tz.secondsFromGMT / 3600;
+}
 
 /* 判断date_是否在当前星期 */
 

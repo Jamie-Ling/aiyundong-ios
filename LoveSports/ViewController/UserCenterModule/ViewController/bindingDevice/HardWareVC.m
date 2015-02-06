@@ -50,10 +50,11 @@
     self.view.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
     
     [self loadLabels];
-    
-    if (_model.isBinding)
+    NSString *curUUID = [BLTManager sharedInstance].model.bltID;
+    if ([_model.bltID isEqualToString:curUUID])
     {
         [self loadBindingSetting];
+        [self bltIsConnect];
     }
     else
     {
@@ -208,7 +209,7 @@
 {
     HIDDENMBProgressHUD;
     
-    if (![LS_SettingBaseInfo getBOOLValue])
+    if (![LS_SettingBaseInfo getBOOLValue] || 1)
     {
         _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
         

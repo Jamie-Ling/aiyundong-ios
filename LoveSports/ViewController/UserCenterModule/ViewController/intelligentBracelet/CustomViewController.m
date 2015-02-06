@@ -230,7 +230,7 @@
             default:
                 break;
         }
-        [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withJetLag:_thisModel._timeAbsoluteValue withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime  withUpdateBlock:^(id object, BLTAcceptDataType type) {
             if (type == BLTAcceptDataTypeSetBaseInfo) {
                 NSLog(@"设置公英制成功");
                 [self reloadUserInfoTableView];
