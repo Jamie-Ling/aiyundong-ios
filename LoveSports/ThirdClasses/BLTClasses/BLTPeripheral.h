@@ -16,11 +16,13 @@ typedef void(^BLTPeripheralUpdate)(NSData *data);
 typedef void(^BLTPeripheralGetDeviceInfo)();
 typedef void(^BLTPeripheralRSSI)(NSInteger RSSI);
 typedef void(^BLTPeripheralUpdateBIgdata)(NSData *data);
+typedef void(^BLTPeripheralFail)();
 
 @property (nonatomic, strong) BLTPeripheralUpdate updateBlock;
 @property (nonatomic, strong) BLTPeripheralUpdateBIgdata updateBigDataBlock;
 @property (nonatomic, strong) BLTPeripheralGetDeviceInfo deviceInfoBlock;
 @property (nonatomic, strong) BLTPeripheralRSSI RSSIBlock;
+@property (nonatomic, strong) BLTPeripheralFail failBlock;
 
 @property (nonatomic, strong) CBPeripheral *peripheral;
 

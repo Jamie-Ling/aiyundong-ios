@@ -165,6 +165,10 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         NSLog(@"写数据时发生错误...%@", error);
+        if (_failBlock)
+        {
+            _failBlock();
+        }
     }
     else
     {
@@ -180,6 +184,11 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         NSLog(@"数据更新错误...");
+        
+        if (_failBlock)
+        {
+            _failBlock();
+        }
     }
     else
     {

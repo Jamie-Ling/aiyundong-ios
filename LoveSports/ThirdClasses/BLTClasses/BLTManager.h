@@ -15,12 +15,14 @@
 typedef void(^BLTManagerUpdateModel)(BLTModel *model);
 typedef void(^BLTManagerDisConnect)();
 typedef void(^BLTManagerConnect)();
+typedef void(^BLTManagerFail)();
 
 @property (nonatomic, strong) BLTModel *model;
 @property (nonatomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
 @property (nonatomic, strong) BLTManagerConnect connectBlock;
+@property (nonatomic, strong) BLTManagerFail failBlock;
 
 AS_SINGLETON(BLTManager)
 

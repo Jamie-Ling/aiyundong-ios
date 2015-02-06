@@ -19,7 +19,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateDay", @"dateHour"];
+    return @[@"userName", @"dateDay", @"currentOrder"];
 }
 
 // 表版本
@@ -41,7 +41,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateDay", @"dateHour"];
+    return @[@"userName", @"dateDay", @"currentOrder"];
 }
 
 // 表版本
@@ -146,7 +146,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"PedometerTable"];
+    return @[@"userName", @"dateString"];
 }
 
 // 表版本

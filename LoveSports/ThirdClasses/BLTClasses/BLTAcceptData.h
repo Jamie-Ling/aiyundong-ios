@@ -7,7 +7,7 @@
 //
 
 typedef enum {                                  // 详细的看接口参数。
-    BLTAcceptDataTypeNoData = 0,                // 无状态
+    BLTAcceptDataTypeUnKnown = 0,               // 无状态
     BLTAcceptDataTypeSetBaseInfo = 1,           // 设置基本信息
     BLTAcceptDataTypeSetLocTime = 2,            // 为固件设置时间, 时区
     BLTAcceptDataTypeSetUserInfo = 3,           // 为固件设置用户信息
@@ -36,7 +36,9 @@ typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeDeleteSportsData,          // 删除运动数据
     BLTAcceptDataTypeRequestTodaySportsData,    // 请求当天运动数据
     BLTAcceptDataTypeRealTimeTransSportsData,   // 实时传输运动数据
-    BLTAcceptDataTypeCloseTransSportsData       // 关闭实时传输运动数据
+    BLTAcceptDataTypeCloseTransSportsData,      // 关闭实时传输运动数据
+    BLTAcceptDataTypeSuccess,                   // 通讯成功
+    BLTAcceptDataTypeError                      // 通讯错误
 } BLTAcceptDataType;
 
 #import <Foundation/Foundation.h>
@@ -62,6 +64,10 @@ AS_SINGLETON(BLTAcceptData)
  *  清空数据。
  */
 - (void)cleanMutableData;
+/**
+ *  提示当次通讯失败
+ */
+- (void)updateFailInfo;
 
 @end
 

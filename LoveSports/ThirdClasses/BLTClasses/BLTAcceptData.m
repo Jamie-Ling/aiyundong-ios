@@ -48,8 +48,20 @@ DEF_SINGLETON(BLTAcceptData)
     return self;
 }
 
+- (void)setType:(BLTAcceptDataType)type
+{
+    _type = type;
+    
+    if (_type == BLTAcceptDataTypeUnKnown)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
+        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:0.2];
+    }
+}
+
 - (void)acceptData:(NSData *)data
 {
+    _type = BLTAcceptDataTypeSuccess;
     UInt8 val[20] = {0};
     [data getBytes:&val length:data.length];
     
@@ -290,6 +302,28 @@ DEF_SINGLETON(BLTAcceptData)
 {
     [_syncData resetBytesInRange:NSMakeRange(0, _syncData.length)];
     [_syncData setLength:0];
+}
+
+// 检查当次通讯是否发生错误
+- (void)checkWhetherCommunicationError
+{
+    if (_type == BLTAcceptDataTypeUnKnown)
+    {
+        [self updateFailInfo];
+    }
+}
+
+// 提示失败信息
+- (void)updateFailInfo
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
+
+    _type = BLTAcceptDataTypeError;
+    if (_updateValue)
+    {
+        _updateValue(nil, _type);
+        _updateValue = nil;
+    }
 }
 
 

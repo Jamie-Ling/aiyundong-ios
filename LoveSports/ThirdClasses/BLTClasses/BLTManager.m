@@ -47,6 +47,12 @@ DEF_SINGLETON(BLTManager)
         [BLTPeripheral sharedInstance].RSSIBlock = ^(NSInteger RSSI) {
             [self updateRSSI:RSSI];
         };
+        [BLTPeripheral sharedInstance].failBlock = ^(NSInteger RSSI) {
+            if (_failBlock)
+            {
+                _failBlock();
+            }
+        };
         
         _model = [[BLTModel alloc] init];
     }
@@ -266,6 +272,11 @@ DEF_SINGLETON(BLTManager)
     if (_disConnectBlock)
     {
         _disConnectBlock();
+    }
+    
+    if (_failBlock)
+    {
+        _failBlock();
     }
 }
 

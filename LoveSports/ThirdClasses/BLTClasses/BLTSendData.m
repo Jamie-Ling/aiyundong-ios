@@ -446,6 +446,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendDataToWare:(void *)val withLength:(NSInteger)length withUpdate:(BLTAcceptDataUpdateValue)block
 {
     [BLTAcceptData sharedInstance].updateValue = block;
+    [BLTAcceptData sharedInstance].type = BLTAcceptDataTypeUnKnown;
     
     NSData *sData = [[NSData alloc] initWithBytes:val length:length];
     [[BLTManager sharedInstance] senderDataToPeripheral:sData];
