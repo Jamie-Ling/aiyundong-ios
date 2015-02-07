@@ -226,13 +226,12 @@ DEF_SINGLETON(BLTAcceptData)
                 {
                     // 请求历史运动数据完毕.
                     _type = BLTAcceptDataTypeRequestHistorySportsData;
-                    
-                    
+                    object = _syncData;
                 }
                 else if (val[3] == 0x06)
                 {
                     // 无数据
-                    _type = BLTAcceptDataTypeRequestHistorySportsData;
+                    _type = BLTAcceptDataTypeRequestHistoryNoData;
                 }
             }
             else if (order == 0x02)
@@ -277,20 +276,16 @@ DEF_SINGLETON(BLTAcceptData)
     if (_updateValue)
     {
         _updateValue(object, _type);
+        _updateValue = nil;
     }
 }
 
 - (void)updateBigData:(NSData *)data
 {
     _type = BLTAcceptDataTypeRequestHistorySportsData;
+    [BLTSendData sharedInstance].waitTime = 0;
 
-    UInt8 val[20] = {0};
-    [data getBytes:&val length:data.length];
-    
-    if (_updateValue)
-    {
-        _updateValue(_syncData, _type);
-    }
+    [_syncData appendData:data];
 }
 
 - (void)saveSyncDataToModel
@@ -318,6 +313,7 @@ DEF_SINGLETON(BLTAcceptData)
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
 
+    NSLog(@" 提示失败信息");
     _type = BLTAcceptDataTypeError;
     if (_updateValue)
     {

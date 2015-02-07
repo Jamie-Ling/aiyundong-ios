@@ -38,6 +38,7 @@ DEF_SINGLETON(BLTManager)
             [LS_LastSyncDate setObjectValue:[NSDate date]];
         }
         
+        _connectState = BLTManagerNoConnect;
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
      
@@ -181,9 +182,9 @@ DEF_SINGLETON(BLTManager)
 - (void)repareConnectedDevice:(BLTModel *)model
 {
     NSLog(@"开始链接...");
-    
     if (self.discoverPeripheral != model.peripheral)
     {
+        _connectState = BLTManagerConnecting;
         _model = model;
         self.discoverPeripheral = model.peripheral;
         [self.centralManager connectPeripheral:model.peripheral options:nil];
@@ -207,6 +208,7 @@ DEF_SINGLETON(BLTManager)
 - (void)centralManager:(CBCentralManager *)central
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
+    _connectState = BLTManagerConnected;
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
     [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
@@ -218,6 +220,7 @@ DEF_SINGLETON(BLTManager)
 didFailToConnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
+    _connectState = BLTManagerConnectFail;
     NSLog(@"链接失败");
     [self startCan];
 }
@@ -226,6 +229,7 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 didDisconnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
+    _connectState = BLTManagerNoConnect;
     NSLog(@"失去链接..%@", error);
     [self startCan];
     

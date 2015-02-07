@@ -41,11 +41,14 @@
 @end
 
 @interface BLTSendData : NSObject
+typedef void(^BLTSendDataBackUpdate)();
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) NSInteger waitTime;
 @property (nonatomic, assign) NSInteger failCount;
 @property (nonatomic, assign) BOOL isStopSync;
+
+@property (nonatomic, strong) BLTSendDataBackUpdate backBlock;
 
 AS_SINGLETON(BLTSendData)
 
@@ -335,6 +338,6 @@ AS_SINGLETON(BLTSendData)
 /** // 无需实现
  *  同步数据, 无论今天还是历史。
  */
-- (void)synHistoryData;
+- (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block;
 
 @end

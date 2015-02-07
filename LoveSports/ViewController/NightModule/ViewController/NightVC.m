@@ -205,4 +205,11 @@
     [self updateContentForBarGraphView];
 }
 
+- (void)downSwipe
+{
+    NSLog(@"..下扫..");
+    
+    [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:nil];
+}
+
 @end

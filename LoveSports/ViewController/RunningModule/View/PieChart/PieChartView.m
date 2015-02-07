@@ -41,7 +41,7 @@
     _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"07:30" withTextColor:[UIColor whiteColor]];
     [self addSubview:_timeLabel];
     
-    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.35, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"MIN" withTextColor:[UIColor whiteColor]];
+    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.4, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"MIN" withTextColor:[UIColor whiteColor]];
     [self addSubview:_minLabel];
     
     _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"目标" withTextColor:[UIColor whiteColor]];
@@ -100,6 +100,26 @@
       CGContextStrokePath(context);
       startAngle += M_PI*2*value/sum;
    }
+}
+
+- (void)nightSetting
+{
+    _minLabel.hidden = YES;
+}
+
+- (void)daySetting
+{
+    _minLabel.hidden = YES;
+   // _targetLabel.hidden = YES;
+    self.signView.image = [UIImage image:@"睡觉@2x.png"];
+   // _durationLabel.frame = CGRectMake(0, self.height / 3 * 2, self.width, self.height / 12);
+}
+
+- (void)updateContentForViewWithModel:(PedometerModel *)model
+{
+    _timeLabel.text = [NSString stringWithFormat:@"%d", model.totalSteps];
+    _targetLabel.text = [NSString stringWithFormat:@"%d", model.totalCalories];
+    _durationLabel.text = [NSString stringWithFormat:@"%d", model.totalDistance];
 }
 
 @end

@@ -10,6 +10,13 @@
 #import "BLTPeripheral.h"
 #import "BLTModel.h"
 
+typedef enum {
+    BLTManagerNoConnect = 0,
+    BLTManagerConnecting = 1,
+    BLTManagerConnected = 2,
+    BLTManagerConnectFail
+} BLTManagerConnectState;
+
 @interface BLTManager : NSObject
 
 typedef void(^BLTManagerUpdateModel)(BLTModel *model);
@@ -23,6 +30,7 @@ typedef void(^BLTManagerFail)();
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;
 @property (nonatomic, strong) BLTManagerConnect connectBlock;
 @property (nonatomic, strong) BLTManagerFail failBlock;
+@property (nonatomic, assign) BLTManagerConnectState connectState;
 
 AS_SINGLETON(BLTManager)
 

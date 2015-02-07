@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PedometerModel.h"
 
 @protocol PieChartViewDelegate;
 @protocol PieChartViewDataSource;
@@ -21,7 +22,10 @@
 @property (nonatomic, strong) UILabel *targetLabel;
 @property (nonatomic, strong) UILabel *durationLabel;
 
--(void)reloadData;
+- (void)reloadData;
+- (void)nightSetting;
+- (void)daySetting;
+- (void)updateContentForViewWithModel:(PedometerModel *)model;
 
 @end
 

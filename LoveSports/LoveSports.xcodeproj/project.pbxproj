@@ -157,6 +157,8 @@
 		69FD42281A7FCC2C0023B74D /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FC1A7FCC2C0023B74D /* UpdatePasswordViewController.m */; };
 		69FD42291A7FCC2C0023B74D /* UpSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */; };
 		69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */; };
+		F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E75E11A8607AF00FAB64C /* DayDetailView.m */; };
+		F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E75E41A8615AF00FAB64C /* TrendChartView.m */; };
 		F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F432BE511A80F8BE0058F87D /* LandscapeVC.m */; };
 		F43F8EDF1A81065B008A431B /* BarGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43F8EDE1A81065B008A431B /* BarGraphView.m */; };
 		F43F8EE31A8106ED008A431B /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F43F8EE21A8106ED008A431B /* DataModel.m */; };
@@ -544,6 +546,10 @@
 		69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpSignatureViewController.m; sourceTree = "<group>"; };
 		69FD41FF1A7FCC2C0023B74D /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		F42E75E01A8607AF00FAB64C /* DayDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayDetailView.h; sourceTree = "<group>"; };
+		F42E75E11A8607AF00FAB64C /* DayDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayDetailView.m; sourceTree = "<group>"; };
+		F42E75E31A8615AF00FAB64C /* TrendChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendChartView.h; sourceTree = "<group>"; };
+		F42E75E41A8615AF00FAB64C /* TrendChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendChartView.m; sourceTree = "<group>"; };
 		F432BE501A80F8BE0058F87D /* LandscapeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeVC.h; sourceTree = "<group>"; };
 		F432BE511A80F8BE0058F87D /* LandscapeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeVC.m; sourceTree = "<group>"; };
 		F43F8EDD1A81065B008A431B /* BarGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarGraphView.h; sourceTree = "<group>"; };
@@ -1244,6 +1250,7 @@
 		69FD41AE1A7FCC2C0023B74D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F42E75DF1A86077300FAB64C /* ShowView */,
 				69FD41AF1A7FCC2C0023B74D /* FSLineChart */,
 				69FD41B41A7FCC2C0023B74D /* PieChart */,
 				69FD41B71A7FCC2C0023B74D /* TestView */,
@@ -1434,6 +1441,17 @@
 				69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */,
 			);
 			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		F42E75DF1A86077300FAB64C /* ShowView */ = {
+			isa = PBXGroup;
+			children = (
+				F42E75E01A8607AF00FAB64C /* DayDetailView.h */,
+				F42E75E11A8607AF00FAB64C /* DayDetailView.m */,
+				F42E75E31A8615AF00FAB64C /* TrendChartView.h */,
+				F42E75E41A8615AF00FAB64C /* TrendChartView.m */,
+			);
+			path = ShowView;
 			sourceTree = "<group>";
 		};
 		F43F8EDC1A810608008A431B /* View */ = {
@@ -2319,6 +2337,7 @@
 				69FD420C1A7FCC2C0023B74D /* TimeZoneView.m in Sources */,
 				F4B693AC1A6F403400B42395 /* MKNetworkEngine.m in Sources */,
 				69FD421F1A7FCC2C0023B74D /* BraceletInfoViewController.m in Sources */,
+				F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */,
 				699242051A768BDF00EFF121 /* LKDBHelper.m in Sources */,
 				F4B693BA1A6F404A00B42395 /* UIViewController+PopRoot.m in Sources */,
 				F4B693E51A6F40D200B42395 /* UIButton+Simple.m in Sources */,
@@ -2337,6 +2356,7 @@
 				698A90C01A6FEB54005BABE6 /* SMPageControl.m in Sources */,
 				69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */,
 				F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */,
+				F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */,
 				F43F8EE31A8106ED008A431B /* DataModel.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
 				69FD421E1A7FCC2C0023B74D /* HardWareVC.m in Sources */,
@@ -2426,8 +2446,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2447,7 +2467,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2470,8 +2490,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2484,7 +2504,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2495,15 +2515,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 			};
 			name = Debug;
 		};
@@ -2511,15 +2531,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 			};
 			name = Release;
 		};
@@ -2527,8 +2547,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2540,7 +2560,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Debug;
@@ -2549,8 +2569,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2558,7 +2578,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Release;

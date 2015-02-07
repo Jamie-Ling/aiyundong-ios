@@ -33,8 +33,10 @@ typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeSetWearingWay,             // 设置佩戴方式
     BLTAcceptDataTypeSetOpenBackLight,          // 是否开启背光设定
     BLTAcceptDataTypeRequestHistorySportsData,  // 请求历史运动数据
+    BLTAcceptDataTypeRequestHistoryNoData,  // 请求历史运动数据, 无数据
     BLTAcceptDataTypeDeleteSportsData,          // 删除运动数据
     BLTAcceptDataTypeRequestTodaySportsData,    // 请求当天运动数据
+    BLTAcceptDataTypeRequestTodayNoData,    // 请求当天运动数据
     BLTAcceptDataTypeRealTimeTransSportsData,   // 实时传输运动数据
     BLTAcceptDataTypeCloseTransSportsData,      // 关闭实时传输运动数据
     BLTAcceptDataTypeSuccess,                   // 通讯成功

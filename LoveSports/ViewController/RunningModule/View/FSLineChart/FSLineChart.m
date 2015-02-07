@@ -124,17 +124,19 @@
     UIGraphicsPushContext(ctx);
     CGContextSetLineWidth(ctx, 6);
     CGContextSetStrokeColorWithColor(ctx, UIColorRGBA(155, 40, 16, 0.5).CGColor);
+    /*
     CGFloat height = [_data[0] floatValue] * _axisHeight;
     
     // draw coordinate axis
     CGContextMoveToPoint(ctx, 5, _axisHeight + 3);
     CGContextAddLineToPoint(ctx, 5, _axisHeight + 8 - height);
     CGContextStrokePath(ctx);
-    
+
     height = [_data[_data.count - 1] floatValue] * _axisHeight;
     CGContextMoveToPoint(ctx, self.width - 5, _axisHeight + 3);
     CGContextAddLineToPoint(ctx, self.width - 5, _axisHeight + 8 - height);
     CGContextStrokePath(ctx);
+    */
     
     float scale = 1.0f;
     int q = (int)_data.count / _horizontalGridStep;
@@ -199,7 +201,7 @@
         _fillLayer.bounds = self.bounds;
         _fillLayer.path = fill.CGPath;
         _fillLayer.strokeColor = nil;
-        _fillLayer.fillColor = UIColorRGB(235, 106, 10).CGColor;
+        _fillLayer.fillColor = UIColorRGB(197, 234, 237).CGColor;
         _fillLayer.lineWidth = 0;
         _fillLayer.lineJoin = kCALineJoinRound;
     }
@@ -213,9 +215,9 @@
     _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
     _pathLayer.bounds = self.bounds;
     _pathLayer.path = path.CGPath;
-    _pathLayer.strokeColor = UIColorRGB(155, 40, 16).CGColor;
+    _pathLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
     _pathLayer.fillColor = nil;
-    _pathLayer.lineWidth = 3.0;
+    _pathLayer.lineWidth = 1.0;
     _pathLayer.lineJoin = kCALineJoinRound;
 }
 
@@ -251,7 +253,7 @@
         if (!_pointLayer)
         {
             _pointLayer = [CAShapeLayer layer];
-            [self.layer addSublayer:_pointLayer];
+            // [self.layer addSublayer:_pointLayer];
         }
         
         _pointLayer.frame = CGRectMake(p.x, p.y, _dataPointRadius, _dataPointRadius);

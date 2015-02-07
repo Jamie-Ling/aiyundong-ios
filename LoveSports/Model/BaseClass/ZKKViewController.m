@@ -75,7 +75,7 @@
 - (void)upSwipe
 {
     NSLog(@"..上扫..");
-    
+    /*
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     if (app.window.rootViewController == app._mainNavigationController)
@@ -87,6 +87,7 @@
             app.vc.selectedIndex = 1;
         }
     }
+     */
 }
 
 - (void)downSwipe

@@ -126,10 +126,9 @@ DEF_SINGLETON(BLTPeripheral)
                 if (type == BLTAcceptDataTypeSetLocTime)
                 {
                     SHOWMBProgressHUD(@"设置时间成功", nil, nil, NO, 2);
-                    
-                   // [BLTSendData send
                 }
             }];
+            
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {

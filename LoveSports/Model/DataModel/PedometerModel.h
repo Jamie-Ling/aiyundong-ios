@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface StepsModel : NSObject
+
+@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *dateDay;
+@property (nonatomic, assign) NSInteger timeOrder;
+@property (nonatomic, assign) NSInteger stepSize;
+
++ (StepsModel *)simpleInit;
+
+@end
+
 @interface SportsModel : NSObject
 
 @property (nonatomic, strong) NSString *userName;
@@ -32,19 +43,24 @@
 @end
 
 @interface PedometerModel : NSObject
+typedef void(^PedometerModelSyncEnd)();
 
 @property (nonatomic, strong) NSString *wareUUID;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *dateString;
 @property (nonatomic, assign) NSInteger totalBytes;
+@property (nonatomic, assign) NSInteger settingBytes;
 @property (nonatomic, assign) NSInteger totalSteps; // 当天的总步数
 @property (nonatomic, assign) NSInteger totalCalories; // 当天的总卡路里
+@property (nonatomic, assign) NSInteger totalDistance ; // 当天的总路程
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
+@property (nonatomic, strong) NSArray *stepSizes;
 
 // 目前硬件协议有问题。协商改进。
-- (void)saveDataToModel:(NSData *)data;
++ (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock;
++ (PedometerModel *)getModelWithDate:(NSDate *)date;
 - (void)setTotalSteps;
 - (void)setTotalCalories;
 

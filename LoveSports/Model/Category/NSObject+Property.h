@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) NSArray *attributeList;
 
++ (NSString *)numberTransferWeek:(NSInteger)number;
+
 @end

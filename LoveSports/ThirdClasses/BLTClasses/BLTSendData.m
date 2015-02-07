@@ -9,6 +9,7 @@
 #import "BLTSendData.h"
 #import "BLTManager.h"
 #import "NSDate+XY.h"
+#import "PedometerModel.h"
 
 @implementation AlarmClockModel
 
@@ -473,43 +474,69 @@ DEF_SINGLETON(BLTSendData)
 }
 
 // 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
-- (void)synHistoryData
+- (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
-    [BLTSendData sendRequestTodaySportDataWithOrder:0 withUpdateBlock:^(id object, BLTAcceptDataType type) {
-        if (type == BLTAcceptDataTypeRequestTodaySportsData)
-        {
-            
-        }
-    }];
-
-   // [self startTimer];
-    [self syncInBackGround];
-    // [self performSelectorInBackground:@selector(syncInBackGround) withObject:nil];
-}
-
-- (void)syncInBackGround
-{
-    _waitTime = 0;
-    _failCount = 0;
-    [[BLTAcceptData sharedInstance] cleanMutableData];
-    NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:-1];
-    [BLTSendData sendRequestHistorySportDataWithDate:date
-                                           withOrder:0
-                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                         if (type == BLTAcceptDataTypeRequestHistorySportsData)
-                                         {
-                                             
-                                         }
-                                     }];
-    
-    
-    if ([date isSameWithDate:[NSDate date]])
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        _isStopSync = YES;
+        SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
+        if (block)
+        {
+            _backBlock = block;
+        }
+        
+        _waitTime = 0;
+        _failCount = 0;
+        [[BLTAcceptData sharedInstance] cleanMutableData];
+        NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:1];
+        [BLTSendData sendRequestHistorySportDataWithDate:[NSDate dateWithTimeIntervalSinceNow:0]
+                                               withOrder:0
+                                         withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                             [self stopTimer];
+                                             if (type == BLTAcceptDataTypeRequestHistorySportsData)
+                                             {
+                                                 NSLog(@"保存数据。%d", type);
+                                                 [self performSelectorInBackground:@selector(syncInBackGround:) withObject:object];
+                                             }
+                                             else if (type == BLTAcceptDataTypeError)
+                                             {
+                                                 NSLog(@"...失败。。。");
+                                                 SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+                                             }
+                                         }];
+        
+        
+        if ([date isSameWithDate:[NSDate date]])
+        {
+            _isStopSync = YES;
+        }
+        else
+        {
+            _isStopSync = NO;
+        }
+        
+        [self startTimer];
     }
     else
     {
-        _isStopSync = NO;
+        SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
+    }
+}
+
+- (void)syncInBackGround:(id)object
+{
+    [PedometerModel saveDataToModel:object withEnd:^{
+        [self performSelectorOnMainThread:@selector(endSyncData) withObject:nil waitUntilDone:NO];
+    }];
+}
+
+// 同步数据结束
+- (void)endSyncData
+{
+    SHOWMBProgressHUD(@"同步成功.", nil, nil, NO, 2.0);
+    if (_backBlock)
+    {
+        _backBlock();
+        _backBlock = nil;
     }
 }
 
@@ -526,10 +553,13 @@ DEF_SINGLETON(BLTSendData)
 {
     _waitTime ++;
     
+    NSLog(@"....%d", _waitTime);
+    
     if (_waitTime > 5 || _failCount > 5)
     {
         // 停止同步数据因意外情况
         [self stopTimer];
+        SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
     }
 }
 
