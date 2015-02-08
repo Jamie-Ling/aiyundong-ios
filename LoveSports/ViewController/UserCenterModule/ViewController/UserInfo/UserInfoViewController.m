@@ -236,19 +236,19 @@
                                 //相同，没有修改
                                 return;
                             }
-                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
-                                if (success)
-                                {
-                                    NSLog(@"修改蓝牙设备生日信息成功");
+//                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
+//                                if (success)
+//                                {
+//                                    NSLog(@"修改蓝牙设备生日信息成功");
                                     NSLog(@"开始进行 生日  修改的请求吧,请求成功后请写入NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAgeKey withValue:getDateString];
                                     [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"修改生日失败");
-                                }
-                            }];
+//                                }
+//                                else
+//                                {
+//                                    NSLog(@"修改生日失败");
+//                                }
+//                            }];
 
                     }
                     }];
@@ -281,20 +281,20 @@
                                 return;
                             }
                             
-                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
-                                if (success)
-                                {
-                                    NSLog(@"修改蓝牙设备步长信息成功");
+//                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
+//                                if (success)
+//                                {
+                                    NSLog(@"发送修改步长信息的请求吧");
                                     NSString *longString = pickerView.selectedValue;
                                     NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
                                     [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"修改步长失败");
-                                }
-                            }];
+//                                }
+//                                else
+//                                {
+//                                    NSLog(@"修改步长失败");
+//                                }
+//                            }];
 
                         }
                     }];
@@ -373,21 +373,21 @@
                                 return;
                             }
                             
-                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
-                                if (success)
-                                {
-                                    NSLog(@"修改蓝牙设备体重 信息成功");
+//                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
+//                                if (success)
+//                                {
+//                                    NSLog(@"修改蓝牙设备体重 信息成功");
                                     NSLog(@"发送体重修改的请求吧");
                                     NSString *heightString = pickerView.selectedValue;
                                     NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:nowSelectedString];
                                     [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"修改体重失败");
-                                }
-                            }];
+//                                }
+//                                else
+//                                {
+//                                    NSLog(@"修改体重失败");
+//                                }
+//                            }];
 
                             
                         }

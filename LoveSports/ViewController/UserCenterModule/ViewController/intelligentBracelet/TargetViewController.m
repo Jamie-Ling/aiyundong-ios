@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
-#define vStepNumberMin   8000
-#define vStepNumberMax  20000
+#define vStepNumberMin   5
+#define vStepNumberMax  30
 
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vDistanceSide   10   // 距离边缘宽度
@@ -47,7 +47,7 @@
     _stepNumbersArray = [[NSMutableArray alloc] initWithCapacity:32];
     for (int i = vStepNumberMin; i <= vStepNumberMax; i++)
     {
-        NSString *stepLongString = [NSString stringWithFormat:@"%d 步", i];
+        NSString *stepLongString = [NSString stringWithFormat:@"%d 千步", i];
         [_stepNumbersArray addObject:stepLongString];
     }
 
@@ -94,8 +94,8 @@
 - (void) reloadMainPage
 {
     NSString *target1 =  [NSString stringWithFormat:@"步数  %ld步", (long)_thisModel._stepNumber];
-    NSString *target2 =  [NSString stringWithFormat:@"卡路里  3500大卡(需由步数转换，步数:%ld)", (long)_thisModel._stepNumber];
-    NSString *target3 =  [NSString stringWithFormat:@"距离  5.8千米(需由步数转换，步数:%ld)", _thisModel._stepNumber];
+    NSString *target2 =  [NSString stringWithFormat:@"卡路里  3500大卡(需步数转换:%ld步)", (long)_thisModel._stepNumber];
+    NSString *target3 =  [NSString stringWithFormat:@"距离  5.8千米(需步数转换:%ld步)", _thisModel._stepNumber];
     
     _titleArray = [NSArray arrayWithObjects:target1, target2, target3, nil];
     
@@ -158,7 +158,7 @@
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
     long lastIndex;
-    NSInteger lastLong = _thisModel._stepNumber;
+    NSInteger lastLong = _thisModel._stepNumber / 1000;
  
     lastIndex= lastLong - vStepNumberMin;
 
@@ -209,7 +209,7 @@
                                 if (type == BLTAcceptDataTypeSetUserInfo)
                                 {
                                     NSLog(@"更新步数成功");
-                                    _thisModel._stepNumber = targetSums;
+                                    _thisModel._stepNumber = targetSums * 1000;
                                     
                                     //更新界面
                                     [self reloadMainPage];

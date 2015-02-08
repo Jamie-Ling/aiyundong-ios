@@ -52,12 +52,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"测试蓝牙其它接口";
+    self.title = @"蓝牙手环信息设置";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值", @"本地时间和时区", @"", nil];
+    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", nil];
     
     //tableview
     [self addTableView];
