@@ -38,16 +38,16 @@
     _signView.backgroundColor = [UIColor clearColor];
     [self addSubview:_signView];
     
-    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"07:30" withTextColor:[UIColor whiteColor]];
+    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_timeLabel];
     
-    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.4, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"MIN" withTextColor:[UIColor whiteColor]];
+    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.4, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_minLabel];
     
-    _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"目标" withTextColor:[UIColor whiteColor]];
+    _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_targetLabel];
     
-    _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"8小时" withTextColor:[UIColor whiteColor]];
+    _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_durationLabel];
 }
 
@@ -113,6 +113,9 @@
    // _targetLabel.hidden = YES;
     self.signView.image = [UIImage image:@"睡觉@2x.png"];
    // _durationLabel.frame = CGRectMake(0, self.height / 3 * 2, self.width, self.height / 12);
+    _timeLabel.text = @"步数";
+    _targetLabel.text = @"卡路里";
+    _durationLabel.text = @"距离";
 }
 
 - (void)updateContentForViewWithModel:(PedometerModel *)model

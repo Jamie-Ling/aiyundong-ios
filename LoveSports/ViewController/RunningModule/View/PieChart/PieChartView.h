@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "PedometerModel.h"
 
+typedef enum {
+    PieChartViewShowDay = 0,
+    PieChartViewShowNight = 1
+} PieChartViewShowState;
+
 @protocol PieChartViewDelegate;
 @protocol PieChartViewDataSource;
 

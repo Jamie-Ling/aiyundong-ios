@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol TrendChartViewDelegate;
 
 @interface TrendChartView : UIView
+
+@property (nonatomic, assign) id <TrendChartViewDelegate> delegate;
+
+@end
+
+@protocol TrendChartViewDelegate <NSObject>
+
+- (void)trendChartViewLandscape:(TrendChartView *)trendView;
 
 @end

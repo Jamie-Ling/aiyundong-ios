@@ -33,8 +33,15 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
+        self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
+        [self loadCalendarButton];
+        [self loadSegmentedControl];
+        [self loadLandscapeButton];
+        [self loadLineChart];
     }
     
     return self;
@@ -113,6 +120,14 @@
     
     [landscapeButton addTarget:self action:@selector(landscapeViewData) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:landscapeButton];
+}
+
+- (void)landscapeViewData
+{
+    if ([_delegate respondsToSelector:@selector(trendChartViewLandscape:)])
+    {
+        [_delegate trendChartViewLandscape:self];
+    }
 }
 
 - (void)loadDateLabel

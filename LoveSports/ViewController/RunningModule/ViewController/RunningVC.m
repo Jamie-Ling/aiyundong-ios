@@ -17,9 +17,11 @@
 #import "DayDetailView.h"
 #import "TrendChartView.h"
 
-@interface RunningVC ()
+@interface RunningVC () <TrendChartViewDelegate>
 
 @property (nonatomic, strong) DayDetailView *detailView;
+@property (nonatomic, strong) TrendChartView *trendView;
+
 @property (nonatomic, strong) NSDate *currentDate;
 
 @end
@@ -44,6 +46,7 @@
     
     _currentDate = [NSDate date];
     [self loadDayDetailView];
+    [self loadTrendChartView];
 }
 
 - (void)loadDayDetailView
@@ -51,6 +54,23 @@
     _detailView = [[DayDetailView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     
     [self.view addSubview:_detailView];
+}
+
+- (void)loadTrendChartView
+{
+    _trendView = [[TrendChartView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    
+    _trendView.delegate = self;
+    [self.view addSubview:_trendView];
+    _trendView.hidden = YES;
+}
+
+#pragma mark --- TrendChartViewDelegate ---
+- (void)trendChartViewLandscape:(TrendChartView *)trendView
+{
+    LandscapeVC *vc = [[LandscapeVC alloc] init];
+    
+    [self presentViewController:vc animated:NO completion:nil];
 }
 
 #pragma mark --- 重写父类方法 ---
@@ -92,6 +112,20 @@
     [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:^{
         [weakSelf updateConnectForView];
     }];
+}
+
+- (void)upSwipe
+{
+    if (_detailView.hidden)
+    {
+        _detailView.hidden = NO;
+        _trendView.hidden = YES;
+    }
+    else
+    {
+        _detailView.hidden = YES;
+        _trendView.hidden = NO;
+    }
 }
 
 - (void)updateConnectForView

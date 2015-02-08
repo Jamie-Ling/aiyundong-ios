@@ -104,9 +104,9 @@
     totalModel.totalSteps =    (val[4]  << 24) | (val[5]  << 16)  | (val[6]  << 8) | (val[7]);
     totalModel.totalCalories = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
     totalModel.totalDistance = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
-    totalModel.totalBytes = (val[16] << 8) | (val[17]);
+    totalModel.totalBytes =    (val[16] << 8)  | (val[17]);
 
-    NSLog(@"dateString = %d..%d..%d", totalModel.totalSteps, totalModel.totalCalories, totalModel.totalDistance);
+    NSLog(@"dateString = %d..%d..%ld", totalModel.totalSteps, totalModel.totalCalories, (long)totalModel.totalDistance);
     
     // 此处需要判断收到得字节与存储得字节长度。看看是否发生丢包。
     NSMutableArray *sports = [[NSMutableArray alloc] init];
@@ -165,20 +165,25 @@
     int setting = i + val[i] + 1;
     totalModel.settingBytes = val[i];
     i = i + 1;
-
+    
+    /*
     for (; i < setting; i += 4)
     {
         StepsModel *model = [[StepsModel alloc] init];
         
         model.dateDay = totalModel.dateString;
-        model.stepSize = (val[i] << 8) | (val[i + 1]);
+        totalModel.stepSize = (val[i] << 8) | (val[i + 1]);
         model.timeOrder = (val[i + 2] << 8) | (val[i + 3]);
         [stepSizes addObject:model];
     }
+     */
     
+    totalModel.stepSize = (val[i] << 8) | (val[i + 1]);
+
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
-    totalModel.stepSizes = stepSizes;
+    
+    [totalModel modelToDetailShow];
     
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", totalModel.dateString];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
@@ -208,32 +213,87 @@
     return model;
 }
 
-- (void)setTotalSteps
+- (void)modelToDetailShow
 {
-    NSInteger total = 0;
-    if (_sportsArray)
+    NSMutableArray *detailSteps = [[NSMutableArray alloc] init];
+    NSMutableArray *detailSleeps = [[NSMutableArray alloc] init];
+    NSMutableArray *detailDistans = [[NSMutableArray alloc] init];
+    NSMutableArray *detailCalories = [[NSMutableArray alloc] init];
+
+    for (int i = 0; i < 288; i += 6)
     {
-        for (SportsModel *model in _sportsArray)
-        {
-            total = total + (model.currentOrder - model.lastOrder) * model.steps;
-        }
+        NSInteger total = [self halfHourData:i withTotals:self.sportsArray];
+        [detailSteps addObject:@(total)];
+        
+        total = [self halfHourData:i withTotals:self.sleepArray];
+        [detailSleeps addObject:@(total)];
+        
+        total = [self halfHourData:i withTotals:self.sportsArray];
+        [detailDistans addObject:@(total)];
+        
+        total = [self halfHourData:i withTotals:self.sportsArray];
+        [detailCalories addObject:@(total)];
     }
     
-    _totalSteps = total;
+    self.detailSports = detailSteps;
+    self.detailSleeps = detailSleeps;
+    self.detailDistans = detailDistans;
+    self.detailCalories = detailCalories;
 }
 
-- (void)setTotalCalories
+- (NSInteger)halfHourData:(int)index withTotals:(NSArray *)array
 {
-    NSInteger total = 0;
-    if (_sportsArray)
+    NSInteger number = 0;
+    for (int i = index; i < index + 6; i++)
     {
-        for (SportsModel *model in _sportsArray)
-        {
-            total = total + (model.currentOrder - model.lastOrder) * model.calories;
-        }
+        number += [self getDataWithIndex:i withTotals:array];
     }
     
-    _totalCalories = total;
+    return number;
+}
+
+- (NSInteger)getDataWithIndex:(int)index withTotals:(NSArray *)array
+{
+    if (array)
+    {
+        NSObject *object = array[0];
+        if ([object isKindOfClass:[SportsModel class]])
+        {
+            for (int i = 0; i < array.count; i++)
+            {
+                SportsModel *model = array[i];
+                if (model.currentOrder >= index)
+                {
+                    return model.steps;
+                }
+            }
+            
+            return 0;
+        }
+        else if ([object isKindOfClass:[SleepModel class]])
+        {
+            for (int i = 0; i < array.count; i++)
+            {
+                SleepModel *model = array[i];
+                if (model.currentOrder >= index)
+                {
+                    return model.sleepState;
+                }
+            }
+            
+            return 0;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        return 0;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 // 表名

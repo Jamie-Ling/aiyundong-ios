@@ -192,5 +192,33 @@
     });
 }
 
+- (void)drawDashLine
+{
+    CGContextRef con = UIGraphicsGetCurrentContext();
+    
+    // 横线
+    for (int i = 0; i < 10; i++)
+    {
+        CGContextSetLineWidth(con, 1.0);
+        CGContextSetStrokeColorWithColor(con, [UIColor lightGrayColor].CGColor);
+        CGFloat lengths[] = {3, 3};
+        CGContextSetLineDash(con, 0, lengths, 2);
+        CGContextMoveToPoint(con, 0, self.frame.size.height - i * 25);
+        CGContextAddLineToPoint(con, self.frame.size.width, self.frame.size.height - i * 25);
+        CGContextStrokePath(con);
+    }
+    
+    // 竖线
+    for (int i = 0; i < 9; i++)
+    {
+        CGContextSetLineWidth(con, 1.0);
+        CGContextSetStrokeColorWithColor(con, [UIColor lightGrayColor].CGColor);
+        CGFloat lengths[] = {3, 3};
+        CGContextSetLineDash(con, 0, lengths, 2);
+        CGContextMoveToPoint(con, 0 + (self.frame.size.width- 10)/8 * i, 0);
+        CGContextAddLineToPoint(con, 0 + (self.frame.size.width - 10)/8 * i, self.frame.size.height);
+        CGContextStrokePath(con);
+    }
+}
 
 @end

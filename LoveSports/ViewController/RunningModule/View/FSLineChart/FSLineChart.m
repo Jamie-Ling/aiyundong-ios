@@ -138,6 +138,9 @@
     CGContextStrokePath(ctx);
     */
     
+    // 画虚线
+    //[self drawDashLine];
+
     float scale = 1.0f;
     int q = (int)_data.count / _horizontalGridStep;
     scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
