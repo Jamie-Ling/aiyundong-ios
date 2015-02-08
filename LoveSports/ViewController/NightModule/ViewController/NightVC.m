@@ -19,9 +19,9 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 
 @property (nonatomic) CalendarHomeView *calenderView;
+@property (nonatomic, strong) NSDate *currentDate;
 
 @property (nonatomic, assign) NSInteger percent;
-
 @property (nonatomic, assign) CGFloat offsetY;
 
 @end
@@ -39,6 +39,8 @@
     _offsetY = (self.view.height < 485.0) ? 25.0 : 0.0;
     _percent = 25;
     
+    _currentDate = [NSDate date];
+    
     [self loadPieChartView];
     [self loadCalendarButton];
     [self loadDateLabel];
@@ -53,7 +55,7 @@
     _chartView.delegate = self;
     _chartView.datasource = self;
     [self.view addSubview:_chartView];
-    _chartView.signView.image = [UIImage image:@"睡觉@2x.png"];
+    [_chartView nightSetting];
     [_chartView reloadData];
 }
 
@@ -77,20 +79,13 @@
     [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
     DEF_WEAKSELF_(NightVC);
     _calenderView.calendarblock = ^(CalendarDayModel *model) {
-        NSLog(@"\n---------------------------");
-        NSLog(@"1星期 %@",[model getWeek]);
-        NSLog(@"2字符串 %@",[model toString]);
-        NSLog(@"3节日  %@",model.holiday);
-        if (model.holiday)
-        {
-        }
-        else
-        {
-        }
+
     };
     
     [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
+        [_calenderView removeFromSuperview];
+        _calenderView = nil;
     }];
 }
 

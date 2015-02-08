@@ -10,4 +10,6 @@
 
 @interface LandscapeVC : ZKKViewController
 
+- (instancetype)initWithDate:(NSDate *)date;
+
 @end

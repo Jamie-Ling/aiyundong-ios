@@ -73,8 +73,10 @@ typedef void(^PedometerModelSyncEnd)();
 
 // 目前硬件协议有问题。协商改进。
 + (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock;
-+ (PedometerModel *)getModelWithDate:(NSDate *)date;
-+ (PedometerModel *)getModelWithToday;
++ (PedometerModel *)getModelFromDBWithDate:(NSDate *)date;
++ (PedometerModel *)getModelFromDBWithToday;
++ (PedometerModel *)simpleInitWithDate:(NSDate *)date;
++ (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date;
 
 @end
 

@@ -17,12 +17,10 @@
 #import "DayDetailView.h"
 #import "TrendChartView.h"
 
-@interface RunningVC () <TrendChartViewDelegate>
+@interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate>
 
 @property (nonatomic, strong) DayDetailView *detailView;
 @property (nonatomic, strong) TrendChartView *trendView;
-
-@property (nonatomic, strong) NSDate *currentDate;
 
 @end
 
@@ -44,18 +42,18 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
-    _currentDate = [NSDate date];
     [self loadDayDetailView];
     [self loadTrendChartView];
     
     // 默认显示当天的.
-    [_detailView updateContentForView:[PedometerModel getModelWithToday]];
+    [_detailView updateContentForView:[PedometerModel getModelFromDBWithToday]];
 }
 
 - (void)loadDayDetailView
 {
     _detailView = [[DayDetailView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     
+    _detailView.delegate = self;
     [self.view addSubview:_detailView];
 }
 
@@ -71,7 +69,7 @@
 #pragma mark --- TrendChartViewDelegate ---
 - (void)trendChartViewLandscape:(TrendChartView *)trendView
 {
-    LandscapeVC *vc = [[LandscapeVC alloc] init];
+    LandscapeVC *vc = [[LandscapeVC alloc] initWithDate:_trendView.currentDate];
     
     [self presentViewController:vc animated:NO completion:nil];
 }
@@ -80,30 +78,24 @@
 - (void)leftSwipe
 {
     NSLog(@"..左扫..");
-    _currentDate = [_currentDate dateAfterDay:1];
-    PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
-    if (model)
-    {
-        [_detailView updateContentForView:model];
-    }
-    else
-    {
-        SHOWMBProgressHUD(@"没有明天的数据.", nil, nil, NO, 2.0);
-    }
+    [self swipeUpdateContentForChartViewWithDirection:1];
 }
 
 - (void)rightSwipe
 {
     NSLog(@"..右扫..");
-    _currentDate = [_currentDate dateAfterDay:-1];
-    PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
-    if (model)
+    [self swipeUpdateContentForChartViewWithDirection:-1];
+}
+
+- (void)swipeUpdateContentForChartViewWithDirection:(NSInteger)direction;
+{
+    if (_detailView.hidden)
     {
-        [_detailView updateContentForView:model];
+        [_trendView updateContentForChartViewWithDirection:direction];
     }
     else
     {
-        SHOWMBProgressHUD(@"没有更早的数据.", nil, nil, NO, 2.0);
+        [_detailView updateContentForChartViewWithDirection:direction];
     }
 }
 
@@ -119,9 +111,19 @@
 
 - (void)updateConnectForView
 {
-    if ([_currentDate isSameWithDate:[NSDate date]])
+    if (_detailView.hidden)
     {
-        [_detailView updateContentForView:[PedometerModel getModelWithDate:_currentDate]];
+        if ([_trendView.currentDate isSameWithDate:[NSDate date]])
+        {
+            [_trendView updateContentForChartViewWithDirection:0];
+        }
+    }
+    else
+    {
+        if ([_detailView.currentDate isSameWithDate:[NSDate date]])
+        {
+            [_detailView updateContentForChartViewWithDirection:0];
+        }
     }
 }
 
@@ -137,6 +139,11 @@
         _detailView.hidden = YES;
         _trendView.hidden = NO;
     }
+}
+
+- (void)dayDetailViewSwipeUp
+{
+    [self upSwipe];
 }
 
 @end

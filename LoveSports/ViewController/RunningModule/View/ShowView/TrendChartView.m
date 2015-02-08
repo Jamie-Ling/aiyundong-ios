@@ -11,6 +11,7 @@
 #import "UIColor+FSPalette.h"
 #import "ShowWareView.h"
 #import "CalendarHomeView.h"
+#import "PedometerModel.h"
 
 @interface TrendChartView ()
 
@@ -38,6 +39,8 @@
         self.backgroundColor = [UIColor clearColor];
         self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
+        _currentDate = [NSDate date];
+        
         [self loadCalendarButton];
         [self loadSegmentedControl];
         [self loadLandscapeButton];
@@ -45,6 +48,13 @@
     }
     
     return self;
+}
+
+- (void)setCurrentDate:(NSDate *)currentDate
+{
+    _currentDate = currentDate;
+    
+    [self updateContentForChartViewWithDirection:0];
 }
 
 - (void)loadCalendarButton
@@ -67,20 +77,14 @@
     [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
     DEF_WEAKSELF_(TrendChartView);
     _calenderView.calendarblock = ^(CalendarDayModel *model) {
-        NSLog(@"\n---------------------------");
-        NSLog(@"1星期 %@",[model getWeek]);
-        NSLog(@"2字符串 %@",[model toString]);
-        NSLog(@"3节日  %@",model.holiday);
-        if (model.holiday)
-        {
-        }
-        else
-        {
-        }
+        NSLog(@"..%@", [model date]);
+        weakSelf.currentDate = [model date];
     };
     
     [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
+        [_calenderView removeFromSuperview];
+        _calenderView = nil;
     }];
 }
 
@@ -152,29 +156,45 @@
 -(void)loadLineChart
 {
     // Generating some dummy data
-    NSMutableArray *chartData = [NSMutableArray arrayWithCapacity:0];
-    for(int i = 0; i < 7; i++)
-    {
-        chartData[i] = [NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
-    }
-    
-    NSArray *days = @[@"10/10", @"10/11", @"10/12", @"10/13", @"10/14", @"10/15", @"10/16"];
-    
+ 
     CGRect rect = CGRectMake((self.width - self.width * 0.9) / 2, 120, self.width * 0.9, 200);
     _lineChart = [[FSLineChart alloc] initWithFrame:rect];
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = (int)days.count; // 151,187,205,0.2
+    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
+    _lineChart.levelNumber = 800;
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
-    _lineChart.labelForIndex = ^(NSUInteger item) {
-        return days[item];
-    };
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
     };
-    [_lineChart setChartData:chartData];
-    
     [self addSubview:_lineChart];
+    
+    [self refreshTrendChartViewWithDate:_currentDate];
+}
+
+- (void)refreshTrendChartViewWithDate:(NSDate *)date
+{
+    _currentDate = date;
+    NSArray *array = [PedometerModel getEveryDayTrendDataWithDate:_currentDate];
+    NSMutableArray *chartDataArray = [[NSMutableArray alloc] init];
+    NSMutableArray *daysArray = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < array.count; i++)
+    {
+        PedometerModel *model = array[i];
+        chartDataArray[i] = @(model.totalSteps);
+        daysArray[i] = [model.dateString substringFromIndex:5];
+    }
+    
+    _lineChart.labelForIndex = ^(NSUInteger item) {
+        return daysArray[item];
+    };
+    [_lineChart setChartData:chartDataArray];
+}
+
+- (void)updateContentForChartViewWithDirection:(NSInteger)direction
+{
+    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:direction * 8]];
 }
 
 - (void)loadChartStyleButtons

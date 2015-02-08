@@ -12,6 +12,9 @@
 @interface TrendChartView : UIView
 
 @property (nonatomic, assign) id <TrendChartViewDelegate> delegate;
+@property (nonatomic, strong) NSDate *currentDate;
+
+- (void)updateContentForChartViewWithDirection:(NSInteger)direction;
 
 @end
 

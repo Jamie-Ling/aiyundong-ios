@@ -46,7 +46,8 @@
         _offsetY = (self.height < 485) ? 20.0 : 0.0;
         _percent = 25;
         _chartData = [[NSMutableArray alloc] initWithCapacity:0];
-        
+        _currentDate = [NSDate date];
+
         [self loadPieChartView];
         [self loadCalendarButton];
         [self loadDateLabel];
@@ -56,6 +57,13 @@
     }
     
     return self;
+}
+
+- (void)setCurrentDate:(NSDate *)currentDate
+{
+    _currentDate = currentDate;
+    
+    [self updateContentForChartViewWithDirection:0];
 }
 
 - (void)loadPieChartView
@@ -86,23 +94,17 @@
         _calenderView = [[CalendarHomeView alloc] initWithFrame:CGRectMake(2, self.height * 0.15, self.width - 4.0, self.height * 0.8)];
     }
     
+    DEF_WEAKSELF_(DayDetailView)
     [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
-    DEF_WEAKSELF_(DayDetailView);
     _calenderView.calendarblock = ^(CalendarDayModel *model) {
-        NSLog(@"\n---------------------------");
-        NSLog(@"1星期 %@",[model getWeek]);
-        NSLog(@"2字符串 %@",[model toString]);
-        NSLog(@"3节日  %@",model.holiday);
-        if (model.holiday)
-        {
-        }
-        else
-        {
-        }
+        NSLog(@"..%@", [model date]);
+        weakSelf.currentDate = [model date];
     };
     
     [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
+        [_calenderView removeFromSuperview];
+        _calenderView = nil;
     }];
 }
 
@@ -167,16 +169,24 @@
     [self addSubview:_scrollView];
     [self loadLineChart];
     _scrollView.contentSize = CGSizeMake(_scrollView.width * 6, _scrollView.height);
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upSwipe)];
+    swipe.direction = UISwipeGestureRecognizerDirectionUp;
+    [_scrollView addGestureRecognizer:swipe];
+}
+
+- (void)upSwipe
+{
+    NSLog(@"上");
+    if ([_delegate respondsToSelector:@selector(dayDetailViewSwipeUp)])
+    {
+        [_delegate dayDetailViewSwipeUp];
+    }
 }
 
 -(void)loadLineChart
 {
     // Generating some dummy data
-    for (int i = 0; i < 49; i++)
-    {
-        _chartData[i] = @(0); //[NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
-    }
-    
     NSMutableArray *bottomTitles = [[NSMutableArray alloc] init];
     for (int i = 0; i < 49; i++)
     {
@@ -195,8 +205,9 @@
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
     };
-    [_lineChart setChartData:_chartData];
     [_scrollView addSubview:_lineChart];
+    
+    [self updateContentForChartViewWithDirection:0];
 }
 
 - (void)loadShareButton
@@ -291,6 +302,14 @@
     }
     
     [_lineChart setChartData:_chartData];
+}
+
+- (void)updateContentForChartViewWithDirection:(NSInteger)direction
+{
+    _currentDate = [_currentDate dateAfterDay:direction * 1];
+    PedometerModel *model = [PedometerModel getModelFromDBWithDate:_currentDate];
+
+    [self updateContentForView:model];
 }
 
 @end

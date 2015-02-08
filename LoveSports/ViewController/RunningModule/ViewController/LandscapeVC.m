@@ -8,14 +8,25 @@
 
 #import "LandscapeVC.h"
 #import "FSLineChart.h"
+#import "PedometerModel.h"
 
 @interface LandscapeVC ()
 
 @property (nonatomic, strong) FSLineChart *lineChart;
+@property (nonatomic, strong) NSDate *currentDate;
 
 @end
 
 @implementation LandscapeVC
+
+- (instancetype)initWithDate:(NSDate *)date
+{
+    self = [super init];
+    if (self) {
+        _currentDate = date;
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -46,32 +57,58 @@
 
 -(void)loadLineChart
 {
-    // Generating some dummy data
-    NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:7];
-    
-    for(int i = 0;i < 7;i ++)
-    {
-        chartData[i] = [NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
-    }
-    
-    NSArray *days = @[@"10/10", @"10/11", @"10/12", @"10/13", @"10/14", @"10/15", @"10/16"];
-    
     // Creating the line chart
     CGRect rect = CGRectMake((self.view.height - self.view.height * 0.9) / 2, 50, self.view.height * 0.9, self.view.width - 120);
     _lineChart = [[FSLineChart alloc] initWithFrame:rect];
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = (int)days.count; // 151,187,205,0.2
+    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
+    _lineChart.levelNumber = 800;
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
-    _lineChart.labelForIndex = ^(NSUInteger item) {
-        return days[item];
-    };
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
     };
-    [_lineChart setChartData:chartData];
-    
     [self.view addSubview:_lineChart];
+    
+    [self refreshTrendChartViewWithDate:_currentDate];
+}
+
+- (void)refreshTrendChartViewWithDate:(NSDate *)date
+{
+    _currentDate = date;
+    NSArray *array = [PedometerModel getEveryDayTrendDataWithDate:_currentDate];
+    NSMutableArray *chartDataArray = [[NSMutableArray alloc] init];
+    NSMutableArray *daysArray = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < array.count; i++)
+    {
+        PedometerModel *model = array[i];
+        chartDataArray[i] = @(model.totalSteps);
+        daysArray[i] = [model.dateString substringFromIndex:5];
+    }
+    
+    _lineChart.labelForIndex = ^(NSUInteger item) {
+        return daysArray[item];
+    };
+    [_lineChart setChartData:chartDataArray];
+}
+
+- (void)updateContentForChartViewWithDirection:(NSInteger)direction
+{
+    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:direction * 8]];
+}
+
+#pragma mark --- 重写父类方法 ---
+- (void)leftSwipe
+{
+    NSLog(@"..左扫..");
+    [self updateContentForChartViewWithDirection:1];
+}
+
+- (void)rightSwipe
+{
+    NSLog(@"..右扫..");
+    [self updateContentForChartViewWithDirection:-1];
 }
 
 // 下面的是6.0以后的

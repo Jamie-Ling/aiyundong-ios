@@ -129,7 +129,7 @@
         case PieChartViewShowSteps:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
-            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalSteps / model.targetStep];
+            _durationLabel.text = [NSString stringWithFormat:@"%02d%%", model.totalSteps / model.targetStep];
             percent = model.totalSteps / model.targetStep;
         }
             break;
@@ -137,7 +137,7 @@
         case PieChartViewShowCalories:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
-            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalCalories / model.targetCalories];
+            _durationLabel.text = [NSString stringWithFormat:@"%02d%%", model.totalCalories / model.targetCalories];
             percent = model.totalCalories / model.targetCalories;
         }
             break;
@@ -145,7 +145,7 @@
         case PieChartViewShowDistance:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalDistance];
-            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalDistance / model.targetDistance];
+            _durationLabel.text = [NSString stringWithFormat:@"%02d%%", model.totalDistance / model.targetDistance];
             percent = model.totalDistance / model.targetDistance;
         }
             break;

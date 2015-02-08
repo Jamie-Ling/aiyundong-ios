@@ -215,7 +215,7 @@
         [self.layer addSublayer:_pathLayer];
     }
     
-    _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
+    _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale - 2, self.bounds.size.width, self.bounds.size.height);
     _pathLayer.bounds = self.bounds;
     _pathLayer.path = path.CGPath;
     _pathLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
@@ -401,7 +401,7 @@
     
     // Compute the point in the view from the data with a set scale
     CGFloat number = [_data[idx] floatValue] / _levelNumber * 0.1;
-    return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - number * scale);
+    return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - ((number > 1.0) ? 1.0 : number) * scale);
 }
 
 - (UIBezierPath*)getLinePath:(float)scale withSmoothing:(BOOL)smoothed close:(BOOL)closed

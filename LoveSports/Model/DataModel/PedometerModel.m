@@ -106,6 +106,15 @@
     return self;
 }
 
++ (PedometerModel *)simpleInitWithDate:(NSDate *)date
+{
+    PedometerModel *model = [[PedometerModel alloc] init];
+    
+    model.dateString = [[date dateToString] componentsSeparatedByString:@" "][0];
+    
+    return model;
+}
+
 + (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock
 {
     UInt8 val[288 * 25] = {0};
@@ -137,10 +146,12 @@
             model.dateDay = totalModel.dateString;
             model.lastOrder = lastOrder;
             model.currentOrder = val[i] + signOrder;
-           // model.steps = ((val[i + 1] & 0x0F) << 8) | val[i + 2];
-           // model.calories = val[i + 3] + ((state == 8) ? 0 : 256);
-            totalModel.totalSteps += model.steps;
-            totalModel.totalCalories += model.calories;
+            model.steps = ((val[i + 1] & 0x0F) << 8) | val[i + 2];
+            model.calories = val[i + 3] + ((state == 8) ? 0 : 256);
+            
+            NSLog(@"steps = ..%d..%d", model.steps, model.calories);
+           // totalModel.totalSteps += model.steps;
+           // totalModel.totalCalories += model.calories;
             
             [sports addObject:model];
             lastOrder = model.currentOrder;
@@ -212,19 +223,24 @@
     }
 }
 
-+ (PedometerModel *)getModelWithDate:(NSDate *)date
++ (PedometerModel *)getModelFromDBWithDate:(NSDate *)date
 {
     NSString *dateString = [date dateToString];
     NSLog(@"..%@", dateString);
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
+    if (!model)
+    {
+        model = [PedometerModel simpleInitWithDate:date];
+    }
+    
     return model;
 }
 
-+ (PedometerModel *)getModelWithToday
++ (PedometerModel *)getModelFromDBWithToday
 {
-    PedometerModel *model = [PedometerModel getModelWithDate:[NSDate date]];
+    PedometerModel *model = [PedometerModel getModelFromDBWithDate:[NSDate date]];
     
     if (model)
     {
@@ -287,7 +303,7 @@
             for (int i = 0; i < array.count; i++)
             {
                 SportsModel *model = array[i];
-                if (model.currentOrder >= index)
+                if (index <= model.currentOrder)
                 {
                     return model.steps;
                 }
@@ -300,7 +316,7 @@
             for (int i = 0; i < array.count; i++)
             {
                 SleepModel *model = array[i];
-                if (model.currentOrder >= index)
+                if (index <= model.currentOrder)
                 {
                     return model.sleepState;
                 }
@@ -327,6 +343,26 @@
     self.targetStep = [BLTManager sharedInstance].model.targetStep;
     self.targetCalories = [BLTManager sharedInstance].model.targetStep;
     self.targetDistance = [BLTManager sharedInstance].model.targetStep;
+}
+
++ (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 8; i++)
+    {
+        NSDate *curDate = [date dateAfterDay:i];
+        PedometerModel *model = [PedometerModel getModelFromDBWithDate:curDate];
+        if (model)
+        {
+            [array addObject:model];
+        }
+        else
+        {
+            [array addObject:[PedometerModel simpleInitWithDate:curDate]];
+        }
+    }
+    
+    return array;
 }
 
 // 表名
