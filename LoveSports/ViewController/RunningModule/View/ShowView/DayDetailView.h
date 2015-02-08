@@ -11,6 +11,7 @@
 
 @interface DayDetailView : UIView
 
+@property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) PedometerModel *model;
 
 - (void)updateContentForView:(PedometerModel *)model;

@@ -105,24 +105,65 @@
 - (void)nightSetting
 {
     _minLabel.hidden = YES;
+    self.signView.image = [UIImage image:@"睡觉@2x.png"];
+
 }
 
 - (void)daySetting
 {
     _minLabel.hidden = YES;
-   // _targetLabel.hidden = YES;
-    self.signView.image = [UIImage image:@"睡觉@2x.png"];
-   // _durationLabel.frame = CGRectMake(0, self.height / 3 * 2, self.width, self.height / 12);
+    _targetLabel.hidden = YES;
+    self.signView.image = [UIImage image:@"home_sports@2x.png"];
+    self.signView.frame = CGRectMake(self.signView.x + 7, self.signView.y - 7, 89 / 2.0, 89 / 2.0);
+    _durationLabel.frame = CGRectMake(0, self.height / 3 * 2, self.width, self.height / 12);
     _timeLabel.text = @"步数";
-    _targetLabel.text = @"卡路里";
-    _durationLabel.text = @"距离";
+   // _targetLabel.text = @"卡路里";
+    _durationLabel.text = @"百分比";
 }
 
-- (void)updateContentForViewWithModel:(PedometerModel *)model
+- (void)updateContentForViewWithModel:(PedometerModel *)model withState:(PieChartViewShowState)state  withReloadBlock:(PieChartViewReload)block;
 {
-    _timeLabel.text = [NSString stringWithFormat:@"%d", model.totalSteps];
-    _targetLabel.text = [NSString stringWithFormat:@"%d", model.totalCalories];
-    _durationLabel.text = [NSString stringWithFormat:@"%d", model.totalDistance];
+    CGFloat percent = -1.0;
+    switch (state)
+    {
+        case PieChartViewShowSteps:
+        {
+            _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
+            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalSteps / model.targetStep];
+            percent = model.totalSteps / model.targetStep;
+        }
+            break;
+            
+        case PieChartViewShowCalories:
+        {
+            _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
+            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalCalories / model.targetCalories];
+            percent = model.totalCalories / model.targetCalories;
+        }
+            break;
+            
+        case PieChartViewShowDistance:
+        {
+            _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalDistance];
+            _durationLabel.text = [NSString stringWithFormat:@"%02ld%%", model.totalDistance / model.targetDistance];
+            percent = model.totalDistance / model.targetDistance;
+        }
+            break;
+            
+        case PieChartViewShowSleep:
+        {
+        
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (block)
+    {
+        block(percent);
+    }
 }
 
 @end

@@ -241,6 +241,8 @@
 		F49529D21A766E03002A5382 /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CC1A766E03002A5382 /* BLTModel.m */; };
 		F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CE1A766E03002A5382 /* BLTPeripheral.m */; };
 		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
+		F49693191A872075008D81CA /* UIScrollView+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = F49693181A872075008D81CA /* UIScrollView+Simple.m */; };
+		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
 		F4B692F41A6F3EBC00B42395 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F31A6F3EBC00B42395 /* main.m */; };
 		F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F61A6F3EBC00B42395 /* AppDelegate.m */; };
 		F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F91A6F3EBC00B42395 /* ViewController.m */; };
@@ -655,6 +657,9 @@
 		F49529CE1A766E03002A5382 /* BLTPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTPeripheral.m; sourceTree = "<group>"; };
 		F49529CF1A766E03002A5382 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
 		F49529D01A766E03002A5382 /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
+		F49693171A872075008D81CA /* UIScrollView+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Simple.h"; sourceTree = "<group>"; };
+		F49693181A872075008D81CA /* UIScrollView+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Simple.m"; sourceTree = "<group>"; };
+		F496931A1A872952008D81CA /* home_sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_sports@2x.png"; sourceTree = "<group>"; };
 		F4B692EE1A6F3EBC00B42395 /* LoveSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoveSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B692F21A6F3EBC00B42395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4B692F31A6F3EBC00B42395 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -905,6 +910,7 @@
 			children = (
 				69EFC19E1A737ABD00B5BC53 /* background@2x.jpg */,
 				69EFC19F1A737ABD00B5BC53 /* home.jpg */,
+				F496931A1A872952008D81CA /* home_sports@2x.png */,
 				69EFC1A01A737ABD00B5BC53 /* nav@2x.png */,
 				69EFC1A11A737ABD00B5BC53 /* 分享.png */,
 				69EFC1A21A737ABD00B5BC53 /* 卡路里.png */,
@@ -1955,6 +1961,8 @@
 				69EFC2511A73A8EA00B5BC53 /* UITextField+_extra.m */,
 				F4BF5F581A6F5197004C433D /* UITableView+Animation.h */,
 				F4BF5F591A6F5197004C433D /* UITableView+Animation.m */,
+				F49693171A872075008D81CA /* UIScrollView+Simple.h */,
+				F49693181A872075008D81CA /* UIScrollView+Simple.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2212,6 +2220,7 @@
 				F470E7AB1A7FAD680009E649 /* 月@2x.png in Resources */,
 				F470E7B01A7FAD680009E649 /* 足迹-选中@2x.png in Resources */,
 				F470E7C91A7FAD680009E649 /* 路程.png in Resources */,
+				F496931B1A872952008D81CA /* home_sports@2x.png in Resources */,
 				F470E7B31A7FAD680009E649 /* 路程选中@2x.png in Resources */,
 				69EFC2BA1A75EB0A00B5BC53 /* 选择按钮@2x.png in Resources */,
 				F470E7A41A7FAD680009E649 /* 周@2x.png in Resources */,
@@ -2291,6 +2300,7 @@
 				69FD420A1A7FCC2C0023B74D /* PieChartView.m in Sources */,
 				F4B693971A6F403400B42395 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 				F4BF5F541A6F4C69004C433D /* UIView+Frame.m in Sources */,
+				F49693191A872075008D81CA /* UIScrollView+Simple.m in Sources */,
 				F4B6935A1A6F402300B42395 /* YYJSONHelper.m in Sources */,
 				F470E7F11A7FB7660009E649 /* CalendarHomeView.m in Sources */,
 				69FD421A1A7FCC2C0023B74D /* PAGameAnswerItem.m in Sources */,

@@ -77,30 +77,30 @@
 - (void)leftSwipe
 {
     NSLog(@"..左扫..");
-    NSMutableArray *chartData = [NSMutableArray arrayWithCapacity:7];
-    for(int i = 0; i < 7; i++)
+    _currentDate = [_currentDate dateAfterDay:-1];
+    PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
+    if (model)
     {
-        chartData[i] = [NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
+        
     }
-    
-   // if (_lineChart)
+    else
     {
-      //  [_lineChart setChartData:chartData];
+        SHOWMBProgressHUD(@"没有之前的数据.", nil, nil, NO, 2.0);
     }
 }
 
 - (void)rightSwipe
 {
     NSLog(@"..右扫..");
-    NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:7];
-    for(int i = 0;i < 7;i ++)
+    _currentDate = [_currentDate dateAfterDay:1];
+    PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
+    if (model)
     {
-        chartData[i] = [NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
+        
     }
-    
-   // if (_lineChart)
+    else
     {
-       // [_lineChart setChartData:chartData];
+        SHOWMBProgressHUD(@"没有之后的数据.", nil, nil, NO, 2.0);
     }
 }
 
@@ -112,6 +112,14 @@
     [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:^{
         [weakSelf updateConnectForView];
     }];
+}
+
+- (void)updateConnectForView
+{
+    if ([_currentDate isEqualToDate:[NSDate date]])
+    {
+        [_detailView updateContentForView:[PedometerModel getModelWithDate:_currentDate]];
+    }
 }
 
 - (void)upSwipe
@@ -126,11 +134,6 @@
         _detailView.hidden = YES;
         _trendView.hidden = NO;
     }
-}
-
-- (void)updateConnectForView
-{
-   [_detailView updateContentForView:[PedometerModel getModelWithDate:_currentDate]];
 }
 
 @end

@@ -10,14 +10,17 @@
 #import "PedometerModel.h"
 
 typedef enum {
-    PieChartViewShowDay = 0,
-    PieChartViewShowNight = 1
+    PieChartViewShowSteps = 0,
+    PieChartViewShowCalories = 1,
+    PieChartViewShowDistance = 2,
+    PieChartViewShowSleep = 3
 } PieChartViewShowState;
 
 @protocol PieChartViewDelegate;
 @protocol PieChartViewDataSource;
 
 @interface PieChartView : UIView 
+typedef void(^PieChartViewReload)(CGFloat percent);
 
 @property (nonatomic, assign) id <PieChartViewDataSource> datasource;
 @property (nonatomic, assign) id <PieChartViewDelegate> delegate;
@@ -26,11 +29,13 @@ typedef enum {
 @property (nonatomic, strong) UILabel *minLabel;
 @property (nonatomic, strong) UILabel *targetLabel;
 @property (nonatomic, strong) UILabel *durationLabel;
+@property (nonatomic, strong) PieChartViewReload reloadBlock;
 
 - (void)reloadData;
 - (void)nightSetting;
 - (void)daySetting;
-- (void)updateContentForViewWithModel:(PedometerModel *)model;
+- (void)updateContentForViewWithModel:(PedometerModel *)model
+                            withState:(PieChartViewShowState)state withReloadBlock:(PieChartViewReload)block;
 
 @end
 
