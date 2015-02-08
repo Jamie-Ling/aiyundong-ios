@@ -28,6 +28,18 @@
 		699242081A768BDF00EFF121 /* NSObject+LKModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 699242031A768BDF00EFF121 /* NSObject+LKModel.m */; };
 		699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6992420F1A77425200EFF121 /* game_button_select_Highlighted@2x.png */; };
 		699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 699242101A77425200EFF121 /* game_button_select_Normal@2x.png */; };
+		69E097261A873627003F2EB9 /* WeekModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097251A873627003F2EB9 /* WeekModel.m */; };
+		69E0973A1A873D6E003F2EB9 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69E097291A873D6E003F2EB9 /* DateTools.bundle */; };
+		69E0973B1A873D6E003F2EB9 /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E0972D1A873D6E003F2EB9 /* DTError.m */; };
+		69E0973C1A873D6E003F2EB9 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E0972F1A873D6E003F2EB9 /* DTTimePeriod.m */; };
+		69E0973D1A873D6E003F2EB9 /* DTTimePeriodChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097311A873D6E003F2EB9 /* DTTimePeriodChain.m */; };
+		69E0973E1A873D6E003F2EB9 /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097331A873D6E003F2EB9 /* DTTimePeriodCollection.m */; };
+		69E0973F1A873D6E003F2EB9 /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097351A873D6E003F2EB9 /* DTTimePeriodGroup.m */; };
+		69E097401A873D6E003F2EB9 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097371A873D6E003F2EB9 /* NSDate+DateTools.m */; };
+		69E097411A873D6E003F2EB9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 69E097381A873D6E003F2EB9 /* LICENSE */; };
+		69E097421A873D6E003F2EB9 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 69E097391A873D6E003F2EB9 /* README.md */; };
+		69E097451A87B991003F2EB9 /* MonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097441A87B991003F2EB9 /* MonthModel.m */; };
+		69E097481A87B9C1003F2EB9 /* YearModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E097471A87B9C1003F2EB9 /* YearModel.m */; };
 		69EFC1DB1A737ABD00B5BC53 /* background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC19E1A737ABD00B5BC53 /* background@2x.jpg */; };
 		69EFC1DC1A737ABD00B5BC53 /* home.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC19F1A737ABD00B5BC53 /* home.jpg */; };
 		69EFC1DD1A737ABD00B5BC53 /* nav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A01A737ABD00B5BC53 /* nav@2x.png */; };
@@ -356,6 +368,29 @@
 		699242031A768BDF00EFF121 /* NSObject+LKModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LKModel.m"; sourceTree = "<group>"; };
 		6992420F1A77425200EFF121 /* game_button_select_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_button_select_Highlighted@2x.png"; sourceTree = "<group>"; };
 		699242101A77425200EFF121 /* game_button_select_Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_button_select_Normal@2x.png"; sourceTree = "<group>"; };
+		69E097241A873627003F2EB9 /* WeekModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekModel.h; sourceTree = "<group>"; };
+		69E097251A873627003F2EB9 /* WeekModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekModel.m; sourceTree = "<group>"; };
+		69E097291A873D6E003F2EB9 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
+		69E0972A1A873D6E003F2EB9 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
+		69E0972B1A873D6E003F2EB9 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
+		69E0972C1A873D6E003F2EB9 /* DTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTError.h; sourceTree = "<group>"; };
+		69E0972D1A873D6E003F2EB9 /* DTError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTError.m; sourceTree = "<group>"; };
+		69E0972E1A873D6E003F2EB9 /* DTTimePeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriod.h; sourceTree = "<group>"; };
+		69E0972F1A873D6E003F2EB9 /* DTTimePeriod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriod.m; sourceTree = "<group>"; };
+		69E097301A873D6E003F2EB9 /* DTTimePeriodChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodChain.h; sourceTree = "<group>"; };
+		69E097311A873D6E003F2EB9 /* DTTimePeriodChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodChain.m; sourceTree = "<group>"; };
+		69E097321A873D6E003F2EB9 /* DTTimePeriodCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodCollection.h; sourceTree = "<group>"; };
+		69E097331A873D6E003F2EB9 /* DTTimePeriodCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodCollection.m; sourceTree = "<group>"; };
+		69E097341A873D6E003F2EB9 /* DTTimePeriodGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTimePeriodGroup.h; sourceTree = "<group>"; };
+		69E097351A873D6E003F2EB9 /* DTTimePeriodGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTimePeriodGroup.m; sourceTree = "<group>"; };
+		69E097361A873D6E003F2EB9 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
+		69E097371A873D6E003F2EB9 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
+		69E097381A873D6E003F2EB9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		69E097391A873D6E003F2EB9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		69E097431A87B991003F2EB9 /* MonthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthModel.h; sourceTree = "<group>"; };
+		69E097441A87B991003F2EB9 /* MonthModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthModel.m; sourceTree = "<group>"; };
+		69E097461A87B9C1003F2EB9 /* YearModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearModel.h; sourceTree = "<group>"; };
+		69E097471A87B9C1003F2EB9 /* YearModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearModel.m; sourceTree = "<group>"; };
 		69EFC19E1A737ABD00B5BC53 /* background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background@2x.jpg"; sourceTree = "<group>"; };
 		69EFC19F1A737ABD00B5BC53 /* home.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = home.jpg; sourceTree = "<group>"; };
 		69EFC1A01A737ABD00B5BC53 /* nav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav@2x.png"; sourceTree = "<group>"; };
@@ -890,6 +925,38 @@
 				699242031A768BDF00EFF121 /* NSObject+LKModel.m */,
 			);
 			path = LKDBHelper;
+			sourceTree = "<group>";
+		};
+		69E097271A873D6E003F2EB9 /* DateTools */ = {
+			isa = PBXGroup;
+			children = (
+				69E097281A873D6E003F2EB9 /* DateTools */,
+				69E097381A873D6E003F2EB9 /* LICENSE */,
+				69E097391A873D6E003F2EB9 /* README.md */,
+			);
+			path = DateTools;
+			sourceTree = "<group>";
+		};
+		69E097281A873D6E003F2EB9 /* DateTools */ = {
+			isa = PBXGroup;
+			children = (
+				69E097291A873D6E003F2EB9 /* DateTools.bundle */,
+				69E0972A1A873D6E003F2EB9 /* DateTools.h */,
+				69E0972B1A873D6E003F2EB9 /* DTConstants.h */,
+				69E0972C1A873D6E003F2EB9 /* DTError.h */,
+				69E0972D1A873D6E003F2EB9 /* DTError.m */,
+				69E0972E1A873D6E003F2EB9 /* DTTimePeriod.h */,
+				69E0972F1A873D6E003F2EB9 /* DTTimePeriod.m */,
+				69E097301A873D6E003F2EB9 /* DTTimePeriodChain.h */,
+				69E097311A873D6E003F2EB9 /* DTTimePeriodChain.m */,
+				69E097321A873D6E003F2EB9 /* DTTimePeriodCollection.h */,
+				69E097331A873D6E003F2EB9 /* DTTimePeriodCollection.m */,
+				69E097341A873D6E003F2EB9 /* DTTimePeriodGroup.h */,
+				69E097351A873D6E003F2EB9 /* DTTimePeriodGroup.m */,
+				69E097361A873D6E003F2EB9 /* NSDate+DateTools.h */,
+				69E097371A873D6E003F2EB9 /* NSDate+DateTools.m */,
+			);
+			path = DateTools;
 			sourceTree = "<group>";
 		};
 		69EFC19C1A737ABD00B5BC53 /* Resources */ = {
@@ -1485,6 +1552,12 @@
 				F45F84081A7B6698004246E8 /* NoPasteTextField.m */,
 				F47F351E1A7E6D1400D6D220 /* PedometerModel.h */,
 				F47F351F1A7E6D1400D6D220 /* PedometerModel.m */,
+				69E097241A873627003F2EB9 /* WeekModel.h */,
+				69E097251A873627003F2EB9 /* WeekModel.m */,
+				69E097431A87B991003F2EB9 /* MonthModel.h */,
+				69E097441A87B991003F2EB9 /* MonthModel.m */,
+				69E097461A87B9C1003F2EB9 /* YearModel.h */,
+				69E097471A87B9C1003F2EB9 /* YearModel.m */,
 				F45F84091A7B6698004246E8 /* SaveHelper.h */,
 				F45F840A1A7B6698004246E8 /* SaveHelper.m */,
 			);
@@ -1981,6 +2054,7 @@
 		F4BF5F5B1A6F529E004C433D /* BaseClass */ = {
 			isa = PBXGroup;
 			children = (
+				69E097271A873D6E003F2EB9 /* DateTools */,
 				69FD418E1A7FCC100023B74D /* JSBadgeView */,
 				69EFC2A91A75D11900B5BC53 /* BSModealPicker */,
 				69EFC21D1A7397C600B5BC53 /* 电池电量 */,
@@ -2180,6 +2254,7 @@
 				69EFC1FE1A737ABD00B5BC53 /* 1_01.png in Resources */,
 				69EFC2011A737ABD00B5BC53 /* 1_04.png in Resources */,
 				F470E7D01A7FAD680009E649 /* T4副本.jpg in Resources */,
+				69E097411A873D6E003F2EB9 /* LICENSE in Resources */,
 				69EFC1F01A737ABD00B5BC53 /* icon2@2x.png in Resources */,
 				69EFC2B91A75EB0A00B5BC53 /* 添加按钮@2x.png in Resources */,
 				F470E7D51A7FAD680009E649 /* 睡觉2.png in Resources */,
@@ -2198,6 +2273,7 @@
 				69EFC1DB1A737ABD00B5BC53 /* background@2x.jpg in Resources */,
 				F470E7AF1A7FAD680009E649 /* 能量选中@2x.png in Resources */,
 				69EFC1EC1A737ABD00B5BC53 /* bg3@2x.png in Resources */,
+				69E0973A1A873D6E003F2EB9 /* DateTools.bundle in Resources */,
 				69EFC1F61A737ABD00B5BC53 /* title4@2x.png in Resources */,
 				69EFC1F71A737ABD00B5BC53 /* username_1_07@2x.png in Resources */,
 				F470E7B91A7FAD680009E649 /* t3.jpg in Resources */,
@@ -2250,6 +2326,7 @@
 				F4B693E61A6F40D200B42395 /* UIImage+ZKK.m in Sources */,
 				F4B693531A6F401A00B42395 /* IQTitleBarButtonItem.m in Sources */,
 				69EFC2E61A760CD700B5BC53 /* UIView+WebCacheOperation.m in Sources */,
+				69E0973B1A873D6E003F2EB9 /* DTError.m in Sources */,
 				69FD42131A7FCC2C0023B74D /* CityViewController.m in Sources */,
 				69EFC2DC1A760CD600B5BC53 /* SDWebImageDecoder.m in Sources */,
 				69EFC2DE1A760CD700B5BC53 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -2282,6 +2359,7 @@
 				69FD421C1A7FCC2C0023B74D /* AccountManageViewController.m in Sources */,
 				F4BF5F6A1A6F529E004C433D /* XYSystemInfo.m in Sources */,
 				F4B693551A6F401A00B42395 /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				69E097421A873D6E003F2EB9 /* README.md in Sources */,
 				F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */,
 				69EFC22A1A7397C600B5BC53 /* UIView+ALQuickFrame.m in Sources */,
 				F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */,
@@ -2290,6 +2368,7 @@
 				F4B693A91A6F403400B42395 /* RequestHelper.m in Sources */,
 				69FD42221A7FCC2C0023B74D /* TargetViewController.m in Sources */,
 				F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */,
+				69E097401A873D6E003F2EB9 /* NSDate+DateTools.m in Sources */,
 				69FD42141A7FCC2C0023B74D /* ProvinceInfo.m in Sources */,
 				F49529D11A766E03002A5382 /* BLTManager.m in Sources */,
 				F4B6939A1A6F403400B42395 /* FMDatabasePool.m in Sources */,
@@ -2312,6 +2391,7 @@
 				F4B6934D1A6F401A00B42395 /* IQUIWindow+Hierarchy.m in Sources */,
 				699242071A768BDF00EFF121 /* NSObject+LKDBHelper.m in Sources */,
 				F4BF5F691A6F529E004C433D /* XYSandbox.m in Sources */,
+				69E097261A873627003F2EB9 /* WeekModel.m in Sources */,
 				69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */,
 				F4B693A51A6F403400B42395 /* NSData+MKBase64.m in Sources */,
 				F4B693A61A6F403400B42395 /* NSDate+RFC1123.m in Sources */,
@@ -2325,6 +2405,7 @@
 				F470E7EF1A7FB7660009E649 /* CalendarDayCell.m in Sources */,
 				69FD42011A7FCC2C0023B74D /* CoffeeVC.m in Sources */,
 				F4B6934F1A6F401A00B42395 /* IQKeyboardReturnKeyHandler.m in Sources */,
+				69E0973F1A873D6E003F2EB9 /* DTTimePeriodGroup.m in Sources */,
 				69FD42041A7FCC2C0023B74D /* RegisterVC.m in Sources */,
 				69FD421D1A7FCC2C0023B74D /* BindIngDeviceViewController.m in Sources */,
 				F4BF5F6B1A6F529E004C433D /* XYThread.m in Sources */,
@@ -2340,7 +2421,9 @@
 				69EFC2B01A75D11900B5BC53 /* BSModalDatePickerView.m in Sources */,
 				F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */,
 				F4B693AD1A6F403400B42395 /* MKNetworkOperation.m in Sources */,
+				69E097481A87B9C1003F2EB9 /* YearModel.m in Sources */,
 				69FD42101A7FCC2C0023B74D /* VersionInfoModel.m in Sources */,
+				69E0973D1A873D6E003F2EB9 /* DTTimePeriodChain.m in Sources */,
 				F4B693A81A6F403400B42395 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				69FD42031A7FCC2C0023B74D /* LoginVC.m in Sources */,
 				F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */,
@@ -2353,7 +2436,9 @@
 				F4B693E51A6F40D200B42395 /* UIButton+Simple.m in Sources */,
 				69FD42241A7FCC2C0023B74D /* UpdateBraceletNameViewController.m in Sources */,
 				F4B693541A6F401A00B42395 /* IQToolbar.m in Sources */,
+				69E0973E1A873D6E003F2EB9 /* DTTimePeriodCollection.m in Sources */,
 				699242041A768BDF00EFF121 /* LKDB+Mapping.m in Sources */,
+				69E0973C1A873D6E003F2EB9 /* DTTimePeriod.m in Sources */,
 				69EFC2E31A760CD700B5BC53 /* UIImage+MultiFormat.m in Sources */,
 				69FD42051A7FCC2C0023B74D /* MapVC.m in Sources */,
 				69FD42271A7FCC2C0023B74D /* UpdateNickNameViewController.m in Sources */,
@@ -2386,6 +2471,7 @@
 				699242061A768BDF00EFF121 /* LKDBUtils.m in Sources */,
 				69FD42021A7FCC2C0023B74D /* HomeVC.m in Sources */,
 				69FD42071A7FCC2C0023B74D /* NightVC.m in Sources */,
+				69E097451A87B991003F2EB9 /* MonthModel.m in Sources */,
 				F4B6934B1A6F401A00B42395 /* IQNSArray+Sort.m in Sources */,
 				69EFC2DF1A760CD700B5BC53 /* SDWebImageManager.m in Sources */,
 				698A90C21A6FEB54005BABE6 /* README.md in Sources */,
