@@ -66,7 +66,7 @@ typedef void(^PedometerModelSyncEnd)();
 
 // @property (nonatomic, strong) NSArray *stepSizes;
 
-@property (nonatomic, strong) NSArray *detailSports;
+@property (nonatomic, strong) NSArray *detailSteps;
 @property (nonatomic, strong) NSArray *detailSleeps;
 @property (nonatomic, strong) NSArray *detailCalories;
 @property (nonatomic, strong) NSArray *detailDistans;
@@ -74,6 +74,7 @@ typedef void(^PedometerModelSyncEnd)();
 // 目前硬件协议有问题。协商改进。
 + (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock;
 + (PedometerModel *)getModelWithDate:(NSDate *)date;
++ (PedometerModel *)getModelWithToday;
 
 @end
 

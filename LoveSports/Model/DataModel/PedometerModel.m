@@ -94,6 +94,18 @@
 
 @implementation PedometerModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        NSString *dateString = [[NSDate date] dateToString];
+        _dateString= [dateString componentsSeparatedByString:@" "][0];
+    }
+    
+    return self;
+}
+
 + (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock
 {
     UInt8 val[288 * 25] = {0};
@@ -166,20 +178,16 @@
     totalModel.settingBytes = val[i];
     i = i + 1;
     
-    /*
     for (; i < setting; i += 4)
     {
+        NSLog(@"%d..%d..%d..%d", val[i], val[i+1], val[i+2],val[i+3]);
         StepsModel *model = [[StepsModel alloc] init];
         
         model.dateDay = totalModel.dateString;
         totalModel.stepSize = (val[i] << 8) | (val[i + 1]);
-        model.timeOrder = (val[i + 2] << 8) | (val[i + 3]);
-        [stepSizes addObject:model];
+        // model.timeOrder = (val[i + 2] << 8) | (val[i + 3]);
     }
-     */
     
-    totalModel.stepSize = (val[i] << 8) | (val[i + 1]);
-
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
@@ -208,10 +216,26 @@
 {
     NSString *dateString = [date dateToString];
     NSLog(@"..%@", dateString);
-    NSString *where = [dateString componentsSeparatedByString:@" "][0];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
     return model;
+}
+
++ (PedometerModel *)getModelWithToday
+{
+    PedometerModel *model = [PedometerModel getModelWithDate:[NSDate date]];
+    
+    if (model)
+    {
+        return model;
+    }
+    else
+    {
+        model = [[PedometerModel alloc] init];
+        
+        return model;
+    }
 }
 
 - (void)modelToDetailShow
@@ -236,7 +260,7 @@
         [detailCalories addObject:@(total)];
     }
     
-    self.detailSports = detailSteps;
+    self.detailSteps = detailSteps;
     self.detailSleeps = detailSleeps;
     self.detailDistans = detailDistans;
     self.detailCalories = detailCalories;
@@ -255,7 +279,7 @@
 
 - (NSInteger)getDataWithIndex:(int)index withTotals:(NSArray *)array
 {
-    if (array)
+    if (array && array.count > 0)
     {
         NSObject *object = array[0];
         if ([object isKindOfClass:[SportsModel class]])
@@ -301,6 +325,8 @@
 - (void)setTargetDataForModel
 {
     self.targetStep = [BLTManager sharedInstance].model.targetStep;
+    self.targetCalories = [BLTManager sharedInstance].model.targetStep;
+    self.targetDistance = [BLTManager sharedInstance].model.targetStep;
 }
 
 // 表名

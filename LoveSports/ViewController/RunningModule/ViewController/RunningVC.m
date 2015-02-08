@@ -47,6 +47,9 @@
     _currentDate = [NSDate date];
     [self loadDayDetailView];
     [self loadTrendChartView];
+    
+    // 默认显示当天的.
+    [_detailView updateContentForView:[PedometerModel getModelWithToday]];
 }
 
 - (void)loadDayDetailView
@@ -77,30 +80,30 @@
 - (void)leftSwipe
 {
     NSLog(@"..左扫..");
-    _currentDate = [_currentDate dateAfterDay:-1];
+    _currentDate = [_currentDate dateAfterDay:1];
     PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
     if (model)
     {
-        
+        [_detailView updateContentForView:model];
     }
     else
     {
-        SHOWMBProgressHUD(@"没有之前的数据.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"没有明天的数据.", nil, nil, NO, 2.0);
     }
 }
 
 - (void)rightSwipe
 {
     NSLog(@"..右扫..");
-    _currentDate = [_currentDate dateAfterDay:1];
+    _currentDate = [_currentDate dateAfterDay:-1];
     PedometerModel *model = [PedometerModel getModelWithDate:_currentDate];
     if (model)
     {
-        
+        [_detailView updateContentForView:model];
     }
     else
     {
-        SHOWMBProgressHUD(@"没有之后的数据.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"没有更早的数据.", nil, nil, NO, 2.0);
     }
 }
 
@@ -116,7 +119,7 @@
 
 - (void)updateConnectForView
 {
-    if ([_currentDate isEqualToDate:[NSDate date]])
+    if ([_currentDate isSameWithDate:[NSDate date]])
     {
         [_detailView updateContentForView:[PedometerModel getModelWithDate:_currentDate]];
     }

@@ -85,6 +85,8 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 // Animations
 @property (nonatomic) CGFloat animationDuration;
 
+@property (nonatomic, assign) NSInteger levelNumber;
+
 // Set the actual data for the chart, and then render it to the view.
 - (void)setChartData:(NSArray *)chartData;
 

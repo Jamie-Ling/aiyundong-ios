@@ -247,7 +247,7 @@
                                          withTextColor:[UIColor whiteColor]];
         [self addSubview:label];
         label.center = CGPointMake(p.x, p.y - 15);
-        label.text = [NSString stringWithFormat:@"%0.0f", [_data[i] floatValue] * 10000];
+        label.text = [NSString stringWithFormat:@"%d", [_data[i] integerValue]];
         
         p.y +=  minBound * scale;
 
@@ -301,6 +301,7 @@
     _valueLabelTextColor = [UIColor grayColor];
     _valueLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
     _valueLabelPosition = ValueLabelRight;
+    _levelNumber = 100;
 }
 
 - (void)computeBounds
@@ -399,8 +400,8 @@
         return CGPointZero;
     
     // Compute the point in the view from the data with a set scale
-    NSNumber *number = _data[idx];
-    return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - [number floatValue] * scale);
+    CGFloat number = [_data[idx] floatValue] / _levelNumber * 0.1;
+    return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - number * scale);
 }
 
 - (UIBezierPath*)getLinePath:(float)scale withSmoothing:(BOOL)smoothed close:(BOOL)closed

@@ -25,6 +25,8 @@
 @property (nonatomic) CalendarHomeView *calenderView;
 @property (nonatomic, strong) UIButton *lastButton;
 
+@property (nonatomic, strong) NSMutableArray *chartData;
+
 @property (nonatomic, assign) NSInteger percent;
 
 @property (nonatomic, assign) CGFloat offsetY;
@@ -43,6 +45,7 @@
         NSLog(@".height..%f", self.height);
         _offsetY = (self.height < 485) ? 20.0 : 0.0;
         _percent = 25;
+        _chartData = [[NSMutableArray alloc] initWithCapacity:0];
         
         [self loadPieChartView];
         [self loadCalendarButton];
@@ -152,22 +155,12 @@
     button.selected = YES;
     _lastButton = button;
     
-    if (button.tag == 2000)
-    {
-        
-    }
-    else if (button.tag == 2001)
-    {
-    }
-    else if (button.tag == 2002)
-    {
-        
-    }
+    [self updateContentFromClickChangeEvent];
 }
 
 - (void)loadScrollView
 {
-    CGFloat offsetY = _chartView.totalHeight + 70;
+    CGFloat offsetY = _chartView.totalHeight + 50;
     _scrollView = [UIScrollView simpleInit:CGRectMake(0, offsetY, self.width, self.height - offsetY - 64)
                                   withShow:NO
                                 withBounce:YES];
@@ -179,10 +172,9 @@
 -(void)loadLineChart
 {
     // Generating some dummy data
-    NSMutableArray *chartData = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < 49; i++)
     {
-        chartData[i] = [NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
+        _chartData[i] = @(0); //[NSNumber numberWithFloat: (arc4random() % 10 + 1) * 0.1];
     }
     
     NSMutableArray *bottomTitles = [[NSMutableArray alloc] init];
@@ -192,7 +184,7 @@
         [bottomTitles addObject:string];
     }
     
-    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(15.0, 0, _scrollView.width * 6 - 30.0, _scrollView.height - 20)];
+    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(15.0, 20, _scrollView.width * 6 - 30.0, _scrollView.height - 40)];
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = (int)bottomTitles.count - 1; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
@@ -203,7 +195,7 @@
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
     };
-    [_lineChart setChartData:chartData];
+    [_lineChart setChartData:_chartData];
     [_scrollView addSubview:_lineChart];
 }
 
@@ -256,20 +248,49 @@
 {
     _model = model;
     
-    DEF_WEAKSELF_(DayDetailView);
-    [_chartView updateContentForViewWithModel:model
-                                    withState:(PieChartViewShowState)(_lastButton.tag - 2000)
-     withReloadBlock:^(CGFloat percent) {
-         if (percent > -0.1)
-         {
-             weakSelf.percent = percent;
-             [weakSelf.chartView reloadData];
-         }
-     }];
+    [self updateContentFromClickChangeEvent];
     _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
     NSDate *date =  [NSDate stringToDate:[NSString stringWithFormat:@"%@ 06:00:00", model.dateString]];
     NSString *weekString = [NSObject numberTransferWeek:date.weekday];
     _weekLabel.text = weekString;
+}
+
+- (void)updateContentFromClickChangeEvent
+{
+    DEF_WEAKSELF_(DayDetailView);
+    [_chartView updateContentForViewWithModel:_model
+                                    withState:(PieChartViewShowState)(_lastButton.tag - 2000)
+                              withReloadBlock:^(CGFloat percent) {
+                                  if (percent > -0.1)
+                                  {
+                                      weakSelf.percent = percent;
+                                      [weakSelf.chartView reloadData];
+                                  }
+                              }];
+    
+    [_chartData removeAllObjects];
+    [_chartData addObject:@(0)];
+    if (_lastButton.tag == 2000)
+    {
+        [_chartData addObjectsFromArray:_model.detailSteps];
+        _lineChart.levelNumber = 200;
+    }
+    else if (_lastButton.tag == 2001)
+    {
+        [_chartData addObjectsFromArray:_model.detailCalories];
+        
+    }
+    else if (_lastButton.tag == 2001)
+    {
+        [_chartData addObjectsFromArray:_model.detailDistans];
+    }
+    
+    for (int i = _chartData.count; i < 49; i++)
+    {
+        [_chartData addObject:@(0)];
+    }
+    
+    [_lineChart setChartData:_chartData];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "BLTManager.h"
 #import "NSDate+XY.h"
 #import "PedometerModel.h"
+#import "BraceletInfoModel.h"
 
 @implementation AlarmClockModel
 
@@ -502,6 +503,10 @@ DEF_SINGLETON(BLTSendData)
                                                  NSLog(@"...失败。。。");
                                                  SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
                                              }
+                                             else if (type == BLTAcceptDataTypeRequestHistoryNoData)
+                                             {
+                                                 SHOWMBProgressHUD(@"没有最新的数据.", nil, nil, NO, 2.0);
+                                             }
                                          }];
         
         
@@ -573,6 +578,33 @@ DEF_SINGLETON(BLTSendData)
             _timer = nil;
         }
     }
+}
+
+#pragma mark --- 蓝牙连接后发送连续的指令 ---
+- (void)sendContinuousInstruction
+{
+    [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeSetLocTime)
+        {
+            SHOWMBProgressHUD(@"设置时间成功", nil, nil, NO, 2);
+        }
+    }];
+    
+    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.5];
+    
+}
+
+- (void)sendRequestWeight
+{
+    /*
+    [BLTSendData sendLookBodyInformationDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
+        
+    }];
+     */
+    [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
+    [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
+        
+    }];
 }
 
 @end

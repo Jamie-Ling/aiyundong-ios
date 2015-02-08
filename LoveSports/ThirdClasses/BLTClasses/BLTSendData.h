@@ -339,5 +339,9 @@ AS_SINGLETON(BLTSendData)
  *  同步数据, 无论今天还是历史。
  */
 - (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block;
+/**
+ *  连接手环后发送连续的指令
+ */
+- (void)sendContinuousInstruction;
 
 @end
