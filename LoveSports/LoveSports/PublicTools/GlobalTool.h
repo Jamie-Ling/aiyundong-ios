@@ -120,6 +120,7 @@
 #define kUserInfoOfSexKey  @"userInfo004"  //性别
 #define kUserInfoOfHeightKey  @"userInfo005"  //身高
 #define kUserInfoOfWeightKey  @"userInfo006"  //体重
+#define kUserInfoOfStepLongKey  @"userInfo00111"  //步距  后来增加
 #define kUserInfoOfInterestingKey  @"userInfo007"  //兴趣点
 #define kUserInfoOfAreaKey  @"userInfo008"  //地区
 #define kUserInfoOfDeclarationKey  @"userInfo009"  //宣言

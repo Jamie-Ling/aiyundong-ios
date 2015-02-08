@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/TestBLT/TestBLTViewController.m"
-            timestampString = "444842436.294586"
+            filePath = "ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
+            timestampString = "445067075.07223"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "-changeStepLong"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,122 +25,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/TestBLT/TestBLTViewController.m"
-            timestampString = "444842436.294586"
+            filePath = "ViewController/UserCenterModule/Model/BraceletInfoModel.m"
+            timestampString = "445067175.389407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
+            landmarkName = "+updateUserInfoToBLTWithUserInfo:withnewestModel:WithSuccess:"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-            timestampString = "444844547.441898"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
-            landmarkName = "-changeHeight"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-            timestampString = "444844549.68768"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
-            landmarkName = "-changeHeight"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[UserInfoViewController changeHeight]_block_invoke"
-                  moduleName = "LoveSports"
-                  urlString = "file:///Users/biginto/Documents/03-%E5%85%AC%E5%8F%B8%E7%9B%B8%E5%85%B3&amp;SVN/aiyundong-ios/LoveSports/ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-                  timestampString = "444844549.691778"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "287"
-                  endingLineNumber = "287"
-                  offsetFromSymbolStart = "122">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[UserInfoViewController changeHeight]_block_invoke_2"
-                  moduleName = "LoveSports"
-                  urlString = "file:///Users/biginto/Documents/03-%E5%85%AC%E5%8F%B8%E7%9B%B8%E5%85%B3&amp;SVN/aiyundong-ios/LoveSports/ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-                  timestampString = "444844549.692016"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "288"
-                  endingLineNumber = "288"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-            timestampString = "444844563.358944"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
-            landmarkName = "-updateUserInfoToBLTWithSuccess:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[UserInfoViewController updateUserInfoToBLTWithSuccess:]"
-                  moduleName = "LoveSports"
-                  urlString = "file:///Users/biginto/Documents/03-%E5%85%AC%E5%8F%B8%E7%9B%B8%E5%85%B3&amp;SVN/aiyundong-ios/LoveSports/ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-                  timestampString = "444844563.361903"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "751"
-                  endingLineNumber = "751"
-                  offsetFromSymbolStart = "946">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__57-[UserInfoViewController updateUserInfoToBLTWithSuccess:]_block_invoke"
-                  moduleName = "LoveSports"
-                  urlString = "file:///Users/biginto/Documents/03-%E5%85%AC%E5%8F%B8%E7%9B%B8%E5%85%B3&amp;SVN/aiyundong-ios/LoveSports/ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-                  timestampString = "444844563.362296"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "751"
-                  endingLineNumber = "751"
-                  offsetFromSymbolStart = "45">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

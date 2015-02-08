@@ -7,6 +7,7 @@
 //  智能手环 模型
 
 #import <Foundation/Foundation.h>
+#import "BLTManager.h"
 
 @interface HandSetAlarmClock : NSObject
 
@@ -57,6 +58,9 @@
 @property (nonatomic, assign) NSInteger _timeAbsoluteValue;  //时区绝对值
 @property (nonatomic, assign) BOOL _timeZone;  //是否是正时区
 
+@property (nonatomic, assign) NSInteger _stepNumber;  //目标步数
+
+
 /**
  *  还原所有设置
  */
@@ -74,5 +78,24 @@
  */
 + (void) choiceOneModelShow: (BraceletInfoModel *)showModel;
 
+/**
+ *  更新给另一个Model(蓝牙交互和图表显示model)
+ *
+ *  @param theModel 蓝牙交互和图表显示model,如果为空，就是全局的model:[BLTManager sharedInstance].model
+ */
++ (void) updateToBLTModel: (BLTModel *) theModel;
+
+
+#pragma mark ---------------- 蓝牙对接 多参数修改 集合-----------------
+/**
+ *  更新个人信息到蓝牙设备
+ *
+ *  @param userInfoDic 用户基本信息， 如果为nil ,自动获取最新的用户信息
+ *  @param theModel    上次选中的手环模型信息，如果为nil ,自动获取最新的手环模型信息
+ *  @param resultBack  返回的结果Block
+ */
++ (void) updateUserInfoToBLTWithUserInfo: (NSDictionary *) userInfoDic
+                         withnewestModel: (BraceletInfoModel *) theModel
+                             WithSuccess: (void (^)(bool success))resultBack;
 
 @end

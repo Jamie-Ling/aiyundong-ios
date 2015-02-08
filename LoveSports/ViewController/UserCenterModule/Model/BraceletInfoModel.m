@@ -51,7 +51,7 @@
 
 @synthesize _defaultName;
 
-@synthesize _timeAbsoluteValue, _timeZone;
+@synthesize _timeAbsoluteValue, _timeZone, _stepNumber;
 
 - (instancetype)init
 {
@@ -106,6 +106,7 @@
     _longTimeSetRemind = YES;
     _PreventLossRemind = YES;
     _isHandAlarmClock = NO;
+    _stepNumber = 10000;
     
     [self initAllSetAlarmClock];
     
@@ -269,6 +270,138 @@
     showModel._orderID = 0;
     //存储到DB
     [[BraceletInfoModel getUsingLKDBHelper] insertToDB:showModel];
+}
+
+/**
+ *  更新给另一个Model(蓝牙交互和图表显示model)
+ *
+ *  @param theModel 蓝牙交互和图表显示model,如果为空，就是全局的model:[BLTManager sharedInstance].model
+ */
++ (void) updateToBLTModel: (BLTModel *) theModel
+{
+// 步距 // 目标步数  // 体重 // 生日
+    
+    BraceletInfoModel *newestModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+    
+    if (!newestModel)
+    {
+        [UIView showAlertView:@"读取当前手环数据模型出错" andMessage:nil];
+        return;
+    }
+    
+    NSDictionary *userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+    
+    if (!userInfoDictionary)
+    {
+        [UIView showAlertView:@"读取用户信息出错" andMessage:nil];
+        return;
+    }
+    
+    BLTModel *tempModel;
+    if (theModel)
+    {
+        tempModel = theModel;
+    }
+    else
+    {
+        tempModel =  [BLTManager sharedInstance].model;
+    }
+    
+    tempModel.stepSize = [[userInfoDictionary objectForKey:kUserInfoOfStepLongKey] integerValue];
+    tempModel.targetStep = newestModel._stepNumber;
+    tempModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] integerValue];
+    tempModel.birthDay = [[userInfoDictionary objectForKey:kUserInfoOfAgeKey] integerValue];
+}
+
+
+
+#pragma mark ---------------- 蓝牙对接 -----------------
+/**
+ *  更新个人信息到蓝牙设备
+ *
+ *  @param userInfoDic 用户基本信息， 如果为nil ,自动获取最新的用户信息
+ *  @param theModel    上次选中的手环模型信息，如果为nil ,自动获取最新的手环模型信息
+ *  @param resultBack  返回的结果Block
+ */
++ (void) updateUserInfoToBLTWithUserInfo: (NSDictionary *) userInfoDic
+                         withnewestModel: (BraceletInfoModel *) theModel
+                             WithSuccess: (void (^)(bool success))resultBack
+{
+    BraceletInfoModel *newestModel;
+    NSDictionary *userInfoDictionary;
+    
+    if (theModel)
+    {
+        newestModel = theModel;
+    }
+    else
+    {
+        newestModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+        
+        if (!newestModel)
+        {
+            [UIView showAlertView:@"读取当前手环数据模型出错" andMessage:nil];
+            return;
+        }
+
+    }
+    
+    if (userInfoDic)
+    {
+        userInfoDictionary = userInfoDic;
+    }
+    else
+    {
+        userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+        
+        if (!userInfoDictionary)
+        {
+            [UIView showAlertView:@"读取用户信息出错" andMessage:nil];
+            return;
+        }
+    }
+
+    //生日
+    NSDate *theDate = [NSDate date];
+    NSString *birthdayString = [userInfoDictionary objectForKey:kUserInfoOfAgeKey];
+    if (![NSString isNilOrEmpty:birthdayString ])
+    {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+        [dateFormatter setTimeZone:timeZone];
+        theDate = [dateFormatter dateFromString:birthdayString];
+    }
+    
+    //体重
+    NSString *weight = [userInfoDictionary objectForKey:kUserInfoOfWeightKey];
+    if ([NSString isNilOrEmpty:weight])
+    {
+        weight = @"50";
+    }
+    
+    //步长
+    NSString *stepLong = [userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
+    if ([NSString isNilOrEmpty:stepLong])
+    {
+        stepLong = @"50";
+    }
+    
+    //步数
+    NSInteger targetSums = newestModel._stepNumber;
+    
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[stepLong integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeSetUserInfo)
+        {
+            NSLog(@"更新个人相关信息成功");
+            resultBack(YES);
+        }
+        else
+        {
+            NSLog(@"更新个人相关信息失败");
+            resultBack(NO);
+        }
+    }];
 }
 
 // DB

@@ -6,6 +6,9 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+#define vStepNumberMin   8000
+#define vStepNumberMax  20000
+
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vDistanceSide   10   // 距离边缘宽度
 
@@ -15,11 +18,14 @@
 
 #import "TargetViewController.h"
 #import "PAGameAnswerItem.h"
+#import "BSModalPickerView.h"
 
 @interface TargetViewController ()<PAGameAnswerItemDelegate>
 {
     NSArray *_titleArray;
     NSDictionary *_userInfoDictionary;
+    
+    NSMutableArray *_stepNumbersArray;
 }
 
 @end
@@ -35,9 +41,18 @@
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
-    _titleArray = [NSArray arrayWithObjects:@"步数  10000步", @"卡路里  3500大卡", @"距离  5.8千米", nil];
+    self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"修改步数" target:self selector:@selector(changeStepLong) ImageName:@"_"];
+    
 
-    [self addChoices];
+    _stepNumbersArray = [[NSMutableArray alloc] initWithCapacity:32];
+    for (int i = vStepNumberMin; i <= vStepNumberMax; i++)
+    {
+        NSString *stepLongString = [NSString stringWithFormat:@"%d 步", i];
+        [_stepNumbersArray addObject:stepLongString];
+    }
+
+    [self reloadMainPage];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,8 +64,8 @@
 {
     [super viewWillAppear:animated];
     
-    
     [self reloadUserInfoTableView];
+
 }
 
 - (void) reloadUserInfoTableView
@@ -73,6 +88,22 @@
 }
 
 #pragma mark ---------------- 页面布局 -----------------
+/**
+ *  刷新界面
+ */
+- (void) reloadMainPage
+{
+    NSString *target1 =  [NSString stringWithFormat:@"步数  %ld步", (long)_thisModel._stepNumber];
+    NSString *target2 =  [NSString stringWithFormat:@"卡路里  3500大卡(需由步数转换，步数:%ld)", (long)_thisModel._stepNumber];
+    NSString *target3 =  [NSString stringWithFormat:@"距离  5.8千米(需由步数转换，步数:%ld)", _thisModel._stepNumber];
+    
+    _titleArray = [NSArray arrayWithObjects:target1, target2, target3, nil];
+    
+    [self.view removeAllSubviews];
+    [self addChoices];
+}
+
+
 - (void) addChoices
 {
     UIView *pCustomView = [[UIView alloc] init];
@@ -122,6 +153,76 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) changeStepLong
+{
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
+    
+    long lastIndex;
+    NSInteger lastLong = _thisModel._stepNumber;
+ 
+    lastIndex= lastLong - vStepNumberMin;
+
+    
+    pickerView.selectedIndex = lastIndex;
+    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    [pickerView presentInView:self.view
+                    withBlock:^(BOOL madeChoice) {
+                        if (madeChoice) {
+                            if (pickerView.selectedIndex == lastIndex)
+                            {
+                                NSLog(@"未做修改");
+                                return;
+                            }
+                            
+                            //生日
+                            NSDate *theDate = [NSDate date];
+                            NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
+                            if (![NSString isNilOrEmpty:birthdayString ])
+                            {
+                                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+                                [dateFormatter setTimeZone:timeZone];
+                                theDate = [dateFormatter dateFromString:birthdayString];
+                            }
+                            
+                            //体重
+                            NSString *weight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
+                            if ([NSString isNilOrEmpty:weight])
+                            {
+                                weight = @"50";
+                            }
+                            
+                            //步长
+                            NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
+                            if ([NSString isNilOrEmpty:height])
+                            {
+                                height = @"50";
+                            }
+                            
+                            //步数
+                            NSString *longString = pickerView.selectedValue;
+                            NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
+                            NSInteger targetSums = [nowSelectedString integerValue];
+                            
+                            [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                if (type == BLTAcceptDataTypeSetUserInfo)
+                                {
+                                    NSLog(@"更新步数成功");
+                                    _thisModel._stepNumber = targetSums;
+                                    
+                                    //更新界面
+                                    [self reloadMainPage];
+                                }
+                                else
+                                {
+                                    NSLog(@"更新步数失败");
+                                }
+                            }];
+                        }
+                    }];
+}
+
 #pragma mark ---------------- PAGameAnswerItemDelegate -----------------
 - (void)PAGameAnswerItem:(PAGameAnswerItem *)item selectIndex:(NSInteger)index
 {
@@ -150,24 +251,17 @@
         weight = @"50";
     }
     
-    //步长, 假设为身高的1/3
-    NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
+    //步长
+    NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
     if ([NSString isNilOrEmpty:height])
     {
-        height = @"178";
+        height = @"50";
     }
     
     //步数
-    NSInteger targetSums = 10000;
-    if ([_thisModel._target integerValue] == 2)
-    {
-        targetSums = 13000;
-    }
-    if (([_thisModel._target integerValue] == 3)) {
-        targetSums = 12000;
-    }
+    NSInteger targetSums = _thisModel._stepNumber;
     
-    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:(int)([height integerValue] / 3 ) withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetUserInfo)
         {
             NSLog(@"更新目标成功");

@@ -22,6 +22,9 @@
 #define vWeightMin   20
 #define vWeightMax   297
 
+#define vStepLongMin   30
+#define vStepLongMax   120
+
 #import "UserInfoViewController.h"
 #import "FlatRoundedButton.h"
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -42,6 +45,7 @@
     
     NSMutableArray *_heightMutableArray;
     NSMutableArray *_weightMutableArray;
+    NSMutableArray *_stepLongMustableArray;
     
     NSDictionary *_userInfoDictionary;
     UpdateNickNameViewController *_updateNickNameVC;
@@ -68,8 +72,8 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"兴趣爱好 ：", @"常出没地区 ：", @"运动宣言 ：", nil];
-    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
+    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"常出没地区 ：", @"运动宣言 ：", nil];
+    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfStepLongKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
     for (int i = vHeightMin; i <= vHeightMax; i++)
@@ -83,6 +87,13 @@
     {
         NSString *weightString = [NSString stringWithFormat:@"%d kg", i];
         [_weightMutableArray addObject:weightString];
+    }
+    
+    _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
+    for (int i = vStepLongMin; i <= vStepLongMax; i++)
+    {
+        NSString *stepLongString = [NSString stringWithFormat:@"%d cm", i];
+        [_stepLongMustableArray addObject:stepLongString];
     }
     
     //tableview
@@ -225,8 +236,7 @@
                                 //相同，没有修改
                                 return;
                             }
-                            
-                            [self updateUserInfoToBLTWithSuccess:^(bool success) {
+                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
                                 if (success)
                                 {
                                     NSLog(@"修改蓝牙设备生日信息成功");
@@ -239,11 +249,55 @@
                                     NSLog(@"修改生日失败");
                                 }
                             }];
-                            
-                           
-                        }
+
+                    }
                     }];
     
+}
+
+- (void) changeStepLong
+{
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepLongMustableArray];
+    
+    long lastIndex;
+    NSString *lastLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
+    if ([NSString isNilOrEmpty:lastLong])
+    {
+        lastIndex = 50 - vStepLongMin;
+    }
+    else
+    {
+        lastIndex= [lastLong integerValue] - vStepLongMin;
+    }
+    
+    pickerView.selectedIndex = lastIndex;
+    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    [pickerView presentInView:self.view
+                    withBlock:^(BOOL madeChoice) {
+                        if (madeChoice) {
+                            if (pickerView.selectedIndex == lastIndex)
+                            {
+                                NSLog(@"未做修改");
+                                return;
+                            }
+                            
+                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
+                                if (success)
+                                {
+                                    NSLog(@"修改蓝牙设备步长信息成功");
+                                    NSString *longString = pickerView.selectedValue;
+                                    NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
+                                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
+                                    [self reloadUserInfoTableView];
+                                }
+                                else
+                                {
+                                    NSLog(@"修改步长失败");
+                                }
+                            }];
+
+                        }
+                    }];
 }
 
 - (void) changeGender
@@ -283,22 +337,11 @@
                                 return;
                             }
                             
-                            
-                            [self updateUserInfoToBLTWithSuccess:^(bool success) {
-                                if (success)
-                                {
-                                    NSLog(@"修改蓝牙设备身高-》步长  信息成功");
-                                    NSLog(@"发送身高修改的请求吧");
-                                    NSString *heightString = pickerView.selectedValue;
-                                    NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
-                                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:nowSelectedString];
-                                    [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"修改身高失败");
-                                }
-                            }];
+                            NSLog(@"发送身高修改的请求吧");
+                            NSString *heightString = pickerView.selectedValue;
+                            NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
+                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:nowSelectedString];
+                            [self reloadUserInfoTableView];
                             
                         }
                     }];
@@ -330,7 +373,7 @@
                                 return;
                             }
                             
-                            [self updateUserInfoToBLTWithSuccess:^(bool success) {
+                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
                                 if (success)
                                 {
                                     NSLog(@"修改蓝牙设备体重 信息成功");
@@ -345,8 +388,8 @@
                                     NSLog(@"修改体重失败");
                                 }
                             }];
+
                             
-                           
                         }
                     }];
 }
@@ -481,6 +524,11 @@
                     nameString = [NSString stringWithFormat:@"%@kg", nameString];
                 }
                     break;
+                case 6:
+                {
+                    nameString = [NSString stringWithFormat:@"%@cm", nameString];
+                }
+                    break;
                 default:
                     break;
             }
@@ -539,12 +587,15 @@
             [self changeWeight];
             break;
         case 6:
-            [self changeInteresting];
+            [self changeStepLong];
             break;
         case 7:
-            [self changeCity];
+            [self changeInteresting];
             break;
         case 8:
+            [self changeCity];
+            break;
+        case 9:
             [self changeDeclaration];
             break;
         default:
@@ -708,58 +759,5 @@
     [self reloadUserInfoTableView];
 }
 
-
-#pragma mark ---------------- 蓝牙对接 -----------------
-- (void) updateUserInfoToBLTWithSuccess: (void (^)(bool success))resultBack
-{
-    //生日
-    NSDate *theDate = [NSDate date];
-    NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
-    if (![NSString isNilOrEmpty:birthdayString ])
-    {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-        [dateFormatter setTimeZone:timeZone];
-        theDate = [dateFormatter dateFromString:birthdayString];
-    }
-    
-    //体重
-    NSString *weight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
-    if ([NSString isNilOrEmpty:weight])
-    {
-        weight = @"50";
-    }
-    
-    //步长, 假设为身高的1/3
-    NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
-    if ([NSString isNilOrEmpty:height])
-    {
-        height = @"178";
-    }
-    
-    //步数
-    NSInteger targetSums = 10000;
-    if ([_thisModel._target integerValue] == 2)
-    {
-        targetSums = 13000;
-    }
-    if (([_thisModel._target integerValue] == 3)) {
-        targetSums = 12000;
-    }
-    
-    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:(int)([height integerValue] / 3 ) withUpdateBlock:^(id object, BLTAcceptDataType type) {
-        if (type == BLTAcceptDataTypeSetUserInfo)
-        {
-            NSLog(@"更新目标成功");
-            resultBack(YES);
-        }
-        else
-        {
-            NSLog(@"更新目标失败");
-            resultBack(NO);
-        }
-    }];
-}
 
 @end

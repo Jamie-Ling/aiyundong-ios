@@ -21,7 +21,6 @@
         
         [self loadButtons];
     }
-    
     return self;
 }
 
