@@ -50,13 +50,20 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, strong) NSString *dateString;
 @property (nonatomic, assign) NSInteger totalBytes;
 @property (nonatomic, assign) NSInteger settingBytes;
-@property (nonatomic, assign) NSInteger totalSteps;     // 当天的总步数
-@property (nonatomic, assign) NSInteger totalCalories;  // 当天的总卡路里
-@property (nonatomic, assign) NSInteger totalDistance ; // 当天的总路程
-@property (nonatomic, assign) NSInteger stepSize;       //步距
+
+@property (nonatomic, assign) NSInteger totalSteps;         // 当天的总步数
+@property (nonatomic, assign) NSInteger totalCalories;      // 当天的总卡路里
+@property (nonatomic, assign) NSInteger totalDistance ;     // 当天的总路程
+
+@property (nonatomic, assign) NSInteger targetStep;         // 目标步数
+@property (nonatomic, assign) NSInteger targetCalories;     // 目标卡路里
+@property (nonatomic, assign) NSInteger targetDistance;     // 目标距离
+
+@property (nonatomic, assign) NSInteger stepSize;           //步距
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
+
 // @property (nonatomic, strong) NSArray *stepSizes;
 
 @property (nonatomic, strong) NSArray *detailSports;

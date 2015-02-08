@@ -184,6 +184,7 @@
     totalModel.sleepArray = sleeps;
     
     [totalModel modelToDetailShow];
+    [totalModel setTargetDataForModel];
     
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", totalModel.dateString];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
@@ -294,6 +295,12 @@
     {
         return 0;
     }
+}
+
+// 设置当前模型的各种目标
+- (void)setTargetDataForModel
+{
+    self.targetStep = [BLTManager sharedInstance].model.targetStep;
 }
 
 // 表名
