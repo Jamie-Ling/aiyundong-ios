@@ -58,6 +58,7 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, assign) NSInteger targetStep;         // 目标步数
 @property (nonatomic, assign) NSInteger targetCalories;     // 目标卡路里
 @property (nonatomic, assign) NSInteger targetDistance;     // 目标距离
+@property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
 @property (nonatomic, assign) NSInteger stepSize;           //步距
 

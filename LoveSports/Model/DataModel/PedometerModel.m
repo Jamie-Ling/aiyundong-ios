@@ -101,6 +101,11 @@
     {
         NSString *dateString = [[NSDate date] dateToString];
         _dateString= [dateString componentsSeparatedByString:@" "][0];
+        
+        _targetStep = 0.0001;
+        _totalCalories = 0.0001;
+        _targetDistance = 0.0001;
+        _targetSleep = 0.0001;
     }
     
     return self;
