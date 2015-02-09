@@ -46,4 +46,66 @@
     return [dict objectForKey:@(number)];
 }
 
+- (NSInteger)stepsConvertCalories:(NSInteger)steps
+                       withWeight:(NSInteger)weight
+                        withModel:(BOOL)metric
+{
+    // 四舍五入...
+    if (metric)
+    {
+        return steps * ((weight - 13.63636) * 0.000693 + 0.00495) * 0.923 + 0.5;
+    }
+    else
+    {
+        return steps / 100 * (0.0315 * weight - 0.45) * 0.9230;
+    }
+}
+
+- (NSInteger)caloriesConvertSteps:(NSInteger)Calories
+                       withWeight:(NSInteger)weight
+                        withModel:(BOOL)metric
+{
+    // 四舍五入...
+    if (metric)
+    {
+        return Calories / (((weight - 13.63636) * 0.000693 + 0.00495) * 0.923);
+    }
+    else
+    {
+        return Calories * 100 / ((0.0315 * weight - 0.45) * 0.9230);
+    }
+}
+
+- (CGFloat)StepsConvertDistance:(NSInteger)steps
+                       withPace:(NSInteger)pace
+{
+    return steps * pace / 1000.0;
+}
+
+- (NSInteger)distanceConvertSteps:(CGFloat)distance
+                       withPace:(NSInteger)pace
+{
+    return distance / pace * 1000.0 + 0.5;
+}
+
+- (NSInteger)caloriesConvertDistance:(NSInteger)calories
+                       withWeight:(NSInteger)weight
+                         withPace:(NSInteger)pace
+                        withModel:(BOOL)metric
+{
+    NSInteger steps = [self caloriesConvertSteps:calories withWeight:weight withModel:metric];
+    
+    return [self StepsConvertDistance:steps withPace:pace];
+}
+
+- (NSInteger)distanceConvertCalories:(CGFloat)distance
+                          withWeight:(NSInteger)weight
+                            withPace:(NSInteger)pace
+                           withModel:(BOOL)metric
+{
+    NSInteger steps = [self distanceConvertSteps:distance withPace:pace];
+    
+    return [self stepsConvertCalories:steps withWeight:weight withModel:metric];
+}
+
 @end
