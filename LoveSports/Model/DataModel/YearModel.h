@@ -17,6 +17,15 @@
 @property (nonatomic, strong) NSMutableDictionary *_thisYearAllWeeks;  //这一年内所有有数据的周模型
 @property (nonatomic, strong) NSMutableDictionary *_thisYearAllMonths;//这一年内所有有数据的月模型
 
+#pragma mark ---------------- 周 - 月  相关 -----------------
+/**
+ *  初始化或更新 周&月模型 通过传入PedModel
+ *
+ *  @param onePedoMeterModel 传入的PedMode
+ *
+ */
++ (void) initOrUpdateTheWeekAndMonthModelFromAPedometerModel: (PedometerModel *) onePedoMeterModel;
+
 
 #pragma mark ---------------- 周相关 -----------------
 /**

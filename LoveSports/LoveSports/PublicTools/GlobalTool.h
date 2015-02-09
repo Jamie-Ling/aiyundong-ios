@@ -112,6 +112,8 @@
 #define kLastChocieBraceletInfoDictionaryKey                      @"LastChocieBraceletInfoDictionaryKey"      //存储上次选择智能手环的key
 #define kAllLoginUserInfoKeyArray                  @"AllLoginUserInfoArray"        //存储所有已登录的用户的key的数组
 
+#define kUserUseFirstDateKey  @"UserUseFirstDateKey"      // 用户第一天使用的日期
+
 
 //用户信息相关key---得到接口后再对应设置
 #define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像

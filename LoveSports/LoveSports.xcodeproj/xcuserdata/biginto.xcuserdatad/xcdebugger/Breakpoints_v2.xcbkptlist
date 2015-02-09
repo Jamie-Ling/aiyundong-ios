@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/ViewController/UserInfo/UserInfoViewController.m"
-            timestampString = "445067075.07223"
+            filePath = "ViewController/RunningModule/View/PieChart/PieChartView.m"
+            timestampString = "445163103.347572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "-changeStepLong"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "-updateContentForViewWithModel:withState:withReloadBlock:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewController/UserCenterModule/Model/BraceletInfoModel.m"
-            timestampString = "445067175.389407"
+            filePath = "ViewController/RunningModule/View/PieChart/PieChartView.m"
+            timestampString = "445163104.558226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
-            landmarkName = "+updateUserInfoToBLTWithUserInfo:withnewestModel:WithSuccess:"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-updateContentForViewWithModel:withState:withReloadBlock:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
