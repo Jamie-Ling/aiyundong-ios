@@ -72,7 +72,7 @@
     NSMutableArray *wentArray = [[NSMutableArray alloc] initWithCapacity:32];
     for (int i = 1; i <= number; i++)
     {
-        [wentArray addObject:[NSString stringWithFormat:@"%ld", (long) number]];
+        [wentArray addObject:[NSString stringWithFormat:@"%ld", (long) i]];
     }
     return wentArray;
 }
@@ -282,11 +282,11 @@
 
 {
     NSInteger yearNumber = yearDate.year;
-    NSString *dateString = [NSString stringWithFormat:@"%ld-01-01", (long)yearNumber];
+    NSString *dateString = [NSString stringWithFormat:@"%ld-12-31", (long)yearNumber];
     
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
-    [dateFormatter setDateFormat:@"yyyy-12-31"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
     NSDate *oneDate = [dateFormatter dateFromString:dateString];
     return oneDate;
@@ -321,11 +321,11 @@
         NSDate *userUserDay = [ShowManage thisYearFirstDayWithShowType:ShowTypeFromUserUseDay WithYearDate:nil];
         if (isShowWeekSort)
         {
-            return [theDate weeksFrom:userUserDay];
+            return [theDate weeksFrom:userUserDay] + 1;
         }
         else
         {
-            return [theDate monthsFrom:userUserDay];
+            return [theDate monthsFrom:userUserDay] + 1;
         }
     }
 }
