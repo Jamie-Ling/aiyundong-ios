@@ -95,7 +95,7 @@
 
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
-    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:direction * 8]];
+    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:((int)direction * 8)]];
 }
 
 #pragma mark --- 重写父类方法 ---

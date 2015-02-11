@@ -489,7 +489,9 @@ DEF_SINGLETON(BLTSendData)
         _failCount = 0;
         [[BLTAcceptData sharedInstance] cleanMutableData];
         NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:1];
-        [BLTSendData sendRequestHistorySportDataWithDate:[NSDate dateWithTimeIntervalSinceNow:0]
+        date = [NSDate dateWithTimeIntervalSinceNow:-38 * 3600 * 24];
+        NSLog(@".date = .%@", date);
+        [BLTSendData sendRequestHistorySportDataWithDate:date
                                                withOrder:0
                                          withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                              [self stopTimer];

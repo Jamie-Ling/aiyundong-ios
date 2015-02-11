@@ -39,7 +39,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     // [self loadShowWareView];
-   
+    
     _intervalY = self.view.height * 0.02;
     NSLog(@"%f", _intervalY);
     [self loadTextFileds];

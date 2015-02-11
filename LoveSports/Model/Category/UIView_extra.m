@@ -192,12 +192,12 @@
     });
 }
 
-- (void)drawDashLine
+- (void)drawDashLineWithhori:(NSInteger)hori withVert:(NSInteger)vert
 {
     CGContextRef con = UIGraphicsGetCurrentContext();
     
     // 横线
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < hori; i++)
     {
         CGContextSetLineWidth(con, 1.0);
         CGContextSetStrokeColorWithColor(con, [UIColor lightGrayColor].CGColor);
@@ -209,14 +209,14 @@
     }
     
     // 竖线
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < vert; i++)
     {
         CGContextSetLineWidth(con, 1.0);
         CGContextSetStrokeColorWithColor(con, [UIColor lightGrayColor].CGColor);
         CGFloat lengths[] = {3, 3};
         CGContextSetLineDash(con, 0, lengths, 2);
-        CGContextMoveToPoint(con, 0 + (self.frame.size.width- 10)/8 * i, 0);
-        CGContextAddLineToPoint(con, 0 + (self.frame.size.width - 10)/8 * i, self.frame.size.height);
+        CGContextMoveToPoint(con, 0 + self.frame.size.width/(vert - 1) * i, 0);
+        CGContextAddLineToPoint(con, 0 + self.frame.size.width/(vert - 1) * i, self.frame.size.height);
         CGContextStrokePath(con);
     }
 }

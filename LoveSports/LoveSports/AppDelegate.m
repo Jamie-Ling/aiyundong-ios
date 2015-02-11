@@ -23,7 +23,7 @@
 {
     // Override point for customization after application launch.
     
-    NSLog(@"..%d..%d..%d", (0x08 << 8) | 0x9f, 0xdc, 0x67);
+    NSLog(@"..%d", 0x015c);
     // 启动蓝牙并自动接受数据
     [BLTAcceptData sharedInstance];
     

@@ -104,6 +104,7 @@
     _segIndex = 0;
 }
 
+// 日月周趋势切换
 - (void)clickSegementControl:(UISegmentedControl *)seg
 {
     NSArray *images = @[@"日@2x.png", @"周@2x.png", @"月@2x.png"];
@@ -114,6 +115,19 @@
     [_segement setImage:[UIImage image:selectImages[_segement.selectedSegmentIndex]]
       forSegmentAtIndex:_segement.selectedSegmentIndex];
     _segIndex = _segement.selectedSegmentIndex;
+    
+    if (_segement.selectedSegmentIndex == 0)
+    {
+        // 日
+    }
+    else if (_segement.selectedSegmentIndex == 1)
+    {
+        // 周
+    }
+    else
+    {
+        // 月
+    }
 }
 
 - (void)loadLandscapeButton
@@ -153,6 +167,7 @@
     [self addSubview:_dateLabel];
 }
 
+#define TrendChartView_LevelNumber 800
 -(void)loadLineChart
 {
     // Generating some dummy data
@@ -161,7 +176,7 @@
     _lineChart = [[FSLineChart alloc] initWithFrame:rect];
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
-    _lineChart.levelNumber = 800;
+    _lineChart.levelNumber = TrendChartView_LevelNumber;
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForValue = ^(CGFloat value) {
@@ -182,6 +197,22 @@
     for(int i = 0; i < array.count; i++)
     {
         PedometerModel *model = array[i];
+        if (_lastButton.tag == 2000)
+        {
+            chartDataArray[i] = @(model.totalSteps);
+            _lineChart.levelNumber = TrendChartView_LevelNumber;
+        }
+        else if (_lastButton.tag == 2001)
+        {
+            chartDataArray[i] = @(model.totalCalories);
+            _lineChart.levelNumber = [self stepsConvertCalories:TrendChartView_LevelNumber withWeight:model.weight withModel:YES];
+        }
+        else
+        {
+            chartDataArray[i] = @(model.totalDistance);
+            _lineChart.levelNumber = [self StepsConvertDistance:TrendChartView_LevelNumber withPace:model.stepSize];
+        }
+        
         chartDataArray[i] = @(model.totalSteps);
         daysArray[i] = [model.dateString substringFromIndex:5];
     }
@@ -194,9 +225,10 @@
 
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
-    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:direction * 8]];
+    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:((int)direction * 8)]];
 }
 
+// 步数，卡路里，距离切换.
 - (void)loadChartStyleButtons
 {
     CGFloat offsetX = ((self.width - 60) - 90 * 3) / 2;
@@ -227,17 +259,7 @@
     button.selected = YES;
     _lastButton = button;
     
-    if (button.tag == 2000)
-    {
-        
-    }
-    else if (button.tag == 2001)
-    {
-    }
-    else if (button.tag == 2002)
-    {
-        
-    }
+    [self refreshTrendChartViewWithDate:_currentDate];
 }
 
 - (void)loadShareButton

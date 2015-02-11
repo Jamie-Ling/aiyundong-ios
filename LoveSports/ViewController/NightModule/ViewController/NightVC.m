@@ -10,6 +10,7 @@
 #import "PieChartView.h"
 #import "CalendarHomeView.h"
 #import "BarGraphView.h"
+#import "BarShowView.h"
 
 @interface NightVC () <PieChartViewDelegate, PieChartViewDataSource>
 
@@ -17,6 +18,9 @@
 @property (nonatomic, strong) BarGraphView *barView;;
 @property (nonatomic, strong) UILabel *weekLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) BarShowView *showView;
 
 @property (nonatomic) CalendarHomeView *calenderView;
 @property (nonatomic, strong) NSDate *currentDate;
@@ -44,7 +48,7 @@
     [self loadPieChartView];
     [self loadCalendarButton];
     [self loadDateLabel];
-    [self loadBarGraphView];
+    [self loadScrollView];
     [self loadShareButton];
 }
 
@@ -108,32 +112,49 @@
     [self.view addSubview:_dateLabel];
 }
 
-- (void)loadBarGraphView
+- (void)loadScrollView
 {
-    _barView = [[BarGraphView alloc] initWithFrame:CGRectMake((self.view.width - 280) / 2, 300 - _offsetY * 1.5, 280, 160 - _offsetY)];
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 300 - _offsetY * 1.5, self.view.width, 160 - _offsetY)];
     
-    [self.view addSubview:_barView];
-    [self updateContentForBarGraphView];
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
+    
+    NSInteger width = ((int)(_scrollView.width * (5 + 1 / 16.0) / 49)) * 49;
+    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(0, 0, width, _scrollView.height)];
+    [_scrollView addSubview:_showView];
+    _scrollView.contentSize = _showView.frame.size;
+    
+    [self updateContentForBarShowView:_currentDate];
 }
 
-- (void)updateContentForBarGraphView
+- (void)updateContentForBarShowView:(NSDate *)date
 {
+    _currentDate = date;
+    PedometerModel *model = [PedometerModel getModelFromDBWithDate:_currentDate];
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 10; i++)
+    
+    if (model.detailSleeps && model.detailSleeps.count > 0)
     {
-        DataModel *model = [[DataModel alloc] init];
+        for (int i = 0; i < model.detailSleeps.count; i++)
+        {
+            [array addObject:@(18 - [model.detailSleeps[i] intValue])];
+        }
         
-        model.width = arc4random() % 30 + 5;
-        model.height = arc4random() % 180 + 20;
-        model.color = [UIColor colorWithRed:(arc4random() % 200 + 20) / 255.0
-                                      green:(arc4random() % 200 + 20) / 255.0
-                                       blue:(arc4random() % 200 + 20) / 255.0
-                                      alpha:1.0];
-        
-        [array addObject:model];
+        for (NSInteger i = array.count - 1; i < 49; i++)
+        {
+            [array addObject:@(0)];
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 49; i++)
+        {
+            [array addObject:@(0)];
+        }
     }
     
-    _barView.array = array;
+    [_showView updateContentForView:array];
 }
 
 - (void)loadShareButton
@@ -188,7 +209,8 @@
     
     _percent = arc4random() % 70 + 20;
     [_chartView reloadData];
-    [self updateContentForBarGraphView];
+    
+    [self updateContentForBarShowView:[_currentDate dateAfterDay:1]];
 }
 
 - (void)rightSwipe
@@ -197,7 +219,8 @@
     
     _percent = arc4random() % 70 + 20;
     [_chartView reloadData];
-    [self updateContentForBarGraphView];
+    
+    [self updateContentForBarShowView:[_currentDate dateAfterDay:-1]];
 }
 
 - (void)downSwipe

@@ -19,6 +19,13 @@
 
 @end
 
+typedef enum {
+    SportsModelSteps = 0,
+    SportsModelCalories = 1,
+    SportsModelDistance,
+    SportsModelSleep
+} SportsModelType;
+
 @interface SportsModel : NSObject
 
 @property (nonatomic, strong) NSString *userName;
@@ -28,6 +35,7 @@
 @property (nonatomic, assign) NSInteger currentOrder;   // 当前时间序号
 @property (nonatomic, assign) NSInteger steps;
 @property (nonatomic, assign) NSInteger calories;       // 卡路里
+@property (nonatomic, assign) CGFloat distance;         // 距离
 
 @end
 
@@ -54,6 +62,8 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, assign) NSInteger totalSteps;         // 当天的总步数
 @property (nonatomic, assign) NSInteger totalCalories;      // 当天的总卡路里
 @property (nonatomic, assign) NSInteger totalDistance ;     // 当天的总路程
+@property (nonatomic, assign) NSInteger totalSportTime ;    // 当天的总运动时间
+@property (nonatomic, assign) NSInteger totalSleepTime ;    // 当天的总睡眠时间
 
 @property (nonatomic, assign) NSInteger targetStep;         // 目标步数
 @property (nonatomic, assign) NSInteger targetCalories;     // 目标卡路里
@@ -61,9 +71,12 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
 @property (nonatomic, assign) NSInteger stepSize;           //步距
+@property (nonatomic, assign) NSInteger weight;             //体重
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
+
+@property (nonatomic, strong) NSArray *lastSleepArray;      // 昨天的睡眠
 
 // @property (nonatomic, strong) NSArray *stepSizes;
 

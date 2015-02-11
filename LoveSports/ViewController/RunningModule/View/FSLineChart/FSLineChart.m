@@ -247,7 +247,7 @@
                                          withTextColor:[UIColor whiteColor]];
         [self addSubview:label];
         label.center = CGPointMake(p.x, p.y - 15);
-        label.text = [NSString stringWithFormat:@"%d", [_data[i] integerValue]];
+        label.text = [NSString stringWithFormat:@"%ld", (long)[_data[i] integerValue]];
         
         p.y +=  minBound * scale;
 
@@ -400,7 +400,7 @@
         return CGPointZero;
     
     // Compute the point in the view from the data with a set scale
-    CGFloat number = [_data[idx] floatValue] / _levelNumber * 0.1;
+    CGFloat number = [_data[idx] floatValue] / (_levelNumber + 0.0001) * 0.1;
     return CGPointMake(_margin + idx * (_axisWidth / (_data.count - 1)), _axisHeight + _margin - ((number > 1.0) ? 1.0 : number) * scale);
 }
 

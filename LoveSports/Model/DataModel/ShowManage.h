@@ -25,7 +25,6 @@ typedef enum {
 
 @interface ShowManage : NSObject
 
-
 /**
  *   当使用ShowTypeFromUserUseDay类型展示前，必须设置用户使用起点日期（用户第一天使用的日期）
  */

@@ -41,7 +41,7 @@
     _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_timeLabel];
     
-    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.4, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor whiteColor]];
+    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.34, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor whiteColor]];
     [self addSubview:_minLabel];
     
     _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor whiteColor]];
@@ -104,9 +104,11 @@
 
 - (void)nightSetting
 {
-    _minLabel.hidden = YES;
+    _minLabel.text = @"MIN";
     self.signView.image = [UIImage image:@"睡觉@2x.png"];
-
+    _timeLabel.text = @"07:00";
+    _targetLabel.text = @"目标";
+    _durationLabel.text = @"8小时";
 }
 
 - (void)daySetting

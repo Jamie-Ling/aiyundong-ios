@@ -48,6 +48,6 @@
             andMessage: (NSString *) message
           withDelegate: (UIViewController<UIAlertViewDelegate> *) delegate;
 
-- (void)drawDashLine;
+- (void)drawDashLineWithhori:(NSInteger)hori withVert:(NSInteger)vert;
 
 @end

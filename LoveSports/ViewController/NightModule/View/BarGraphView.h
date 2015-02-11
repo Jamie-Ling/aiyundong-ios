@@ -13,4 +13,8 @@
 
 @property (nonatomic, strong) NSArray *array;
 
+@property (nonatomic, assign) NSInteger hori;
+@property (nonatomic, assign) NSInteger vert;
+
+
 @end
