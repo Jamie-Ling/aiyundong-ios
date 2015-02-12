@@ -150,6 +150,7 @@
                 {
                     theSwitch.on = !_thisModel._isAutomaticAlarmClock;
                     _thisModel._isAutomaticAlarmClock = theSwitch.on;
+                    [self reloadUserInfoTableView];
                 }
             }];
         }
@@ -175,6 +176,7 @@
                 {
                     theSwitch.on = !_thisModel._isHandAlarmClock;
                     _thisModel._isHandAlarmClock = theSwitch.on;
+                    [self reloadUserInfoTableView];
                 }
             }];
         }
@@ -187,6 +189,7 @@
                 {
                     theSwitch.on = !tempModel._isOpen;
                     tempModel._isOpen = theSwitch.on;
+                    [self reloadUserInfoTableView];
                 }
             }];
         }
@@ -235,6 +238,7 @@
                                            {
                                                tempHandClock._setTime = setTimeString;
                                                tempHandClock._weekDayArray = tempArray;
+                                               [self reloadUserInfoTableView];
                                            }
                                        }];
                                        
@@ -346,7 +350,7 @@
     title.center = CGPointMake(vTableViewMoveLeftX + 16.0 + title.width / 2.0, vOneCellHeight / 2.0);
     
     //右侧箭头
-    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 5, vOneCellHeight / 2.0) withImageName:@"right.png" withImageZoomSize:1.0];
+    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 2, vOneCellHeight / 2.0) withImageName:@"右箭头" withImageZoomSize:1.0];
     //    [oneCell.contentView addSubview:rightImageView];
     
     

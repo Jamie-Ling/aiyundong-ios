@@ -212,7 +212,7 @@
         //头像
         userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:[[_userInfoValueArray objectAtIndex:indexPath.row] objectForKey:kUserInfoOfHeadPhotoKey]];
         
-        [userImageButton setCenter:CGPointMake(vTableViewMoveLeftX + 32.0, vOneCellHeight / 2.0)];
+        [userImageButton setCenter:CGPointMake(vTableViewMoveLeftX + 28.0, vOneCellHeight / 2.0)];
         
         userImageButton.userInteractionEnabled = NO;
         [oneCell.contentView addSubview:userImageButton];
@@ -228,11 +228,11 @@
                                                    textAlignment:NSTextAlignmentLeft
                                                    lineBreakMode:0
                                                    numberOfLines:0];
-    title.center = CGPointMake(vTableViewMoveLeftX + userImageButton.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+    title.center = CGPointMake(vTableViewMoveLeftX + userImageButton.width + title.width / 2.0 + 15+ 12, vOneCellHeight / 2.0);
     [oneCell.contentView addSubview:title];
     
     //右侧箭头
-    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 5, vOneCellHeight / 2.0) withImageName:@"right.png" withImageZoomSize:1.0];
+    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 2, vOneCellHeight / 2.0) withImageName:@"右箭头" withImageZoomSize:1.0];
     [oneCell.contentView addSubview:rightImageView];
     [rightImageView setHidden:NO];
     
@@ -245,12 +245,12 @@
         [userImageButton removeFromSuperview];
         
         //图标
-        UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 32.0, vOneCellHeight / 2.0) withImageName:@"添加按钮" withImageZoomSize:2.0];
+        UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 28.0, vOneCellHeight / 2.0) withImageName:@"加号" withImageZoomSize:2.0];
 
         [oneCell.contentView addSubview:actionImageView];
       
         [title setText:@"添加账号"];
-        title.center = CGPointMake(vTableViewMoveLeftX + vOneCellHeight - 13 + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+        title.center = CGPointMake(vTableViewMoveLeftX + vOneCellHeight - 13 + title.width / 2.0 + 15+ 12, vOneCellHeight / 2.0);
         [rightImageView removeFromSuperview];
     }
     

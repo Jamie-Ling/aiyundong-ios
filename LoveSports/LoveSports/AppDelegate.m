@@ -39,8 +39,14 @@
     [self pushToLoginVC];
     
     //导航条设置
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
+//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
     
+    //修改导航条标题栏颜色
+    [[UINavigationBar appearance] setBarTintColor: kNavigationBarColor];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    //按效果图的导航条只能设置成黑色，要么隐藏
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     //添加介绍页
     [self addIntroView];

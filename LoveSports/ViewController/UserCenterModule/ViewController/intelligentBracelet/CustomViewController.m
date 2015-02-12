@@ -231,9 +231,18 @@
                 break;
         }
         [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime  withUpdateBlock:^(id object, BLTAcceptDataType type) {
-            if (type == BLTAcceptDataTypeSetBaseInfo) {
+            if (type == BLTAcceptDataTypeSetBaseInfo)
+            {
                 NSLog(@"设置公英制成功");
                 [self reloadUserInfoTableView];
+                if (_thisModel._isShowMetricSystem)
+                {
+                    [[ObjectCTools shared]  removeObjectForKey:kIsShowMetricSystem];
+                }
+                else
+                {
+                    [[ObjectCTools shared]  setobject:[NSNumber numberWithBool:YES] forKey:kIsShowMetricSystem];
+                }
             }
             else
             {
@@ -325,7 +334,7 @@
     [oneCell.contentView addSubview:title];
     
     //右侧箭头
-    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 5, vOneCellHeight / 2.0) withImageName:@"right.png" withImageZoomSize:1.0];
+    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 2, vOneCellHeight / 2.0) withImageName:@"右箭头" withImageZoomSize:1.0];
     [oneCell.contentView addSubview:rightImageView];
     
     
@@ -351,7 +360,7 @@
     
     
     //图标
-    UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 32.0, vOneCellHeight / 2.0) withImageName:[_cellImageArray objectAtIndex:indexPath.row] withImageZoomSize:1.0];
+    UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 28.0, vOneCellHeight / 2.0) withImageName:[_cellImageArray objectAtIndex:indexPath.row] withImageZoomSize:1.0];
     
     
     if (indexPath.section == 0)
@@ -388,7 +397,7 @@
     if ((indexPath.section == 1) && (indexPath.row != [[_titleArray objectAtIndex:1] count] - 1))
     {
         [oneCell.contentView addSubview:actionImageView];
-        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 12, vOneCellHeight / 2.0);
         
         [rightImageView setHidden:YES];
         oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
@@ -431,7 +440,7 @@
             gongzhi = @"英制";
         }
         [title setText:gongzhi];
-        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+        title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 12, vOneCellHeight / 2.0);
     }
     
     
@@ -484,7 +493,7 @@
 {
     if ([NSString isNilOrEmpty:[[_titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]])
     {
-        return 13.0;
+        return 10.0;
     }
     return vOneCellHeight;
 }

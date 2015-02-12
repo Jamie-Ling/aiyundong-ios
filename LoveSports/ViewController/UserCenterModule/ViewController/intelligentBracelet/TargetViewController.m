@@ -226,8 +226,8 @@
 #pragma mark ---------------- PAGameAnswerItemDelegate -----------------
 - (void)PAGameAnswerItem:(PAGameAnswerItem *)item selectIndex:(NSInteger)index
 {
-    [self resetButtonImage];
-    [item setSelectButtonImage:@"game_button_select_Highlighted.png"];
+//    [self resetButtonImage];
+   
     
     NSString *tempTarget = _thisModel._target;
     _thisModel._target = [NSString stringWithFormat:@"%ld", (long)index];
@@ -265,6 +265,8 @@
         if (type == BLTAcceptDataTypeSetUserInfo)
         {
             NSLog(@"更新目标成功");
+            [self resetButtonImage];
+            [item setSelectButtonImage:@"game_button_select_Highlighted.png"];
         }
         else
         {
@@ -282,5 +284,6 @@
         [pItem setSelectButtonImage:@"game_button_select_Normal.png"];
     }
 }
+
 
 @end

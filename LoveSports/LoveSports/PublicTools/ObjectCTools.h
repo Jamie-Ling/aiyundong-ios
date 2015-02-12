@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 Jamie.ling. All rights reserved.
 //  工具集
 
-#define vBackBarButtonItemName  @"backArrow.png"    //导航条返回默认图片名
+#define vBackBarButtonItemName  @"左箭头"    //导航条返回默认图片名
 
 #define vAutomaticDissmissAlertViewShowTime  1.2  //会自动消失弹窗的显示时间
 

@@ -57,9 +57,9 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellImageArray = [NSArray arrayWithObjects:@"头像",@"", @"头像", @"头像", @"", @"头像", @"头像",@"", @"头像", @"头像", @"", @"头像", @"头像", @"头像", nil];
+    _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱动运手环", @"梆定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动商城", nil];
     
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动智能手环", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关与爱运动+", nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动手环", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动", nil];
     
     //tableview
     [self addTableView];
@@ -338,7 +338,7 @@
     }
     
     //图标
-    UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 32.0, vOneCellHeight / 2.0) withImageName:[_cellImageArray objectAtIndex:indexPath.row] withImageZoomSize:1.0];
+    UIImageView *actionImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vTableViewMoveLeftX + 28.0, vOneCellHeight / 2.0) withImageName:[_cellImageArray objectAtIndex:indexPath.row] withImageZoomSize:1.0];
     [oneCell.contentView addSubview:actionImageView];
     
     // left label
@@ -351,11 +351,11 @@
                                                    textAlignment:NSTextAlignmentLeft
                                                    lineBreakMode:0
                                                    numberOfLines:0];
-    title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 10, vOneCellHeight / 2.0);
+    title.center = CGPointMake(vTableViewMoveLeftX + actionImageView.width + title.width / 2.0 + 15+ 12, vOneCellHeight / 2.0);
     [oneCell.contentView addSubview:title];
     
     //右侧箭头
-    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 5, vOneCellHeight / 2.0) withImageName:@"right.png" withImageZoomSize:1.0];
+    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 2, vOneCellHeight / 2.0) withImageName:@"右箭头" withImageZoomSize:1.0];
     [oneCell.contentView addSubview:rightImageView];
     [rightImageView setHidden:NO];
     
@@ -506,7 +506,7 @@
 {
     if ([NSString isNilOrEmpty:[_cellTitleArray objectAtIndex:indexPath.row]])
     {
-        return 13.0;
+        return 10.0;
     }
     return vOneCellHeight;
 }

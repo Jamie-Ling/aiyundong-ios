@@ -68,8 +68,8 @@ static ObjectCTools *_tools = nil;
     [leftButton setImage:image forState:UIControlStateNormal];
     [leftButton setTitle:title forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont systemFontOfSize:18];
-    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [leftButton setTitleColor:kNavigationBarTitleColor forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
     [leftButton addTarget:obj action:selector forControlEvents:UIControlEventTouchUpInside];
     [leftButton sizeToFit];
     
@@ -131,8 +131,8 @@ static ObjectCTools *_tools = nil;
     button.titleLabel.font = [UIFont systemFontOfSize:18];
     button.titleLabel.textAlignment = NSTextAlignmentLeft;
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor colorWithRed:130.0/255 green:56.0/255 blue:23.0/255 alpha:1] forState:UIControlStateHighlighted];
+    [button setTitleColor:kNavigationBarTitleColor forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
     [button addTarget:obj action:selector forControlEvents:UIControlEventTouchUpInside];
     [button sizeToFit];
     

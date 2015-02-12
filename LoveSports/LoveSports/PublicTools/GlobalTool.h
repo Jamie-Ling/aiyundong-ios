@@ -56,9 +56,9 @@
 //页面通用背景颜色
 #define kBackgroundColor kHexRGB(0xFFFFFF)
 //导航栏背景颜色值
-#define kNavigationBarColor kRGB(237, 147, 102)
+#define kNavigationBarColor kRGBAlpha(246, 246, 246, 1.0)
 //导航栏字体颜色值：#FFFFFF;
-#define kNavigationBarTitleColor kHexRGB(0xFFFFFF)
+#define kNavigationBarTitleColor [UIColor blackColor]
 //页面字体颜色
 #define kPageTitleColor [UIColor blackColor]
 //holdPlacer字体颜色
@@ -115,6 +115,9 @@
 #define kUserUseFirstDateKey  @"UserUseFirstDateKey"      // 用户第一天使用的日期
 
 
+#define kIsShowMetricSystem     @"IsShowMetricSystem"       //是否选择公制
+
+
 //用户信息相关key---得到接口后再对应设置
 #define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像
 #define kUserInfoOfNickNameKey  @"userInfo002"  //昵称
@@ -126,6 +129,7 @@
 #define kUserInfoOfInterestingKey  @"userInfo007"  //兴趣点
 #define kUserInfoOfAreaKey  @"userInfo008"  //地区
 #define kUserInfoOfDeclarationKey  @"userInfo009"  //宣言
+
 
 /*
  缓存信息

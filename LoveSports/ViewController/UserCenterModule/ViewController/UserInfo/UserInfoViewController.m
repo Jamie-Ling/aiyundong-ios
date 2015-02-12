@@ -471,7 +471,7 @@
     [oneCell.contentView addSubview:title];
     
     //右侧箭头
-    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 5, vOneCellHeight / 2.0) withImageName:@"right.png" withImageZoomSize:1.0];
+    UIImageView *rightImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(vOneCellWidth - vOneCellHeight / 2.0 + 2, vOneCellHeight / 2.0) withImageName:@"右箭头" withImageZoomSize:1.0];
     [oneCell.contentView addSubview:rightImageView];
     
     
@@ -608,7 +608,7 @@
 {
     if ([NSString isNilOrEmpty:[_cellTitleArray objectAtIndex:indexPath.row]])
     {
-        return 13.0;
+        return 10.0;
     }
     return vOneCellHeight;
 }
