@@ -6,6 +6,15 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
+#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
+
+#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里
+
+
+#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
+#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
+
 #define vStepNumberMin   5
 #define vStepNumberMax  30
 
@@ -77,6 +86,7 @@
     {
         NSLog(@"用户信息出错");
     }
+    [self reloadMainPage];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -95,7 +105,15 @@
 {
     NSString *target1 =  [NSString stringWithFormat:@"步数  %ld步", (long)_thisModel._stepNumber];
     NSString *target2 =  [NSString stringWithFormat:@"卡路里  3500大卡(需步数转换:%ld步)", (long)_thisModel._stepNumber];
+    
+    
     NSString *target3 =  [NSString stringWithFormat:@"距离  5.8千米(需步数转换:%ld步)", _thisModel._stepNumber];
+    
+    if ([[_userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
+    {
+        target3 =  [NSString stringWithFormat:@"距离  %.2f英里(需步数转换:%ld步)",vChangeToMI(5.8), _thisModel._stepNumber];
+    }
+    
     
     _titleArray = [NSArray arrayWithObjects:target1, target2, target3, nil];
     

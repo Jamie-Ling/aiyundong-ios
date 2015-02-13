@@ -16,14 +16,32 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
-#define vHeightMin   60
-#define vHeightMax   220
+#define vChangeToFT(A)  (A / 30.48) + 1   //CM - >转换为英尺
+#define vChangeToLB(A)  A * 2.2046226  //KG - >转换为磅
 
-#define vWeightMin   20
-#define vWeightMax   297
 
-#define vStepLongMin   30
-#define vStepLongMax   120
+//#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
+//#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
+
+
+//#define vHeightMin(a)    (a ? 60 : vChangeToFT(60))
+//#define vHeightMax(a)   (a ? 220 : vChangeToFT(220))
+//
+//#define vWeightMin(a)   (a ? 20 : vChangeToLB(20))
+//#define vWeightMax(a)   (a ? 297 : vChangeToLB(297))
+//
+//#define vStepLongMin(a)   (a ? 30 : vChangeToFT(30))
+//#define vStepLongMax(a)   (a ? 120 : vChangeToFT(120))
+
+
+#define vHeightMin(a)    (a ? 60 : 3.0)
+#define vHeightMax(a)   (a ? 220 : 9.0)
+
+#define vWeightMin(a)   (a ? 20 : 44)
+#define vWeightMax(a)   (a ? 297 : 654)
+
+#define vStepLongMin(a)   (a ? 30 : 1.0)
+#define vStepLongMax(a)   (a ? 120 : 5.0)
 
 #import "UserInfoViewController.h"
 #import "FlatRoundedButton.h"
@@ -54,6 +72,7 @@
     UpSignatureViewController *_signatureVC;
     
     UITableView *_listTableView;
+    BOOL _isMetricSystem;
     
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -70,31 +89,12 @@
     self.title = @"用户信息";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
-    
     //初始化
     _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"常出没地区 ：", @"运动宣言 ：", nil];
     _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfStepLongKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vHeightMin; i <= vHeightMax; i++)
-    {
-        NSString *heightString = [NSString stringWithFormat:@"%d cm", i];
-        [_heightMutableArray addObject:heightString];
-    }
-    
-    _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vWeightMin; i <= vWeightMax; i++)
-    {
-        NSString *weightString = [NSString stringWithFormat:@"%d kg", i];
-        [_weightMutableArray addObject:weightString];
-    }
-    
-    _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vStepLongMin; i <= vStepLongMax; i++)
-    {
-        NSString *stepLongString = [NSString stringWithFormat:@"%d cm", i];
-        [_stepLongMustableArray addObject:stepLongString];
-    }
+  
     
     //tableview
     [self addTableView];
@@ -118,7 +118,56 @@
     {
         NSLog(@"用户信息出错");
     }
+    
+    NSString *longBack = @"cm";
+    NSString *weightBack = @"kg";
+    
+    _isMetricSystem = YES;
+    
+    if ([[_userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
+    {
+        longBack = @"ft";   //英寸
+        weightBack = @"lb";  //磅
+        _isMetricSystem = NO;
+    }
+    
+    
+    [_heightMutableArray removeAllObjects];
+    [_weightMutableArray removeAllObjects];
+    [_stepLongMustableArray removeAllObjects];
+    
+    for (float i = vHeightMin(_isMetricSystem); i <= vHeightMax(_isMetricSystem); i = i + (_isMetricSystem ? 1 : 0.1))
+    {
+        NSString *heightString = [NSString stringWithFormat:@"%.0f %@", i, longBack];
+        if (!_isMetricSystem)
+        {
+            heightString = [NSString stringWithFormat:@"%.1f %@", i, longBack];
+        }
+        [_heightMutableArray addObject:heightString];
+    }
+    
+    _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
+    for (float i = vWeightMin(_isMetricSystem); i <= vWeightMax(_isMetricSystem); i++)
+    {
+        NSString *weightString = [NSString stringWithFormat:@"%.0f %@", i, weightBack];
+        [_weightMutableArray addObject:weightString];
+    }
+    
+    _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
+    for (float i = vStepLongMin(_isMetricSystem); i <= vStepLongMax(_isMetricSystem); i = i + (_isMetricSystem ? 1 : 0.1))
+    {
+        NSString *stepLongString = [NSString stringWithFormat:@"%.0f %@", i, longBack];
+        if (!_isMetricSystem)
+        {
+            stepLongString = [NSString stringWithFormat:@"%.1f %@", i, longBack];
+        }
+        [_stepLongMustableArray addObject:stepLongString];
+    }
+    
     [_listTableView reloadData];
+    
+    
+    
 }
 
 
@@ -263,12 +312,44 @@
     NSString *lastLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
     if ([NSString isNilOrEmpty:lastLong])
     {
-        lastIndex = 50 - vStepLongMin;
+        lastIndex = 50 - vStepLongMin(YES);
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) (((int)vChangeToFT(50) - vStepLongMin(NO)) * 10);
+        }
     }
     else
     {
-        lastIndex= [lastLong integerValue] - vStepLongMin;
+        lastIndex= [lastLong integerValue] - vStepLongMin(YES);
+      
+        
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)) * 10);
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vHeightMax(NO) - vHeightMin(NO) + 1)
+            {
+                lastIndex = vHeightMax(NO) - vHeightMin(NO) + 1;
+            }
+
+        }
+        else
+        {
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vHeightMax(YES) - vHeightMin(YES) + 1)
+            {
+                lastIndex = vHeightMax(YES) - vHeightMin(YES) + 1;
+            }
+
+        }
     }
+    
     
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
@@ -287,6 +368,13 @@
                                     NSLog(@"发送修改步长信息的请求吧");
                                     NSString *longString = pickerView.selectedValue;
                                     NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
+                            
+//                            if (!_isMetricSystem)
+//                            {
+//                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToCM([nowSelectedString integerValue])];
+//                            }
+                            
+                            
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
                                     [self reloadUserInfoTableView];
 //                                }
@@ -319,11 +407,39 @@
     NSString *lastHeight = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
     if ([NSString isNilOrEmpty:lastHeight])
     {
-        lastIndex = 178 - vHeightMin;
+        lastIndex = 178 - vHeightMin(YES);
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) ((vChangeToFT(178) - vHeightMin(NO)) * 10);
+        }
     }
     else
     {
-        lastIndex= [lastHeight integerValue] - vHeightMin;
+        lastIndex= [lastHeight integerValue] - vHeightMin(YES);
+       
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) (([lastHeight floatValue] - vHeightMin(NO)) * 10);
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vHeightMax(NO) - vHeightMin(NO) + 1)
+            {
+                lastIndex = vHeightMax(NO) - vHeightMin(NO) + 1;
+            }
+        }
+        else
+        {
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vHeightMax(YES) - vHeightMin(YES) + 1)
+            {
+                lastIndex = vHeightMax(YES) - vHeightMin(YES) + 1;
+            }
+        }
     }
     
     pickerView.selectedIndex = lastIndex;
@@ -340,6 +456,13 @@
                             NSLog(@"发送身高修改的请求吧");
                             NSString *heightString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
+//                            
+//                            if (!_isMetricSystem)
+//                            {
+//                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToCM([nowSelectedString integerValue])];
+//                            }
+                            
+                            
                             [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:nowSelectedString];
                             [self reloadUserInfoTableView];
                             
@@ -355,11 +478,39 @@
     NSString *lastWeight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
     if ([NSString isNilOrEmpty:lastWeight])
     {
-        lastIndex = 50 - vWeightMin;
+        lastIndex = 50 - vWeightMin(YES);
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) (vChangeToLB(50) - vWeightMin(NO));
+        }
     }
     else
     {
-        lastIndex= [lastWeight integerValue] - vWeightMin;
+        lastIndex= [lastWeight integerValue] - vWeightMin(YES);
+        
+        if (!_isMetricSystem)
+        {
+            lastIndex = (int) (([lastWeight integerValue]) - vWeightMin(NO));
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vWeightMax(NO) - vWeightMin(NO) + 1)
+            {
+                lastIndex = vWeightMax(NO) - vWeightMin(NO) + 1;
+            }
+        }
+        else
+        {
+            if (lastIndex < 0)
+            {
+                lastIndex = 0;
+            }
+            if (lastIndex > vWeightMax(YES) - vWeightMin(YES) + 1)
+            {
+                lastIndex = vWeightMax(YES) - vWeightMin(YES) + 1;
+            }
+        }
     }
     
     pickerView.selectedIndex = lastIndex;
@@ -380,6 +531,14 @@
                                     NSLog(@"发送体重修改的请求吧");
                                     NSString *heightString = pickerView.selectedValue;
                                     NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
+                            
+//                            if (!_isMetricSystem)
+//                            {
+//                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToKG([nowSelectedString integerValue])];
+//                            }
+                            
+                            
+                        
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:nowSelectedString];
                                     [self reloadUserInfoTableView];
 //                                }
@@ -517,16 +676,28 @@
                 case 4:
                 {
                     nameString = [NSString stringWithFormat:@"%@cm", nameString];
+                    if (!_isMetricSystem)
+                    {
+                        nameString = [NSString stringWithFormat:@"%.1fft", ([nameString floatValue])];
+                    }
                 }
                     break;
                 case 5:
                 {
                     nameString = [NSString stringWithFormat:@"%@kg", nameString];
+                    if (!_isMetricSystem)
+                    {
+                        nameString = [NSString stringWithFormat:@"%.0flb", ([nameString floatValue])];
+                    }
                 }
                     break;
                 case 6:
                 {
                     nameString = [NSString stringWithFormat:@"%@cm", nameString];
+                    if (!_isMetricSystem)
+                    {
+                        nameString = [NSString stringWithFormat:@"%.1fft", [nameString floatValue]];
+                    }
                 }
                     break;
                 default:

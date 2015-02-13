@@ -8,10 +8,24 @@
 
 #import "BraceletInfoModel.h"
 
+@interface BraceletInfoModel()
+{
+    NSDictionary *_userInfoDictionary;
+}
+
+@end
+
 
 @implementation HandSetAlarmClock
 
 @synthesize _isOpen, _setTime, _weekDayArray;
+
+#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
+#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
+
+
+#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
+#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
 
 
 /**
@@ -59,6 +73,16 @@
     if (self) {
         _allHandSetAlarmClock = [[NSMutableArray alloc] initWithCapacity:32];
         _allAutomaticSetAlarmClock = [[NSMutableArray alloc] initWithCapacity:32];
+        
+        _userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+        
+        if (!_userInfoDictionary)
+        {
+            [UIView showAlertView:@"请先登录" andMessage:nil];
+            NSLog(@"用户信息出错");
+            return nil;
+        }
+        
         [self initAllSet];
     }
     return self;
@@ -100,13 +124,21 @@
     _showSteps = YES;
     _showKa = NO;
     _showDistance = NO;
-    _isShowMetricSystem = YES;
+    
     _isAutomaticAlarmClock = NO;
     _is24HoursTime = YES;
     _longTimeSetRemind = YES;
     _PreventLossRemind = YES;
     _isHandAlarmClock = NO;
     _stepNumber = 10000;
+    
+    _isShowMetricSystem = YES;
+    
+    
+    if ([[_userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
+    {
+        _isShowMetricSystem = NO;
+    }
     
     [self initAllSetAlarmClock];
     
@@ -373,24 +405,49 @@
         theDate = [dateFormatter dateFromString:birthdayString];
     }
     
+    BOOL isMetricSystem = YES;
+    if ([[userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
+    {
+        isMetricSystem = NO;
+    }
+    
     //体重
     NSString *weight = [userInfoDictionary objectForKey:kUserInfoOfWeightKey];
+    
+  
+    
     if ([NSString isNilOrEmpty:weight])
     {
         weight = @"50";
     }
+    else
+    {
+        if (!isMetricSystem)
+        {
+            weight = [NSString stringWithFormat:@"%d", (int) vBackToKG([weight integerValue]) ];
+        }
+    }
     
     //步长
     NSString *stepLong = [userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
+    
+  
     if ([NSString isNilOrEmpty:stepLong])
     {
         stepLong = @"50";
+    }
+    else
+    {
+        if (!isMetricSystem)
+        {
+            stepLong = [NSString stringWithFormat:@"%d", (int) vBackToCM([stepLong integerValue]) ];
+        }
     }
     
     //步数
     NSInteger targetSums = newestModel._stepNumber;
     
-    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 * 100 withTarget:targetSums withStepAway:[stepLong integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[stepLong integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetUserInfo)
         {
             NSLog(@"更新个人相关信息成功");

@@ -8,6 +8,15 @@
 #define vMetricSystemTag   10099
 #define vHandTag   10100
 
+#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
+#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
+
+#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里
+
+
+#define vBackToCM(A)  ((A - 1) * 30.48)   //英尺 - > cm
+#define vBackToKG(A)  (A / 2.2046226)  //磅 - > kg
+
 
 #define vTableViewLeaveTop   0   //tableView距离顶部的距离
 
@@ -28,6 +37,8 @@
     
     UITableView *_listTableView;
     BOOL _showDistance;
+    
+    NSDictionary *_userInfoDictionary;
 }
 
 @end
@@ -62,6 +73,14 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
+    
+    _userInfoDictionary = nil;
+    _userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
+    
+    if (!_userInfoDictionary)
+    {
+        NSLog(@"用户信息出错");
+    }
     
     _showDistance = _thisModel._showDistance;
     [self reloadUserInfoTableView];
@@ -195,6 +214,10 @@
 {
     if (actionSheet.tag == vMetricSystemTag)
     {
+        NSString __block *tempHeight = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
+        NSString __block *tempStepLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
+        NSString __block *tempWeight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
+        
         switch (buttonIndex)
         {
             case  0:
@@ -237,11 +260,24 @@
                 [self reloadUserInfoTableView];
                 if (_thisModel._isShowMetricSystem)
                 {
-                    [[ObjectCTools shared]  removeObjectForKey:kIsShowMetricSystem];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue:@"1"];
+                    tempHeight = [NSString stringWithFormat:@"%.0f", vBackToCM([tempHeight floatValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
+                    tempStepLong = [NSString stringWithFormat:@"%.0f", vBackToCM([tempStepLong floatValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
+                    tempWeight= [NSString stringWithFormat:@"%.0f", vBackToKG([tempWeight integerValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
                 }
                 else
                 {
-                    [[ObjectCTools shared]  setobject:[NSNumber numberWithBool:YES] forKey:kIsShowMetricSystem];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue: @"0"];
+                    
+                    tempHeight = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempHeight floatValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
+                    tempStepLong = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempStepLong floatValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
+                    tempWeight= [NSString stringWithFormat:@"%.0f", vChangeToLB([tempWeight integerValue])];
+                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
                 }
             }
             else

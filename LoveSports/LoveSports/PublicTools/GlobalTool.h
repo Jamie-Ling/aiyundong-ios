@@ -115,8 +115,6 @@
 #define kUserUseFirstDateKey  @"UserUseFirstDateKey"      // 用户第一天使用的日期
 
 
-#define kIsShowMetricSystem     @"IsShowMetricSystem"       //是否选择公制
-
 
 //用户信息相关key---得到接口后再对应设置
 #define kUserInfoOfHeadPhotoKey  @"userInfo001"  //头像
@@ -129,7 +127,7 @@
 #define kUserInfoOfInterestingKey  @"userInfo007"  //兴趣点
 #define kUserInfoOfAreaKey  @"userInfo008"  //地区
 #define kUserInfoOfDeclarationKey  @"userInfo009"  //宣言
-
+#define kUserInfoOfIsMetricSystemKey  @"userInfo010"  //是否是公制， 默认是公制
 
 /*
  缓存信息

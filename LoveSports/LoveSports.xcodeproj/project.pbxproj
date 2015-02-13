@@ -1566,13 +1566,13 @@
 		69FD41DB1A7FCC2C0023B74D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				69FD41F41A7FCC2C0023B74D /* UserCenterVC.h */,
+				69FD41F51A7FCC2C0023B74D /* UserCenterVC.m */,
 				69FD41DC1A7FCC2C0023B74D /* aboutUS */,
 				69FD41DF1A7FCC2C0023B74D /* accountManage */,
 				6970ED241A83B0EA009572D5 /* TestBLT */,
 				69FD41E21A7FCC2C0023B74D /* bindingDevice */,
 				69FD41E71A7FCC2C0023B74D /* intelligentBracelet */,
-				69FD41F41A7FCC2C0023B74D /* UserCenterVC.h */,
-				69FD41F51A7FCC2C0023B74D /* UserCenterVC.m */,
 				69FD41F61A7FCC2C0023B74D /* UserInfo */,
 			);
 			path = ViewController;

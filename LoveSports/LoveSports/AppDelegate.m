@@ -160,12 +160,14 @@
                                          @"1987-01-01", kUserInfoOfAgeKey,
                                          @"深圳 长沙", kUserInfoOfAreaKey,
                                          @"天将降大任于斯人也，必先苦其心志...", kUserInfoOfDeclarationKey,
-                                         @"178", kUserInfoOfHeightKey,
-                                         @"50", kUserInfoOfStepLongKey,
+                                         @"5.8", kUserInfoOfHeightKey,
+                                         @"1.6", kUserInfoOfStepLongKey,
                                          @"上网、爬山、蹦极", kUserInfoOfInterestingKey,
                                          @"一休哥", kUserInfoOfNickNameKey,
                                          @"男", kUserInfoOfSexKey,
-                                         @"56", kUserInfoOfWeightKey, nil
+                                         @"123", kUserInfoOfWeightKey,
+                                         @"0", kUserInfoOfIsMetricSystemKey,
+                                         nil
                                          ];
         [[ObjectCTools shared] userAddUserInfo:testUserInfoNow];
         
@@ -180,7 +182,9 @@
                                         @"KTV", kUserInfoOfInterestingKey,
                                         @"关淑南", kUserInfoOfNickNameKey,
                                         @"女", kUserInfoOfSexKey,
-                                        @"47", kUserInfoOfWeightKey, nil
+                                        @"47", kUserInfoOfWeightKey,
+                                         @"1", kUserInfoOfIsMetricSystemKey,
+                                        nil
                                         ];
         
         
@@ -194,7 +198,9 @@
                                         @"男", kUserInfoOfInterestingKey,
                                         @"大叔", kUserInfoOfNickNameKey,
                                         @"男", kUserInfoOfSexKey,
-                                        @"66", kUserInfoOfWeightKey, nil
+                                        @"66", kUserInfoOfWeightKey,
+                                        @"1", kUserInfoOfIsMetricSystemKey,
+                                        nil
                                         ];
         [[ObjectCTools shared] userAddUserInfo:testUserInfo02];
         [[ObjectCTools shared] userAddUserInfo:testUserInfo01];
