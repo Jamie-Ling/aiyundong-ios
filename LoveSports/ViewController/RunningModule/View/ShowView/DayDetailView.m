@@ -281,11 +281,11 @@
     
     [_chartData removeAllObjects];
     [_chartData addObject:@(0)];
-    _lineChart.levelNumber = 1000;
+    
+    NSLog(@"count..%d", _model.detailSteps.count);
     if (_lastButton.tag == 2000)
     {
         [_chartData addObjectsFromArray:_model.detailSteps];
-        _lineChart.levelNumber = 1000;
     }
     else if (_lastButton.tag == 2001)
     {

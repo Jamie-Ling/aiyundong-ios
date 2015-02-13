@@ -69,7 +69,10 @@
 #pragma mark --- TrendChartViewDelegate ---
 - (void)trendChartViewLandscape:(TrendChartView *)trendView
 {
-    LandscapeVC *vc = [[LandscapeVC alloc] initWithDate:_trendView.currentDate];
+    LandscapeVC *vc = [[LandscapeVC alloc] initWithDate:_trendView.dayDate
+                                           withWeekDate:_trendView.weekDate
+                                         withMonthIndex:_trendView.monthIndex
+                                           withShowtype:_trendView.showType];
     
     [self presentViewController:vc animated:NO completion:nil];
 }
@@ -113,7 +116,7 @@
 {
     if (_detailView.hidden)
     {
-        if ([_trendView.currentDate isSameWithDate:[NSDate date]])
+        if ([_trendView.dayDate isSameWithDate:[NSDate date]])
         {
             [_trendView updateContentForChartViewWithDirection:0];
         }

@@ -35,7 +35,7 @@ DEF_SINGLETON(BLTManager)
         
         if (![LS_LastSyncDate getObjectValue])
         {
-            [LS_LastSyncDate setObjectValue:[NSDate date]];
+            [LS_LastSyncDate setObjectValue:[[NSDate date] dateToString]];
         }
         
         _connectState = BLTManagerNoConnect;

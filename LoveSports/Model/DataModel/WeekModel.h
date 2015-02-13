@@ -27,12 +27,13 @@
 
 @interface WeekModel : NSObject
 
-@property (nonatomic, assign) NSInteger _weekNumber;  //第几周
-@property (nonatomic, assign) NSInteger _yearNumber;  //年，如2014
+@property (nonatomic, assign) NSInteger _weekNumber;         // 第几周
+@property (nonatomic, assign) NSInteger _yearNumber;         // 年，如2014
 @property (nonatomic, assign) NSInteger _weekTotalSteps;     // 当天的总步数
 @property (nonatomic, assign) NSInteger _weekTotalCalories;  // 当天的总卡路里
 @property (nonatomic, assign) NSInteger _weekTotalDistance ; // 当天的总路程
 @property (nonatomic, strong) NSMutableDictionary *_allSubPedModelArray;
+@property (nonatomic, strong) NSString *showDate;
 
 /**
  *  初始化一个星期模型

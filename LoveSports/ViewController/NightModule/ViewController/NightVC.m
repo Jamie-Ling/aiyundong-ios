@@ -42,7 +42,6 @@
     self.view.backgroundColor = [UIColor clearColor];
     self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
-    NSLog(@"..%f..%f",self.view.totalHeight, self.view.height);
     _offsetY = (self.view.height < 485.0) ? 25.0 : 0.0;
     _percent = 25;
     

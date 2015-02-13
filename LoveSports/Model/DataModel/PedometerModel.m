@@ -226,6 +226,9 @@
     [totalModel modelToDetailShowWithTimeOrder:(int)timeOrder];
     [totalModel setTargetDataForModel];
     
+    // 将数据保存到周－月表
+    [totalModel savePedometerModelToWeekModelAndMonthModel];
+    
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", totalModel.dateString];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
@@ -242,6 +245,11 @@
     {
         endBlock();
     }
+}
+
+- (void)savePedometerModelToWeekModelAndMonthModel
+{
+    [YearModel initOrUpdateTheWeekAndMonthModelFromAPedometerModel:self];
 }
 
 // 根据日期取出模型。
@@ -311,6 +319,7 @@
     for (int i = timeOrder; i < 288; i += 6)
     {
         NSInteger total = [self halfHourData:i withType:SportsModelSteps];
+        NSLog(@"total = ..%d ..%d", total, i / 6);
         [detailSteps addObject:@(total)];
 
         //total = [self halfHourData:i withType:SportsModelSleep];
@@ -327,6 +336,9 @@
     self.detailSleeps = detailSleeps;
     self.detailDistans = detailDistans;
     self.detailCalories = detailCalories;
+    
+    NSLog(@".self.detailSteps .%d", self.detailSteps.count);
+
 }
 
 // 取出每半个小时的数据
@@ -439,7 +451,7 @@
 + (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < LS_TrendChartShowCount; i++)
     {
         NSDate *curDate = [date dateAfterDay:i];
         PedometerModel *model = [PedometerModel getModelFromDBWithDate:curDate];

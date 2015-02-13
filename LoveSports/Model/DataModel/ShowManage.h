@@ -6,11 +6,6 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
-typedef enum {
-    ShowTypeDefault = 0,   //常用显示方式，如每年的1月1号当作使用的第一天,每年过完，周和月都是当年的第一个
-    ShowTypeFromUserUseDay = 1, //用户使用点为起点的显示方式，如用户10月2号使用，10月2号所在的周为第一周，以后不再以年为单位，从1-100进行周显示
-} ShowType;
-
 #import <Foundation/Foundation.h>
 #import "YearModel.h"
 

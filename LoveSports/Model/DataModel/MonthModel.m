@@ -28,6 +28,8 @@
         _allSubPedModelArray = [[NSMutableDictionary alloc] init];
         _monthNumber = monthNumber;
         _yearNumber = yearNumber;
+        
+        _showDate = [NSString stringWithFormat:@"%ld年\n  %ld月", (long)yearNumber, (long)monthNumber];
     }
     return self;
 }
@@ -45,8 +47,10 @@
     {
         return;
     }
-    for (SubOfPedometerModel *tempSubPedModel in self._allSubPedModelArray)
+    for (NSString *keyString in self._allSubPedModelArray)
     {
+        SubOfPedometerModel *tempSubPedModel = [self._allSubPedModelArray objectForKey:keyString];
+        
         _monthTotalCalories += tempSubPedModel._thisDayTotalCalories;
         _monthTotalDistance += tempSubPedModel._thisDayTotalDistance;
         _monthTotalSteps += tempSubPedModel._thisDayTotalSteps;

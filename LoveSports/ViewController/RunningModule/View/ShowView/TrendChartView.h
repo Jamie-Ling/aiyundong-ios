@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrendShowType.h"
 @protocol TrendChartViewDelegate;
 
 @interface TrendChartView : UIView
 
 @property (nonatomic, assign) id <TrendChartViewDelegate> delegate;
-@property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, strong) NSDate *dayDate;
+@property (nonatomic, strong) NSDate *weekDate;
+@property (nonatomic, assign) NSInteger monthIndex;
+
+@property (nonatomic, assign) TrendChartShowType showType;
 
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction;
 

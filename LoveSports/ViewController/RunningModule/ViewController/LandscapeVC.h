@@ -7,9 +7,15 @@
 //
 
 #import "ZKKViewController.h"
+#import "TrendShowType.h"
 
 @interface LandscapeVC : ZKKViewController
 
-- (instancetype)initWithDate:(NSDate *)date;
+@property (nonatomic, strong) NSDate *dayDate;
+@property (nonatomic, assign) TrendChartShowType showType;
 
+- (instancetype)initWithDate:(NSDate *)date
+                withWeekDate:(NSDate *)weekDate
+              withMonthIndex:(NSInteger)index
+                withShowtype:(TrendChartShowType)showtype;
 @end

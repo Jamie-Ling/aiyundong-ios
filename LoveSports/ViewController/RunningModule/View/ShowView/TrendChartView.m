@@ -39,12 +39,17 @@
         self.backgroundColor = [UIColor clearColor];
         self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
-        _currentDate = [NSDate date];
+        _showType = TrendChartViewShowDaySteps;
+        
+        _dayDate = [NSDate date];
+        _weekDate = [NSDate date];
+        _monthIndex = [NSDate date].month;
         
         [self loadCalendarButton];
         [self loadSegmentedControl];
         [self loadLandscapeButton];
         [self loadLineChart];
+        [self loadChartStyleButtons];
     }
     
     return self;
@@ -52,7 +57,9 @@
 
 - (void)setCurrentDate:(NSDate *)currentDate
 {
-    _currentDate = currentDate;
+    _dayDate = currentDate;
+    _weekDate = currentDate;
+    _monthIndex = [YearModel monthOfYearWithDate:currentDate];
     
     [self updateContentForChartViewWithDirection:0];
 }
@@ -116,18 +123,7 @@
       forSegmentAtIndex:_segement.selectedSegmentIndex];
     _segIndex = _segement.selectedSegmentIndex;
     
-    if (_segement.selectedSegmentIndex == 0)
-    {
-        // 日
-    }
-    else if (_segement.selectedSegmentIndex == 1)
-    {
-        // 周
-    }
-    else
-    {
-        // 月
-    }
+    [self reloadTrendChartView];
 }
 
 - (void)loadLandscapeButton
@@ -167,7 +163,6 @@
     [self addSubview:_dateLabel];
 }
 
-#define TrendChartView_LevelNumber 800
 -(void)loadLineChart
 {
     // Generating some dummy data
@@ -175,8 +170,7 @@
     CGRect rect = CGRectMake((self.width - self.width * 0.9) / 2, 120, self.width * 0.9, 200);
     _lineChart = [[FSLineChart alloc] initWithFrame:rect];
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
-    _lineChart.levelNumber = TrendChartView_LevelNumber;
+    _lineChart.horizontalGridStep = LS_TrendChartShowCount; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForValue = ^(CGFloat value) {
@@ -184,48 +178,60 @@
     };
     [self addSubview:_lineChart];
     
-    [self refreshTrendChartViewWithDate:_currentDate];
+    [self refreshTrendChartViewWithDayDate:_dayDate];
 }
 
-- (void)refreshTrendChartViewWithDate:(NSDate *)date
+// 日刷新
+- (void)refreshTrendChartViewWithDayDate:(NSDate *)date
 {
-    _currentDate = date;
-    NSArray *array = [PedometerModel getEveryDayTrendDataWithDate:_currentDate];
-    NSMutableArray *chartDataArray = [[NSMutableArray alloc] init];
-    NSMutableArray *daysArray = [[NSMutableArray alloc] init];
+    _dayDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithDayDate:_dayDate withShowType:_showType];
     
-    for(int i = 0; i < array.count; i++)
-    {
-        PedometerModel *model = array[i];
-        if (_lastButton.tag == 2000)
-        {
-            chartDataArray[i] = @(model.totalSteps);
-            _lineChart.levelNumber = TrendChartView_LevelNumber;
-        }
-        else if (_lastButton.tag == 2001)
-        {
-            chartDataArray[i] = @(model.totalCalories);
-            _lineChart.levelNumber = [self stepsConvertCalories:TrendChartView_LevelNumber withWeight:model.weight withModel:YES];
-        }
-        else
-        {
-            chartDataArray[i] = @(model.totalDistance);
-            _lineChart.levelNumber = [self StepsConvertDistance:TrendChartView_LevelNumber withPace:model.stepSize];
-        }
-        
-        chartDataArray[i] = @(model.totalSteps);
-        daysArray[i] = [model.dateString substringFromIndex:5];
-    }
-    
-    _lineChart.labelForIndex = ^(NSUInteger item) {
-        return daysArray[item];
-    };
-    [_lineChart setChartData:chartDataArray];
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
 }
 
+// 周刷新
+- (void)refreshTrendChartViewWithWeekDate:(NSDate *)date
+{
+    _weekDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithWeekDate:_weekDate withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 月刷新
+- (void)refreshTrendChartViewWithMonthIndex:(NSInteger)index
+{
+    _monthIndex = index;
+    NSArray *array = [TrendShowType getShowDataArrayWithMonthIndex:_monthIndex withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 传入数据刷新
+- (void)refreshTrendChartViewWithChartData:(NSArray *)ChartData withTitle:(NSArray *)titlesArray
+{
+    _lineChart.labelForIndex = ^(NSUInteger item) {
+        return titlesArray[item];
+    };
+    [_lineChart setChartData:ChartData];
+}
+
+// 左右滑动进行数据变换。
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
-    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:((int)direction * 8)]];
+    if (_showType < 3)
+    {
+        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
+    }
+    else if (_showType < 6)
+    {
+        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
+    }
+    else
+    {
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
+    }
 }
 
 // 步数，卡路里，距离切换.
@@ -259,7 +265,26 @@
     button.selected = YES;
     _lastButton = button;
     
-    [self refreshTrendChartViewWithDate:_currentDate];
+    [self reloadTrendChartView];
+}
+
+// 点击6个按钮后图表进行切换。
+- (void)reloadTrendChartView
+{
+    _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
+    
+    if (_showType < 3)
+    {
+        [self refreshTrendChartViewWithDayDate:_dayDate];
+    }
+    else if (_showType < 6)
+    {
+        [self refreshTrendChartViewWithWeekDate:_weekDate];
+    }
+    else
+    {
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex];
+    }
 }
 
 - (void)loadShareButton

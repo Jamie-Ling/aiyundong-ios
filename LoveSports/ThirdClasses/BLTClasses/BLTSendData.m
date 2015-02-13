@@ -514,8 +514,9 @@ DEF_SINGLETON(BLTSendData)
         _waitTime = 0;
         _failCount = 0;
         [[BLTAcceptData sharedInstance] cleanMutableData];
-        NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:1];
+        NSDate *date = [[NSDate dateWithString:[LS_LastSyncDate getObjectValue]] dateAfterDay:1];
         date = [NSDate dateWithTimeIntervalSinceNow:0];
+        // date = [NSDate dateWithString:@"2015-02-02"];
         NSLog(@".date = .%@", date);
         [BLTSendData sendRequestHistorySportDataWithDate:date
                                                withOrder:0

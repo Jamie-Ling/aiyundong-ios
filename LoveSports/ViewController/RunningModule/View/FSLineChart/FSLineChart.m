@@ -100,11 +100,12 @@
                                          attributes:@{NSFontAttributeName:_indexLabelFont}
                                             context:nil].size.width;
             
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 14)];
+            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
             label.text = text;
             label.font = _indexLabelFont;
             label.textColor = [UIColor whiteColor];
             label.backgroundColor = [UIColor clearColor];
+            label.numberOfLines = 2;
             
             [self addSubview:label];
         }
@@ -295,11 +296,11 @@
     // Labels attributes
     _indexLabelBackgroundColor = [UIColor clearColor];
     _indexLabelTextColor = [UIColor grayColor];
-    _indexLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
+    _indexLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
     
     _valueLabelBackgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
     _valueLabelTextColor = [UIColor grayColor];
-    _valueLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
+    _valueLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
     _valueLabelPosition = ValueLabelRight;
     _levelNumber = 100;
 }
@@ -317,6 +318,8 @@
         if([number floatValue] > _max)
             _max = [number floatValue];
     }
+    
+    _levelNumber = (NSInteger)_max / 10;
     
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];

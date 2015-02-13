@@ -46,6 +46,8 @@
         _allSubPedModelArray = [[NSMutableDictionary alloc] init];
         _weekNumber = weekNumber;
         _yearNumber = yearNumber;
+        
+        _showDate = [NSString stringWithFormat:@"%ld年\n第%ld周", (long)yearNumber, (long)weekNumber];
     }
     return self;
 }
@@ -64,8 +66,11 @@
     {
         return;
     }
-    for (SubOfPedometerModel *tempSubPedModel in self._allSubPedModelArray)
+    for (NSString *keyString in self._allSubPedModelArray)
     {
+        // NSLog(@"_allSubPedModelArray = ..%@...%@", self._allSubPedModelArray, tempSubPedModel);
+        SubOfPedometerModel *tempSubPedModel = [self._allSubPedModelArray objectForKey:keyString];
+        
         _weekTotalCalories += tempSubPedModel._thisDayTotalCalories;
         _weekTotalDistance += tempSubPedModel._thisDayTotalDistance;
         _weekTotalSteps += tempSubPedModel._thisDayTotalSteps;

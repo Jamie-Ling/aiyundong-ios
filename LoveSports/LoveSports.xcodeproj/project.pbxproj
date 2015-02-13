@@ -353,6 +353,7 @@
 		F4BF5F6E1A6F529E004C433D /* ZKKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5F681A6F529E004C433D /* ZKKViewController.m */; };
 		F4BF5FF41A6FC95C004C433D /* ZKKTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5FF31A6FC95C004C433D /* ZKKTabBar.m */; };
 		F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5FF61A6FCD20004C433D /* ZKKTabBarController.m */; };
+		F4C4FD251A8DFF71003A946F /* TrendShowType.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C4FD241A8DFF71003A946F /* TrendShowType.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -891,6 +892,8 @@
 		F4BF5FF31A6FC95C004C433D /* ZKKTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKKTabBar.m; sourceTree = "<group>"; };
 		F4BF5FF51A6FCD20004C433D /* ZKKTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKKTabBarController.h; sourceTree = "<group>"; };
 		F4BF5FF61A6FCD20004C433D /* ZKKTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKKTabBarController.m; sourceTree = "<group>"; };
+		F4C4FD231A8DFF71003A946F /* TrendShowType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendShowType.h; sourceTree = "<group>"; };
+		F4C4FD241A8DFF71003A946F /* TrendShowType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendShowType.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1437,6 +1440,7 @@
 		69FD41AD1A7FCC2C0023B74D /* RunningModule */ = {
 			isa = PBXGroup;
 			children = (
+				F4C4FD221A8DFF4B003A946F /* Model */,
 				69FD41AE1A7FCC2C0023B74D /* View */,
 				69FD41BE1A7FCC2C0023B74D /* ViewController */,
 			);
@@ -2207,6 +2211,15 @@
 			path = BaseClass;
 			sourceTree = "<group>";
 		};
+		F4C4FD221A8DFF4B003A946F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4C4FD231A8DFF71003A946F /* TrendShowType.h */,
+				F4C4FD241A8DFF71003A946F /* TrendShowType.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2593,6 +2606,7 @@
 				F4B693BA1A6F404A00B42395 /* UIViewController+PopRoot.m in Sources */,
 				F4B693E51A6F40D200B42395 /* UIButton+Simple.m in Sources */,
 				69FD42241A7FCC2C0023B74D /* UpdateBraceletNameViewController.m in Sources */,
+				F4C4FD251A8DFF71003A946F /* TrendShowType.m in Sources */,
 				F4B693541A6F401A00B42395 /* IQToolbar.m in Sources */,
 				69E0973E1A873D6E003F2EB9 /* DTTimePeriodCollection.m in Sources */,
 				699242041A768BDF00EFF121 /* LKDB+Mapping.m in Sources */,
@@ -2723,7 +2737,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2760,7 +2774,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2779,7 +2793,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Debug;
 		};
@@ -2795,7 +2809,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Release;
 		};
@@ -2816,7 +2830,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Debug;
@@ -2834,7 +2848,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c161058-4c9d-4e1e-956f-bd8d5518d452";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Release;

@@ -13,18 +13,27 @@
 @interface LandscapeVC ()
 
 @property (nonatomic, strong) FSLineChart *lineChart;
-@property (nonatomic, strong) NSDate *currentDate;
+
+@property (nonatomic, strong) NSDate *weekDate;
+@property (nonatomic, assign) NSInteger monthIndex;
 
 @end
 
 @implementation LandscapeVC
 
 - (instancetype)initWithDate:(NSDate *)date
+                withWeekDate:(NSDate *)weekDate
+              withMonthIndex:(NSInteger)index
+                withShowtype:(TrendChartShowType)showtype
 {
     self = [super init];
     if (self) {
-        _currentDate = date;
+        _dayDate = date;
+        _weekDate = weekDate;
+        _monthIndex = index;
+        _showType = showtype;
     }
+    
     return self;
 }
 
@@ -61,8 +70,7 @@
     CGRect rect = CGRectMake((self.view.height - self.view.height * 0.9) / 2, 50, self.view.height * 0.9, self.view.width - 120);
     _lineChart = [[FSLineChart alloc] initWithFrame:rect];
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
-    _lineChart.levelNumber = 800;
+    _lineChart.horizontalGridStep = LS_TrendChartShowCount; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForValue = ^(CGFloat value) {
@@ -70,32 +78,60 @@
     };
     [self.view addSubview:_lineChart];
     
-    [self refreshTrendChartViewWithDate:_currentDate];
+    [self updateContentForChartViewWithDirection:0];
 }
 
-- (void)refreshTrendChartViewWithDate:(NSDate *)date
+// 日刷新
+- (void)refreshTrendChartViewWithDayDate:(NSDate *)date
 {
-    _currentDate = date;
-    NSArray *array = [PedometerModel getEveryDayTrendDataWithDate:_currentDate];
-    NSMutableArray *chartDataArray = [[NSMutableArray alloc] init];
-    NSMutableArray *daysArray = [[NSMutableArray alloc] init];
+    _dayDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithDayDate:_dayDate withShowType:_showType];
     
-    for(int i = 0; i < array.count; i++)
-    {
-        PedometerModel *model = array[i];
-        chartDataArray[i] = @(model.totalSteps);
-        daysArray[i] = [model.dateString substringFromIndex:5];
-    }
-    
-    _lineChart.labelForIndex = ^(NSUInteger item) {
-        return daysArray[item];
-    };
-    [_lineChart setChartData:chartDataArray];
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
 }
 
+// 周刷新
+- (void)refreshTrendChartViewWithWeekDate:(NSDate *)date
+{
+    _weekDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithWeekDate:_weekDate withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 月刷新
+- (void)refreshTrendChartViewWithMonthIndex:(NSInteger)index
+{
+    _monthIndex = index;
+    NSArray *array = [TrendShowType getShowDataArrayWithMonthIndex:_monthIndex withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 传入数据刷新
+- (void)refreshTrendChartViewWithChartData:(NSArray *)ChartData withTitle:(NSArray *)titlesArray
+{
+    _lineChart.labelForIndex = ^(NSUInteger item) {
+        return titlesArray[item];
+    };
+    [_lineChart setChartData:ChartData];
+}
+
+// 左右滑动进行数据变换。
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
-    [self refreshTrendChartViewWithDate:[_currentDate dateAfterDay:((int)direction * 8)]];
+    if (_showType < 3)
+    {
+        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
+    }
+    else if (_showType < 6)
+    {
+        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
+    }
+    else
+    {
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
+    }
 }
 
 #pragma mark --- 重写父类方法 ---

@@ -43,16 +43,20 @@
     
     //取得这一年的模型，没有就创建，有就更新数据
     NSInteger thisYearNumber = oneDate.year;
-    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:[NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)thisYearNumber], @"_yearID", nil] orderBy:nil];
+    NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
+    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
     
-    if (!thisYearNumber)
+    if (!thisYearModel)
     {
         thisYearModel = [[YearModel alloc] init];
         thisYearModel._yearID = [NSString stringWithFormat:@"%ld", (long)thisYearNumber];
+        
+        [thisYearModel saveToDB];
     }
     
     //周=-----------------------------------------------
     //取到这一周的模型，没有就创建，更新至年模型中
+    
     NSInteger thisWeekNumber = oneDate.weekOfYear;
     WeekModel *thisWeekModel = [thisYearModel._thisYearAllWeeks objectForKey:[NSString stringWithFormat:@"%ld", (long)thisWeekNumber]];
     
@@ -86,6 +90,7 @@
     //月=-----------------------------------------------
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
+
     MonthModel *thisMonthModel = [thisYearModel._thisYearAllMonths objectForKey:[NSString stringWithFormat:@"%ld", (long)thisMonthNumber]];
     
     if (!thisMonthModel)
@@ -109,19 +114,16 @@
     thisMonthModel._monthNumber = thisMonthNumber;
     thisMonthModel._yearNumber = thisYearNumber;
     
-    
     //更新月模型的相关数据 根据pedometermodel的内容更新此weekmodel汇总信息
     [thisMonthModel updateInfo];
     
     //存入/更新进年模型中
     [thisYearModel._thisYearAllMonths setObject:thisMonthModel forKey:[NSString stringWithFormat:@"%ld", (long)thisMonthModel]];
 
-    
     //存入/更新数据库
-    [[YearModel getUsingLKDBHelper] insertToDB:thisYearModel];
-
+    // [[YearModel getUsingLKDBHelper] insertToDB:thisYearModel];
+    [YearModel updateToDB:thisYearModel where:where];
 }
-
 
 #pragma mark ---------------- 周相关 -----------------
 /**
@@ -146,7 +148,6 @@
     return [YearModel initOrUpdateTheWeekModelFromADate:thisDate andPedometerModel:onePedoMeterModel];
 }
 
-
 /**
  *  得到一个周模型。通过指定的日期和PedModel
  *
@@ -161,7 +162,8 @@
 {
     //取得这一年的模型，没有就创建，有就更新数据
     NSInteger thisYearNumber = oneDate.year;
-    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:[NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)thisYearNumber], @"_yearID", nil] orderBy:nil];
+    NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
+    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
     
     if (!thisYearNumber)
     {
@@ -204,7 +206,6 @@
     //存入/更新数据库
     [[YearModel getUsingLKDBHelper] insertToDB:thisYearModel];
     
-    
     //在返回这个更新了的周模型
     return thisWeekModel;
 }
@@ -221,7 +222,6 @@
     return oneDate.weekOfYear;
 }
 
-
 /**
  *   返回指定日期一年内所有的周模型
  *
@@ -233,7 +233,8 @@
 {
     //取得这一年的模型，没有就返回
     NSInteger thisYearNumber = oneDate.year;
-    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:[NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)thisYearNumber], @"_yearID", nil] orderBy:nil];
+    NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
+    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
     
     if (!thisYearNumber)
     {
@@ -278,6 +279,106 @@
     return thisWeekModel;
 }
 
++ (WeekModel *)getTheWeekModelWithDate:(NSDate *)date
+                        withReturnModel:(BOOL)noEmpty
+{
+    NSInteger year = date.year;
+    NSInteger order = date.weekOfYear;
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %d AND _weekNumber = %d", year, order];
+    WeekModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
+    
+    if (model)
+    {
+        if (!model.showDate)
+        {
+            model.showDate = [NSString stringWithFormat:@"%ld年\n第%ld周", (long)year, (long)order];
+        }
+        
+        return model;
+    }
+    else
+    {
+        if (noEmpty)
+        {
+            model = [[WeekModel alloc] initWithWeekNumber:order andYearNumber:year];
+            
+            return model;
+        }
+        
+        return nil;
+    }
+}
+
++ (NSArray *)getWeekModelArrayWithDate:(NSDate *)date
+                       withReturnModel:(BOOL)noEmpty
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = -1 * (LS_TrendChartShowCount); i <= 0; i++)
+    {
+        NSDate *tmpDate = [date dateAfterDay:i * 7];
+        WeekModel *model = [YearModel getTheWeekModelWithDate:tmpDate withReturnModel:noEmpty];
+        
+        [array addObject:model];
+    }
+
+    return array;
+}
+
++ (MonthModel *)getTheWeekModelWithIndex:(NSInteger)index
+                         withReturnModel:(BOOL)noEmpty
+{
+    NSInteger currentYear = LS_Baseyear;
+    if (index > 0)
+    {
+        currentYear = currentYear + (index - 1) / 12;
+    }
+    else
+    {
+        currentYear = currentYear + index / 12 - 1;
+    }
+    
+    NSInteger month = index - (currentYear - LS_Baseyear) * 12;
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %d AND _monthNumber = %d", currentYear, month];
+    MonthModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
+    
+    if (model)
+    {
+        if (!model.showDate)
+        {
+            model.showDate = [NSString stringWithFormat:@"%ld年\n  %ld月", (long)currentYear, (long)month];
+        }
+        
+        return model;
+    }
+    else
+    {
+        if (noEmpty)
+        {
+            model = [[MonthModel alloc] initWithmonthNumber:month andYearNumber:currentYear];
+            
+            return model;
+        }
+        
+        return nil;
+    }
+    
+    return nil;
+}
+
++ (NSArray *)getMonthModelArrayWithIndex:(NSInteger)index
+                       withReturnModel:(BOOL)noEmpty
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = -1 * (LS_TrendChartShowCount); i <= 0; i++)
+    {
+        NSInteger tmpIndex = i + index;
+        MonthModel *model = [YearModel getTheWeekModelWithIndex:tmpIndex withReturnModel:noEmpty];
+        
+        [array addObject:model];
+    }
+    
+    return array;
+}
 
 #pragma mark ---------------- 月相关 -----------------
 
@@ -289,8 +390,7 @@
  *  @return 返回更新后的月模型
  */
 + (MonthModel *) initOrUpdateThemonthModelFromAPedometerModel: (PedometerModel *) onePedoMeterModel
-{
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+{    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
@@ -318,7 +418,8 @@
 {
     //取得这一年的模型，没有就创建，有就更新数据
     NSInteger thisYearNumber = oneDate.year;
-    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:[NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)thisYearNumber], @"_yearID", nil] orderBy:nil];
+    NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
+    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
     
     if (!thisYearNumber)
     {
@@ -379,6 +480,10 @@
     return oneDate.month;
 }
 
++ (NSInteger)monthOfYearWithDate: (NSDate *)date
+{
+    return (date.year - LS_Baseyear) * 12 + date.month;
+}
 
 /**
  *   返回指定日期一年内所有的月模型
@@ -391,7 +496,8 @@
 {
     //取得这一年的模型，没有就返回
     NSInteger thisYearNumber = oneDate.year;
-    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:[NSDictionary dictionaryWithObjectsAndKeys: [NSString stringWithFormat:@"%ld", (long)thisYearNumber], @"_yearID", nil] orderBy:nil];
+    NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
+    YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
     
     if (!thisYearNumber)
     {
@@ -454,8 +560,6 @@
 {
     return 1;
 }
-
-
 
 @end
 
