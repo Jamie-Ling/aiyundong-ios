@@ -7,6 +7,7 @@
 //
 
 #import "UserModelEntity.h"
+#import "Header.h"
 
 @implementation UserModelEntity
 

@@ -390,7 +390,7 @@
     //步数
     NSInteger targetSums = newestModel._stepNumber;
     
-    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[stepLong integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 * 100 withTarget:targetSums withStepAway:[stepLong integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetUserInfo)
         {
             NSLog(@"更新个人相关信息成功");

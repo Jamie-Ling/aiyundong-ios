@@ -7,6 +7,8 @@
 //
 
 #import "PedometerModel.h"
+#import "BLTSendData.h"
+#import "ShowManage.h"
 
 @implementation StepsModel
 
@@ -122,27 +124,37 @@
 }
 
 // 保存数据。
-+ (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock
++ (void)saveDataToModel:(NSData *)data
+          withTimeOrder:(NSInteger)timeOrder
+                withEnd:(PedometerModelSyncEnd)endBlock
 {
     UInt8 val[288 * 25] = {0};
     [data getBytes:&val length:data.length];
     PedometerModel *totalModel = [[PedometerModel alloc] init];
     
     // 第一个包
-    totalModel.dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
-    totalModel.totalSteps =     (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
-    totalModel.totalCalories =  (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
-    totalModel.totalDistance =  (val[16] << 8)  | val[17];
-    totalModel.totalSportTime = (val[18] << 8)  | val[19];
+    totalModel.dateString       = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
+    totalModel.totalSteps       = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
+    totalModel.totalCalories    = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
+    totalModel.totalDistance    = (val[16] << 8)  | val[17];
+    totalModel.totalSportTime   = (val[18] << 8)  | val[19];
     
     // 第二个包
-    totalModel.totalSleepTime = (val[20] << 8)  | val[21];
+    totalModel.totalSleepTime = [NSString stringWithFormat:@"%02d:%02d", val[20], val[21]]; // (val[20] << 8)  | val[21];
+    totalModel.totalStillTime = [NSString stringWithFormat:@"%02d:%02d", val[22], val[23]]; // (val[20] << 8)  | val[21];
+    totalModel.walkTime       = [NSString stringWithFormat:@"%02d:%02d", val[24], val[25]];
+    totalModel.slowWalkTime   = [NSString stringWithFormat:@"%02d:%02d", val[26], val[27]];
+    totalModel.midWalkTime    = [NSString stringWithFormat:@"%02d:%02d", val[28], val[29]];
+    totalModel.fastWalkTime   = [NSString stringWithFormat:@"%02d:%02d", val[30], val[31]];
+    totalModel.slowRunTime    = [NSString stringWithFormat:@"%02d:%02d", val[32], val[33]];
+    totalModel.midRunTime     = [NSString stringWithFormat:@"%02d:%02d", val[34], val[35]];
+    totalModel.fastRunTime    = [NSString stringWithFormat:@"%02d:%02d", val[36], val[37]];
     
     // 第三个包
-    totalModel.stepSize =   (val[40] << 8)  | (val[41]);
-    totalModel.weight =     (val[42] << 8)  | (val[43]);
-    totalModel.targetStep = (val[44] << 16) | (val[45] << 8) | (val[46]);
-    totalModel.totalBytes = (val[47] << 8)  | (val[48]);
+    totalModel.stepSize     = (val[40] << 8)  | (val[41]);
+    totalModel.weight       = ((val[42] << 8) | (val[43])) / 100;
+    totalModel.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
+    totalModel.totalBytes   = (val[47] << 8)  | (val[48]);
 
     //  NSLog(@"dateString = %d..%d..%ld", totalModel.totalSteps, totalModel.totalCalories, (long)totalModel.totalDistance);
     
@@ -150,10 +162,10 @@
     NSMutableArray *sports = [[NSMutableArray alloc] init];
     NSMutableArray *sleeps = [[NSMutableArray alloc] init];
 
-    NSInteger lastOrder = 0;
+    NSInteger lastOrder = timeOrder;
     int i = 60;
-    int signOrder = 0;
-    for (; i < totalModel.totalBytes + 60;)
+    int signOrder = timeOrder > 255 ? 255 : 0;
+    for (; i < totalModel.totalBytes + 60 && i < (3 * 288 + 64);)
     {
         int state = (val[i + 1] >> 4);
         if (state == 0)
@@ -168,7 +180,6 @@
             
             // totalModel.totalSteps += model.steps;
             // totalModel.totalCalories += model.calories;
-            NSLog(@"..%d.. %d", totalModel.totalBytes, model.steps);
 
             [sports addObject:model];
             lastOrder = model.currentOrder;
@@ -182,7 +193,6 @@
             model.currentOrder = val[i] + signOrder;
             model.sleepState = val[i + 1] & 0x0F;
             
-            NSLog(@"..%d.. %d", totalModel.totalBytes, model.sleepState);
             [sleeps addObject:model];
             lastOrder = model.currentOrder;
             i += 2;
@@ -202,13 +212,19 @@
             break;
         }
     }
-  
+    
+    // 保存最后的同步日期和时序
+    [BLTSendData sharedInstance].lastSyncDate = totalModel.dateString;
+    [BLTSendData sharedInstance].lastSyncOrder = lastOrder;
+    [LS_LastSyncDate setObjectValue:[BLTSendData sharedInstance].lastSyncDate];
+    [LS_LastSyncOrder setIntValue:[BLTSendData sharedInstance].lastSyncOrder];
+
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
     [totalModel setLastSleepData];
-    [totalModel modelToDetailShow];
-     [totalModel setTargetDataForModel];
+    [totalModel modelToDetailShowWithTimeOrder:(int)timeOrder];
+    [totalModel setTargetDataForModel];
     
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", totalModel.dateString];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
@@ -247,7 +263,7 @@
 // 为今天的模型附加上昨天的睡眠模型
 - (void)setLastSleepData
 {
-    NSDate *date =  [NSDate stringToDate:[NSString stringWithFormat:@"%@ 06:00:00", self.dateString]];
+    NSDate *date = [NSDate dateWithString:self.dateString];
     PedometerModel *model = [PedometerModel getModelFromDBWithDate:date];
     
     if (model)
@@ -274,20 +290,31 @@
 }
 
 // 将一天的数据分为48个阶段详细展示。
-- (void)modelToDetailShow
+- (void)modelToDetailShowWithTimeOrder:(int)timeOrder
 {
     NSMutableArray *detailSteps = [[NSMutableArray alloc] init];
     NSMutableArray *detailSleeps = [[NSMutableArray alloc] init];
     NSMutableArray *detailDistans = [[NSMutableArray alloc] init];
     NSMutableArray *detailCalories = [[NSMutableArray alloc] init];
 
-    for (int i = 0; i < 288; i += 6)
+    for (int i = timeOrder; i < 288; i++)
+    {
+        NSInteger total = [self getDataWithIndex:i withType:SportsModelSleep];
+        [detailSleeps addObject:@(total)];
+    }
+    
+    if (timeOrder > 282)
+    {
+        timeOrder = 282;
+    }
+    
+    for (int i = timeOrder; i < 288; i += 6)
     {
         NSInteger total = [self halfHourData:i withType:SportsModelSteps];
         [detailSteps addObject:@(total)];
 
-        total = [self halfHourData:i withType:SportsModelSleep];
-        [detailSleeps addObject:@(total)];
+        //total = [self halfHourData:i withType:SportsModelSleep];
+        //[detailSleeps addObject:@(total)];
         
         total = [self halfHourData:i withType:SportsModelDistance];
         [detailDistans addObject:@(total)];
@@ -388,7 +415,6 @@
                     SleepModel *model = self.sleepArray[i];
                     if (index - 144 <= model.currentOrder)
                     {
-                        NSLog(@"...今天的睡眠状态：%d...%d", index, model.sleepState);
                         return model.sleepState;
                     }
                 }

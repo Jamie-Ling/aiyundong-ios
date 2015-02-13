@@ -86,6 +86,25 @@
 
 @implementation BLTSendData
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        NSString *nowString = [[[NSDate date] dateToString] componentsSeparatedByString:@" "][0];
+        if ([LS_LastSyncDate getObjectValue] && [nowString isEqualToString:[LS_LastSyncDate getObjectValue]])
+        {
+            _lastSyncOrder = [LS_LastSyncOrder getIntValue];
+        }
+        else
+        {
+            _lastSyncOrder = 0;
+        }
+    }
+    
+    return self;
+}
+
 DEF_SINGLETON(BLTSendData)
 
 + (UInt8)timeZone
@@ -414,6 +433,12 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
++ (void)sendHistoricalDataStorageDateWithUpdateBlock:(BLTAcceptDataUpdateValue)block
+{
+    UInt8 val[4] = {0xBE, 0x02, 0x05, 0xED};
+    [self sendDataToWare:&val withLength:4 withUpdate:block];
+}
+
 + (void)sendDeleteSportDataWithDate:(NSDate *)date
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
@@ -437,15 +462,16 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:6 withUpdate:block];
 }
 
+// 该方法已经被取消。
 + (void)sendRealtimeTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[4] = {0xBE, 0x02, 0x04, 0xED};
+    UInt8 val[4] = {0xBE, 0x02, 0x03, 0xED};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 
 + (void)sendCloseTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[4] = {0xBE, 0x02, 0x05, 0xED};
+    UInt8 val[4] = {0xBE, 0x02, 0x04, 0xED};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 
@@ -489,7 +515,7 @@ DEF_SINGLETON(BLTSendData)
         _failCount = 0;
         [[BLTAcceptData sharedInstance] cleanMutableData];
         NSDate *date = [[LS_LastSyncDate getObjectValue] dateAfterDay:1];
-        date = [NSDate dateWithTimeIntervalSinceNow:-38 * 3600 * 24];
+        date = [NSDate dateWithTimeIntervalSinceNow:0];
         NSLog(@".date = .%@", date);
         [BLTSendData sendRequestHistorySportDataWithDate:date
                                                withOrder:0
@@ -497,7 +523,7 @@ DEF_SINGLETON(BLTSendData)
                                              [self stopTimer];
                                              if (type == BLTAcceptDataTypeRequestHistorySportsData)
                                              {
-                                                 NSLog(@"保存数据。%d", type);
+                                                 SHOWMBProgressHUD(@"同步成功.", nil, nil, NO, 2.0);
                                                  [self performSelectorInBackground:@selector(syncInBackGround:) withObject:object];
                                              }
                                              else if (type == BLTAcceptDataTypeError)
@@ -510,7 +536,6 @@ DEF_SINGLETON(BLTSendData)
                                                  SHOWMBProgressHUD(@"没有最新的数据.", nil, nil, NO, 2.0);
                                              }
                                          }];
-        
         
         if ([date isSameWithDate:[NSDate date]])
         {
@@ -531,7 +556,7 @@ DEF_SINGLETON(BLTSendData)
 
 - (void)syncInBackGround:(id)object
 {
-    [PedometerModel saveDataToModel:object withEnd:^{
+    [PedometerModel saveDataToModel:object withTimeOrder:0 withEnd:^{
         [self performSelectorOnMainThread:@selector(endSyncData) withObject:nil waitUntilDone:NO];
     }];
 }
@@ -539,7 +564,6 @@ DEF_SINGLETON(BLTSendData)
 // 同步数据结束
 - (void)endSyncData
 {
-    SHOWMBProgressHUD(@"同步成功.", nil, nil, NO, 2.0);
     if (_backBlock)
     {
         _backBlock();
@@ -559,8 +583,6 @@ DEF_SINGLETON(BLTSendData)
 - (void)supervisionSync
 {
     _waitTime ++;
-    
-    NSLog(@"....%d", _waitTime);
     
     if (_waitTime > 5 || _failCount > 5)
     {
@@ -593,7 +615,7 @@ DEF_SINGLETON(BLTSendData)
     }];
     
     [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.5];
-    
+    [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.1];
 }
 
 - (void)sendRequestWeight
@@ -606,6 +628,16 @@ DEF_SINGLETON(BLTSendData)
     [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
     [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
         
+    }];
+}
+
+- (void)sendRequestHistoryDataSaveDate
+{
+    [BLTSendData sendHistoricalDataStorageDateWithUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeRequestHistoryDate)
+        {
+            
+        }
     }];
 }
 

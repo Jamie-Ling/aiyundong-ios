@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BLTAcceptData.h"
+#import "Header.h"
 
 @interface AlarmClockModel : NSObject
 
@@ -47,6 +48,9 @@ typedef void(^BLTSendDataBackUpdate)();
 @property (nonatomic, assign) NSInteger waitTime;
 @property (nonatomic, assign) NSInteger failCount;
 @property (nonatomic, assign) BOOL isStopSync;
+
+@property (nonatomic, assign) NSInteger lastSyncOrder;  // 最后同步的时序
+@property (nonatomic, strong) NSString *lastSyncDate;     // 最后同步的日期
 
 @property (nonatomic, strong) BLTSendDataBackUpdate backBlock;
 
@@ -287,6 +291,14 @@ AS_SINGLETON(BLTSendData)
  *           传输运动数据.
  */
 
+/**
+ *           传输运动数据.
+ */
+
+/**
+ *           传输运动数据.
+ */
+
 /** // 无需界面
  *  手机请求计步器历史运动数据
  *
@@ -297,6 +309,14 @@ AS_SINGLETON(BLTSendData)
                            withOrder:(NSInteger)order
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
+
+/**
+ *  请求硬件里保存的数据的日期。
+ *
+ *  @param block 回调
+ */
++ (void)sendHistoricalDataStorageDateWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
 /** // 只需点击事件
  *  删除运动数据
  *
@@ -306,7 +326,7 @@ AS_SINGLETON(BLTSendData)
 + (void)sendDeleteSportDataWithDate:(NSDate *)date
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
-/** // 无需实现
+/** // 无需实现  该方法已经被取消。
  *  请求当天的运动数据。
  *
  *  @param order 时间序号

@@ -8,6 +8,7 @@
 
 #import "BLTAcceptData.h"
 #import "PedometerModel.h"
+#import "Header.h"
 
 @implementation BLTAcceptData
 
@@ -246,24 +247,34 @@ DEF_SINGLETON(BLTAcceptData)
             {
                 if (val[3] == 0xED)
                 {
-                    // 请求当天数据完毕
-                    _type = BLTAcceptDataTypeRequestTodaySportsData;
+                    // 计步器收到开始实时传输数据的命令
+                    _type = BLTAcceptDataTypeRealTimeTransSportsData;
                 }
             }
             else if (order == 0x04)
             {
                 if (val[3] == 0xED)
                 {
-                    // 计步器收到开始实时传输数据的命令
-                    _type = BLTAcceptDataTypeRealTimeTransSportsData;
+                    // 计步器收到关闭实时传输数据的命令
+                    _type = BLTAcceptDataTypeCloseTransSportsData;
                 }
             }
             else if (order == 0x05)
             {
                 if (val[3] == 0xED)
                 {
-                    // 计步器收到关闭实时传输数据的命令
-                    _type = BLTAcceptDataTypeCloseTransSportsData;
+                    // 请求历史运动数据的保存日期
+                    _type = BLTAcceptDataTypeRequestHistoryDate;
+                    
+                    NSString *startDate = [NSString stringWithFormat:@"%04d-%02d-%02d", ((val[4] << 8) | val[5]), val[6], val[7]];
+                    NSString *endDate = [NSString stringWithFormat:@"%04d-%02d-%02d", ((val[8] << 8) | val[9]), val[10], val[11]];
+                    
+                    NSLog(@"请求历史运动数据的保存日期..%@..%@", startDate, endDate);
+                    object = @[startDate, endDate];
+                }
+                else if (val[3] == 0xFB)
+                {
+                  
                 }
             }
         }

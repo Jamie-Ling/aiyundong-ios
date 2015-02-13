@@ -30,6 +30,7 @@
 
 + (long long)timeStamp;
 
+// 优先使用这个转换，字符串转日期
 + (NSDate *)dateWithString:(NSString *)string;
 + (NSDate *)now;
 

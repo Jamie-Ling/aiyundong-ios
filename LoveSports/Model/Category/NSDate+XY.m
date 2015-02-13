@@ -152,7 +152,29 @@ DUMMY_CLASS(NSDate_XY);
 
 + (NSDate *)dateWithString:(NSString *)string
 {
-    return nil;
+    NSArray *array = [string componentsSeparatedByString:@" "];
+    
+    if (array)
+    {
+        if (array.count == 1)
+        {
+            NSString *dateString = [NSString stringWithFormat:@"%@ 00:00:00", string];
+            NSDate *date = [NSDate dateWithString:dateString];
+            date = [date dateByAddingTimeInterval:[NSDate timeZone] * 3600];
+            
+            return date;
+        }
+        else if (array.count == 2)
+        {
+            return [NSDate stringToDate:string];
+        }
+        else
+        {
+            return [NSDate date];
+        }
+    }
+    
+    return [NSDate date];
 }
 
 + (NSDate *)now
@@ -242,7 +264,7 @@ DUMMY_CLASS(NSDate_XY);
     [dateFormatter setDateStyle:NSDateFormatterFullStyle];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
-    // 所有得时间都按北美的时间，无需转换。结果一样
+    // 所有得时间都按格林的时间，无需转换。结果一样
     // 如果本身需要具体的时间。可以转换成GMT
     // NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     // [dateFormatter setTimeZone:timeZone];
@@ -270,7 +292,7 @@ DUMMY_CLASS(NSDate_XY);
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
-    // 所有得时间都按北美的时间，无需转换。结果一样
+    // 所有得时间都按格林的时间，无需转换。结果一样
     // 如果本身需要具体的时间。可以转换成GMT
     // NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     // [formatter setTimeZone:timeZone];

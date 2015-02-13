@@ -63,7 +63,16 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, assign) NSInteger totalCalories;      // 当天的总卡路里
 @property (nonatomic, assign) NSInteger totalDistance ;     // 当天的总路程
 @property (nonatomic, assign) NSInteger totalSportTime ;    // 当天的总运动时间
-@property (nonatomic, assign) NSInteger totalSleepTime ;    // 当天的总睡眠时间
+@property (nonatomic, strong) NSString *totalSleepTime ;    // 当天的总睡眠时间
+@property (nonatomic, strong) NSString *totalStillTime ;    // 当天的总静止时间
+
+@property (nonatomic, strong) NSString *walkTime ;          // 当天散步时间
+@property (nonatomic, strong) NSString *slowWalkTime ;      // 当天慢步时间
+@property (nonatomic, strong) NSString *midWalkTime ;       // 当天中等散步时间
+@property (nonatomic, strong) NSString *fastWalkTime ;      // 当天快速散步时间
+@property (nonatomic, strong) NSString *slowRunTime ;       // 当天慢速跑步时间
+@property (nonatomic, strong) NSString *midRunTime ;        // 当天中等跑步时间
+@property (nonatomic, strong) NSString *fastRunTime ;       // 当天快速跑步时间
 
 @property (nonatomic, assign) NSInteger targetStep;         // 目标步数
 @property (nonatomic, assign) NSInteger targetCalories;     // 目标卡路里
@@ -71,7 +80,7 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
 @property (nonatomic, assign) NSInteger stepSize;           //步距
-@property (nonatomic, assign) NSInteger weight;             //体重
+@property (nonatomic, assign) CGFloat weight;               //体重
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
@@ -86,7 +95,7 @@ typedef void(^PedometerModelSyncEnd)();
 @property (nonatomic, strong) NSArray *detailDistans;
 
 // 目前硬件协议有问题。协商改进。
-+ (void)saveDataToModel:(NSData *)data withEnd:(PedometerModelSyncEnd)endBlock;
++ (void)saveDataToModel:(NSData *)data withTimeOrder:(NSInteger)timeOrder withEnd:(PedometerModelSyncEnd)endBlock;
 + (PedometerModel *)getModelFromDBWithDate:(NSDate *)date;
 + (PedometerModel *)getModelFromDBWithToday;
 + (PedometerModel *)simpleInitWithDate:(NSDate *)date;

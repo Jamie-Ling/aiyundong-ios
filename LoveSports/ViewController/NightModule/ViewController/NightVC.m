@@ -11,6 +11,7 @@
 #import "CalendarHomeView.h"
 #import "BarGraphView.h"
 #import "BarShowView.h"
+#import "UIColor+RGB.h"
 
 @interface NightVC () <PieChartViewDelegate, PieChartViewDataSource>
 
@@ -21,9 +22,11 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) BarShowView *showView;
+@property (nonatomic, strong) PedometerModel *model;
 
 @property (nonatomic) CalendarHomeView *calenderView;
 @property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, strong) NSArray *chartDataArray;
 
 @property (nonatomic, assign) NSInteger percent;
 @property (nonatomic, assign) CGFloat offsetY;
@@ -50,6 +53,13 @@
     [self loadDateLabel];
     [self loadScrollView];
     [self loadShareButton];
+}
+
+- (void)setCurrentDate:(NSDate *)currentDate
+{
+    _currentDate = currentDate;
+    
+    [self updateContentForBarShowViewWithDate:_currentDate];
 }
 
 - (void)loadPieChartView
@@ -83,7 +93,8 @@
     [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
     DEF_WEAKSELF_(NightVC);
     _calenderView.calendarblock = ^(CalendarDayModel *model) {
-
+        NSLog(@"..%@", [model date]);
+        weakSelf.currentDate = [model date];
     };
     
     [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
@@ -125,20 +136,27 @@
     [_scrollView addSubview:_showView];
     _scrollView.contentSize = _showView.frame.size;
     
-    [self updateContentForBarShowView:_currentDate];
+    [self updateContentForBarShowViewWithDate:_currentDate];
 }
 
-- (void)updateContentForBarShowView:(NSDate *)date
+- (void)updateContentForBarShowViewWithDate:(NSDate *)date
 {
     _currentDate = date;
     PedometerModel *model = [PedometerModel getModelFromDBWithDate:_currentDate];
+    
+    [self updateContentForLabel:model];
+    _chartDataArray = model.detailSleeps;
+    [_chartView reloadData];
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     if (model.detailSleeps && model.detailSleeps.count > 0)
     {
-        for (int i = 0; i < model.detailSleeps.count; i++)
+        for (int i = 0; i < model.detailSleeps.count - 5; i += 6)
         {
-            [array addObject:@(18 - [model.detailSleeps[i] intValue])];
+            NSInteger number = [model.detailSleeps[i] intValue]     + [model.detailSleeps[i + 1] intValue] +
+                               [model.detailSleeps[i + 2] intValue] + [model.detailSleeps[i + 3] intValue] +
+                               [model.detailSleeps[i + 4] intValue] + [model.detailSleeps[i + 5] intValue];
+            [array addObject:@(18 - number)];
         }
         
         for (NSInteger i = array.count - 1; i < 49; i++)
@@ -155,6 +173,21 @@
     }
     
     [_showView updateContentForView:array];
+}
+
+- (void)updateContentForLabel:(PedometerModel *)model
+{
+    _model = model;
+    
+    _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+    NSDate *date = [NSDate dateWithString:model.dateString];
+    NSString *weekString = [NSObject numberTransferWeek:date.weekday];
+    _weekLabel.text = weekString;
+}
+
+- (void)updateContentForChartView:(PedometerModel *)model
+{
+    
 }
 
 - (void)loadShareButton
@@ -175,16 +208,23 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 180;
+    return 288 * 2;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 180 * (_percent * 0.01))
+        if (_chartDataArray && _chartDataArray.count > 0)
         {
-            return [UIColor yellowColor];
+            if (_chartDataArray.count > index)
+            {
+                return [UIColor colorWithIndex:[_chartDataArray[index] integerValue]];
+            }
+            else
+            {
+                return [UIColor lightGrayColor];
+            }
         }
         else
         {
@@ -206,28 +246,33 @@
 - (void)leftSwipe
 {
     NSLog(@"..左扫..");
-    
-    _percent = arc4random() % 70 + 20;
-    [_chartView reloadData];
-    
-    [self updateContentForBarShowView:[_currentDate dateAfterDay:1]];
+
+    [self updateContentForBarShowViewWithDate:[_currentDate dateAfterDay:1]];
 }
 
 - (void)rightSwipe
 {
     NSLog(@"..右扫..");
     
-    _percent = arc4random() % 70 + 20;
-    [_chartView reloadData];
-    
-    [self updateContentForBarShowView:[_currentDate dateAfterDay:-1]];
+    [self updateContentForBarShowViewWithDate:[_currentDate dateAfterDay:-1]];
 }
 
 - (void)downSwipe
 {
     NSLog(@"..下扫..");
     
-    [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:nil];
+    DEF_WEAKSELF_(NightVC);
+    [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:^{
+        [weakSelf updateConnectForView];
+    }];
+}
+
+- (void)updateConnectForView
+{
+    if ([_currentDate isSameWithDate:[NSDate date]])
+    {
+        [self updateContentForBarShowViewWithDate:_currentDate];
+    }
 }
 
 @end

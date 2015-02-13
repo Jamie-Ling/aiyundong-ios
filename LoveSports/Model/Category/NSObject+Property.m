@@ -47,32 +47,32 @@
 }
 
 - (NSInteger)stepsConvertCalories:(NSInteger)steps
-                       withWeight:(NSInteger)weight
+                       withWeight:(CGFloat)weight
                         withModel:(BOOL)metric
 {
     // 四舍五入...
     if (metric)
     {
-        return steps * ((weight - 13.63636) * 0.000693 + 0.00495) * 0.923 + 0.5;
+        return steps * ((weight - 13.63636) * 0.000693 + 0.00495)+ 0.5;
     }
     else
     {
-        return steps / 100 * (0.0315 * weight - 0.45) * 0.9230;
+        return steps / 100 * (0.0315 * weight - 0.45) + 0.5;
     }
 }
 
 - (NSInteger)caloriesConvertSteps:(NSInteger)Calories
-                       withWeight:(NSInteger)weight
+                       withWeight:(CGFloat)weight
                         withModel:(BOOL)metric
 {
     // 四舍五入...
     if (metric)
     {
-        return Calories / (((weight - 13.63636) * 0.000693 + 0.00495) * 0.923);
+        return Calories / ((weight - 13.63636) * 0.000693 + 0.00495) + 0.5;
     }
     else
     {
-        return Calories * 100 / ((0.0315 * weight - 0.45) * 0.9230);
+        return Calories * 100 / (0.0315 * weight - 0.45) + 0.5;
     }
 }
 
@@ -89,7 +89,7 @@
 }
 
 - (NSInteger)caloriesConvertDistance:(NSInteger)calories
-                       withWeight:(NSInteger)weight
+                       withWeight:(CGFloat)weight
                          withPace:(NSInteger)pace
                         withModel:(BOOL)metric
 {
@@ -99,7 +99,7 @@
 }
 
 - (NSInteger)distanceConvertCalories:(CGFloat)distance
-                          withWeight:(NSInteger)weight
+                          withWeight:(CGFloat)weight
                             withPace:(NSInteger)pace
                            withModel:(BOOL)metric
 {

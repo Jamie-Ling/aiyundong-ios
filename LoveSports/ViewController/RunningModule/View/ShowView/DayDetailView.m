@@ -261,7 +261,7 @@
     
     [self updateContentFromClickChangeEvent];
     _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
-    NSDate *date =  [NSDate stringToDate:[NSString stringWithFormat:@"%@ 06:00:00", model.dateString]];
+    NSDate *date = [NSDate dateWithString:model.dateString];
     NSString *weekString = [NSObject numberTransferWeek:date.weekday];
     _weekLabel.text = weekString;
 }

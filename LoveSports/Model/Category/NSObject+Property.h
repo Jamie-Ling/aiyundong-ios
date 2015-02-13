@@ -18,12 +18,12 @@
 // 为yes的时候重量单位为公斤， 长度为公里和厘米。
 // pace为
 - (NSInteger)stepsConvertCalories:(NSInteger)steps
-                       withWeight:(NSInteger)weight
+                       withWeight:(CGFloat)weight
                         withModel:(BOOL)metric;
 
 // 卡路里转步数
 - (NSInteger)caloriesConvertSteps:(NSInteger)Calories
-                       withWeight:(NSInteger)weight
+                       withWeight:(CGFloat)weight
                         withModel:(BOOL)metric;
 
 // 步数转距离
@@ -36,13 +36,13 @@
 
 // 卡路里转距离
 - (NSInteger)caloriesConvertDistance:(NSInteger)calories
-                          withWeight:(NSInteger)weight
+                          withWeight:(CGFloat)weight
                             withPace:(NSInteger)pace
                            withModel:(BOOL)metric;
 
 // 距离转卡路里
 - (NSInteger)distanceConvertCalories:(CGFloat)distance
-                          withWeight:(NSInteger)weight
+                          withWeight:(CGFloat)weight
                             withPace:(NSInteger)pace
                            withModel:(BOOL)metric;
 

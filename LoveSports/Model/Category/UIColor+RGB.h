@@ -22,5 +22,7 @@
 
 // 返回一个十六进制表示的颜色: 0xFF0000
 + (UIColor *)colorFromHex:(int)hex;
++ (UIColor *)colorWithIndex:(int)index;
+
 
 @end
