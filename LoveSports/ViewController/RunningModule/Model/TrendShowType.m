@@ -65,7 +65,7 @@
 
 + (NSArray *)getShowDataArrayWithDayDate:(NSDate *)date withShowType:(TrendChartShowType)showType
 {
-    NSArray *array = [PedometerModel getEveryDayTrendDataWithDate:date];
+    NSArray *array = [PedometerHelper getEveryDayTrendDataWithDate:date];
     NSMutableArray *chartDataArray = [[NSMutableArray alloc] init];
     NSMutableArray *daysArray = [[NSMutableArray alloc] init];
     

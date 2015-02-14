@@ -64,7 +64,7 @@
     }
     
     BLTModel *model = [BLTManager sharedInstance].allWareArray[indexPath.row];
-    [cell updateContentForWareInfoCell:model withHeight:60.0];
+    [cell updateContentForWareInfoCell:model withHeight:100.0];
     
     return cell;
 }
@@ -76,7 +76,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.0;
+    return 100.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

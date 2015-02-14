@@ -20,6 +20,8 @@ DEF_SINGLETON(BLTAcceptData)
     if (self)
     {
         _syncData = [[NSMutableData alloc] init];
+        _realTimeData = [[NSMutableData alloc] init];
+        
         // 直接启动蓝牙
         [BLTManager sharedInstance];
         
@@ -43,6 +45,11 @@ DEF_SINGLETON(BLTAcceptData)
          */
         [BLTPeripheral sharedInstance].updateBigDataBlock = ^(NSData *data) {
             [self updateBigData:data];
+        };
+        
+        // 实时传输的数据
+        [BLTPeripheral sharedInstance].realTimeBlock = ^(NSData *data) {
+            [self saveRealTimeData:data];
         };
     }
     
@@ -77,8 +84,8 @@ DEF_SINGLETON(BLTAcceptData)
             if (order == 0x01)
             {
                 SHOWMBProgressHUD(@"设置成功...", nil, nil, NO, 2);
-                [LS_SettingBaseInfo setBOOLValue:YES];
-                NSLog(@"设置成功.%d",  [LS_SettingBaseInfo getBOOLValue]);
+                [LS_SettingBaseTimeZoneInfo setBOOLValue:YES];
+                NSLog(@"设置成功.%d",  [LS_SettingBaseTimeZoneInfo getBOOLValue]);
 
                 // 设定时区英制基本信息成功.
                 _type = BLTAcceptDataTypeSetBaseInfo;
@@ -263,6 +270,10 @@ DEF_SINGLETON(BLTAcceptData)
             {
                 if (val[3] == 0xED)
                 {
+                 
+                }
+                else if (val[3] == 0xFB)
+                {
                     // 请求历史运动数据的保存日期
                     _type = BLTAcceptDataTypeRequestHistoryDate;
                     
@@ -271,10 +282,6 @@ DEF_SINGLETON(BLTAcceptData)
                     
                     NSLog(@"请求历史运动数据的保存日期..%@..%@", startDate, endDate);
                     object = @[startDate, endDate];
-                }
-                else if (val[3] == 0xFB)
-                {
-                  
                 }
             }
         }
@@ -294,7 +301,7 @@ DEF_SINGLETON(BLTAcceptData)
 - (void)updateBigData:(NSData *)data
 {
     _type = BLTAcceptDataTypeRequestHistorySportsData;
-    [BLTSendData sharedInstance].waitTime = 0;
+    [BLTSimpleSend sharedInstance].waitTime = 0;
 
     [_syncData appendData:data];
 }
@@ -303,11 +310,24 @@ DEF_SINGLETON(BLTAcceptData)
 {
 }
 
+- (void)saveRealTimeData:(NSData *)data
+{
+    _type = BLTAcceptDataTypeRealTimeTransState;
+    [_realTimeData appendData:data];
+    NSLog(@".实时传输的数据 :..%@", data);
+}
+
 #pragma mark --- syncData 数据清空 ---
 - (void)cleanMutableData
 {
     [_syncData resetBytesInRange:NSMakeRange(0, _syncData.length)];
     [_syncData setLength:0];
+}
+
+- (void)cleanMutableRealTimeData
+{
+    [_realTimeData resetBytesInRange:NSMakeRange(0, _realTimeData.length)];
+    [_realTimeData setLength:0];
 }
 
 // 检查当次通讯是否发生错误

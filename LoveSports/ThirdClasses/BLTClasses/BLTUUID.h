@@ -14,6 +14,8 @@
 + (CBUUID *)uartServiceUUID;
 + (CBUUID *)txCharacteristicUUID;
 + (CBUUID *)rxCharacteristicUUID;
++ (CBUUID *)realTimeCharacteristicUUID;
+
 + (CBUUID *)hardwareRevisionStringUUID;
 + (CBUUID *)deviceInformationServiceUUID;
 

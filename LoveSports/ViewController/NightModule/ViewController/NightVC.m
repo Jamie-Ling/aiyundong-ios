@@ -35,6 +35,23 @@
 
 @implementation NightVC
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    DEF_WEAKSELF_(NightVC);
+    [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
+        [weakSelf updateConnectForView];
+    };
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTSimpleSend sharedInstance].backBlock = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -141,7 +158,7 @@
 - (void)updateContentForBarShowViewWithDate:(NSDate *)date
 {
     _currentDate = date;
-    PedometerModel *model = [PedometerModel getModelFromDBWithDate:_currentDate];
+    PedometerModel *model = [PedometerHelper getModelFromDBWithDate:_currentDate];
     
     [self updateContentForLabel:model];
     _chartDataArray = model.detailSleeps;
@@ -261,7 +278,7 @@
     NSLog(@"..下扫..");
     
     DEF_WEAKSELF_(NightVC);
-    [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:^{
+    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
         [weakSelf updateConnectForView];
     }];
 }

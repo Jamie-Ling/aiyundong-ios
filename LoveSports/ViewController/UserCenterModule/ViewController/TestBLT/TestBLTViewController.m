@@ -32,6 +32,7 @@
 #import "DeviceUpdateViewController.h"
 #import "TestBLTViewController.h"
 #import "BSModalPickerView.h"
+#import "BLTSendData.h"
 
 
 @interface TestBLTViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
@@ -43,6 +44,7 @@
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UILabel *switchLabel;
 
 @end
 
@@ -57,7 +59,7 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", nil];
+    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", @"开启运动数据实时传输", nil];
     
     //tableview
     [self addTableView];
@@ -215,6 +217,7 @@
                                                    numberOfLines:0];
     [title sizeToFit];
     title.center = CGPointMake(vTableViewMoveLeftX + 16.0 + title.width / 2.0, vOneCellHeight / 2.0);
+    title.tag = 3000;
     [oneCell.contentView addSubview:title];
     
     //右侧箭头
@@ -239,8 +242,40 @@
     //    [oneCell setSelectedBackgroundView:[[UIView alloc] initWithFrame:oneCell.frame]];
     //    //kHexRGB(0x0e822f)
     //    oneCell.selectedBackgroundView.backgroundColor = kHexRGBAlpha(0x0e822f, 0.6);
+    
+    if (indexPath.row == 3)
+    {
+        UISwitch *select = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, oneCell.width * 0.3, 44)];
+        
+        select.center = CGPointMake(oneCell.width * 0.75, vOneCellHeight/2.0);
+        select.selected = [LS_RealTimeTransState getBOOLValue];
+        [oneCell.contentView addSubview:select];
+        [select addTarget:self action:@selector(changeSwitchLabel:) forControlEvents:UIControlEventValueChanged];
+        
+        _switchLabel = title;
+    }
+    
     //
     return oneCell;
+}
+
+- (void)changeSwitchLabel:(UISwitch *)select
+{
+    NSLog(@"selected..%d",select.selected);
+    select.selected = !select.selected;
+    if (select.selected)
+    {
+        _switchLabel.text = @"关闭运动数据实时传输";
+        [[BLTRealTime sharedInstance] startRealTimeTrans];
+    }
+    else
+    {
+        _switchLabel.text = @"开启运动数据实时传输";
+        [[BLTRealTime sharedInstance] closeRealTimeTrans];
+    }
+    
+    [BLTRealTime sharedInstance].isRealTime = select.selected;
+    [LS_RealTimeTransState setBOOLValue:select.selected];
 }
 
 

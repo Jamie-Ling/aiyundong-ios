@@ -9,6 +9,7 @@
 #import "PedometerModel.h"
 #import "BLTSendData.h"
 #import "ShowManage.h"
+#import "PedometerHelper.h"
 
 @implementation StepsModel
 
@@ -123,38 +124,68 @@
     return model;
 }
 
+- (void)saveAllTotalInfo:(UInt8 *)val
+{
+    self.totalSteps       = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
+    self.totalCalories    = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
+    self.totalDistance    = (val[16] << 8)  | val[17];
+    self.totalSportTime   = (val[18] << 8)  | val[19];
+    
+    // 第二个包
+    self.totalSleepTime = (val[20] << 8) | val[21]; // (val[20] << 8)  | val[21];
+    self.totalStillTime = (val[22] << 8) | val[23]; // (val[20] << 8)  | val[21];
+    self.walkTime       = (val[24] << 8) | val[25];
+    self.slowWalkTime   = (val[26] << 8) | val[27];
+    self.midWalkTime    = (val[28] << 8) | val[29];
+    self.fastWalkTime   = (val[30] << 8) | val[31];
+    self.slowRunTime    = (val[32] << 8) | val[33];
+    self.midRunTime     = (val[34] << 8) | val[35];
+    self.fastRunTime    = (val[36] << 8) | val[37];
+    
+    // 第三个包
+    self.stepSize     = (val[40] << 8)  | (val[41]);
+    self.weight       = ((val[42] << 8) | (val[43])) / 100;
+    self.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
+    self.totalBytes   = (val[47] << 8)  | (val[48]);
+    NSLog(@"totalBytes..%ld", (long)self.totalBytes);
+}
+
+- (void)showMessage
+{
+    __weak PedometerModel *safeModel = self;
+    showMessage(^{
+        NSString *alertString = [NSString stringWithFormat:@"%@的数据", safeModel.dateString];
+        SHOWMBProgressHUD(alertString, @"同步成功.", nil, NO, 2.0);
+    });
+}
+
 // 保存数据。
-+ (void)saveDataToModel:(NSData *)data
++ (void)saveDataToModel:(NSArray *)array
           withTimeOrder:(NSInteger)timeOrder
                 withEnd:(PedometerModelSyncEnd)endBlock
 {
+    NSData *data = array[0];
     UInt8 val[288 * 25] = {0};
     [data getBytes:&val length:data.length];
     PedometerModel *totalModel = [[PedometerModel alloc] init];
     
     // 第一个包
-    totalModel.dateString       = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
-    totalModel.totalSteps       = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
-    totalModel.totalCalories    = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
-    totalModel.totalDistance    = (val[16] << 8)  | val[17];
-    totalModel.totalSportTime   = (val[18] << 8)  | val[19];
+    totalModel.dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
     
-    // 第二个包
-    totalModel.totalSleepTime = [NSString stringWithFormat:@"%02d:%02d", val[20], val[21]]; // (val[20] << 8)  | val[21];
-    totalModel.totalStillTime = [NSString stringWithFormat:@"%02d:%02d", val[22], val[23]]; // (val[20] << 8)  | val[21];
-    totalModel.walkTime       = [NSString stringWithFormat:@"%02d:%02d", val[24], val[25]];
-    totalModel.slowWalkTime   = [NSString stringWithFormat:@"%02d:%02d", val[26], val[27]];
-    totalModel.midWalkTime    = [NSString stringWithFormat:@"%02d:%02d", val[28], val[29]];
-    totalModel.fastWalkTime   = [NSString stringWithFormat:@"%02d:%02d", val[30], val[31]];
-    totalModel.slowRunTime    = [NSString stringWithFormat:@"%02d:%02d", val[32], val[33]];
-    totalModel.midRunTime     = [NSString stringWithFormat:@"%02d:%02d", val[34], val[35]];
-    totalModel.fastRunTime    = [NSString stringWithFormat:@"%02d:%02d", val[36], val[37]];
+    NSDate *tmpDate = [NSDate dateWithString:totalModel.dateString];
+    if (!tmpDate || [tmpDate timeIntervalSince1970] < 0
+        || ([tmpDate timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970]) > 3600 * 24)
+    {
+        // SHOWMBProgressHUD(@"数据出现问题.", nil, nil, NO, 2.0);
+        if (endBlock)
+        {
+            endBlock(array[1], NO);
+        }
+        return;
+    }
     
-    // 第三个包
-    totalModel.stepSize     = (val[40] << 8)  | (val[41]);
-    totalModel.weight       = ((val[42] << 8) | (val[43])) / 100;
-    totalModel.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
-    totalModel.totalBytes   = (val[47] << 8)  | (val[48]);
+    [totalModel showMessage];
+    [totalModel saveAllTotalInfo:val];
 
     //  NSLog(@"dateString = %d..%d..%ld", totalModel.totalSteps, totalModel.totalCalories, (long)totalModel.totalDistance);
     
@@ -214,17 +245,31 @@
     }
     
     // 保存最后的同步日期和时序
-    [BLTSendData sharedInstance].lastSyncDate = totalModel.dateString;
-    [BLTSendData sharedInstance].lastSyncOrder = lastOrder;
-    [LS_LastSyncDate setObjectValue:[BLTSendData sharedInstance].lastSyncDate];
-    [LS_LastSyncOrder setIntValue:[BLTSendData sharedInstance].lastSyncOrder];
+    [BLTSimpleSend sharedInstance].lastSyncDate = totalModel.dateString;
+    [LS_LastSyncDate setObjectValue:[BLTSimpleSend sharedInstance].lastSyncDate];
+    
+    // 只有今天的才需要保存时序.也只有是今天的数据才需要保存时序
+    NSLog(@".....%@....%@", [NSDate dateWithString:totalModel.dateString], [NSDate date]);
+    if ([[NSDate dateWithString:totalModel.dateString] isSameWithDate:[NSDate date]])
+    {
+        [BLTRealTime sharedInstance].lastSyncOrder = lastOrder;
+        [LS_LastSyncOrder setIntValue:[BLTRealTime sharedInstance].lastSyncOrder];
+    }
 
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
     [totalModel setLastSleepData];
-    [totalModel modelToDetailShowWithTimeOrder:(int)timeOrder];
     [totalModel setTargetDataForModel];
+    
+    if ([[NSDate date] isSameWithDate:[NSDate dateWithString:totalModel.dateString]])
+    {
+        totalModel.isSaveAllDay = NO;
+    }
+    else
+    {
+        totalModel.isSaveAllDay = YES;
+    }
     
     // 将数据保存到周－月表
     [totalModel savePedometerModelToWeekModelAndMonthModel];
@@ -234,16 +279,23 @@
     
     if (model)
     {
+        totalModel.detailSteps = model.detailSteps;
+        totalModel.detailSleeps = model.detailSleeps;
+        totalModel.detailCalories = model.detailCalories;
+        totalModel.detailDistans = model.detailDistans;
+        
+        [totalModel modelToDetailShowWithTimeOrder:(int)timeOrder];
         [PedometerModel updateToDB:totalModel where:where];
     }
     else
     {
+        [totalModel modelToDetailShowWithTimeOrder:(int)timeOrder];
         [totalModel saveToDB];
     }
     
     if (endBlock)
     {
-        endBlock();
+        endBlock([NSDate dateWithString:totalModel.dateString], YES);
     }
 }
 
@@ -252,27 +304,11 @@
     [YearModel initOrUpdateTheWeekAndMonthModelFromAPedometerModel:self];
 }
 
-// 根据日期取出模型。
-+ (PedometerModel *)getModelFromDBWithDate:(NSDate *)date
-{
-    NSString *dateString = [date dateToString];
-    NSLog(@"..%@", dateString);
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
-    PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
-    
-    if (!model)
-    {
-        model = [PedometerModel simpleInitWithDate:date];
-    }
-    
-    return model;
-}
-
 // 为今天的模型附加上昨天的睡眠模型
 - (void)setLastSleepData
 {
     NSDate *date = [NSDate dateWithString:self.dateString];
-    PedometerModel *model = [PedometerModel getModelFromDBWithDate:date];
+    PedometerModel *model = [PedometerHelper getModelFromDBWithDate:date];
     
     if (model)
     {
@@ -280,34 +316,46 @@
     }
 }
 
-// 取出今天的数据模型
-+ (PedometerModel *)getModelFromDBWithToday
-{
-    PedometerModel *model = [PedometerModel getModelFromDBWithDate:[NSDate date]];
-    
-    if (model)
-    {
-        return model;
-    }
-    else
-    {
-        model = [[PedometerModel alloc] init];
-        
-        return model;
-    }
-}
-
 // 将一天的数据分为48个阶段详细展示。
 - (void)modelToDetailShowWithTimeOrder:(int)timeOrder
 {
-    NSMutableArray *detailSteps = [[NSMutableArray alloc] init];
-    NSMutableArray *detailSleeps = [[NSMutableArray alloc] init];
-    NSMutableArray *detailDistans = [[NSMutableArray alloc] init];
-    NSMutableArray *detailCalories = [[NSMutableArray alloc] init];
+    NSMutableArray *detailSteps    = [NSMutableArray arrayWithArray:self.detailSteps];
+    NSMutableArray *detailSleeps   = [NSMutableArray arrayWithArray:self.detailSleeps];
+    NSMutableArray *detailDistans  = [NSMutableArray arrayWithArray:self.detailDistans];
+    NSMutableArray *detailCalories = [NSMutableArray arrayWithArray:self.detailCalories];
 
+    // 差就补，多就移除
+    if ((timeOrder / 6) > detailSteps.count)
+    {
+        for (NSUInteger i = detailSteps.count; i < timeOrder / 6; i++)
+        {
+            [detailSteps addObject:@(0)];
+            [detailCalories addObject:@(0)];
+            [detailDistans addObject:@(0)];
+        }
+    }
+    else if ((timeOrder / 6) < detailSteps.count)
+    {
+        [detailSteps removeObjectsInRange:NSMakeRange(timeOrder / 6, detailSteps.count - timeOrder / 6)];
+    }
+    
+    if (timeOrder > detailSleeps.count)
+    {
+        for (NSUInteger i = detailSleeps.count; i < timeOrder; i++)
+        {
+            [detailSleeps addObject:@(3)];
+        }
+    }
+    else if (timeOrder < detailSleeps.count)
+    {
+        [detailSteps removeObjectsInRange:NSMakeRange(timeOrder, detailSteps.count - timeOrder)];
+    }
+    
     for (int i = timeOrder; i < 288; i++)
     {
         NSInteger total = [self getDataWithIndex:i withType:SportsModelSleep];
+        NSLog(@"detailSleeps..%ld", (long)total);
+
         [detailSleeps addObject:@(total)];
     }
     
@@ -319,7 +367,6 @@
     for (int i = timeOrder; i < 288; i += 6)
     {
         NSInteger total = [self halfHourData:i withType:SportsModelSteps];
-        NSLog(@"total = ..%d ..%d", total, i / 6);
         [detailSteps addObject:@(total)];
 
         //total = [self halfHourData:i withType:SportsModelSleep];
@@ -336,9 +383,6 @@
     self.detailSleeps = detailSleeps;
     self.detailDistans = detailDistans;
     self.detailCalories = detailCalories;
-    
-    NSLog(@".self.detailSteps .%d", self.detailSteps.count);
-
 }
 
 // 取出每半个小时的数据
@@ -446,26 +490,6 @@
 {
     self.targetCalories = [self stepsConvertCalories:self.targetStep withWeight:self.weight withModel:YES];
     self.targetDistance = [self StepsConvertDistance:self.targetStep withPace:self.stepSize];
-}
-
-+ (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < LS_TrendChartShowCount; i++)
-    {
-        NSDate *curDate = [date dateAfterDay:i];
-        PedometerModel *model = [PedometerModel getModelFromDBWithDate:curDate];
-        if (model)
-        {
-            [array addObject:model];
-        }
-        else
-        {
-            [array addObject:[PedometerModel simpleInitWithDate:curDate]];
-        }
-    }
-    
-    return array;
 }
 
 // 表名

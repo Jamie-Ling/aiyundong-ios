@@ -95,14 +95,15 @@ DEF_SINGLETON(BLTPeripheral)
         {
             // self.blService = service;
             //[_peripheral discoverCharacteristics:nil forService:service];
-            [_peripheral discoverCharacteristics:@[BLTUUID.txCharacteristicUUID, BLTUUID.rxCharacteristicUUID] forService:service];
-
+            [_peripheral discoverCharacteristics:@[BLTUUID.txCharacteristicUUID,
+                                                   BLTUUID.rxCharacteristicUUID,
+                                                   BLTUUID.realTimeCharacteristicUUID]
+                                      forService:service];
         }
         else if ([service.UUID isEqual:BLTUUID.deviceInformationServiceUUID])
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.hardwareRevisionStringUUID] forService:service];
         }
-        
         
         NSLog(@"service.UUID. = .%@.", service.UUID);
     }
@@ -122,7 +123,7 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
             
-            [[BLTSendData sharedInstance] sendContinuousInstruction];
+            [[BLTSimpleSend sharedInstance] sendContinuousInstruction];
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
@@ -133,9 +134,9 @@ DEF_SINGLETON(BLTPeripheral)
                 _connectBlock();
             }
         }
-        else if ([charac.UUID isEqual:BLTUUID.hardwareRevisionStringUUID]) // 绑定
+        else if ([charac.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
-            NSLog(@"硬件信息.");
+            [_peripheral setNotifyValue:YES forCharacteristic:charac];
         }
 
         NSLog(@"charac. = .%@..", charac);
@@ -203,7 +204,7 @@ DEF_SINGLETON(BLTPeripheral)
                 _updateBlock(_receiveData);
             }
         }
-        if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
+        else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {
             [self cleanMutableData:_receiveData];
             [_receiveData appendData:characteristic.value];
@@ -211,6 +212,13 @@ DEF_SINGLETON(BLTPeripheral)
             if (_updateBigDataBlock)
             {
                 _updateBigDataBlock(_receiveData);
+            }
+        }
+        else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
+        {
+            if (_realTimeBlock)
+            {
+                _realTimeBlock(characteristic.value);
             }
         }
     }

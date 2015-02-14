@@ -40,6 +40,7 @@ typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeRequestTodayNoData,        // 请求当天运动数据
     BLTAcceptDataTypeRealTimeTransSportsData,   // 实时传输运动数据
     BLTAcceptDataTypeCloseTransSportsData,      // 关闭实时传输运动数据
+    BLTAcceptDataTypeRealTimeTransState,        // 实时传输运动数据的状态
     BLTAcceptDataTypeSuccess,                   // 通讯成功
     BLTAcceptDataTypeError                      // 通讯错误
 } BLTAcceptDataType;
@@ -59,7 +60,10 @@ typedef void(^BLTAcceptDataUpdateValue)(id object, BLTAcceptDataType type);
 
 @property (nonatomic, strong) BLTAcceptDataUpdateValue updateValue;
 @property (nonatomic, assign) BLTAcceptDataType type;
+@property (nonatomic, assign) BLTAcceptDataType realTimeType;
 @property (nonatomic, strong) NSMutableData *syncData;
+
+@property (nonatomic, strong) NSMutableData *realTimeData;
 
 AS_SINGLETON(BLTAcceptData)
 
@@ -67,6 +71,8 @@ AS_SINGLETON(BLTAcceptData)
  *  清空数据。
  */
 - (void)cleanMutableData;
+- (void)cleanMutableRealTimeData;
+
 /**
  *  提示当次通讯失败
  */

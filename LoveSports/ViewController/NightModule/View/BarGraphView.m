@@ -62,11 +62,11 @@
 {
     if (index < 4)
     {
-        return [UIColor blackColor];
+        return [UIColor lightGrayColor];
     }
     else if (index < 8)
     {
-        return [UIColor brownColor];
+        return [UIColor greenColor];
     }
     else if (index < 12)
     {
@@ -74,14 +74,14 @@
     }
     else if (index < 16)
     {
-        return [UIColor greenColor];
+        return [UIColor blueColor];
     }
     else if (index <= 18)
     {
         return [UIColor redColor];
     }
     
-    return [UIColor blackColor];
+    return [UIColor lightGrayColor];
 }
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index

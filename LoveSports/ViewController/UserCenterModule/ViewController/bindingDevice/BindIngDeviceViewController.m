@@ -34,7 +34,7 @@
 
 - (void)loadShowWareView
 {
-    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width , self.view.height)];
+    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width , self.view.height - 64)];
     
     _wareView.delegate = self;
     //_wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);

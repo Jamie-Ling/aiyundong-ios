@@ -75,15 +75,8 @@ DEF_SINGLETON(BLTManager)
 #pragma mark --- 操作移动设备的蓝牙链接 ---
 - (void)startCan
 {
-    if (_discoverPeripheral)
-    {
-        _discoverPeripheral.delegate = nil;
-        [_centralManager cancelPeripheralConnection:_discoverPeripheral];
-        _discoverPeripheral = nil;
-        [BLTPeripheral sharedInstance].peripheral = nil;
-    }
-    
-    _model = nil;
+    [self resetDiscoverPeripheral];
+
     [self scan];
 }
 
@@ -140,7 +133,7 @@ DEF_SINGLETON(BLTManager)
             BLTModel *model = [self checkIsAddInAllWareWithID:idString];
             if (model)
             {
-                 model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI];
+                model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
             }
             else
             {
@@ -149,7 +142,7 @@ DEF_SINGLETON(BLTManager)
                 model.bltID = [peripheral.identifier UUIDString] ? [peripheral.identifier UUIDString] : @"";
                 NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
                 model.bltName = adverString ? adverString : @"";
-                model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI];
+                model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
                 model.peripheral = peripheral;
                 
                 BLTModel *DBModel = [model getCurrentModelFromDB];
@@ -181,7 +174,7 @@ DEF_SINGLETON(BLTManager)
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
-    NSLog(@"开始链接...");
+    NSLog(@"开始链接.....%@..%@..%@", model, self.discoverPeripheral, model.peripheral);
     if (self.discoverPeripheral != model.peripheral)
     {
         _connectState = BLTManagerConnecting;
@@ -208,6 +201,7 @@ DEF_SINGLETON(BLTManager)
 - (void)centralManager:(CBCentralManager *)central
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
+    NSLog(@"...正在连接...");
     _connectState = BLTManagerConnected;
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
@@ -301,10 +295,22 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 
 - (void)dismissLink
 {
+    [self resetDiscoverPeripheral];
+}
+
+// 重置外围设备.
+- (void)resetDiscoverPeripheral
+{
     if (_discoverPeripheral)
     {
-        [self.centralManager cancelPeripheralConnection:_discoverPeripheral];
+        _discoverPeripheral.delegate = nil;
+        [_centralManager cancelPeripheralConnection:_discoverPeripheral];
+        _discoverPeripheral = nil;
+        [BLTPeripheral sharedInstance].peripheral = nil;
     }
+    
+    _model = nil;
 }
+
 
 @end

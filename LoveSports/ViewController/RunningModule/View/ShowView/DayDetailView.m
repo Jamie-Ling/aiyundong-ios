@@ -68,7 +68,7 @@
 
 - (void)loadPieChartView
 {
-    CGRect rect = CGRectMake((self.width - 200) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
+    CGRect rect = CGRectMake((self.width - 200 + _offsetY) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
     _chartView = [[PieChartView alloc] initWithFrame:rect];
     _chartView.delegate = self;
     _chartView.datasource = self;
@@ -190,7 +190,7 @@
     NSMutableArray *bottomTitles = [[NSMutableArray alloc] init];
     for (int i = 0; i < 49; i++)
     {
-        NSString *string = [NSString stringWithFormat:@"%02d:%@", i / 2, (((i % 2) == 0) ? @"00" : @"30")];
+        NSString *string = [NSString stringWithFormat:@"%02d:%@\n", i / 2, (((i % 2) == 0) ? @"00" : @"30")];
         [bottomTitles addObject:string];
     }
     
@@ -282,7 +282,6 @@
     [_chartData removeAllObjects];
     [_chartData addObject:@(0)];
     
-    NSLog(@"count..%d", _model.detailSteps.count);
     if (_lastButton.tag == 2000)
     {
         [_chartData addObjectsFromArray:_model.detailSteps];
@@ -308,7 +307,7 @@
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
     _currentDate = [_currentDate dateAfterDay:direction * 1];
-    PedometerModel *model = [PedometerModel getModelFromDBWithDate:_currentDate];
+    PedometerModel *model = [PedometerHelper getModelFromDBWithDate:_currentDate];
 
     [self updateContentForView:model];
 }

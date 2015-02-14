@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "ThirdClasses/BLTClasses/BLTAcceptData.m"
+            timestampString = "445604601.132632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-displayViewAtIndex:"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "-acceptData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "ThirdClasses/BLTClasses/BLTAcceptData.m"
+            timestampString = "445604601.132632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "-displayViewAtIndex:"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-acceptData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ThirdClasses/BLTClasses/BLTManager.m"
+            timestampString = "445530995.562013"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "-centralManager:didConnectPeripheral:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "Model/Category/UIColor+RGB.m"
+            timestampString = "444457613.471043"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "-displayViewAtIndex:"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "+colorWithRGB:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "Model/Category/UIColor+RGB.m"
+            timestampString = "444457627.32726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "-displayViewAtIndex:"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "+colorWithRGB:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "Model/Category/UIColor+RGB.m"
+            timestampString = "444457634.311575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "-displayViewAtIndex:"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "+colorWithRGB:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443536589.776486"
+            filePath = "Model/BaseClass/ZKKViewController.m"
+            timestampString = "444486026.101231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "-initWithViewControllers:items:"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "-upSwipe"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,13 +121,77 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/BaseClass/ZKKTabBarController.m"
-            timestampString = "443537627.15354"
+            filePath = "ViewController/RunningModule/View/ShowView/TrendChartView.m"
+            timestampString = "445520883.13176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "-loadLineChart"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Model/Category/NSObject+Property.m"
+            timestampString = "445181749.707535"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "-caloriesConvertDistance:withWeight:withPace:withModel:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewController/RunningModule/View/ShowView/TrendChartView.m"
+            timestampString = "445520883.13176"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "-reloadTrendChartView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewController/RunningModule/View/ShowView/TrendChartView.m"
+            timestampString = "445520883.13176"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "-reloadTrendChartView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewController/UserCenterModule/ViewController/TestBLT/TestBLTViewController.m"
+            timestampString = "445582167.495748"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "-changeSwitchLabel:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

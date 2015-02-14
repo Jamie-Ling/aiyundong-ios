@@ -17,7 +17,6 @@
 @property (nonatomic, assign) NSInteger seconds;
 @property (nonatomic, assign) UInt8 repeat;
 
-
 /**
  *  得到一个代表星期几的Uint8
  *
@@ -26,7 +25,6 @@
  *  @return 得到的Uint8
  */
 + (UInt8) getAUint8FromeWeekNumber: (NSInteger) weekNumber;
-
 
 /**
  *  设置所有时间（时分秒&重复周期）
@@ -42,15 +40,18 @@
 @end
 
 @interface BLTSendData : NSObject
-typedef void(^BLTSendDataBackUpdate)();
+typedef void(^BLTSendDataBackUpdate)(NSDate *date);
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) NSInteger waitTime;
 @property (nonatomic, assign) NSInteger failCount;
 @property (nonatomic, assign) BOOL isStopSync;
 
-@property (nonatomic, assign) NSInteger lastSyncOrder;  // 最后同步的时序
-@property (nonatomic, strong) NSString *lastSyncDate;     // 最后同步的日期
+@property (nonatomic, assign) NSInteger lastSyncOrder;      // 最后同步的时序
+@property (nonatomic, strong) NSString *lastSyncDate;       // 最后同步的日期
+
+@property (nonatomic, strong) NSDate *startDate;            // 历史数据保存的开始日期
+@property (nonatomic, strong) NSDate *endDate;              // 历史数据保存的结束日期
 
 @property (nonatomic, strong) BLTSendDataBackUpdate backBlock;
 
@@ -349,19 +350,22 @@ AS_SINGLETON(BLTSendData)
  */
 + (void)sendCloseTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
+// 升级指令
++ (void)sendUpdateFirmware;
 /*
 + (void)sendOpenBacklightSetData:(NSData *)data;
 + (void)sendOpenBacklightSetData:(NSData *)data;
 + (void)sendOpenBacklightSetData:(NSData *)data;
  */
 
+/*
 /** // 无需实现
  *  同步数据, 无论今天还是历史。
- */
 - (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block;
 /**
  *  连接手环后发送连续的指令
- */
 - (void)sendContinuousInstruction;
+
+*/
 
 @end

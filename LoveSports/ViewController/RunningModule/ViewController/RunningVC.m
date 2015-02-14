@@ -29,11 +29,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    DEF_WEAKSELF_(RunningVC);
+    [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
+        [weakSelf updateConnectForView];
+    };
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [BLTSimpleSend sharedInstance].backBlock = nil;
 }
 
 - (void)viewDidLoad
@@ -46,7 +53,7 @@
     [self loadTrendChartView];
     
     // 默认显示当天的.
-    [_detailView updateContentForView:[PedometerModel getModelFromDBWithToday]];
+    [_detailView updateContentForView:[PedometerHelper getModelFromDBWithToday]];
 }
 
 - (void)loadDayDetailView
@@ -107,7 +114,7 @@
     NSLog(@"..下扫..");
     
     DEF_WEAKSELF_(RunningVC);
-    [[BLTSendData sharedInstance] synHistoryDataWithBackBlock:^{
+    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
         [weakSelf updateConnectForView];
     }];
 }

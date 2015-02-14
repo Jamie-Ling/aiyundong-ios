@@ -29,6 +29,12 @@
     return [CBUUID UUIDWithString:@"D0A2FF02-2996-D38B-E214-86515DF5A1DF"];
 }
 
+// 实时传输通道
++ (CBUUID *)realTimeCharacteristicUUID
+{
+    return [CBUUID UUIDWithString:@"D0A2FF03-2996-D38B-E214-86515DF5A1DF"];
+}
+
 // 硬件绑定的特征
 + (CBUUID *)hardwareRevisionStringUUID
 {
@@ -41,4 +47,5 @@
     return [CBUUID UUIDWithString:@"180A"];
 }
 
+// 升级服务UUID : 00001530-1212-EFDE-1523-785FEABCD123
 @end

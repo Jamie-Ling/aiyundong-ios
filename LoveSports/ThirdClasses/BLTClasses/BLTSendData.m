@@ -91,6 +91,7 @@
     self = [super init];
     if (self)
     {
+        // 只有同步今天的数据才有时序的分别为了实时传输.
         NSString *nowString = [[[NSDate date] dateToString] componentsSeparatedByString:@" "][0];
         if ([LS_LastSyncDate getObjectValue] && [nowString isEqualToString:[LS_LastSyncDate getObjectValue]])
         {
@@ -100,6 +101,9 @@
         {
             _lastSyncOrder = 0;
         }
+        
+        _startDate = [NSDate date];
+        _endDate = [NSDate date];
     }
     
     return self;
@@ -433,12 +437,14 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
+// 请求保存历史数据的日期.
 + (void)sendHistoricalDataStorageDateWithUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     UInt8 val[4] = {0xBE, 0x02, 0x05, 0xED};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 
+// 删除某天的历史数据.
 + (void)sendDeleteSportDataWithDate:(NSDate *)date
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
@@ -454,6 +460,7 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
+// 请求今天数据的接口，已经关闭。
 + (void)sendRequestTodaySportDataWithOrder:(NSInteger)order
                            withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
@@ -469,10 +476,18 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 
+// 关闭实时传输.
 + (void)sendCloseTransmissionSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     UInt8 val[4] = {0xBE, 0x02, 0x04, 0xED};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
+}
+
+// 升级指令
++ (void)sendUpdateFirmware
+{
+    UInt8 val[10] = {0xBE, 0xFE, 0x44, 0x46, 0x55, 0x01, 0x02, 0x00, 0xF0, 0x02};
+    [self sendDataToWare:&val withLength:10 withUpdate:nil];
 }
 
 #pragma mark --- 命令转发中心 ---
@@ -485,27 +500,13 @@ DEF_SINGLETON(BLTSendData)
     [[BLTManager sharedInstance] senderDataToPeripheral:sData];
 }
 
-// 同步今天数据
-- (void)synTodayData
-{
-    _waitTime = 0;
-    _failCount = 0;
-    [BLTSendData sendRequestHistorySportDataWithDate:[NSDate date]
-                                           withOrder:0
-                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                         if (type == BLTAcceptDataTypeRequestHistorySportsData)
-                                         {
-                                             
-                                         }
-    }];
-}
-
+// 逻辑方面的数据发送全部转移.
+/*
 // 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
 - (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
         if (block)
         {
             _backBlock = block;
@@ -514,18 +515,37 @@ DEF_SINGLETON(BLTSendData)
         _waitTime = 0;
         _failCount = 0;
         [[BLTAcceptData sharedInstance] cleanMutableData];
-        NSDate *date = [[NSDate dateWithString:[LS_LastSyncDate getObjectValue]] dateAfterDay:1];
-        date = [NSDate dateWithTimeIntervalSinceNow:0];
+        // NSDate *date = [[NSDate dateWithString:[LS_LastSyncDate getObjectValue]] dateAfterDay:1];
+        // _startDate = [_startDate dateAfterDay:1];
+        
+        // date = [NSDate dateWithTimeIntervalSinceNow:0];
         // date = [NSDate dateWithString:@"2015-02-02"];
-        NSLog(@".date = .%@", date);
-        [BLTSendData sendRequestHistorySportDataWithDate:date
-                                               withOrder:0
+        // NSLog(@".date = .%@", date);
+        if ([_startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
+        {
+            _startDate = [NSDate date];
+            return;
+        }
+        
+        NSInteger timeOrder = 0;
+        if ([_startDate isSameWithDate:[NSDate date]])
+        {
+            timeOrder = _lastSyncOrder;
+        }
+        
+        SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
+        [BLTSendData sendRequestHistorySportDataWithDate:_startDate
+                                               withOrder:timeOrder
                                          withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                              [self stopTimer];
                                              if (type == BLTAcceptDataTypeRequestHistorySportsData)
                                              {
-                                                 SHOWMBProgressHUD(@"同步成功.", nil, nil, NO, 2.0);
-                                                 [self performSelectorInBackground:@selector(syncInBackGround:) withObject:object];
+                                                 _startDate = [_startDate dateAfterDay:1];
+                                                 [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
+                                                 if (object && _startDate)
+                                                 {
+                                                     [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, _startDate]];
+                                                 }
                                              }
                                              else if (type == BLTAcceptDataTypeError)
                                              {
@@ -537,16 +557,6 @@ DEF_SINGLETON(BLTSendData)
                                                  SHOWMBProgressHUD(@"没有最新的数据.", nil, nil, NO, 2.0);
                                              }
                                          }];
-        
-        if ([date isSameWithDate:[NSDate date]])
-        {
-            _isStopSync = YES;
-        }
-        else
-        {
-            _isStopSync = NO;
-        }
-        
         [self startTimer];
     }
     else
@@ -555,19 +565,33 @@ DEF_SINGLETON(BLTSendData)
     }
 }
 
-- (void)syncInBackGround:(id)object
+- (void)syncInBackGround:(NSArray *)array
 {
-    [PedometerModel saveDataToModel:object withTimeOrder:0 withEnd:^{
-        [self performSelectorOnMainThread:@selector(endSyncData) withObject:nil waitUntilDone:NO];
+    NSInteger timeOrder = 0;
+    if ([_startDate isSameWithDate:[NSDate date]])
+    {
+        timeOrder = _lastSyncOrder;
+    }
+    
+    // 保存数据后的回调
+    [PedometerModel saveDataToModel:array withTimeOrder:timeOrder withEnd:^(NSDate *date, BOOL success){
+        if (success)
+        {
+            [self performSelectorOnMainThread:@selector(endSyncData:) withObject:date waitUntilDone:NO];
+        }
+        else
+        {
+            // 此处删除错误数据
+        }
     }];
 }
 
 // 同步数据结束
-- (void)endSyncData
+- (void)endSyncData:(NSDate *)date
 {
     if (_backBlock)
     {
-        _backBlock();
+        _backBlock(date);
         _backBlock = nil;
     }
 }
@@ -585,7 +609,7 @@ DEF_SINGLETON(BLTSendData)
 {
     _waitTime ++;
     
-    if (_waitTime > 5 || _failCount > 5)
+    if (_waitTime > 10 || _failCount > 10)
     {
         // 停止同步数据因意外情况
         [self stopTimer];
@@ -615,17 +639,22 @@ DEF_SINGLETON(BLTSendData)
         }
     }];
     
-    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.5];
-    [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.3];
+    
+    // 如果已经设定过时区信息才获取历史纪录。测试demo版
+    if ([LS_SettingBaseTimeZoneInfo getBOOLValue])
+    {
+        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.6];
+    }
+}
+
+- (void)sendUpdateFirmware
+{
+    [BLTSendData sendUpdateFirmware];
 }
 
 - (void)sendRequestWeight
 {
-    /*
-    [BLTSendData sendLookBodyInformationDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
-        
-    }];
-     */
     [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
     [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
         
@@ -637,9 +666,38 @@ DEF_SINGLETON(BLTSendData)
     [BLTSendData sendHistoricalDataStorageDateWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeRequestHistoryDate)
         {
+            if ([object isKindOfClass:[NSArray class]] && ((NSArray *)object).count == 2)
+            {
+                _startDate = [NSDate dateWithString:object[0]];
+                if ([_startDate timeIntervalSince1970] < 0
+                    || [_startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970]
+                    || !_startDate)
+                {
+                    _startDate = [NSDate date];
+                }
+                else if ([_startDate timeIntervalSince1970] > 0 && ([[NSDate date] timeIntervalSince1970] - [_startDate timeIntervalSince1970]) > 60 * 24 * 3600)
+                {
+                    _startDate = [[NSDate date] dateAfterDay:-60];
+                }
+                
+                _endDate = [NSDate dateWithString:object[1]];
+                if ([_endDate timeIntervalSince1970] < 0
+                    || [_endDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970]
+                    || !_endDate)
+                {
+                    _endDate = [NSDate date];
+                }
+            }
             
+            [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
         }
     }];
 }
+
+- (void)startSyncHistoryData
+{
+    [self synHistoryDataWithBackBlock:_backBlock];
+}
+*/
 
 @end

@@ -37,6 +37,23 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    DEF_WEAKSELF_(LandscapeVC);
+    [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
+        [weakSelf updateContentForChartViewWithDirection:0];
+    };
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTSimpleSend sharedInstance].backBlock = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) TimeZoneView *timeView;
 
+@property (nonatomic, assign) NSInteger timeCount;
+
 @end
 
 @implementation HardWareVC
@@ -59,12 +61,12 @@
     else
     {
         [self loadNoBindingSetting];
-        
-        __weak HardWareVC *safeSelf = self;
-        [BLTManager sharedInstance].connectBlock = ^() {
-            [safeSelf bltIsConnect];
-        };
     }
+    
+    __weak HardWareVC *safeSelf = self;
+    [BLTManager sharedInstance].connectBlock = ^() {
+        [safeSelf bltIsConnect];
+    };
 }
 
 - (void)loadLabels
@@ -168,6 +170,11 @@
 {
     _model.isBinding = NO;
     [LS_BindingID setObjectValue:@""];
+    
+    [[BLTManager sharedInstance] dismissLink];
+    [self.view removeAllSubviews];
+    [self loadLabels];
+    [self loadNoBindingSetting];
 }
 
 // 忽略该设备
@@ -208,8 +215,12 @@
 - (void)bltIsConnect
 {
     HIDDENMBProgressHUD;
+    NSLog(@"..........连接成功更新ui。。。。。。");
+    [self.view removeAllSubviews];
+    [self loadLabels];
+    [self loadBindingSetting];
     
-    if (![LS_SettingBaseInfo getBOOLValue] || 1)
+    if (![LS_SettingBaseTimeZoneInfo getBOOLValue])
     {
         _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
         

@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) UIView *baseView;
 @property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *rssiLabel;
+
 @property (nonatomic, strong) UIView *lockView;
 @property (nonatomic, strong) UIView *bltView;
 @property (nonatomic, strong) UIView *infoView;
