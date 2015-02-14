@@ -79,14 +79,14 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 @property (nonatomic, assign) NSInteger targetDistance;     // 目标距离
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
-@property (nonatomic, assign) NSInteger stepSize;           //步距
-@property (nonatomic, assign) CGFloat weight;               //体重
+@property (nonatomic, assign) NSInteger stepSize;           // 步距
+@property (nonatomic, assign) CGFloat weight;               // 体重
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
 
 @property (nonatomic, strong) NSArray *lastSleepArray;      // 昨天的睡眠
-@property (nonatomic, assign) BOOL isSaveAllDay;              // 是否保存了全天的数据
+@property (nonatomic, assign) BOOL isSaveAllDay;            // 是否保存了全天的数据
 
 // @property (nonatomic, strong) NSArray *stepSizes;
 
@@ -98,6 +98,9 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 // 目前硬件协议有问题。协商改进。
 + (void)saveDataToModel:(NSArray *)array withTimeOrder:(NSInteger)timeOrder withEnd:(PedometerModelSyncEnd)endBlock;
 + (PedometerModel *)simpleInitWithDate:(NSDate *)date;
+
+// 将数据分成阶段展示.
+- (void)modelToDetailShowWithTimeOrder:(int)lastOrder;
 
 @end
 

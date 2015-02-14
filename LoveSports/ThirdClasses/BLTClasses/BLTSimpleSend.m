@@ -33,7 +33,6 @@ DEF_SINGLETON(BLTSimpleSend)
         if ([PedometerHelper queryWhetherCurrentDateDataSaveAllDay:self.startDate])
         {
             // 如果已经进行过完整的保存就不要再down了。
-            NSLog(@"已经有这个日期的数据了:%@", self.startDate);
             self.startDate = [self.startDate dateAfterDay:1];
             [self startSyncHistoryData];
             
@@ -47,9 +46,7 @@ DEF_SINGLETON(BLTSimpleSend)
             return;
         }
 
-        showMessage(^{
-            SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
-        });
+        // SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
         [BLTSendData sendRequestHistorySportDataWithDate:self.startDate
                                                withOrder:0
                                          withUpdateBlock:^(id object, BLTAcceptDataType type) {
@@ -67,18 +64,13 @@ DEF_SINGLETON(BLTSimpleSend)
                                              else if (type == BLTAcceptDataTypeError)
                                              {
                                                  NSLog(@"...失败。。。");
-                                                 showMessage(^{
-                                                     SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
-                                                 });
+                                                 SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
                                              }
                                              else if (type == BLTAcceptDataTypeRequestHistoryNoData)
                                              {
                                                  NSString *dateString = [[self.startDate dateToString] componentsSeparatedByString:@" "][0];
                                                  NSString *alertString = [NSString stringWithFormat:@"%@没有数据", dateString];
-                                                 SHOWMBProgressHUD(alertString, @"同步成功.", nil, NO, 2.0);
-                                                 showMessage(^{
-                                                     SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
-                                                 });
+                                                 SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
                                                  
                                                  [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
                                                  self.startDate = [self.startDate dateAfterDay:1];
@@ -128,7 +120,6 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     if (self.backBlock)
     {
         self.backBlock(date);
-        self.backBlock = nil;
     }
 }
 
@@ -229,7 +220,9 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     {
         // 停止同步数据因意外情况
         [self stopTimer];
-        SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HIDDENMBProgressHUD
+        });
     }
 }
 

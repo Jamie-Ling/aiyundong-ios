@@ -17,7 +17,7 @@
 // 步数转卡路里， metric 为no时传入的(weight)重量为磅，长度(distance)英里和(pace)英尺
 // 为yes的时候重量单位为公斤， 长度为公里和厘米。
 // pace为
-- (NSInteger)stepsConvertCalories:(NSInteger)steps
+- (CGFloat)stepsConvertCalories:(NSInteger)steps
                        withWeight:(CGFloat)weight
                         withModel:(BOOL)metric;
 

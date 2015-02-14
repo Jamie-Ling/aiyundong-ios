@@ -18,5 +18,7 @@ AS_SINGLETON(PedometerHelper)
 // 当天的数据是不是保存了全天的。
 + (BOOL)queryWhetherCurrentDateDataSaveAllDay:(NSDate *)date;
 + (void)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date;
++ (void)updateContentForPedometerModel:(NSData *)data
+                               withEnd:(PedometerModelSyncEnd)endBlock;
 
 @end

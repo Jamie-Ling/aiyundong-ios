@@ -296,9 +296,14 @@
         [_chartData addObjectsFromArray:_model.detailDistans];
     }
     
-    for (int i = _chartData.count; i < 49; i++)
+    for (NSUInteger i = _chartData.count; i < 49; i++)
     {
         [_chartData addObject:@(0)];
+    }
+    
+    for (NSUInteger i = 0; i < 48; i++)
+    {
+        NSLog(@"._chartData. = .%@", _chartData[i]);
     }
     
     [_lineChart setChartData:_chartData];

@@ -16,13 +16,13 @@ DEF_SINGLETON(PedometerHelper)
 + (PedometerModel *)getModelFromDBWithDate:(NSDate *)date
 {
     NSString *dateString = [date dateToString];
-    NSLog(@"..%@", dateString);
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
     if (!model)
     {
         model = [PedometerModel simpleInitWithDate:date];
+        [model saveToDB];
     }
     
     return model;
@@ -94,4 +94,68 @@ DEF_SINGLETON(PedometerHelper)
     [model saveToDB];
 }
 
+// 实时传输更新ui界面
++ (void)updateContentForPedometerModel:(NSData *)data
+                               withEnd:(PedometerModelSyncEnd)endBlock
+{
+    UInt8 val[20 * 3] = {0};
+    [data getBytes:&val length:data.length];
+    
+    PedometerModel *model = [BLTRealTime sharedInstance].currentDayModel;
+
+    NSInteger tmpSteps      = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
+    NSInteger tmpCalories   = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
+    NSInteger tmpDistans    = (val[16] << 8)  | val[17];
+    
+    if (tmpSteps < model.totalSteps
+        || tmpCalories < model.totalCalories
+        || tmpDistans < model.totalDistance)
+    {
+        return;
+    }
+    
+    NSDate *date = [NSDate date];
+    NSInteger order = (date.hour * 60 + date.minute) / 5;
+
+    NSMutableArray *stepsArray = [NSMutableArray arrayWithArray:model.detailSteps];
+    NSInteger steps = [stepsArray[order / 6] integerValue];
+    steps += tmpSteps - model.totalSteps;
+    stepsArray[order / 6] = @(steps);
+    model.detailSteps = stepsArray;
+    model.totalSteps = tmpSteps;
+    
+    NSMutableArray *calArray = [NSMutableArray arrayWithArray:model.detailCalories];
+    NSInteger calories = [calArray[order / 6] integerValue];
+    calories += tmpCalories - model.totalCalories;
+    calArray[order / 6] = @(calories);
+    model.detailCalories = calArray;
+    model.totalCalories = tmpCalories;
+    
+    NSMutableArray *distansArray = [NSMutableArray arrayWithArray:model.detailDistans];
+    NSInteger distans = [distansArray[order / 6] integerValue];
+    distans += tmpDistans - model.totalDistance;
+    distansArray[order / 6] = @(distans);
+    model.detailDistans = distansArray;
+    model.totalDistance = tmpDistans;
+    
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", model.dateString];
+    [PedometerModel updateToDB:model where:where];
+    
+    if (endBlock)
+    {
+        endBlock([NSDate date], YES);
+    }
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+

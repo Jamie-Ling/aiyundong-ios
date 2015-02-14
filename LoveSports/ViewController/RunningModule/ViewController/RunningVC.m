@@ -121,6 +121,7 @@
 
 - (void)updateConnectForView
 {
+    NSLog(@"。。。事实刷新主界面");
     if (_detailView.hidden)
     {
         if ([_trendView.dayDate isSameWithDate:[NSDate date]])

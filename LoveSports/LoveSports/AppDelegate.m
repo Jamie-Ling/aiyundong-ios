@@ -26,6 +26,7 @@
     NSLog(@"..%d", 0x015c);
     // 启动蓝牙并自动接受数据
     [BLTAcceptData sharedInstance];
+    [BLTRealTime sharedInstance];
     
     //添加测试数据
     [self addTestData];

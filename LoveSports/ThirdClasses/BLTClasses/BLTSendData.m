@@ -448,7 +448,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendDeleteSportDataWithDate:(NSDate *)date
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSInteger order = (date.hour * 60 + date.minute) / 15;
+    NSInteger order = (date.hour * 60 + date.minute) / 5;
     UInt8 val[10] = {0xBE, 0x02, 0x02, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year,
         date.month, date.day, (UInt8)(order >> 8), (UInt8)order};

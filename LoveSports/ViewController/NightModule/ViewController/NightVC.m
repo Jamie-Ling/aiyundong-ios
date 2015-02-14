@@ -175,7 +175,7 @@
             [array addObject:@(18 - number)];
         }
         
-        for (NSInteger i = array.count - 1; i < 49; i++)
+        for (NSInteger i = array.count; i < 49; i++)
         {
             [array addObject:@(0)];
         }

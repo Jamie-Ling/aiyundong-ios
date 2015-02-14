@@ -194,7 +194,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        NSLog(@"数据更新%@\n", characteristic.value);
+        NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
             [self cleanMutableData:_receiveData];
@@ -202,6 +202,11 @@ DEF_SINGLETON(BLTPeripheral)
             if (_updateBlock)
             {
                 _updateBlock(_receiveData);
+            }
+            
+            if (_realTimeBlock)
+            {
+                _realTimeBlock(characteristic.value);
             }
         }
         else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
@@ -214,7 +219,7 @@ DEF_SINGLETON(BLTPeripheral)
                 _updateBigDataBlock(_receiveData);
             }
         }
-        else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
+        else if ([characteristic.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
             if (_realTimeBlock)
             {

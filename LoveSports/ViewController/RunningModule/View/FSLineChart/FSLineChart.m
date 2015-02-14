@@ -201,7 +201,7 @@
             [self.layer addSublayer:_fillLayer];
         }
         
-        _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height - 8.0);
+        _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height);
         _fillLayer.bounds = self.bounds;
         _fillLayer.path = fill.CGPath;
         _fillLayer.strokeColor = nil;
@@ -276,7 +276,7 @@
     _fillColor = [_color colorWithAlphaComponent:0.25];
     _verticalGridStep = 3;
     _horizontalGridStep = 3;
-    _margin = 5.0f;
+    _margin = 6.0;
     _axisWidth = self.frame.size.width - 2 * _margin;
     _axisHeight = self.frame.size.height - 2 * _margin;
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];

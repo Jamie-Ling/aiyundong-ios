@@ -29,4 +29,8 @@ AS_SINGLETON(BLTSimpleSend)
  */
 - (void)sendContinuousInstruction;
 
+// 更新界面...
+- (void)endSyncData:(NSDate *)date;
+
+
 @end

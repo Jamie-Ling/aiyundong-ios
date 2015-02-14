@@ -21,6 +21,7 @@ DEF_SINGLETON(BLTAcceptData)
     {
         _syncData = [[NSMutableData alloc] init];
         _realTimeData = [[NSMutableData alloc] init];
+        _realTimeType = BLTAcceptDataTypeUnKnown;
         
         // 直接启动蓝牙
         [BLTManager sharedInstance];
@@ -241,6 +242,12 @@ DEF_SINGLETON(BLTAcceptData)
                     // 无数据
                     _type = BLTAcceptDataTypeRequestHistoryNoData;
                 }
+                else if (val[3] == 0xFE)
+                {
+                    _realTimeType = BLTAcceptDataTypeRealTimeTransState;
+                    
+                    [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
+                }
             }
             else if (order == 0x02)
             {
@@ -308,13 +315,13 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)saveSyncDataToModel
 {
+    
 }
 
 - (void)saveRealTimeData:(NSData *)data
 {
-    _type = BLTAcceptDataTypeRealTimeTransState;
+    _realTimeType = BLTAcceptDataTypeRealTimeTransState;
     [_realTimeData appendData:data];
-    NSLog(@".实时传输的数据 :..%@", data);
 }
 
 #pragma mark --- syncData 数据清空 ---

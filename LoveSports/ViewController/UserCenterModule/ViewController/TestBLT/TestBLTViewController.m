@@ -261,7 +261,6 @@
 
 - (void)changeSwitchLabel:(UISwitch *)select
 {
-    NSLog(@"selected..%d",select.selected);
     select.selected = !select.selected;
     if (select.selected)
     {

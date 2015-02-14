@@ -46,18 +46,17 @@
     return [dict objectForKey:@(number)];
 }
 
-- (NSInteger)stepsConvertCalories:(NSInteger)steps
+- (CGFloat)stepsConvertCalories:(NSInteger)steps
                        withWeight:(CGFloat)weight
                         withModel:(BOOL)metric
 {
-    // 四舍五入...
     if (metric)
     {
-        return steps * ((weight - 13.63636) * 0.000693 + 0.00495)+ 0.5;
+        return steps * ((weight - 13.63636) * 0.000693 + 0.00495);
     }
     else
     {
-        return steps / 100 * (0.0315 * weight - 0.45) + 0.5;
+        return steps / 100 * (0.0315 * weight - 0.45);
     }
 }
 
