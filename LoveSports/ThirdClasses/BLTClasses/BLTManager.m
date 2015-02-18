@@ -123,7 +123,7 @@ DEF_SINGLETON(BLTManager)
     NSLog(@"..%@", advertisementData);
     
     NSArray *uuidArray = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
-    if (uuidArray.count > 0)
+    if (uuidArray.count > 0 && !_isUpdateing)
     {
         CBUUID *currentUUID = [uuidArray lastObject];
         if ([currentUUID isEqual:[BLTUUID uartServiceUUID]] || 1)
@@ -170,6 +170,14 @@ DEF_SINGLETON(BLTManager)
             }
         }
     }
+    else if (_isUpdateing)
+    {
+        NSString *idString = [peripheral.identifier UUIDString];
+        if ([idString isEqualToString:_updateModel.bltID])
+        {
+            [self repareConnectedDevice:_updateModel];
+        }
+    }
 }
 
 - (void)repareConnectedDevice:(BLTModel *)model
@@ -205,9 +213,21 @@ DEF_SINGLETON(BLTManager)
     _connectState = BLTManagerConnected;
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
-    [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
-    
     [BLTPeripheral sharedInstance].peripheral = _discoverPeripheral;
+    
+    if (!_isUpdateing)
+    {
+        [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
+    }
+    else
+    {
+        if ([BLTDFUHelper sharedInstance].state == INIT)
+        {
+            [BLTDFUHelper sharedInstance].state = DISCOVERING;
+            [_discoverPeripheral discoverServices:@[BLTUUID.updateServiceUUID]];
+            [BLTDFUHelper sharedInstance].updatePeripheral = _discoverPeripheral;
+        }
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -312,5 +332,51 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     _model = nil;
 }
 
+/**
+ *  准备固件更新.
+ */
+- (void)prepareUpdateFirmWare
+{
+    if (self.discoverPeripheral.state == CBPeripheralStateConnected)
+    {
+        [[BLTDFUHelper sharedInstance] prepareUpdateFirmWare:^{
+            [self checkIsAllownUpdateFirmWare];
+        }];
+    }
+    else
+    {
+        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+    }
+}
+
+- (void)checkIsAllownUpdateFirmWare
+{
+    _isUpdateing = YES;
+    _updateModel = _model;
+    [BLTSendData sendUpdateFirmware];
+    
+    [BLTDFUHelper sharedInstance].endBlock = ^(BOOL success) {
+        [self firmWareUpdateEnd:success];
+    };
+    
+    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 120);
+}
+
+- (void)firmWareUpdateEnd:(BOOL)success
+{
+    _isUpdateing = NO;
+    _updateModel = nil;
+    _connectState = BLTManagerNoConnect;
+    [self startCan];
+    
+    if (success)
+    {
+        SHOWMBProgressHUD(@"固件更新成功", nil, nil, NO, 2.0);
+    }
+    else
+    {
+        SHOWMBProgressHUD(@"升级失败.", nil, nil, NO, 2.0);
+    }
+}
 
 @end

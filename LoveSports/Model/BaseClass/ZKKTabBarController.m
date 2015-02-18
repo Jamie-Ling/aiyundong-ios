@@ -38,6 +38,8 @@
     _tabBarFrame = CGRectMake(0, 0, self.view.bounds.size.width, 64);
     _contentFrame = CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64);
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     [self loadContentViews];
     self.selectedIndex = 0;
 }

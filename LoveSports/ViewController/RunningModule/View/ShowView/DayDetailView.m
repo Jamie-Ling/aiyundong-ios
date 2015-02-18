@@ -301,11 +301,6 @@
         [_chartData addObject:@(0)];
     }
     
-    for (NSUInteger i = 0; i < 48; i++)
-    {
-        NSLog(@"._chartData. = .%@", _chartData[i]);
-    }
-    
     [_lineChart setChartData:_chartData];
 }
 

@@ -104,6 +104,10 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.hardwareRevisionStringUUID] forService:service];
         }
+        if ([service.UUID isEqual:BLTUUID.updateServiceUUID])
+        {
+            [_peripheral discoverCharacteristics:@[BLTUUID.controlPointCharacteristicUUID, BLTUUID.packetCharacteristicUUID] forService:service];
+        }
         
         NSLog(@"service.UUID. = .%@.", service.UUID);
     }
@@ -137,6 +141,15 @@ DEF_SINGLETON(BLTPeripheral)
         else if ([charac.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
+        }
+        else if ([charac.UUID isEqual:BLTUUID.controlPointCharacteristicUUID])
+        {
+            [BLTDFUHelper sharedInstance].controlPointChar = charac;
+            [_peripheral setNotifyValue:YES forCharacteristic:charac];
+        }
+        else if ([charac.UUID isEqual:BLTUUID.packetCharacteristicUUID])
+        {
+            [BLTDFUHelper sharedInstance].packetChar = charac;
         }
 
         NSLog(@"charac. = .%@..", charac);
@@ -177,6 +190,14 @@ DEF_SINGLETON(BLTPeripheral)
     else
     {
         NSLog(@"写入成功。");
+    }
+    
+    if ([BLTManager sharedInstance].isUpdateing)
+    {
+        if (characteristic == [BLTDFUHelper sharedInstance].controlPointChar)
+        {
+            [[BLTDFUHelper sharedInstance] didWriteControlPoint];
+        }
     }
 }
 
@@ -221,10 +242,15 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([characteristic.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
+            NSLog(@"...04传输...");
             if (_realTimeBlock)
             {
                 _realTimeBlock(characteristic.value);
             }
+        }
+        else if ([characteristic.UUID isEqual:BLTUUID.controlPointCharacteristicUUID])
+        {
+            [[BLTDFUHelper sharedInstance] receiveControlPointInfo:characteristic.value.bytes];
         }
     }
 }

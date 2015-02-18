@@ -19,4 +19,10 @@
 + (CBUUID *)hardwareRevisionStringUUID;
 + (CBUUID *)deviceInformationServiceUUID;
 
+// 升级时的服务.
++ (CBUUID *)updateServiceUUID;
+// 控制中心.
++ (CBUUID *)controlPointCharacteristicUUID;
+// 数据传输通道.
++ (CBUUID *)packetCharacteristicUUID;
 @end

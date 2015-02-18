@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BLTPeripheral.h"
 #import "BLTModel.h"
+#import "BLTDFUHelper.h"
 
 typedef enum {
     BLTManagerNoConnect = 0,
@@ -31,6 +32,9 @@ typedef void(^BLTManagerFail)();
 @property (nonatomic, strong) BLTManagerConnect connectBlock;
 @property (nonatomic, strong) BLTManagerFail failBlock;
 @property (nonatomic, assign) BLTManagerConnectState connectState;
+
+@property (nonatomic, assign) BOOL isUpdateing;
+@property (nonatomic, strong) BLTModel *updateModel;
 
 AS_SINGLETON(BLTManager)
 
@@ -56,5 +60,9 @@ AS_SINGLETON(BLTManager)
 
 // 主动断开链接
 - (void)dismissLink;
+
+// 准备更新固件
+- (void)prepareUpdateFirmWare;
+
 
 @end

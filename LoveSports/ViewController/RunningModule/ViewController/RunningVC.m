@@ -14,13 +14,18 @@
 #import "CalendarHomeView.h"
 #import "LandscapeVC.h"
 
+#import "UIScrollView+Simple.h"
 #import "DayDetailView.h"
 #import "TrendChartView.h"
+#import "MJRefresh.h"
 
-@interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate>
+@interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, strong) UIScrollView *srcollView;
 @property (nonatomic, strong) DayDetailView *detailView;
 @property (nonatomic, strong) TrendChartView *trendView;
+
+@property (nonatomic, assign) BOOL isUpSwipe;
 
 @end
 
@@ -48,28 +53,69 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor clearColor];
+    self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+    [self loadScrollView];
+    NSLog(@"..%@", NSStringFromCGPoint(_srcollView.contentOffset));
+}
+
+- (void)loadScrollView
+{
+    _srcollView = [UIScrollView simpleInit:CGRectMake(0, 0, self.view.width, self.view.height) withShow:NO withBounce:YES];
+    
+    [self.view addSubview:_srcollView];
+    _srcollView.delegate = self;
+    _srcollView.contentSize = _srcollView.frame.size;
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upSwipe)];
+    swipe.direction = UISwipeGestureRecognizerDirectionUp;
+    [_srcollView addGestureRecognizer:swipe];
     
     [self loadDayDetailView];
     [self loadTrendChartView];
+    [self setupRefresh];
     
     // 默认显示当天的.
     [_detailView updateContentForView:[PedometerHelper getModelFromDBWithToday]];
 }
 
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    [_srcollView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"table"];
+    [_srcollView headerBeginRefreshing];
+
+    // 设置文字(也可以不设置,默认的文字在MJRefreshConst中修改)
+    _srcollView.headerPullToRefreshText = @"下拉同步运动数据.";
+    _srcollView.headerReleaseToRefreshText = @"松开马上同步.";
+    _srcollView.headerRefreshingText = @"正在同步中.";
+}
+
+- (void)headerRereshing
+{
+    [_srcollView headerEndRefreshing];
+    
+    DEF_WEAKSELF_(RunningVC);
+    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
+        [weakSelf updateConnectForView];
+    }];
+}
+
 - (void)loadDayDetailView
 {
-    _detailView = [[DayDetailView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    _detailView = [[DayDetailView alloc] initWithFrame:_srcollView.bounds];
     
     _detailView.delegate = self;
-    [self.view addSubview:_detailView];
+    [_srcollView addSubview:_detailView];
 }
 
 - (void)loadTrendChartView
 {
-    _trendView = [[TrendChartView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    _trendView = [[TrendChartView alloc] initWithFrame:_srcollView.bounds];
     
     _trendView.delegate = self;
-    [self.view addSubview:_trendView];
+    [_srcollView addSubview:_trendView];
     _trendView.hidden = YES;
 }
 
@@ -113,10 +159,12 @@
 {
     NSLog(@"..下扫..");
     
+    /*
     DEF_WEAKSELF_(RunningVC);
     [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
         [weakSelf updateConnectForView];
     }];
+     */
 }
 
 - (void)updateConnectForView
@@ -155,6 +203,28 @@
 - (void)dayDetailViewSwipeUp
 {
     [self upSwipe];
+}
+
+#pragma mark --- UIScrollViewDelegate ---
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y > 0.0)
+    {
+        _isUpSwipe = YES;
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+    }
+    else if (scrollView.contentOffset.y < 0.0)
+    {
+        _isUpSwipe = NO;
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_isUpSwipe)
+    {
+        [self upSwipe];
+    }
 }
 
 @end

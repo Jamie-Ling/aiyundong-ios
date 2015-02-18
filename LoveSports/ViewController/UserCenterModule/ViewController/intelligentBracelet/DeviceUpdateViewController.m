@@ -37,7 +37,7 @@
     [super viewWillAppear:animated];
     
     [self addAllControll];
-    if ([_thisVersionInfoModel._versionID isEqualToString:_thisBraceletInfoModel._deviceVersion] )
+    if ([_thisVersionInfoModel._versionID isEqualToString:_thisBraceletInfoModel._deviceVersion] && 0)
     {
         [_updateButton setHidden:YES];
     }
@@ -104,8 +104,10 @@
     
     _thisBraceletInfoModel._deviceVersion = _thisVersionInfoModel._versionID;
     
-    [UIView showAlertView:@"升级成功" andMessage:nil];
-    [self goBackPrePage];
+   // [UIView showAlertView:@"升级成功" andMessage:nil];
+   // [self goBackPrePage];
+    
+    [[BLTManager sharedInstance] prepareUpdateFirmWare];
 }
 
 @end

@@ -29,10 +29,10 @@
     return [CBUUID UUIDWithString:@"D0A2FF02-2996-D38B-E214-86515DF5A1DF"];
 }
 
-// 实时传输通道
+// 实时传输通道04
 + (CBUUID *)realTimeCharacteristicUUID
 {
-    return [CBUUID UUIDWithString:@"D0A2FF03-2996-D38B-E214-86515DF5A1DF"];
+    return [CBUUID UUIDWithString:@"D0A2FF04-2996-D38B-E214-86515DF5A1DF"];
 }
 
 // 硬件绑定的特征
@@ -48,4 +48,23 @@
 }
 
 // 升级服务UUID : 00001530-1212-EFDE-1523-785FEABCD123
+
+// 升级时的服务
++ (CBUUID *)updateServiceUUID
+{
+    return [CBUUID UUIDWithString:@"00001530-1212-EFDE-1523-785FEABCD123"];
+}
+
+// 控制中心.
++ (CBUUID *)controlPointCharacteristicUUID
+{
+    return [CBUUID UUIDWithString:@"00001531-1212-EFDE-1523-785FEABCD123"];
+}
+
+// 数据传输通道
++ (CBUUID *)packetCharacteristicUUID
+{
+    return [CBUUID UUIDWithString:@"00001532-1212-EFDE-1523-785FEABCD123"];
+}
+
 @end

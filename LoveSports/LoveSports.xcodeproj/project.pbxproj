@@ -212,6 +212,17 @@
 		F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A81A79381C00D5B170 /* BLTSendData.m */; };
 		F45F840B1A7B6698004246E8 /* NoPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F84081A7B6698004246E8 /* NoPasteTextField.m */; };
 		F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F840A1A7B6698004246E8 /* SaveHelper.m */; };
+		F4644BC01A9447A8003088E9 /* BLTDFUBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BBD1A9447A8003088E9 /* BLTDFUBaseInfo.m */; };
+		F4644BC11A9447A8003088E9 /* BLTDFUHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BBF1A9447A8003088E9 /* BLTDFUHelper.m */; };
+		F4644BC31A946030003088E9 /* W240N_Test_v0.10.bin in Resources */ = {isa = PBXBuildFile; fileRef = F4644BC21A946030003088E9 /* W240N_Test_v0.10.bin */; };
+		F4644BD51A9464D6003088E9 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4644BC51A9464D6003088E9 /* MJRefresh.bundle */; };
+		F4644BD61A9464D6003088E9 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BC81A9464D6003088E9 /* MJRefreshBaseView.m */; };
+		F4644BD71A9464D6003088E9 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BCA1A9464D6003088E9 /* MJRefreshConst.m */; };
+		F4644BD81A9464D6003088E9 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BCC1A9464D6003088E9 /* MJRefreshFooterView.m */; };
+		F4644BD91A9464D6003088E9 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BCE1A9464D6003088E9 /* MJRefreshHeaderView.m */; };
+		F4644BDA1A9464D6003088E9 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD01A9464D6003088E9 /* UIScrollView+MJExtension.m */; };
+		F4644BDB1A9464D6003088E9 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD21A9464D6003088E9 /* UIScrollView+MJRefresh.m */; };
+		F4644BDC1A9464D6003088E9 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD41A9464D6003088E9 /* UIView+MJExtension.m */; };
 		F470E7A11A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7641A7FAD680009E649 /* background.jpg */; };
 		F470E7A21A7FAD680009E649 /* t3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7651A7FAD680009E649 /* t3.jpg */; };
 		F470E7A31A7FAD680009E649 /* 分享@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7661A7FAD680009E649 /* 分享@2x.png */; };
@@ -288,6 +299,9 @@
 		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
 		F49693191A872075008D81CA /* UIScrollView+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = F49693181A872075008D81CA /* UIScrollView+Simple.m */; };
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
+		F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56F61A8F777C00955BBC /* PedometerHelper.m */; };
+		F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */; };
+		F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */; };
 		F4B692F41A6F3EBC00B42395 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F31A6F3EBC00B42395 /* main.m */; };
 		F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F61A6F3EBC00B42395 /* AppDelegate.m */; };
 		F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F91A6F3EBC00B42395 /* ViewController.m */; };
@@ -672,6 +686,27 @@
 		F45F84081A7B6698004246E8 /* NoPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPasteTextField.m; sourceTree = "<group>"; };
 		F45F84091A7B6698004246E8 /* SaveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveHelper.h; sourceTree = "<group>"; };
 		F45F840A1A7B6698004246E8 /* SaveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveHelper.m; sourceTree = "<group>"; };
+		F4644BBC1A9447A8003088E9 /* BLTDFUBaseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTDFUBaseInfo.h; sourceTree = "<group>"; };
+		F4644BBD1A9447A8003088E9 /* BLTDFUBaseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTDFUBaseInfo.m; sourceTree = "<group>"; };
+		F4644BBE1A9447A8003088E9 /* BLTDFUHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTDFUHelper.h; sourceTree = "<group>"; };
+		F4644BBF1A9447A8003088E9 /* BLTDFUHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTDFUHelper.m; sourceTree = "<group>"; };
+		F4644BC21A946030003088E9 /* W240N_Test_v0.10.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = W240N_Test_v0.10.bin; sourceTree = "<group>"; };
+		F4644BC51A9464D6003088E9 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		F4644BC61A9464D6003088E9 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		F4644BC71A9464D6003088E9 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		F4644BC81A9464D6003088E9 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		F4644BC91A9464D6003088E9 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		F4644BCA1A9464D6003088E9 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		F4644BCB1A9464D6003088E9 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		F4644BCC1A9464D6003088E9 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		F4644BCD1A9464D6003088E9 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		F4644BCE1A9464D6003088E9 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
+		F4644BCF1A9464D6003088E9 /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
+		F4644BD01A9464D6003088E9 /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
+		F4644BD11A9464D6003088E9 /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		F4644BD21A9464D6003088E9 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		F4644BD31A9464D6003088E9 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
+		F4644BD41A9464D6003088E9 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		F470E7641A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E7651A7FAD680009E649 /* t3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t3.jpg; sourceTree = "<group>"; };
 		F470E7661A7FAD680009E649 /* 分享@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分享@2x.png"; sourceTree = "<group>"; };
@@ -764,6 +799,12 @@
 		F49693171A872075008D81CA /* UIScrollView+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Simple.h"; sourceTree = "<group>"; };
 		F49693181A872075008D81CA /* UIScrollView+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Simple.m"; sourceTree = "<group>"; };
 		F496931A1A872952008D81CA /* home_sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_sports@2x.png"; sourceTree = "<group>"; };
+		F4AD56F61A8F777C00955BBC /* PedometerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerHelper.m; sourceTree = "<group>"; };
+		F4AD56FA1A8F779B00955BBC /* BLTRealTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTRealTime.h; sourceTree = "<group>"; };
+		F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTRealTime.m; sourceTree = "<group>"; };
+		F4AD56FC1A8F779B00955BBC /* BLTSimpleSend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSimpleSend.h; sourceTree = "<group>"; };
+		F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSimpleSend.m; sourceTree = "<group>"; };
+		F4AD57001A8F77C500955BBC /* PedometerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerHelper.h; sourceTree = "<group>"; };
 		F4B692EE1A6F3EBC00B42395 /* LoveSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoveSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B692F21A6F3EBC00B42395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4B692F31A6F3EBC00B42395 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1681,6 +1722,8 @@
 				F45F84081A7B6698004246E8 /* NoPasteTextField.m */,
 				F47F351E1A7E6D1400D6D220 /* PedometerModel.h */,
 				F47F351F1A7E6D1400D6D220 /* PedometerModel.m */,
+				F4AD57001A8F77C500955BBC /* PedometerHelper.h */,
+				F4AD56F61A8F777C00955BBC /* PedometerHelper.m */,
 				69E097241A873627003F2EB9 /* WeekModel.h */,
 				69E097251A873627003F2EB9 /* WeekModel.m */,
 				69E097431A87B991003F2EB9 /* MonthModel.h */,
@@ -1693,6 +1736,29 @@
 				F45F840A1A7B6698004246E8 /* SaveHelper.m */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		F4644BC41A9464D6003088E9 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				F4644BC51A9464D6003088E9 /* MJRefresh.bundle */,
+				F4644BC61A9464D6003088E9 /* MJRefresh.h */,
+				F4644BC71A9464D6003088E9 /* MJRefreshBaseView.h */,
+				F4644BC81A9464D6003088E9 /* MJRefreshBaseView.m */,
+				F4644BC91A9464D6003088E9 /* MJRefreshConst.h */,
+				F4644BCA1A9464D6003088E9 /* MJRefreshConst.m */,
+				F4644BCB1A9464D6003088E9 /* MJRefreshFooterView.h */,
+				F4644BCC1A9464D6003088E9 /* MJRefreshFooterView.m */,
+				F4644BCD1A9464D6003088E9 /* MJRefreshHeaderView.h */,
+				F4644BCE1A9464D6003088E9 /* MJRefreshHeaderView.m */,
+				F4644BCF1A9464D6003088E9 /* UIScrollView+MJExtension.h */,
+				F4644BD01A9464D6003088E9 /* UIScrollView+MJExtension.m */,
+				F4644BD11A9464D6003088E9 /* UIScrollView+MJRefresh.h */,
+				F4644BD21A9464D6003088E9 /* UIScrollView+MJRefresh.m */,
+				F4644BD31A9464D6003088E9 /* UIView+MJExtension.h */,
+				F4644BD41A9464D6003088E9 /* UIView+MJExtension.m */,
+			);
+			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 		F470E7621A7FAD680009E649 /* 健康管理 */ = {
@@ -1813,18 +1879,27 @@
 		F49529C81A766E03002A5382 /* BLTClasses */ = {
 			isa = PBXGroup;
 			children = (
+				F4644BC21A946030003088E9 /* W240N_Test_v0.10.bin */,
 				F49529C91A766E03002A5382 /* BLTManager.h */,
 				F49529CA1A766E03002A5382 /* BLTManager.m */,
-				F49529CB1A766E03002A5382 /* BLTModel.h */,
-				F49529CC1A766E03002A5382 /* BLTModel.m */,
 				F49529CD1A766E03002A5382 /* BLTPeripheral.h */,
 				F49529CE1A766E03002A5382 /* BLTPeripheral.m */,
+				F4644BBC1A9447A8003088E9 /* BLTDFUBaseInfo.h */,
+				F4644BBD1A9447A8003088E9 /* BLTDFUBaseInfo.m */,
+				F4644BBE1A9447A8003088E9 /* BLTDFUHelper.h */,
+				F4644BBF1A9447A8003088E9 /* BLTDFUHelper.m */,
+				F49529CB1A766E03002A5382 /* BLTModel.h */,
+				F49529CC1A766E03002A5382 /* BLTModel.m */,
 				F49529CF1A766E03002A5382 /* BLTUUID.h */,
 				F49529D01A766E03002A5382 /* BLTUUID.m */,
 				F445F7A51A79381C00D5B170 /* BLTAcceptData.h */,
 				F445F7A61A79381C00D5B170 /* BLTAcceptData.m */,
 				F445F7A71A79381C00D5B170 /* BLTSendData.h */,
 				F445F7A81A79381C00D5B170 /* BLTSendData.m */,
+				F4AD56FC1A8F779B00955BBC /* BLTSimpleSend.h */,
+				F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */,
+				F4AD56FA1A8F779B00955BBC /* BLTRealTime.h */,
+				F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */,
 			);
 			path = BLTClasses;
 			sourceTree = "<group>";
@@ -1923,6 +1998,7 @@
 		F4B6931A1A6F3F2B00B42395 /* ThirdClasses */ = {
 			isa = PBXGroup;
 			children = (
+				F4644BC41A9464D6003088E9 /* MJRefresh */,
 				F470E7DC1A7FB7660009E649 /* ZFCalendar */,
 				699241F91A768BDF00EFF121 /* LKDBHelper */,
 				F49529C81A766E03002A5382 /* BLTClasses */,
@@ -2413,6 +2489,7 @@
 				F470E7C51A7FAD680009E649 /* 能量.png in Resources */,
 				69EFC1FE1A737ABD00B5BC53 /* 1_01.png in Resources */,
 				69EFC2011A737ABD00B5BC53 /* 1_04.png in Resources */,
+				F4644BC31A946030003088E9 /* W240N_Test_v0.10.bin in Resources */,
 				F470E7D01A7FAD680009E649 /* T4副本.jpg in Resources */,
 				69E097411A873D6E003F2EB9 /* LICENSE in Resources */,
 				695549561A8D012B00423EA9 /* 背景.png in Resources */,
@@ -2469,6 +2546,7 @@
 				6955493C1A8CF4D900423EA9 /* 电池电量@2x.png in Resources */,
 				69EFC2BA1A75EB0A00B5BC53 /* 选择按钮@2x.png in Resources */,
 				695549321A8CF4D900423EA9 /* 标题下边线@2x.png in Resources */,
+				F4644BD51A9464D6003088E9 /* MJRefresh.bundle in Resources */,
 				F470E7A41A7FAD680009E649 /* 周@2x.png in Resources */,
 				695549371A8CF4D900423EA9 /* 爱动运手环@2x.png in Resources */,
 			);
@@ -2496,6 +2574,7 @@
 				69EFC2B21A75D11900B5BC53 /* BSModalPickerView.m in Sources */,
 				F4B693E61A6F40D200B42395 /* UIImage+ZKK.m in Sources */,
 				F4B693531A6F401A00B42395 /* IQTitleBarButtonItem.m in Sources */,
+				F4644BD81A9464D6003088E9 /* MJRefreshFooterView.m in Sources */,
 				69EFC2E61A760CD700B5BC53 /* UIView+WebCacheOperation.m in Sources */,
 				69E0973B1A873D6E003F2EB9 /* DTError.m in Sources */,
 				69FD42131A7FCC2C0023B74D /* CityViewController.m in Sources */,
@@ -2511,12 +2590,15 @@
 				69EFC2E01A760CD700B5BC53 /* SDWebImagePrefetcher.m in Sources */,
 				698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */,
 				F4B693E31A6F40D200B42395 /* NSString+Extension.m in Sources */,
+				F4644BD71A9464D6003088E9 /* MJRefreshConst.m in Sources */,
 				F4B693981A6F403400B42395 /* FMDatabase.m in Sources */,
+				F4644BC11A9447A8003088E9 /* BLTDFUHelper.m in Sources */,
 				69FD41911A7FCC100023B74D /* JSBadgeView.m in Sources */,
 				F47F35201A7E6D1400D6D220 /* PedometerModel.m in Sources */,
 				69FD42261A7FCC2C0023B74D /* UpdateInterestingViewController.m in Sources */,
 				F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */,
 				F4B693AB1A6F403400B42395 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
+				F4644BDB1A9464D6003088E9 /* UIScrollView+MJRefresh.m in Sources */,
 				69EFC21A1A738BD600B5BC53 /* FlatRoundedImageView.m in Sources */,
 				F49529D21A766E03002A5382 /* BLTModel.m in Sources */,
 				69EFC2B11A75D11900B5BC53 /* BSModalPickerBase.m in Sources */,
@@ -2526,6 +2608,7 @@
 				F4BF5F6C1A6F529E004C433D /* ZKKBaseObject.m in Sources */,
 				F470E7F51A7FB7660009E649 /* CalendarView.m in Sources */,
 				F4BF5F511A6F4802004C433D /* BaseModelEntity.m in Sources */,
+				F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */,
 				69FD42291A7FCC2C0023B74D /* UpSignatureViewController.m in Sources */,
 				69FD421C1A7FCC2C0023B74D /* AccountManageViewController.m in Sources */,
 				F4BF5F6A1A6F529E004C433D /* XYSystemInfo.m in Sources */,
@@ -2559,6 +2642,7 @@
 				69FD421B1A7FCC2C0023B74D /* AboutUSViewController.m in Sources */,
 				F470E7F41A7FB7660009E649 /* CalendarMonthHeaderView.m in Sources */,
 				69EFC2E41A760CD700B5BC53 /* UIImageView+HighlightedWebCache.m in Sources */,
+				F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */,
 				F4B6934D1A6F401A00B42395 /* IQUIWindow+Hierarchy.m in Sources */,
 				699242071A768BDF00EFF121 /* NSObject+LKDBHelper.m in Sources */,
 				F4BF5F691A6F529E004C433D /* XYSandbox.m in Sources */,
@@ -2569,6 +2653,7 @@
 				6970ED121A826266009572D5 /* WeekView.m in Sources */,
 				F4B6935E1A6F402A00B42395 /* MBProgressHUD.m in Sources */,
 				F4B6931E1A6F3F3E00B42395 /* README.md in Sources */,
+				F4644BDC1A9464D6003088E9 /* UIView+MJExtension.m in Sources */,
 				69FD42231A7FCC2C0023B74D /* TimeAndClockViewController.m in Sources */,
 				F45F840B1A7B6698004246E8 /* NoPasteTextField.m in Sources */,
 				69EFC2DA1A760CD600B5BC53 /* SDImageCache.m in Sources */,
@@ -2609,12 +2694,14 @@
 				F4C4FD251A8DFF71003A946F /* TrendShowType.m in Sources */,
 				F4B693541A6F401A00B42395 /* IQToolbar.m in Sources */,
 				69E0973E1A873D6E003F2EB9 /* DTTimePeriodCollection.m in Sources */,
+				F4644BD91A9464D6003088E9 /* MJRefreshHeaderView.m in Sources */,
 				699242041A768BDF00EFF121 /* LKDB+Mapping.m in Sources */,
 				69E0974F1A899B8A003F2EB9 /* ShowManage.m in Sources */,
 				69E0973C1A873D6E003F2EB9 /* DTTimePeriod.m in Sources */,
 				69EFC2E31A760CD700B5BC53 /* UIImage+MultiFormat.m in Sources */,
 				69FD42051A7FCC2C0023B74D /* MapVC.m in Sources */,
 				69FD42271A7FCC2C0023B74D /* UpdateNickNameViewController.m in Sources */,
+				F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */,
 				F4BF5F6D1A6F529E004C433D /* ZKKNavigationController.m in Sources */,
 				6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */,
 				69FD42191A7FCC2C0023B74D /* MSCustomWebViewController.m in Sources */,
@@ -2622,8 +2709,10 @@
 				69FD42061A7FCC2C0023B74D /* MoreVC.m in Sources */,
 				F4BF5F571A6F4E42004C433D /* UIColor+RGB.m in Sources */,
 				698A90C01A6FEB54005BABE6 /* SMPageControl.m in Sources */,
+				F4644BD61A9464D6003088E9 /* MJRefreshBaseView.m in Sources */,
 				69EFC2E51A760CD700B5BC53 /* UIImageView+WebCache.m in Sources */,
 				F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */,
+				F4644BDA1A9464D6003088E9 /* UIScrollView+MJExtension.m in Sources */,
 				F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */,
 				F43F8EE31A8106ED008A431B /* DataModel.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
@@ -2654,6 +2743,7 @@
 				69EFC2E21A760CD700B5BC53 /* UIImage+GIF.m in Sources */,
 				69EFC2D91A760CD600B5BC53 /* NSData+ImageContentType.m in Sources */,
 				69FD420E1A7FCC2C0023B74D /* RunningVC.m in Sources */,
+				F4644BC01A9447A8003088E9 /* BLTDFUBaseInfo.m in Sources */,
 				69FD42121A7FCC2C0023B74D /* CityInfo.m in Sources */,
 				F4B693AE1A6F403400B42395 /* Reachability.m in Sources */,
 				F4BF5FF41A6FC95C004C433D /* ZKKTabBar.m in Sources */,

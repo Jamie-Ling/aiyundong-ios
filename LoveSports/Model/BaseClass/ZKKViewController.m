@@ -59,7 +59,7 @@
     
     swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(downSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.view addGestureRecognizer:swipe];
+   // [self.view addGestureRecognizer:swipe];
 }
 
 - (void)leftSwipe
