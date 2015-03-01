@@ -224,11 +224,6 @@ DEF_SINGLETON(BLTPeripheral)
             {
                 _updateBlock(_receiveData);
             }
-            
-            if (_realTimeBlock)
-            {
-                _realTimeBlock(characteristic.value);
-            }
         }
         else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
         {

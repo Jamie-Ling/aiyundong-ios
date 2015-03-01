@@ -25,6 +25,7 @@
 @property (nonatomic, strong) DayDetailView *detailView;
 @property (nonatomic, strong) TrendChartView *trendView;
 
+@property (nonatomic, assign) CGFloat offsetY;
 @property (nonatomic, assign) BOOL isUpSwipe;
 
 @end
@@ -208,9 +209,12 @@
 #pragma mark --- UIScrollViewDelegate ---
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    _offsetY += scrollView.contentOffset.y;
+
     if (scrollView.contentOffset.y > 0.0)
     {
         _isUpSwipe = YES;
+
         [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
     }
     else if (scrollView.contentOffset.y < 0.0)
@@ -221,10 +225,12 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (_isUpSwipe)
+    if (_isUpSwipe && _offsetY > 60.0)
     {
         [self upSwipe];
     }
+    
+    _offsetY = 0;
 }
 
 @end

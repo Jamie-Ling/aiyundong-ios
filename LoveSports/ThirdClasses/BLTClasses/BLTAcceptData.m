@@ -244,9 +244,9 @@ DEF_SINGLETON(BLTAcceptData)
                 }
                 else if (val[3] == 0xFE)
                 {
-                    _realTimeType = BLTAcceptDataTypeRealTimeTransState;
-                    
-                    [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
+//                    _realTimeType = BLTAcceptDataTypeRealTimeTransState;
+//                    
+//                    [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
                 }
             }
             else if (order == 0x02)
@@ -261,7 +261,7 @@ DEF_SINGLETON(BLTAcceptData)
             {
                 if (val[3] == 0xED)
                 {
-                    // 计步器收到开始实时传输数据的命令
+                    //  计步器收到开始实时传输数据的命令
                     _type = BLTAcceptDataTypeRealTimeTransSportsData;
                 }
             }
@@ -320,8 +320,21 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)saveRealTimeData:(NSData *)data
 {
+    
+    UInt8 val[20] = {0};
+    [data getBytes:&val length:data.length];
+    if (val[0] == 0xDE)
+    {
+        [self cleanMutableRealTimeData];
+    }
+    
     _realTimeType = BLTAcceptDataTypeRealTimeTransState;
     [_realTimeData appendData:data];
+
+    if (val[0] != 0xDE)
+    {
+        [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
+    }
 }
 
 #pragma mark --- syncData 数据清空 ---

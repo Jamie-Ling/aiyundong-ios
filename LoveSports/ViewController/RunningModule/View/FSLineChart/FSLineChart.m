@@ -201,22 +201,22 @@
             [self.layer addSublayer:_fillLayer];
         }
         
-        _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale + 2, self.bounds.size.width, self.bounds.size.height);
+        _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
         _fillLayer.bounds = self.bounds;
         _fillLayer.path = fill.CGPath;
-        _fillLayer.strokeColor = nil;
+        _fillLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
         _fillLayer.fillColor = UIColorRGB(197, 234, 237).CGColor;
-        _fillLayer.lineWidth = 0;
+        _fillLayer.lineWidth = 1.0;
         _fillLayer.lineJoin = kCALineJoinRound;
     }
     
     if (!_pathLayer)
     {
         _pathLayer = [CAShapeLayer layer];
-        [self.layer addSublayer:_pathLayer];
+       // [self.layer addSublayer:_pathLayer];
     }
     
-    _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale - 2, self.bounds.size.width, self.bounds.size.height);
+    _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
     _pathLayer.bounds = self.bounds;
     _pathLayer.path = path.CGPath;
     _pathLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
@@ -276,14 +276,14 @@
     _fillColor = [_color colorWithAlphaComponent:0.25];
     _verticalGridStep = 3;
     _horizontalGridStep = 3;
-    _margin = 6.0;
+    _margin = 7.0;
     _axisWidth = self.frame.size.width - 2 * _margin;
     _axisHeight = self.frame.size.height - 2 * _margin;
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     _drawInnerGrid = YES;
     _bezierSmoothing = YES;
-    _bezierSmoothingTension = 0.2;
+    _bezierSmoothingTension = 0.0;
     _lineWidth = 1;
     _innerGridLineWidth = 0.5;
     _axisLineWidth = 1;
