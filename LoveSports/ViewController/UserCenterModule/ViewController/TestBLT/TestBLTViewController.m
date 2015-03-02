@@ -33,6 +33,7 @@
 #import "TestBLTViewController.h"
 #import "BSModalPickerView.h"
 #import "BLTSendData.h"
+#import "BLTRealTime.h"
 
 
 @interface TestBLTViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
@@ -59,7 +60,9 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", @"开启运动数据实时传输", nil];
+    
+    NSString *realText = [BLTRealTime sharedInstance].isRealTime ? @"运动数据实时传输开启中" : @"运动数据实时传输关闭中";
+    _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", realText, nil];
     
     //tableview
     [self addTableView];
@@ -248,7 +251,7 @@
         UISwitch *select = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, oneCell.width * 0.3, 44)];
         
         select.center = CGPointMake(oneCell.width * 0.75, vOneCellHeight/2.0);
-        select.selected = [LS_RealTimeTransState getBOOLValue];
+        select.on = [BLTRealTime sharedInstance].isRealTime;
         [oneCell.contentView addSubview:select];
         [select addTarget:self action:@selector(changeSwitchLabel:) forControlEvents:UIControlEventValueChanged];
         
@@ -261,20 +264,46 @@
 
 - (void)changeSwitchLabel:(UISwitch *)select
 {
-    select.selected = !select.selected;
-    if (select.selected)
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        _switchLabel.text = @"关闭运动数据实时传输";
-        [[BLTRealTime sharedInstance] startRealTimeTrans];
+        DEF_WEAKSELF_(TestBLTViewController)
+        if (select.on)
+        {
+            [[BLTRealTime sharedInstance] startRealTimeTransWithBackBlock:^(BOOL success) {
+                if (success)
+                {
+                    weakSelf.switchLabel.text = @"运动数据实时传输开启中";
+                    SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
+                }
+                else
+                {
+                    select.on = NO;
+                }
+            }];
+        }
+        else
+        {
+            _switchLabel.text = @"运动数据实时传输关闭中";
+            [[BLTRealTime sharedInstance] closeRealTimeTransWithBackBlock:^(BOOL success) {
+                if (success)
+                {
+                    weakSelf.switchLabel.text = @"运动数据实时传输关闭中";
+                    SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
+                }
+                else
+                {
+                    select.on = YES;
+                }
+            }];
+        }
+        
+        [LS_RealTimeTransState setBOOLValue:select.selected];
     }
     else
     {
-        _switchLabel.text = @"开启运动数据实时传输";
-        [[BLTRealTime sharedInstance] closeRealTimeTrans];
+        select.on = !select.on;
+        SHOWMBProgressHUD(@"没有链接设备.", @"取消设置", nil, NO, 2.0);
     }
-    
-    [BLTRealTime sharedInstance].isRealTime = select.selected;
-    [LS_RealTimeTransState setBOOLValue:select.selected];
 }
 
 

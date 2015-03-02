@@ -293,9 +293,18 @@ DEF_SINGLETON(BLTAcceptData)
             }
         }
     }
-    else
+    else if (val[0] == 0xBE)
     {
-    
+        if (val[1] == 0x02)
+        {
+            if (val[2] == 0x03)
+            {
+                if (val[3] == 0xFE)
+                {
+                    _type = BLTAcceptDataTypeRealTimeTransSportsData;
+                }
+            }
+        }
     }
     
     if (_updateValue)
@@ -320,7 +329,6 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)saveRealTimeData:(NSData *)data
 {
-    
     UInt8 val[20] = {0};
     [data getBytes:&val length:data.length];
     if (val[0] == 0xDE)

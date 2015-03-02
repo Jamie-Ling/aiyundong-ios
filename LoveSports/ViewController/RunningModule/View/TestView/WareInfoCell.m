@@ -74,6 +74,15 @@
     _bltView.frame = CGRectMake(self.width * 0.75 + 20 , (_baseView.height - 15)/2, 15, 15);
     _infoView.frame = CGRectMake(self.width * 0.75 + 40, (_baseView.height - 15)/2, 15, 15);
     
+    if (model.isBinding)
+    {
+        _lockView.backgroundColor = [UIColor greenColor];
+    }
+    else
+    {
+        _lockView.backgroundColor = [UIColor redColor];
+    }
+    
     _nameLabel.text = model.bltName;
     _rssiLabel.text = [NSString stringWithFormat:@"信号强度RSSI: %@", model.bltRSSI];
 }

@@ -25,14 +25,14 @@ DEF_SINGLETON(BLTRealTime)
         _currentDayModel = [PedometerHelper getModelFromDBWithDate:[NSDate date]];
         [_currentDayModel modelToDetailShowWithTimeOrder:288];
         
-        self.isRealTime = [LS_RealTimeTransState getBOOLValue];
+       // self.isRealTime = [LS_RealTimeTransState getBOOLValue];
         self.isAllownRealTime = NO;
     }
     
     return self;
 }
 
-- (void)startRealTimeTrans
+- (void)startRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
@@ -40,20 +40,28 @@ DEF_SINGLETON(BLTRealTime)
             if (type == BLTAcceptDataTypeRealTimeTransSportsData)
             {
                 // SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
+                _isRealTime = YES;
+                if (block)
+                {
+                    block(YES);
+                }
             }
-            else if (type == BLTAcceptDataTypeError)
+            else
             {
-                
+                if (block)
+                {
+                    block(NO);
+                }
             }
         }];
     }
     else
     {
-       // SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
     };
 }
 
-- (void)closeRealTimeTrans
+- (void)closeRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
@@ -61,18 +69,31 @@ DEF_SINGLETON(BLTRealTime)
             if (type == BLTAcceptDataTypeCloseTransSportsData)
             {
                 // SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
+                _isRealTime = NO;
+                if (block)
+                {
+                    block(YES);
+                }
+            }
+            else
+            {
+                if (block)
+                {
+                    block(NO);
+                }
             }
         }];
     }
     else
     {
-       // SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
     }
 }
 
 // 保存数据到数据库
 - (void)saveRealTimeDataToDBAndUpdateUI:(NSData *)data
 {
+    _isRealTime = YES;
     NSData *tmpData = [NSData dataWithData:data];
     [[BLTAcceptData sharedInstance] cleanMutableRealTimeData];
 

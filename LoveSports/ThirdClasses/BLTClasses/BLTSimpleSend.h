@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+// 数据转发的逻辑处理中心
+
 #import "BLTSendData.h"
 typedef void(^BLTSimpleSendShowMessage)();
 

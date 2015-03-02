@@ -201,7 +201,7 @@
     CGFloat caloriesPrecision = 0.0;
     CGFloat distancePrecision = 0.0;
     
-    for (; i < totalModel.totalBytes + 60 && i < (3 * 288 + 64);)
+    for (; i < data.length && i < (3 * 288 + 64);)
     {
         int state = (val[i + 1] >> 4);
         if (state == 0)

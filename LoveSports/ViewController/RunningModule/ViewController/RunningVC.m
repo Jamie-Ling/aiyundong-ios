@@ -40,6 +40,8 @@
     [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
         [weakSelf updateConnectForView];
     };
+    
+    [self updateConnectForView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,10 +99,24 @@
 {
     [_srcollView headerEndRefreshing];
     
-    DEF_WEAKSELF_(RunningVC);
-    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
-        [weakSelf updateConnectForView];
-    }];
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        if (![BLTRealTime sharedInstance].isRealTime)
+        {
+            DEF_WEAKSELF_(RunningVC);
+            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
+                [weakSelf updateConnectForView];
+            }];
+        }
+        else
+        {
+            SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
+        }
+    }
+    else
+    {
+        SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
+    }
 }
 
 - (void)loadDayDetailView

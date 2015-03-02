@@ -20,11 +20,11 @@
 @property (nonatomic, strong) CBPeripheral *peripheral; // 外围设备对象
 
 @property (nonatomic, assign) NSInteger bltElecState;   // 充电状态
-@property (nonatomic, assign) BOOL isBinding;
 
 @property (nonatomic, assign) BOOL isLock;              // 是否设备了密码，被锁了
 @property (nonatomic, assign) BOOL isConnected;         // 是否已经连接
 @property (nonatomic, assign) BOOL isIgnore;            // 是否被忽略
+@property (nonatomic, assign) BOOL isBinding;           // 是否绑定了
 
 @property (nonatomic, assign) NSInteger stepSize;       // 步距
 @property (nonatomic, assign) NSInteger targetStep;     // 目标步数

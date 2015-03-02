@@ -120,55 +120,56 @@ DEF_SINGLETON(BLTManager)
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    NSLog(@"..%@", advertisementData);
+    NSLog(@"advertisementData. ＝ .%@..%@..%@", advertisementData, peripheral, RSSI);
     
-    NSArray *uuidArray = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
-    if (uuidArray.count > 0 && !_isUpdateing)
+    if (!_isUpdateing)
     {
-        CBUUID *currentUUID = [uuidArray lastObject];
-        if ([currentUUID isEqual:[BLTUUID uartServiceUUID]] || 1)
+        NSString *idString = [peripheral.identifier UUIDString];
+        
+        BLTModel *model = [self checkIsAddInAllWareWithID:idString];
+        if (model)
         {
-            NSString *idString = [peripheral.identifier UUIDString];
+            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+        }
+        else
+        {
+            model = [[BLTModel alloc] init];
             
-            BLTModel *model = [self checkIsAddInAllWareWithID:idString];
-            if (model)
+            model.bltID = [peripheral.identifier UUIDString] ? [peripheral.identifier UUIDString] : @"";
+            NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
+            model.bltName = adverString ? adverString : (peripheral.name ? peripheral.name : @"");
+            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+            model.peripheral = peripheral;
+            
+            BLTModel *DBModel = [model getCurrentModelFromDB];
+            if (!DBModel)
             {
-                model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+                [_allWareArray addObject:model];
             }
             else
             {
-                model = [[BLTModel alloc] init];
-                
-                model.bltID = [peripheral.identifier UUIDString] ? [peripheral.identifier UUIDString] : @"";
-                NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
-                model.bltName = adverString ? adverString : @"";
-                model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
-                model.peripheral = peripheral;
-                
-                BLTModel *DBModel = [model getCurrentModelFromDB];
-                if (!DBModel)
+                if (!DBModel.isIgnore)
                 {
                     [_allWareArray addObject:model];
                 }
-                else
-                {
-                    if (!DBModel.isIgnore)
-                    {
-                        [_allWareArray addObject:model];
-                    }
-                }
-            }
-            
-            if ([idString isEqualToString:[LS_BindingID getObjectValue]])
-            {
-                [self repareConnectedDevice:model];
-            }
-            
-            if (_updateModelBlock)
-            {
-                _updateModelBlock(_model);
             }
         }
+        
+        if ([idString isEqualToString:[LS_BindingID getObjectValue]])
+        {
+            model.isBinding = YES;
+            [self repareConnectedDevice:model];
+        }
+        else
+        {
+            model.isBinding = NO;
+        }
+        
+        if (_updateModelBlock)
+        {
+            _updateModelBlock(_model);
+        }
+
     }
     else if (_isUpdateing)
     {

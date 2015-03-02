@@ -11,6 +11,7 @@
 
 // 实时通道.
 @interface BLTRealTime : BLTSendData
+typedef void(^BLTRealTimeBackBlock)(BOOL success);
 
 @property (nonatomic, assign) BOOL isRealTime;              // 硬件是否实时状态
 @property (nonatomic, assign) BOOL isAllownRealTime;        // 软件是否允许进入实时状态进行数据传输
@@ -20,7 +21,7 @@
 AS_SINGLETON(BLTRealTime)
 
 - (void)saveRealTimeDataToDBAndUpdateUI:(NSData *)data;
-- (void)startRealTimeTrans;
-- (void)closeRealTimeTrans;
+- (void)startRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block;
+- (void)closeRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block;
 
 @end
