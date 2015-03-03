@@ -222,6 +222,7 @@
 		F4644BDA1A9464D6003088E9 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD01A9464D6003088E9 /* UIScrollView+MJExtension.m */; };
 		F4644BDB1A9464D6003088E9 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD21A9464D6003088E9 /* UIScrollView+MJRefresh.m */; };
 		F4644BDC1A9464D6003088E9 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BD41A9464D6003088E9 /* UIView+MJExtension.m */; };
+		F467BD171AA5A8490049D863 /* CalendarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F467BD161AA5A8490049D863 /* CalendarHelper.m */; };
 		F467F5731AA4B9DC00A3B71E /* W240N_V0_13.bin in Resources */ = {isa = PBXBuildFile; fileRef = F467F5721AA4B9DC00A3B71E /* W240N_V0_13.bin */; };
 		F470E7A11A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7641A7FAD680009E649 /* background.jpg */; };
 		F470E7A21A7FAD680009E649 /* t3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7651A7FAD680009E649 /* t3.jpg */; };
@@ -706,6 +707,8 @@
 		F4644BD21A9464D6003088E9 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		F4644BD31A9464D6003088E9 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		F4644BD41A9464D6003088E9 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		F467BD151AA5A8490049D863 /* CalendarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHelper.h; sourceTree = "<group>"; };
+		F467BD161AA5A8490049D863 /* CalendarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarHelper.m; sourceTree = "<group>"; };
 		F467F5721AA4B9DC00A3B71E /* W240N_V0_13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = W240N_V0_13.bin; sourceTree = "<group>"; };
 		F470E7641A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E7651A7FAD680009E649 /* t3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t3.jpg; sourceTree = "<group>"; };
@@ -1860,6 +1863,8 @@
 				F470E7E01A7FB7660009E649 /* CalendarDayModel.m */,
 				F470E7E11A7FB7660009E649 /* CalendarHomeView.h */,
 				F470E7E21A7FB7660009E649 /* CalendarHomeView.m */,
+				F467BD151AA5A8490049D863 /* CalendarHelper.h */,
+				F467BD161AA5A8490049D863 /* CalendarHelper.m */,
 				F470E7E31A7FB7660009E649 /* CalendarLogic.h */,
 				F470E7E41A7FB7660009E649 /* CalendarLogic.m */,
 				F470E7E51A7FB7660009E649 /* CalendarMonthCollectionViewLayout.h */,
@@ -2602,6 +2607,7 @@
 				69EFC21A1A738BD600B5BC53 /* FlatRoundedImageView.m in Sources */,
 				F49529D21A766E03002A5382 /* BLTModel.m in Sources */,
 				69EFC2B11A75D11900B5BC53 /* BSModalPickerBase.m in Sources */,
+				F467BD171AA5A8490049D863 /* CalendarHelper.m in Sources */,
 				69EFC2DB1A760CD600B5BC53 /* SDWebImageCompat.m in Sources */,
 				F49529D41A766E03002A5382 /* BLTUUID.m in Sources */,
 				69FD420D1A7FCC2C0023B74D /* WareInfoCell.m in Sources */,

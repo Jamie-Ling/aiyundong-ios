@@ -12,6 +12,7 @@
 #import "ShowWareView.h"
 #import "CalendarHomeView.h"
 #import "PedometerModel.h"
+#import "CalendarHelper.h"
 
 @interface TrendChartView ()
 
@@ -76,22 +77,15 @@
 
 - (void)clickCalendarButton
 {
-    if (!_calenderView)
-    {
-        _calenderView = [[CalendarHomeView alloc] initWithFrame:CGRectMake(2, self.height * 0.15, self.width - 4.0, self.height * 0.8)];
-    }
-    
-    [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
     DEF_WEAKSELF_(TrendChartView);
-    _calenderView.calendarblock = ^(CalendarDayModel *model) {
+    [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
         NSLog(@"..%@", [model date]);
         weakSelf.currentDate = [model date];
     };
     
-    [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
+    [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
-        [_calenderView removeFromSuperview];
-        _calenderView = nil;
+        [CalendarHelper sharedInstance].calendarblock = nil;
     }];
 }
 

@@ -14,6 +14,7 @@
 #import "ShowWareView.h"
 #import "NSObject+Property.h"
 #import "UIScrollView+Simple.h"
+#import "CalendarHelper.h"
 
 @interface DayDetailView () <PieChartViewDelegate, PieChartViewDataSource>
 
@@ -89,22 +90,15 @@
 
 - (void)clickCalendarButton
 {
-    if (!_calenderView)
-    {
-        _calenderView = [[CalendarHomeView alloc] initWithFrame:CGRectMake(2, self.height * 0.15, self.width - 4.0, self.height * 0.8)];
-    }
-    
     DEF_WEAKSELF_(DayDetailView)
-    [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
-    _calenderView.calendarblock = ^(CalendarDayModel *model) {
+    [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
         NSLog(@"..%@", [model date]);
         weakSelf.currentDate = [model date];
     };
-    
-    [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
+
+    [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
-        [_calenderView removeFromSuperview];
-        _calenderView = nil;
+        [CalendarHelper sharedInstance].calendarblock = nil;
     }];
 }
 

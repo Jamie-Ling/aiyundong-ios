@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) NSString *calendartitle;                  //  设置导航栏标题
 
+AS_SINGLETON(CalendarHomeView)
 - (void)setLoveSportsToDay:(int)day ToDateforString:(NSString *)todate;   
 
 @end

@@ -12,6 +12,7 @@
 #import "BarGraphView.h"
 #import "BarShowView.h"
 #import "UIColor+RGB.h"
+#import "CalendarHelper.h"
 
 @interface NightVC () <PieChartViewDelegate, PieChartViewDataSource>
 
@@ -101,22 +102,15 @@
 
 - (void)clickCalendarButton
 {
-    if (!_calenderView)
-    {
-        _calenderView = [[CalendarHomeView alloc] initWithFrame:CGRectMake(2, self.view.height * 0.15, self.view.width - 4.0, self.view.height * 0.8)];
-    }
-    
-    [_calenderView setLoveSportsToDay:365 ToDateforString:nil];
     DEF_WEAKSELF_(NightVC);
-    _calenderView.calendarblock = ^(CalendarDayModel *model) {
+    [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
         NSLog(@"..%@", [model date]);
         weakSelf.currentDate = [model date];
     };
     
-    [_calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
+    [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
     } dismissBlock:^(UIView *_view) {
-        [_calenderView removeFromSuperview];
-        _calenderView = nil;
+        [CalendarHelper sharedInstance].calendarblock = nil;
     }];
 }
 

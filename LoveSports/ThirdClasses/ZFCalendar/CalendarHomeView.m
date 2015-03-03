@@ -24,6 +24,22 @@
 
 @implementation CalendarHomeView
 
+DEF_SINGLETON(CalendarHomeView)
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        CGRect rect = ([UIScreen mainScreen ].bounds);
+        NSLog(@"...rect...%@", NSStringFromCGRect(rect));
+        self.frame = CGRectMake(2, rect.size.height * 0.10, rect.size.width - 4.0, rect.size.height * 0.8);
+        //[self setLoveSportsToDay:365 ToDateforString:nil];
+        self.backgroundColor = [UIColor redColor];
+    }
+    
+    return self;
+}
 
 #pragma mark - 设置方法
 - (void)setLoveSportsToDay:(int)day ToDateforString:(NSString *)todate
