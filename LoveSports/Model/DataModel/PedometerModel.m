@@ -141,6 +141,7 @@
     self.slowRunTime    = (val[32] << 8) | val[33];
     self.midRunTime     = (val[34] << 8) | val[35];
     self.fastRunTime    = (val[36] << 8) | val[37];
+    [BLTManager sharedInstance].elecQuantity = val[38];
     
     // 第三个包
     self.stepSize     = (val[40] << 8)  | (val[41]);
@@ -277,6 +278,7 @@
 
     // 将数据保存到周－月表
     [totalModel savePedometerModelToWeekModelAndMonthModel];
+    // 将压缩的数据进行每5分钟的详细的转化.
     [totalModel modelToDetailShowWithTimeOrder:(int)lastOrder];
     
     if ([[NSDate date] isSameWithDate:[NSDate dateWithString:totalModel.dateString]])

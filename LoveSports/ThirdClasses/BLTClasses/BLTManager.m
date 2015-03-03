@@ -70,7 +70,15 @@ DEF_SINGLETON(BLTManager)
 }
 
 #pragma mark --- 通知界面的更新 ---
-
+- (void)setElecQuantity:(NSInteger)elecQuantity
+{
+    _elecQuantity = elecQuantity;
+    
+    if (_elecQuantityBlock)
+    {
+        _elecQuantityBlock();
+    }
+}
 
 #pragma mark --- 操作移动设备的蓝牙链接 ---
 - (void)startCan

@@ -490,6 +490,13 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:10 withUpdate:nil];
 }
 
+// 获取当前硬件以及固件的信息
++ (void)sendAccessInformationAboutCurrentHardwareAndFirmware:(BLTAcceptDataUpdateValue)block
+{
+    UInt8 val[4] = {0xBE, 0x06, 0x09, 0xFB};
+    [self sendDataToWare:&val withLength:4 withUpdate:block];
+}
+
 #pragma mark --- 命令转发中心 ---
 + (void)sendDataToWare:(void *)val withLength:(NSInteger)length withUpdate:(BLTAcceptDataUpdateValue)block
 {

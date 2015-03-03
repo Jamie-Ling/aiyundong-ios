@@ -140,7 +140,8 @@ DEF_SINGLETON(PedometerHelper)
     
     NSString *where = [NSString stringWithFormat:@"dateString = '%@'", model.dateString];
     [PedometerModel updateToDB:model where:where];
-    
+    [model savePedometerModelToWeekModelAndMonthModel];
+
     if (endBlock)
     {
         endBlock([NSDate date], YES);

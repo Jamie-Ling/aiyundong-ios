@@ -358,14 +358,11 @@ AS_SINGLETON(BLTSendData)
 + (void)sendOpenBacklightSetData:(NSData *)data;
  */
 
-/*
-/** // 无需实现
- *  同步数据, 无论今天还是历史。
-- (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block;
 /**
- *  连接手环后发送连续的指令
-- (void)sendContinuousInstruction;
-
-*/
+ *  获取硬件设备信息
+ *
+ *  @param block 回调
+ */
++ (void)sendAccessInformationAboutCurrentHardwareAndFirmware:(BLTAcceptDataUpdateValue)block;
 
 @end

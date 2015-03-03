@@ -12,7 +12,7 @@
 
 + (NSData *)getUpdateFirmWareData
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"W240N_V0.13.bin" ofType:nil];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"W240N_V0_13.bin" ofType:nil];
     NSData *data = [[NSData alloc] initWithContentsOfFile:filePath];
     
     return data;

@@ -36,7 +36,6 @@
     self.title = @"关于爱运动";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"版本更新", @"意见反馈", @"帮助",  nil];
     
     //
     [self addAllControl];
@@ -65,7 +64,7 @@
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addAllControl
 {
-    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  94.0) withImageName:@"logo_test" withImageZoomSize:1.0];
+    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  64.0) withImageName:@"logo_test" withImageZoomSize:1.0];
     [self.view addSubview:_logoImageView];
     
     
@@ -73,7 +72,7 @@
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
 
-    NSString *titleString = [NSString stringWithFormat:@"V%@", app_Version];
+    NSString *titleString = [NSString stringWithFormat:@"v%@", app_Version];
     CGRect titleFrame = CGRectMake(_logoImageView.centerX + 26, _logoImageView.bottom + 2, kButtonDefaultWidth, 24);
     UILabel *title = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                  backgroundColor:[UIColor clearColor]
@@ -87,6 +86,12 @@
     [title setCenterX:_logoImageView.right - title.width / 2.0 + 3];
     [self.view addSubview:title];
     
+    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", titleString];
+    NSString *hardVersion = @"硬件版本:  v0.13";
+    NSString *firmVersion = @"固件版本:  v0.13";
+
+    _cellTitleArray = [NSMutableArray arrayWithObjects:@"版本更新", @"意见反馈", @"帮助", appVersion, hardVersion, firmVersion, nil];
+
     [self addTableView];
 }
 

@@ -42,7 +42,7 @@
     BraceletInfoModel *_showModel;
     AboutUSViewController *_aboutUSVC;
 }
-@property (nonatomic, assign) CGFloat _dumpEnergy;  //剩余电量
+@property (nonatomic, assign) NSInteger _dumpEnergy;  //剩余电量
 
 @end
 
@@ -78,11 +78,36 @@
     _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
     [_cellTitleArray insertObject:_showModel._name atIndex:2];
     
-    //得到电量
-    _dumpEnergy = _showModel._deviceElectricity;
-    
     //刷新界面
+    [self updateElecQuantity];
+    
+    DEF_WEAKSELF_(UserCenterVC);
+    [BLTManager sharedInstance].elecQuantityBlock = ^{
+        [weakSelf updateElecQuantity];
+    };
+}
+
+// 更新电量
+- (void)updateElecQuantity
+{
+    //得到电量
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        _dumpEnergy = [BLTManager sharedInstance].elecQuantity; //_showModel._deviceElectricity;
+    }
+    else
+    {
+        _dumpEnergy = 0;
+    }
+    
     [self refreshMainPage];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTManager sharedInstance].elecQuantityBlock = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -389,15 +414,15 @@
             {
                 _dumpEnergy = 0;
             }
-            if (_dumpEnergy > 1.0)
+            if (_dumpEnergy > 100)
             {
-                _dumpEnergy = 1.0;
+                _dumpEnergy = 100;
             }
             
             [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:NO];
             [oneCell.contentView addSubview:batteryView];
             
-            [rightTitle setText:[NSString stringWithFormat:@"%0.0f%%", _dumpEnergy * 100]];
+            [rightTitle setText:[NSString stringWithFormat:@"%02d%%", _dumpEnergy]];
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(batteryView.x - 2 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];

@@ -292,6 +292,17 @@ DEF_SINGLETON(BLTAcceptData)
                 }
             }
         }
+        else if (val[1] == 0x06)
+        {
+            if (val[2] == 0x09)
+            {
+                if (val[3] == 0xFB)
+                {
+                    // 当前硬件以及固件的信息.
+                    _type = BLTAcceptDataTypeInfoAboutHardAndFirm;
+                }
+            }
+        }
     }
     else if (val[0] == 0xBE)
     {
