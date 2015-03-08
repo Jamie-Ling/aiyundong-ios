@@ -11,6 +11,8 @@
 #import "BraceletInfoModel.h"
 #import "BLTManager.h"
 #import "BLTAcceptData.h"
+#import "DownloadEntity.h"
+#import "BLTDFUBaseInfo.h"
 
 @interface AppDelegate ()<EAIntroDelegate>
 
@@ -27,6 +29,12 @@
     // 启动蓝牙并自动接受数据
     [BLTAcceptData sharedInstance];
     [BLTRealTime sharedInstance];
+    [self createVideoFloders];
+    
+    [[DownloadEntity sharedInstance] downloadFileWithWebsite:DownLoadEntity_UpdateZip withRequestType:DownloadEntityRequestUpgradePatch];
+
+
+    [self performSelector:@selector(getUpdateFirmWareData) withObject:nil afterDelay:10.0];
     
     //添加测试数据
     [self addTestData];
@@ -56,6 +64,29 @@
     return YES;
 }
 
+- (void)getUpdateFirmWareData
+{
+    [BLTDFUBaseInfo getUpdateFirmWareData];
+}
+
+- (void)createVideoFloders
+{
+    NSLog(@"..%@", [XYSandbox libCachePath]);
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_UpgradePatch] error:nil];
+    
+    [XYSandbox createDirectoryAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_Others]];
+    [XYSandbox createDirectoryAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_UpgradePatch]];
+    
+    [XYSandbox createDirectoryAtPath:[[XYSandbox docPath] stringByAppendingPathComponent:@"/db/"]];
+    [XYSandbox createDirectoryAtPath:[[XYSandbox docPath] stringByAppendingPathComponent:@"/dbimg/"]];
+    
+    // 通知不用上传备份
+    [[[XYSandbox docPath] stringByAppendingPathComponent:@"/db/"] addSkipBackupAttributeToItem];
+    [[[XYSandbox docPath] stringByAppendingPathComponent:@"/dbimg/"] addSkipBackupAttributeToItem];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -71,6 +102,12 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    // 进入前台的时候蓝牙连接的话就同步.
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -81,6 +118,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
 }
 
 #pragma mark ---------------- 介绍页 & 介绍页回调-----------------

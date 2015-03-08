@@ -157,6 +157,9 @@
     [self updateContentForLabel:model];
     _chartDataArray = model.detailSleeps;
     [_chartView reloadData];
+    
+    [_chartView updateContentForViewWithModel:model withState:PieChartViewShowSleep withReloadBlock:nil];
+    
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     if (model.detailSleeps && model.detailSleeps.count > 0)

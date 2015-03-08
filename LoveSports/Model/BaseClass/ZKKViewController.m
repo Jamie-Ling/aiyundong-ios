@@ -9,6 +9,12 @@
 #import "ZKKViewController.h"
 #import "AppDelegate.h"
 
+@interface ZKKViewController ()
+
+@property (nonatomic, assign) CGPoint beginPoint;
+
+@end
+
 @implementation ZKKViewController
 
 - (instancetype)init
@@ -60,6 +66,9 @@
     swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(downSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionDown;
    // [self.view addGestureRecognizer:swipe];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+    [self.view addGestureRecognizer:pan];
 }
 
 - (void)leftSwipe
@@ -93,6 +102,29 @@
 - (void)downSwipe
 {
     NSLog(@"..下扫..");
+}
+
+- (void)panView:(UIPanGestureRecognizer *)pan
+{
+    CGPoint point = [pan locationInView:self.view];
+    if (pan.state == UIGestureRecognizerStateBegan)
+    {
+        _beginPoint = point;
+    }
+    else if (pan.state == UIGestureRecognizerStateEnded)
+    {
+        if (fabs(point.y - _beginPoint.y) < 44)
+        {
+            if (point.x - _beginPoint.x > 44)
+            {
+                [self rightSwipe];
+            }
+            else if (point.x - _beginPoint.x < -44)
+            {
+                [self leftSwipe];
+            }
+        }
+    }
 }
 
 // 下面的是6.0以后的

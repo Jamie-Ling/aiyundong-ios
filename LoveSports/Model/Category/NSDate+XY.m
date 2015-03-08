@@ -309,6 +309,24 @@ DUMMY_CLASS(NSDate_XY);
     return tz.secondsFromGMT / 3600;
 }
 
+- (NSInteger)compareOtherData:(NSDate *)date
+{
+    NSTimeInterval time1 = [self timeIntervalSince1970];
+    NSTimeInterval time2 = [date timeIntervalSince1970];
+    if (time1 == time2)
+    {
+        return 0;
+    }
+    else if (time2 > time1)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 /* 判断date_是否在当前星期 */
 
 + (BOOL)isDateThisWeek:(NSDate *)date_

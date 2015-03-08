@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DownloadEntity.h"
 
 /**
  进行空中升级的时候的各种状态。
@@ -71,6 +72,10 @@ typedef struct __attribute__((packed))
 } dfu_control_point_data_t;
 
 @interface BLTDFUBaseInfo : NSObject
+
+@property (nonatomic, assign) NSInteger zipVersion;
+
+AS_SINGLETON(BLTDFUBaseInfo)
 
 + (NSData *)getUpdateFirmWareData;
 

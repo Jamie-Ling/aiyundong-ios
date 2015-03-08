@@ -49,5 +49,6 @@
 - (NSArray *)dateToArray;
 - (BOOL)isSameWithDate:(NSDate *)date;
 + (NSInteger)timeZone;
+- (NSInteger)compareOtherData:(NSDate *)date;
 
 @end

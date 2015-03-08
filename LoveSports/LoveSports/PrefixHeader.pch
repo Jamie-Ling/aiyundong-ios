@@ -17,10 +17,9 @@
     #import "Header.h"
     #import "XYSystemInfo.h"
     #import "UIColor+RGB.h"
-    #import "UIView+Frame.h"
+    #import "UIView+Simple.h"
     #import "UILabel+Custom.h"
     #import "UIImage+ZKK.h"
-    #import "UIButton+Simple.h"
     #import "GlobalTool.h"
     #import "ObjectCTools.h"
     #import "UIView_extra.h"
@@ -36,13 +35,20 @@
     #import "NSObject+Property.h"
     #import "BLTRealTime.h"
     #import "PedometerHelper.h"
+    #import "XYSandbox.h"
+    #import "UIViewController+SystemAdap.h"
 
 #endif
+
+#define Screen_Rect ([UIScreen mainScreen ].bounds)
 
 // 当前绑定的设备ID
 #define LS_BindingID        @"LS_BindingID"
 // 是否已经设置过基本时区和度量
 #define LS_SettingBaseTimeZoneInfo  @"LS_SettingBaseTimeZoneInfo"
+
+#define LS_FileCache_Others @"Others"
+#define LS_FileCache_UpgradePatch @"UpdatePatch"
 
 // 最后同步的时间
 #define LS_LastSyncDate     @"LS_LastSyncDate"

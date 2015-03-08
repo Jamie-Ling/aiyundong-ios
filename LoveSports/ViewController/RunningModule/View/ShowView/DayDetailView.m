@@ -13,7 +13,6 @@
 #import "UIColor+FSPalette.h"
 #import "ShowWareView.h"
 #import "NSObject+Property.h"
-#import "UIScrollView+Simple.h"
 #import "CalendarHelper.h"
 
 @interface DayDetailView () <PieChartViewDelegate, PieChartViewDataSource>
@@ -300,7 +299,13 @@
 
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction
 {
+    if (direction == 1 && [_currentDate isSameWithDate:[NSDate date]])
+    {
+        return;
+    }
+    
     _currentDate = [_currentDate dateAfterDay:direction * 1];
+    
     PedometerModel *model = [PedometerHelper getModelFromDBWithDate:_currentDate];
 
     [self updateContentForView:model];

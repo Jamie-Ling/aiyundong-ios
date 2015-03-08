@@ -119,7 +119,7 @@ DEF_SINGLETON(BLTManager)
         }
     }];
     
-    [self.centralManager scanForPeripheralsWithServices:nil
+    [self.centralManager scanForPeripheralsWithServices:@[BLTUUID.uartServiceUUID]
                                                 options:nil];
 }
 

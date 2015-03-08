@@ -31,8 +31,6 @@
     [self.tabBar setBackgroundImage:[UIImage imageNamed:@"1_01"]];
     
     [self setSelectedIndex:1];
-    
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -46,17 +44,17 @@
     UserCenterVC *vc1 = [[UserCenterVC alloc] init];
     RunningVC *vc2 = [[RunningVC alloc] init];
     NightVC *vc3 = [[NightVC alloc] init];
-    MapVC *vc4 = [[MapVC alloc] init];
-    CoffeeVC *vc5 = [[CoffeeVC alloc] init];
+   // MapVC *vc4 = [[MapVC alloc] init];
+   // CoffeeVC *vc5 = [[CoffeeVC alloc] init];
     MoreVC *vc6 = [[MoreVC alloc] init];
     
-    NSArray *vcArray = @[vc1, vc2, vc3, vc4, vc5, vc6];
+    NSArray *vcArray = @[vc1, vc2, vc3, vc6];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    NSArray *imagesArray = @[@"头像", @"顶部四格1", @"顶部四格2", @"顶部四格3", @"顶部四格4", @"更多"];
+    NSArray *imagesArray = @[@"头像", @"顶部四格1", @"顶部四格2", @"更多"];
     for (int i = 0; i < vcArray.count; i++)
     {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 35)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, vc2.width / 4, 64)];
         
         button.backgroundColor = [UIColor clearColor];
         button.exclusiveTouch = YES;
@@ -90,6 +88,11 @@
         //动画显示推出用户中心
         [self pushTheUserCenterVCByAnimation];
         [self.navigationController setNavigationBarHidden:NO];
+        
+        return;
+    }
+    if (index == 3)
+    {
         
         return;
     }

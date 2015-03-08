@@ -216,14 +216,29 @@
 {
     if (_showType < 3)
     {
+        if (direction == 1 && [_dayDate isSameWithDate:[NSDate date]])
+        {
+            return;
+        }
+        
         [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
     }
     else if (_showType < 6)
     {
+        if (direction == 1 && [_weekDate isSameWithDate:[NSDate date]])
+        {
+            return;
+        }
+        
         [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
     }
     else
     {
+        if (direction == 1 && _monthIndex == [NSDate date].month)
+        {
+            return;
+        }
+        
         [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
     }
 }

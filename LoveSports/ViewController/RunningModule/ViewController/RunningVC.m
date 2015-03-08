@@ -14,7 +14,6 @@
 #import "CalendarHomeView.h"
 #import "LandscapeVC.h"
 
-#import "UIScrollView+Simple.h"
 #import "DayDetailView.h"
 #import "TrendChartView.h"
 #import "MJRefresh.h"
@@ -227,15 +226,22 @@
 {
     _offsetY += scrollView.contentOffset.y;
 
-    if (scrollView.contentOffset.y > 0.0)
+    if (_trendView.hidden)
     {
-        _isUpSwipe = YES;
-
-        [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+        if (scrollView.contentOffset.y > 0.0)
+        {
+            _isUpSwipe = YES;
+            
+            [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+        }
+        else if (scrollView.contentOffset.y < 0.0)
+        {
+            _isUpSwipe = NO;
+        }
     }
-    else if (scrollView.contentOffset.y < 0.0)
+    else
     {
-        _isUpSwipe = NO;
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
     }
 }
 

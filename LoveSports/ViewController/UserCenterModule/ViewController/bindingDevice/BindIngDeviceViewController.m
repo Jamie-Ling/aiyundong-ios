@@ -59,6 +59,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+// ShowWareViewDelegate;
 - (void)showWareViewSelectHardware:(ShowWareView *)wareView withModel:(BLTModel *)model
 {
     HardWareVC *wareVC = [[HardWareVC alloc] initWithModel:model];

@@ -6,6 +6,9 @@
 //  Copyright (c) 2014年 zorro. All rights reserved.
 //
 
+#define UIImageNamed(string) [UIImage image:string]
+#define UIImageNamedNoCache(string) [UIImage imageWithBundle:string]
+
 #import <UIKit/UIKit.h>
 
 @interface UIImage (ZKK)
