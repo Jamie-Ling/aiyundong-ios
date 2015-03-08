@@ -30,7 +30,7 @@ DEF_SINGLETON(BLTManager)
     {
         if (![LS_BindingID getObjectValue])
         {
-            [LS_BindingID setObjectValue:@""];
+            [LS_BindingID setObjectValue:@[]];
         }
         
         if (![LS_LastSyncDate getObjectValue])
@@ -119,8 +119,11 @@ DEF_SINGLETON(BLTManager)
         }
     }];
     
-    [self.centralManager scanForPeripheralsWithServices:@[BLTUUID.uartServiceUUID]
+    [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
+    // 延迟链接
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
+    [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -129,12 +132,15 @@ DEF_SINGLETON(BLTManager)
                   RSSI:(NSNumber *)RSSI
 {
     NSLog(@"advertisementData. ＝ .%@..%@..%@", advertisementData, peripheral, RSSI);
+    // NSString *name = peripheral.name;
     
     if (!_isUpdateing)
     {
         NSString *idString = [peripheral.identifier UUIDString];
         
+        // 检查是否已经添加到设备数组了.
         BLTModel *model = [self checkIsAddInAllWareWithID:idString];
+        
         if (model)
         {
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
@@ -143,7 +149,7 @@ DEF_SINGLETON(BLTManager)
         {
             model = [[BLTModel alloc] init];
             
-            model.bltID = [peripheral.identifier UUIDString] ? [peripheral.identifier UUIDString] : @"";
+            model.bltID = idString ? idString : @"";
             NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
             model.bltName = adverString ? adverString : (peripheral.name ? peripheral.name : @"");
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
@@ -163,16 +169,8 @@ DEF_SINGLETON(BLTManager)
             }
         }
         
-        if ([idString isEqualToString:[LS_BindingID getObjectValue]])
-        {
-            model.isBinding = YES;
-            [self repareConnectedDevice:model];
-        }
-        else
-        {
-            model.isBinding = NO;
-        }
-        
+        [model checkBindingState];
+                
         if (_updateModelBlock)
         {
             _updateModelBlock(_model);
@@ -185,6 +183,34 @@ DEF_SINGLETON(BLTManager)
         if ([idString isEqualToString:_updateModel.bltID])
         {
             [self repareConnectedDevice:_updateModel];
+        }
+    }
+}
+
+- (void)checkScanedAllWareDevice
+{
+    NSInteger count = 0;
+    
+    for (BLTModel *model in _allWareArray)
+    {
+        for (NSString  *uuid in [LS_BindingID getObjectValue])
+        {
+            if ([model.bltID isEqualToString:uuid])
+            {
+                count ++;
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    if (count == 1)
+    {
+        BLTModel *model = [_allWareArray lastObject];
+        if (model.isBinding)
+        {
+            [self repareConnectedDevice:[_allWareArray lastObject]];
         }
     }
 }

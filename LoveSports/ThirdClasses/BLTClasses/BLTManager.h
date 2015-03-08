@@ -40,6 +40,10 @@ typedef void(^BLTManagerElecQuantity)();
 @property (nonatomic, strong) BLTModel *updateModel;
 @property (nonatomic, assign) NSInteger elecQuantity;
 
+@property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) NSArray *productArray;
+
 AS_SINGLETON(BLTManager)
 
 // 开始扫描或者是重新扫描

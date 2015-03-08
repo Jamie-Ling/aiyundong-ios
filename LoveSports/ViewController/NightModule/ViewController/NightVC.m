@@ -30,6 +30,9 @@
 @property (nonatomic, strong) NSArray *chartDataArray;
 
 @property (nonatomic, assign) NSInteger percent;
+@property (nonatomic, assign) CGFloat totalPercent;
+@property (nonatomic, strong) NSTimer *timer;
+
 @property (nonatomic, assign) CGFloat offsetY;
 
 @end
@@ -61,7 +64,7 @@
     self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     _offsetY = (self.view.height < 485.0) ? 25.0 : 0.0;
-    _percent = 25;
+    _percent = 0;
     
     _currentDate = [NSDate date];
     
@@ -88,6 +91,39 @@
     [self.view addSubview:_chartView];
     [_chartView nightSetting];
     [_chartView reloadData];
+}
+
+- (void)startTimer
+{
+    _percent = 0;
+    if (!_timer)
+    {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+    }
+}
+
+#define NightVC_TotalPercent 100
+- (void)updateChartView
+{
+    _percent ++;
+    [_chartView reloadData];
+    
+    if (_percent >= NightVC_TotalPercent)
+    {
+        [self stopTimer];
+    }
+}
+
+- (void)stopTimer
+{
+    if (_timer)
+    {
+        if ([_timer isValid])
+        {
+            [_timer invalidate];
+            _timer = nil;
+        }
+    }
 }
 
 - (void)loadCalendarButton
@@ -156,10 +192,10 @@
     
     [self updateContentForLabel:model];
     _chartDataArray = model.detailSleeps;
-    [_chartView reloadData];
     
     [_chartView updateContentForViewWithModel:model withState:PieChartViewShowSleep withReloadBlock:nil];
-    
+    [self startTimer];
+
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     if (model.detailSleeps && model.detailSleeps.count > 0)
@@ -228,17 +264,25 @@
 {
     if (index % 2)
     {
-        if (_chartDataArray && _chartDataArray.count > 0)
+        if (index <= 288 * 2 * (_percent * 0.01))
         {
-            if (_chartDataArray.count > index)
+            if (_chartDataArray && _chartDataArray.count > 0)
             {
-                return [UIColor colorWithIndex:[_chartDataArray[index] integerValue]];
+                if (_chartDataArray.count > index)
+                {
+                    return [UIColor colorWithIndex:[_chartDataArray[index] integerValue]];
+                }
+                else
+                {
+                    return [UIColor lightGrayColor];
+                }
             }
             else
             {
                 return [UIColor lightGrayColor];
             }
         }
+
         else
         {
             return [UIColor lightGrayColor];

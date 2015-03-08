@@ -28,8 +28,10 @@
 @property (nonatomic, strong) NSMutableArray *chartData;
 
 @property (nonatomic, assign) NSInteger percent;
+@property (nonatomic, assign) CGFloat totalPercent;
 
 @property (nonatomic, assign) CGFloat offsetY;
+@property (nonatomic, strong) NSTimer *timer;
 
 @end
 
@@ -75,6 +77,38 @@
     [self addSubview:_chartView];
     [_chartView daySetting];
     [_chartView reloadData];
+}
+
+- (void)startTimer
+{
+    _percent = 0;
+    if (!_timer)
+    {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+    }
+}
+
+- (void)updateChartView
+{
+    _percent ++;
+    [_chartView reloadData];
+
+    if (_percent >= (int)(_totalPercent * 100))
+    {
+        [self stopTimer];
+    }
+}
+
+- (void)stopTimer
+{
+    if (_timer)
+    {
+        if ([_timer isValid])
+        {
+            [_timer invalidate];
+            _timer = nil;
+        }
+    }
 }
 
 - (void)loadCalendarButton
@@ -156,7 +190,7 @@
 - (void)loadScrollView
 {
     CGFloat offsetY = _chartView.totalHeight + 50;
-    _scrollView = [UIScrollView simpleInit:CGRectMake(0, offsetY, self.width, self.height - offsetY - 64)
+    _scrollView = [UIScrollView simpleInit:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)
                                   withShow:NO
                                 withBounce:YES];
     [self addSubview:_scrollView];
@@ -230,7 +264,7 @@
     {
         if (index <= 180 * (_percent * 0.01))
         {
-            return [UIColor yellowColor];
+            return [UIColor greenColor];
         }
         else
         {
@@ -265,10 +299,10 @@
     [_chartView updateContentForViewWithModel:_model
                                     withState:(PieChartViewShowState)(_lastButton.tag - 2000)
                               withReloadBlock:^(CGFloat percent) {
-                                  if (percent > -0.1)
+                                //  if (percent > -0.1)
                                   {
-                                      weakSelf.percent = percent;
-                                      [weakSelf.chartView reloadData];
+                                      weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
+                                      [weakSelf startTimer];
                                   }
                               }];
     

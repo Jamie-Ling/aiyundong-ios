@@ -370,6 +370,9 @@
 		F4CE02751AABF3F8005C29FC /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F4CE02741AABF3F8005C29FC /* libz.1.1.3.dylib */; };
 		F4CE027A1AAC0AAF005C29FC /* UIView+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02791AAC0AAF005C29FC /* UIView+Simple.m */; };
 		F4CE027D1AAC0AC8005C29FC /* UIViewController+SystemAdap.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE027C1AAC0AC8005C29FC /* UIViewController+SystemAdap.m */; };
+		F4CE02801AAC4891005C29FC /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE027F1AAC4891005C29FC /* UserInfoModel.m */; };
+		F4CE02831AAC48AB005C29FC /* UserInfoHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */; };
+		F4CE02861AAC6807005C29FC /* BLTSendOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02851AAC6807005C29FC /* BLTSendOld.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -947,6 +950,12 @@
 		F4CE02791AAC0AAF005C29FC /* UIView+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Simple.m"; sourceTree = "<group>"; };
 		F4CE027B1AAC0AC8005C29FC /* UIViewController+SystemAdap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SystemAdap.h"; sourceTree = "<group>"; };
 		F4CE027C1AAC0AC8005C29FC /* UIViewController+SystemAdap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SystemAdap.m"; sourceTree = "<group>"; };
+		F4CE027E1AAC4891005C29FC /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
+		F4CE027F1AAC4891005C29FC /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
+		F4CE02811AAC48AB005C29FC /* UserInfoHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoHelp.h; sourceTree = "<group>"; };
+		F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHelp.m; sourceTree = "<group>"; };
+		F4CE02841AAC6807005C29FC /* BLTSendOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendOld.h; sourceTree = "<group>"; };
+		F4CE02851AAC6807005C29FC /* BLTSendOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendOld.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1574,6 +1583,10 @@
 				69FD41C41A7FCC2C0023B74D /* BraceletInfoModel.m */,
 				69FD41C51A7FCC2C0023B74D /* VersionInfoModel.h */,
 				69FD41C61A7FCC2C0023B74D /* VersionInfoModel.m */,
+				F4CE027E1AAC4891005C29FC /* UserInfoModel.h */,
+				F4CE027F1AAC4891005C29FC /* UserInfoModel.m */,
+				F4CE02811AAC48AB005C29FC /* UserInfoHelp.h */,
+				F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1915,6 +1928,8 @@
 				F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */,
 				F4AD56FA1A8F779B00955BBC /* BLTRealTime.h */,
 				F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */,
+				F4CE02841AAC6807005C29FC /* BLTSendOld.h */,
+				F4CE02851AAC6807005C29FC /* BLTSendOld.m */,
 			);
 			path = BLTClasses;
 			sourceTree = "<group>";
@@ -2665,6 +2680,7 @@
 				F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */,
 				69E097401A873D6E003F2EB9 /* NSDate+DateTools.m in Sources */,
 				69FD42141A7FCC2C0023B74D /* ProvinceInfo.m in Sources */,
+				F4CE02861AAC6807005C29FC /* BLTSendOld.m in Sources */,
 				F49529D11A766E03002A5382 /* BLTManager.m in Sources */,
 				F4B6939A1A6F403400B42395 /* FMDatabasePool.m in Sources */,
 				F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */,
@@ -2688,6 +2704,7 @@
 				69E097261A873627003F2EB9 /* WeekModel.m in Sources */,
 				69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */,
 				F4B693A51A6F403400B42395 /* NSData+MKBase64.m in Sources */,
+				F4CE02831AAC48AB005C29FC /* UserInfoHelp.m in Sources */,
 				F4B693A61A6F403400B42395 /* NSDate+RFC1123.m in Sources */,
 				6970ED121A826266009572D5 /* WeekView.m in Sources */,
 				F4B6935E1A6F402A00B42395 /* MBProgressHUD.m in Sources */,
@@ -2755,6 +2772,7 @@
 				F4644BDA1A9464D6003088E9 /* UIScrollView+MJExtension.m in Sources */,
 				F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */,
 				F43F8EE31A8106ED008A431B /* DataModel.m in Sources */,
+				F4CE02801AAC4891005C29FC /* UserInfoModel.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
 				69FD421E1A7FCC2C0023B74D /* HardWareVC.m in Sources */,
 				69FD42201A7FCC2C0023B74D /* CustomViewController.m in Sources */,
@@ -2846,8 +2864,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2867,7 +2885,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2890,8 +2908,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2904,7 +2922,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2915,8 +2933,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2927,7 +2945,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Debug;
 		};
@@ -2935,8 +2953,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2947,7 +2965,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Release;
 		};
@@ -2955,8 +2973,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2968,7 +2986,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Debug;
@@ -2977,8 +2995,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2986,7 +3004,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Release;

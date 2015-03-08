@@ -19,6 +19,16 @@
 
 @implementation BindIngDeviceViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

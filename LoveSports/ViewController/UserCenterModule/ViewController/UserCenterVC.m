@@ -57,9 +57,10 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱动运手环", @"梆定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动商城", nil];
+    _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱动运手环", @"梆定硬件", @"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动商城", nil];
     
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动手环", @"绑定硬件", @"", @"消息", @"朋友",@"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动", nil];
+    // @"消息", @"朋友",@"",
+    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动手环", @"绑定硬件", @"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动", nil];
     
     //tableview
     [self addTableView];
@@ -429,7 +430,7 @@
             
         }
             break;
-        case 8:
+        case 5:
         {
             [rightTitle setText:@"收获地址? 订单?"];
             [rightTitle sizeToFit];
@@ -438,7 +439,7 @@
             
         }
             break;
-        case 13:
+        case 10:
         {
             [rightTitle setText:@"    帮助  \n意见反馈"];
             [rightTitle sizeToFit];
@@ -486,37 +487,37 @@
             [self bindingDevice];
         }
             break;
-        case 5:
+        case 500:
         {
             [self message];
         }
             break;
-        case 6:
+        case 600:
         {
             [self friends];
         }
             break;
-        case 8:
+        case 5:
         {
             [self ourShop];
         }
             break;
-        case 9:
+        case 6:
         {
             [self userInfo];
         }
             break;
-        case 11:
+        case 8:
         {
             [self praise];
         }
             break;
-        case 12:
+        case 9:
         {
             [self clearCache];
         }
             break;
-        case 13:
+        case 10:
         {
             [self aboutUs];
         }

@@ -43,6 +43,59 @@
     return model;
 }
 
++ (void)addBindingDeviceWithUUID:(NSString *)string
+{
+    if (string)
+    {
+        NSMutableArray *array = [NSMutableArray arrayWithArray:[LS_BindingID getObjectValue]];
+        
+        if (![array containsObject:string])
+        {
+            [array addObject:string];
+            [LS_BindingID setObjectValue:array];
+        }
+    }
+}
+
++ (void)removeBindingDeviceWithUUID:(NSString *)string
+{
+    if (string)
+    {
+        NSMutableArray *array = [NSMutableArray arrayWithArray:[LS_BindingID getObjectValue]];
+        
+        if ([array containsObject:string])
+        {
+            [array removeObject:string];
+            [LS_BindingID setObjectValue:array];
+        }
+    }
+}
+
+- (void)checkBindingState
+{
+    if ([[LS_BindingID getObjectValue] containsObject:self.bltID])
+    {
+        self.isBinding = YES;
+    }
+    else
+    {
+        self.isBinding = NO;
+    }
+}
+
++ (void)updateDeviceName:(NSString *)name
+{
+    [BLTManager sharedInstance].model.bltName = name;
+    
+    for (BLTModel *model in [BLTManager sharedInstance].allWareArray)
+    {
+        if (model == [BLTManager sharedInstance].model)
+        {
+            model.bltName = name;
+        }
+    }
+}
+
 // 主键
 + (NSString *) getPrimaryKey
 {

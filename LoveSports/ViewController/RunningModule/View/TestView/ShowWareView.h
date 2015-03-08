@@ -15,6 +15,9 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UILabel *label;
 
+@property (nonatomic, strong) NSArray *showArray;
+@property (nonatomic, assign) BOOL isShowAll;
+
 @property (nonatomic, assign) id <ShowWareViewDelegate> delegate;
 
 @end

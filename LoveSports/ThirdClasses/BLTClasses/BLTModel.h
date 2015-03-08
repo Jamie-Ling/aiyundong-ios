@@ -37,4 +37,9 @@
 - (void)forgeFirmwareInformation;
 - (BLTModel *)getCurrentModelFromDB;
 
++ (void)addBindingDeviceWithUUID:(NSString *)string;
++ (void)removeBindingDeviceWithUUID:(NSString *)string;
+- (void)checkBindingState;
++ (void)updateDeviceName:(NSString *)name;
+
 @end

@@ -372,6 +372,10 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
         [button setTitle:title forState:UIControlStateSelected];
     }
     
+    button.selected = NO;
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+
     return button;
 }
 
