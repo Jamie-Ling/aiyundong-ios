@@ -11,6 +11,7 @@
 #import "NSDate+XY.h"
 #import "PedometerModel.h"
 #import "BraceletInfoModel.h"
+#import "BLTSendOld.h"
 
 @implementation BLTSimpleSend
 
@@ -126,6 +127,21 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 #pragma mark --- 蓝牙连接后发送连续的指令 ---
 - (void)sendContinuousInstruction
 {
+    NSString *name = [BLTManager sharedInstance].model.bltName;
+    if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
+        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"])
+    {
+        [self oldDeviceChannel];
+    }
+    else
+    {
+        [self newDeviceChannel];
+    }
+}
+
+// 新设备命令通道.
+- (void)newDeviceChannel
+{
     [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetLocTime)
         {
@@ -133,13 +149,20 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         }
     }];
     
-    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.6];
     
     // 如果已经设定过时区信息才获取历史纪录。测试demo版
     if ([LS_SettingBaseTimeZoneInfo getBOOLValue])
     {
-        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.6];
+        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.9];
     }
+}
+
+// 旧设备命令通道.
+- (void)oldDeviceChannel
+{
+    [BLTSendOld setUserInfoToOldDevice];
 }
 
 - (void)sendRequestHistoryDataSaveDate
@@ -200,6 +223,25 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }];
 }
 
+// 请求硬件信息
+- (void)sendRequestHardInfo
+{
+    [BLTSendData sendAccessInformationAboutCurrentHardwareAndFirmware:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeInfoAboutHardAndFirm)
+        {
+            NSData *data = (NSData *)object;
+            UInt8 val[20] = {0};
+            [data getBytes:&val length:data.length];
+            
+            [BLTManager sharedInstance].model.hardType =
+            [NSString stringWithFormat:@"%c%c%c%c%c%c",
+             val[4], val[5], val[6], val[7], val[8], val[9]];
+            [BLTManager sharedInstance].model.hardVersion = val[10];
+            [BLTManager sharedInstance].model.hardVersion = val[11];
+        }
+    }];
+}
+
 /**
  *   ---------------------------------   定时器操作中心   --------------------------------------
  */
@@ -234,6 +276,23 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         {
             [self.timer invalidate];
             self.timer = nil;
+        }
+    }
+}
+
+- (void)synHistoryDataEnterForeground
+{
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        NSString *name = [BLTManager sharedInstance].model.bltName;
+        if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
+            [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"])
+        {
+            
+        }
+        else
+        {
+            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
         }
     }
 }

@@ -26,6 +26,9 @@ AS_SINGLETON(BLTSimpleSend)
  */
 - (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block;
 
+// 进入前台同步数据
+- (void)synHistoryDataEnterForeground;
+
 /**
  *  连接手环后发送连续的指令
  */
@@ -34,5 +37,7 @@ AS_SINGLETON(BLTSimpleSend)
 // 更新界面...
 - (void)endSyncData:(NSDate *)date;
 
+- (void)startTimer;
+- (void)stopTimer;
 
 @end

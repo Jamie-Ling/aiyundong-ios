@@ -104,10 +104,7 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
     // 进入前台的时候蓝牙连接的话就同步.
-    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
-    {
-        [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
-    }
+    [[BLTSimpleSend sharedInstance] synHistoryDataEnterForeground];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

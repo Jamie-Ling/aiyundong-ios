@@ -101,15 +101,7 @@ DEF_SINGLETON(BLTAcceptData)
                 else if (val[3] == 0xFB)
                 {
                     _type = BLTAcceptDataTypeCheckWareTime;
-                    
-                    for (int i = 0; i < 16; i++)
-                    {
-                        NSLog(@"....%d", val[i]);
-                    }
-                    
                     NSString *string = [NSString stringWithFormat:@"当前设备时间: \n%d月%d日 %d:%d \n时区:%d", val[6], val[7], val[10], val[11], val[9]];
-                    
-                    NSLog(@"%d", (val[4] << 8) | (val[5]));
                     object = string;
                     // 计步器发送时间到手机.
                 }
@@ -244,9 +236,9 @@ DEF_SINGLETON(BLTAcceptData)
                 }
                 else if (val[3] == 0xFE)
                 {
-//                    _realTimeType = BLTAcceptDataTypeRealTimeTransState;
-//                    
-//                    [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
+                   _realTimeType = BLTAcceptDataTypeRealTimeTransState;
+                    
+                    // [[BLTRealTime sharedInstance] saveRealTimeDataToDBAndUpdateUI:_realTimeData];
                 }
             }
             else if (order == 0x02)
@@ -300,6 +292,8 @@ DEF_SINGLETON(BLTAcceptData)
                 {
                     // 当前硬件以及固件的信息.
                     _type = BLTAcceptDataTypeInfoAboutHardAndFirm;
+                    
+                    object = data;
                 }
             }
         }
@@ -314,6 +308,76 @@ DEF_SINGLETON(BLTAcceptData)
                 {
                     _type = BLTAcceptDataTypeRealTimeTransSportsData;
                 }
+            }
+        }
+    }
+    else if (val[0] == 86)
+    {
+        if (val[1] == 0)
+        {
+            if (val[2] == 01)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldSetUserInfo;
+                }
+            }
+            else if (val[2] == 0x0A)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldSetAlarmClock;
+                }
+            }
+            else if (val[2] == 6)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldRequestDataLength;
+                    object = @(val[4]);
+                }
+            }
+            else if (val[2] == 0x0B)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldSetWearingWay;
+                }
+            }
+            else if (val[2] == 0x0C)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldSetWearingWay;
+                }
+            }
+            else if (val[2] == 0x0D)
+            {
+                if (val[3] == 01)
+                {
+                    _type = BLTAcceptDataTypeOldEventInfo;
+                }
+            }
+        }
+        else if (val[1] == 0xAA)
+        {
+            if (val[2] == 7)
+            {
+                if (val[3] == 1)
+                {
+                    _type = BLTAcceptDataTypeOldRequestSportEnd;
+                }
+                else if (val[4] == 6)
+                {
+                    _type = BLTAcceptDataTypeOldRequestSportNoData;
+                }
+            }
+        }
+        else if (val[1] == 2)
+        {
+            if (val[2] == 1)
+            {
+                _type = BLTAcceptDataTypeOldRequestUserInfo;
             }
         }
     }

@@ -147,7 +147,8 @@
     self.stepSize     = (val[40] << 8)  | (val[41]);
     self.weight       = ((val[42] << 8) + (val[43])) / 100;
     self.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
-    self.totalBytes   = (val[47] << 8)  | (val[48]);
+    self.targetSleep  = (val[47] << 8)  | (val[48]);
+    self.totalBytes   = (val[49] << 8)  | (val[50]);
     NSLog(@"totalBytes..%ld", (long)self.totalBytes);
 }
 

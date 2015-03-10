@@ -291,6 +291,8 @@
 		F470E7F51A7FB7660009E649 /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = F470E7EA1A7FB7660009E649 /* CalendarView.m */; };
 		F470E7F61A7FB7660009E649 /* chack.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7EB1A7FB7660009E649 /* chack.png */; };
 		F470E7F71A7FB7660009E649 /* NSDate+WQCalendarLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = F470E7EE1A7FB7660009E649 /* NSDate+WQCalendarLogic.m */; };
+		F4792FD61AAF2CF000B44A23 /* BLTAcceptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD51AAF2CF000B44A23 /* BLTAcceptOld.m */; };
+		F4792FD91AAF3C6000B44A23 /* PedometerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD81AAF3C6000B44A23 /* PedometerOld.m */; };
 		F47F35201A7E6D1400D6D220 /* PedometerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F351F1A7E6D1400D6D220 /* PedometerModel.m */; };
 		F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529C61A7662BF002A5382 /* UserModelEntity.m */; };
 		F49529D11A766E03002A5382 /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CA1A766E03002A5382 /* BLTManager.m */; };
@@ -790,6 +792,10 @@
 		F470E7EC1A7FB7660009E649 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		F470E7ED1A7FB7660009E649 /* NSDate+WQCalendarLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WQCalendarLogic.h"; sourceTree = "<group>"; };
 		F470E7EE1A7FB7660009E649 /* NSDate+WQCalendarLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WQCalendarLogic.m"; sourceTree = "<group>"; };
+		F4792FD41AAF2CF000B44A23 /* BLTAcceptOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTAcceptOld.h; sourceTree = "<group>"; };
+		F4792FD51AAF2CF000B44A23 /* BLTAcceptOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTAcceptOld.m; sourceTree = "<group>"; };
+		F4792FD71AAF3C6000B44A23 /* PedometerOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerOld.h; sourceTree = "<group>"; };
+		F4792FD81AAF3C6000B44A23 /* PedometerOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerOld.m; sourceTree = "<group>"; };
 		F47F351E1A7E6D1400D6D220 /* PedometerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerModel.h; sourceTree = "<group>"; };
 		F47F351F1A7E6D1400D6D220 /* PedometerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerModel.m; sourceTree = "<group>"; };
 		F49529C51A7662BF002A5382 /* UserModelEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelEntity.h; sourceTree = "<group>"; };
@@ -1751,6 +1757,8 @@
 				F47F351F1A7E6D1400D6D220 /* PedometerModel.m */,
 				F4AD57001A8F77C500955BBC /* PedometerHelper.h */,
 				F4AD56F61A8F777C00955BBC /* PedometerHelper.m */,
+				F4792FD71AAF3C6000B44A23 /* PedometerOld.h */,
+				F4792FD81AAF3C6000B44A23 /* PedometerOld.m */,
 				69E097241A873627003F2EB9 /* WeekModel.h */,
 				69E097251A873627003F2EB9 /* WeekModel.m */,
 				69E097431A87B991003F2EB9 /* MonthModel.h */,
@@ -1922,6 +1930,8 @@
 				F49529D01A766E03002A5382 /* BLTUUID.m */,
 				F445F7A51A79381C00D5B170 /* BLTAcceptData.h */,
 				F445F7A61A79381C00D5B170 /* BLTAcceptData.m */,
+				F4792FD41AAF2CF000B44A23 /* BLTAcceptOld.h */,
+				F4792FD51AAF2CF000B44A23 /* BLTAcceptOld.m */,
 				F445F7A71A79381C00D5B170 /* BLTSendData.h */,
 				F445F7A81A79381C00D5B170 /* BLTSendData.m */,
 				F4AD56FC1A8F779B00955BBC /* BLTSimpleSend.h */,
@@ -2745,6 +2755,7 @@
 				69FD421F1A7FCC2C0023B74D /* BraceletInfoViewController.m in Sources */,
 				F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */,
 				699242051A768BDF00EFF121 /* LKDBHelper.m in Sources */,
+				F4792FD91AAF3C6000B44A23 /* PedometerOld.m in Sources */,
 				F4B693BA1A6F404A00B42395 /* UIViewController+PopRoot.m in Sources */,
 				F4CE027D1AAC0AC8005C29FC /* UIViewController+SystemAdap.m in Sources */,
 				69FD42241A7FCC2C0023B74D /* UpdateBraceletNameViewController.m in Sources */,
@@ -2790,6 +2801,7 @@
 				698A90CD1A6FEF76005BABE6 /* ObjectCTools.m in Sources */,
 				F470E7F21A7FB7660009E649 /* CalendarLogic.m in Sources */,
 				699242061A768BDF00EFF121 /* LKDBUtils.m in Sources */,
+				F4792FD61AAF2CF000B44A23 /* BLTAcceptOld.m in Sources */,
 				69FD42021A7FCC2C0023B74D /* HomeVC.m in Sources */,
 				69FD42071A7FCC2C0023B74D /* NightVC.m in Sources */,
 				69E097451A87B991003F2EB9 /* MonthModel.m in Sources */,
@@ -2864,8 +2876,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2885,7 +2897,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2908,8 +2920,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2922,7 +2934,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2933,8 +2945,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2945,7 +2957,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 			};
 			name = Debug;
 		};
@@ -2953,8 +2965,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2965,7 +2977,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 			};
 			name = Release;
 		};
@@ -2973,8 +2985,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2986,7 +2998,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Debug;
@@ -2995,8 +3007,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -3004,7 +3016,7 @@
 				INFOPLIST_FILE = LoveSportsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoveSports.app/LoveSports";
 			};
 			name = Release;

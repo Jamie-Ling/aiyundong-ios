@@ -26,6 +26,10 @@
 @property (nonatomic, assign) BOOL isIgnore;            // 是否被忽略
 @property (nonatomic, assign) BOOL isBinding;           // 是否绑定了
 
+@property (nonatomic, strong) NSString *hardType;       // 硬件型号
+@property (nonatomic, assign) NSInteger hardVersion;    // 硬件版本
+@property (nonatomic, assign) NSInteger firmVersion;    // 固件版本
+
 @property (nonatomic, assign) NSInteger stepSize;       // 步距
 @property (nonatomic, assign) NSInteger targetStep;     // 目标步数
 @property (nonatomic, assign) NSInteger weight;         // 体重

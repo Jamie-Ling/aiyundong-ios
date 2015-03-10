@@ -42,6 +42,18 @@ typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeCloseTransSportsData,      // 关闭实时传输运动数据
     BLTAcceptDataTypeRealTimeTransState,        // 实时传输运动数据的状态
     BLTAcceptDataTypeInfoAboutHardAndFirm,      // 实时传输运动数据的状态
+    
+    // 旧设备命令通道.
+    BLTAcceptDataTypeOldSetUserInfo,            // 设置用户信息
+    BLTAcceptDataTypeOldRequestUserInfo,        // 请求用户信息
+    BLTAcceptDataTypeOldSetAlarmClock,          // 设置闹钟
+    BLTAcceptDataTypeOldRequestDataLength,      // 请求运动数据长度
+    BLTAcceptDataTypeOldRequestSportData,       // 请求运动数据
+    BLTAcceptDataTypeOldRequestSportEnd,        // 请求后数据同步结束.
+    BLTAcceptDataTypeOldRequestSportNoData,     // 请求后没有数据.
+    BLTAcceptDataTypeOldSetWearingWay,          // 设置佩戴方式
+    BLTAcceptDataTypeOldEventInfo,              // 传输事件信息
+    
     BLTAcceptDataTypeSuccess,                   // 通讯成功
     BLTAcceptDataTypeError                      // 通讯错误
 } BLTAcceptDataType;

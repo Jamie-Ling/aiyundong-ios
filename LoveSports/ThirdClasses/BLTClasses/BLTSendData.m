@@ -139,13 +139,15 @@ DEF_SINGLETON(BLTSendData)
                                      withWeight:(NSInteger)weight
                                      withTarget:(NSInteger)target
                                    withStepAway:(NSInteger)step
+                                withSleepTarget:(NSInteger)time
                                 withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[15] = {0xBE, 0x01, 0x03, 0xFE,
+    UInt8 val[17] = {0xBE, 0x01, 0x03, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
         (UInt8)(weight >> 8), (UInt8)weight, (UInt8)(target >> 16), (UInt8)(target >> 8),
-        (UInt8)target, (UInt8)(step >> 8) ,(UInt8)step};
-    [self sendDataToWare:&val withLength:15 withUpdate:block];
+        (UInt8)target, (UInt8)(step >> 8) ,(UInt8)step,
+        time/60, time%60};
+    [self sendDataToWare:&val withLength:17 withUpdate:block];
 }
 
 + (void)sendCheckDateOfHardwareDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
@@ -256,7 +258,7 @@ DEF_SINGLETON(BLTSendData)
 {
     UInt8 val[20] = {0xBE, 0x01, 0x09, 0xFE, open};
     
-    int count = 3;
+    int count = 4;
     if (alarms)
     {
         for (AlarmClockModel *model in alarms)
@@ -493,7 +495,7 @@ DEF_SINGLETON(BLTSendData)
 // 获取当前硬件以及固件的信息
 + (void)sendAccessInformationAboutCurrentHardwareAndFirmware:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[4] = {0xBE, 0x06, 0x09, 0xFB};
+    UInt8 val[4] = {0xBE, 0x06, 0x09, 0xED};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 

@@ -423,11 +423,10 @@
             [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:NO];
             [oneCell.contentView addSubview:batteryView];
             
-            [rightTitle setText:[NSString stringWithFormat:@"%02d%%", _dumpEnergy]];
+            [rightTitle setText:[NSString stringWithFormat:@"%02ld%%", (long)_dumpEnergy]];
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(batteryView.x - 2 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
-            
         }
             break;
         case 5:
@@ -436,7 +435,6 @@
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(rightImageView.x - 12 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
-            
         }
             break;
         case 10:
@@ -445,12 +443,9 @@
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(rightImageView.x - 12 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
-            
         }
             break;
             
-       
-
         default:
             break;
     }
@@ -545,7 +540,6 @@
     }
     return nil;
 }
-
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -88,6 +88,7 @@ AS_SINGLETON(BLTSendData)
                                      withWeight:(NSInteger)weight
                                      withTarget:(NSInteger)target
                                    withStepAway:(NSInteger)step
+                                withSleepTarget:(NSInteger)time
                                 withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /** // 只需点击事件
@@ -364,5 +365,10 @@ AS_SINGLETON(BLTSendData)
  *  @param block 回调
  */
 + (void)sendAccessInformationAboutCurrentHardwareAndFirmware:(BLTAcceptDataUpdateValue)block;
+
+// 命令转发通道
++ (void)sendDataToWare:(void *)val
+            withLength:(NSInteger)length
+            withUpdate:(BLTAcceptDataUpdateValue)block;
 
 @end

@@ -223,7 +223,7 @@
                             NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
                             NSInteger targetSums = [nowSelectedString integerValue];
                             
-                            [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                            [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withSleepTarget:8*60 withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                 if (type == BLTAcceptDataTypeSetUserInfo)
                                 {
                                     NSLog(@"更新步数成功");
@@ -279,7 +279,7 @@
     //步数
     NSInteger targetSums = _thisModel._stepNumber;
     
-    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withSleepTarget:8*60 withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetUserInfo)
         {
             NSLog(@"更新目标成功");
