@@ -86,13 +86,13 @@
 
 - (void)dismissLink
 {
-    SHOWMBProgressHUD(@"该设备连接突然断开", nil, nil, NO, 2.0);
-    [self performSelector:@selector(popCurrentVC) withObject:nil afterDelay:2.0];
+    // SHOWMBProgressHUD(@"该设备连接突然断开", nil, nil, NO, 2.0);
+    // [self performSelector:@selector(popCurrentVC) withObject:nil afterDelay:2.0];
 }
 
 - (void)popCurrentVC
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)loadLabels

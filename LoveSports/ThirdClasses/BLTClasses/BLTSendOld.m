@@ -10,6 +10,8 @@
 
 @implementation BLTSendOld
 
+DEF_SINGLETON(BLTSendOld)
+
 // 一
 + (void)sendOldSetUserInfo:(NSDate *)date
               withBirthDay:(NSDate *)birthDay
@@ -125,6 +127,7 @@
     [BLTSendOld sendOldRequestDataInfoLengthWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeOldRequestDataLength)
         {
+            _dataBytes = object;
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startSyncSportData) object:nil];
             [self performSelector:@selector(startSyncSportData) withObject:nil afterDelay:0.3];
         }
@@ -139,21 +142,20 @@
     [BLTSendOld sendOldRequestSportDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         [self stopTimer];
         
-        if (type == BLTAcceptDataTypeSuccess)
+        if (type == BLTAcceptDataTypeOldRequestSportEnd)
         {
-            if (object && self.startDate)
+            if (object)
             {
-                [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object]];
+                [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, _dataBytes]];
             }
         }
         else if (type == BLTAcceptDataTypeError)
         {
-            NSLog(@"...失败。。。");
             SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
         }
         else if (type == BLTAcceptDataTypeRequestHistoryNoData)
         {
-          
+            SHOWMBProgressHUD(@"没有数据.", nil, nil, NO, 2.0);
         }
     }];
     
@@ -185,21 +187,66 @@
     }
 }
 
-
 + (void)setUserInfoToOldDevice
 {
+    // type 0代表公制, 1代表英制
     [BLTSendOld sendOldSetUserInfo:[NSDate date]
                       withBirthDay:[NSDate dateWithString:@"1985-03-21"]
                         withWeight:170
                    withTargetSteps:10000
                           withStep:50
-                          withType:1
+                          withType:0
                    withUpdateBlock:^(id object, BLTAcceptDataType type) {
                        if (type == BLTAcceptDataTypeOldSetUserInfo)
                        {
-                           [self performSelector:@selector(requestSportDataLength) withObject:nil afterDelay:0.3];
+                           [[BLTSendOld sharedInstance] performSelector:@selector(requestSportDataLength) withObject:nil afterDelay:0.3];
                        }
                    }];
 }
 
 @end
+
+
+
+/*
+ 20:
+ <00000000 00000000 00000000 00000000 00000000>
+ <81000000 00000000 00000000 00000000 00000000>
+ 
+ 14:
+ <80000000 00000000 00000000 00800000 00000000>
+ 
+ 32:
+ 00 770100008d02000013000000 5700b1000400 20
+ 8101dc010f00 0000-0000-0000 b403-0000-0000 0000
+ 
+ 14:
+ 80770100 008d0200 00130000 009a0100 00000000
+ 
+ 38:
+ 00770100 008d0200 00130000 00000000 00000000
+ 81000000 00000000 00000000 00000000 00009b01
+ 
+ 20:
+ 00 8d010000-8d020000-14000000 1600-0000-0100 48
+ 81010000 00000000 00000000 00000000 00000000
+ 
+ kCBAdvDataIsConnectable = 1;
+ kCBAdvDataLocalName = MillionPedometer;
+ kCBAdvDataManufacturerData = <00800080>;
+ 
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+

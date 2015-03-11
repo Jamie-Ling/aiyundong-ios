@@ -12,6 +12,10 @@
 
 @interface BLTSendOld : BLTSimpleSend
 
+@property (nonatomic, strong) NSNumber *dataBytes;
+
+AS_SINGLETON(BLTSendOld)
+
 // 设置用户信息
 + (void)sendOldSetUserInfo:(NSDate *)date
               withBirthDay:(NSDate *)birthDay

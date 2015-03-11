@@ -190,7 +190,7 @@ DEF_SINGLETON(BLTManager)
 - (void)checkScanedAllWareDevice
 {
     NSInteger count = 0;
-    
+    BLTModel *bindModel = nil;
     for (BLTModel *model in _allWareArray)
     {
         for (NSString  *uuid in [LS_BindingID getObjectValue])
@@ -198,6 +198,7 @@ DEF_SINGLETON(BLTManager)
             if ([model.bltID isEqualToString:uuid])
             {
                 count ++;
+                bindModel = model;
                 if (count > 1)
                 {
                     break;
@@ -205,19 +206,23 @@ DEF_SINGLETON(BLTManager)
             }
         }
     }
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
     if (count == 1)
     {
-        BLTModel *model = [_allWareArray lastObject];
-        if (model.isBinding)
+        [self repareConnectedDevice:bindModel];
+    }
+    else
+    {
+        if (self.connectState != BLTManagerConnected)
         {
-            [self repareConnectedDevice:[_allWareArray lastObject]];
+            [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
         }
     }
 }
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
-    NSLog(@"开始链接.....%@..%@..%@", model, self.discoverPeripheral, model.peripheral);
     if (self.discoverPeripheral != model.peripheral)
     {
         _connectState = BLTManagerConnecting;

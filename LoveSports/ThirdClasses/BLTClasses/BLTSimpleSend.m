@@ -129,7 +129,8 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 {
     NSString *name = [BLTManager sharedInstance].model.bltName;
     if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
-        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"])
+        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"] ||
+        [name isEqualToString:@"MillionPedometer"])
     {
         [self oldDeviceChannel];
     }

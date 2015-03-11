@@ -22,6 +22,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (_wareView)
+    {
+        [_wareView.tableView reloadData];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated

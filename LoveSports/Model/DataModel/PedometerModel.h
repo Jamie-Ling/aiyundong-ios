@@ -104,6 +104,9 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 // 将模型保存到周表和月表
 - (void)savePedometerModelToWeekModelAndMonthModel;
 
+- (void)showMessage;
+
+
 @end
 
 

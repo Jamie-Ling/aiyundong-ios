@@ -50,7 +50,7 @@ DEF_SINGLETON(DownloadEntity)
             
         } failed:^(MKNetworkOperation *op, NSError *err) {
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(repeatDownloadFileFromCurrentWebsite:) object:@[website, [NSNumber numberWithInteger:requestType]]];
-            [self performSelector:@selector(repeatDownloadFileFromCurrentWebsite:) withObject:@[website, [NSNumber numberWithInteger:requestType]] afterDelay:10];
+            [self performSelector:@selector(repeatDownloadFileFromCurrentWebsite:) withObject:@[website, [NSNumber numberWithInteger:requestType]] afterDelay:60];
         }];
         
         [self.downloadEngine submit:down];
