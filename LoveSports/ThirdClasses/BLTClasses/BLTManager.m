@@ -33,6 +33,11 @@ DEF_SINGLETON(BLTManager)
             [LS_BindingID setObjectValue:@[]];
         }
         
+        if (![LS_LastWareUUID getObjectValue])
+        {
+            [LS_LastWareUUID setObjectValue:@""];
+        }
+        
         if (![LS_LastSyncDate getObjectValue])
         {
             [LS_LastSyncDate setObjectValue:[[NSDate date] dateToString]];

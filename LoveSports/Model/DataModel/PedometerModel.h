@@ -10,7 +10,10 @@
 
 @interface StepsModel : NSObject
 
+// 这个模型暂时没发现在哪里使用....
+@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
 @property (nonatomic, strong) NSString *userName;
+
 @property (nonatomic, strong) NSString *dateDay;
 @property (nonatomic, assign) NSInteger timeOrder;
 @property (nonatomic, assign) NSInteger stepSize;
@@ -28,7 +31,9 @@ typedef enum {
 
 @interface SportsModel : NSObject
 
+@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
 @property (nonatomic, strong) NSString *userName;
+
 @property (nonatomic, strong) NSString *dateDay;
 @property (nonatomic, strong) NSString *dateHour;
 @property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
@@ -41,7 +46,9 @@ typedef enum {
 
 @interface SleepModel : NSObject
 
+@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
 @property (nonatomic, strong) NSString *userName;
+
 @property (nonatomic, strong) NSString *dateDay;
 @property (nonatomic, strong) NSString *dateHour;
 @property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
@@ -53,8 +60,8 @@ typedef enum {
 @interface PedometerModel : NSObject
 typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
-@property (nonatomic, strong) NSString *wareUUID;
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
+@property (nonatomic, strong) NSString *userName;           // 用户名
 @property (nonatomic, strong) NSString *dateString;
 @property (nonatomic, assign) NSInteger totalBytes;
 @property (nonatomic, assign) NSInteger settingBytes;

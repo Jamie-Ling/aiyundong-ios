@@ -84,18 +84,23 @@
     _percent = 0;
     if (!_timer)
     {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
     }
+    //[self performSelector:@selector(updateChartView) withObject:nil afterDelay:0.02];
 }
 
 - (void)updateChartView
 {
-    _percent ++;
+    _percent += 4;
     [_chartView reloadData];
-
+    
     if (_percent >= (int)(_totalPercent * 100))
     {
         [self stopTimer];
+    }
+    else
+    {
+       // [self performSelector:@selector(updateChartView) withObject:nil afterDelay:0.02];
     }
 }
 
@@ -255,14 +260,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 180;
+    return 288 * 2;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 180 * (_percent * 0.01))
+        if (index <= 288 * 2 * (_percent * 0.01))
         {
             return [UIColor greenColor];
         }
@@ -338,6 +343,7 @@
         return;
     }
     
+    [self stopTimer];
     _currentDate = [_currentDate dateAfterDay:direction * 1];
     
     PedometerModel *model = [PedometerHelper getModelFromDBWithDate:_currentDate];

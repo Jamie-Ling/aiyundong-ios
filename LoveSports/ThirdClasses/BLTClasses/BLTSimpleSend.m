@@ -17,75 +17,76 @@
 
 DEF_SINGLETON(BLTSimpleSend)
 
-// 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
-- (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
+// 新设备的同步方法.
+- (void)synNewDeviceHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
-    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    if (block)
     {
-        if (block)
-        {
-            self.backBlock = block;
-        }
+        self.backBlock = block;
+    }
+    
+    self.waitTime = 0;
+    self.failCount = 0;
+    [[BLTAcceptData sharedInstance] cleanMutableData];
+    
+    if ([PedometerHelper queryWhetherCurrentDateDataSaveAllDay:self.startDate])
+    {
+        // 如果已经进行过完整的保存就不要再down了。
+        self.startDate = [self.startDate dateAfterDay:1];
+        [self startSyncHistoryData];
         
-        self.waitTime = 0;
-        self.failCount = 0;
-        [[BLTAcceptData sharedInstance] cleanMutableData];
-  
-        if ([PedometerHelper queryWhetherCurrentDateDataSaveAllDay:self.startDate])
-        {
-            // 如果已经进行过完整的保存就不要再down了。
-            self.startDate = [self.startDate dateAfterDay:1];
-            [self startSyncHistoryData];
-            
-            return;
-        }
+        return;
+    }
+    
+    if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
+    {
+        self.startDate = [NSDate date];
         
-        if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
-        {
-            self.startDate = [NSDate date];
-            
-            return;
-        }
-
-        // SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
-        [BLTSendData sendRequestHistorySportDataWithDate:self.startDate
-                                               withOrder:0
-                                         withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                             [self stopTimer];
+        return;
+    }
+    
+    // SHOWMBProgressHUDIndeterminate(@"同步中...", nil, YES);
+    [BLTSendData sendRequestHistorySportDataWithDate:self.startDate
+                                           withOrder:0
+                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                         [self stopTimer];
+                                         
+                                         if (type == BLTAcceptDataTypeRequestHistorySportsData)
+                                         {
+                                             self.startDate = [self.startDate dateAfterDay:1];
+                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
+                                             if (object && self.startDate)
+                                             {
+                                                 [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, self.startDate]];
+                                             }
+                                         }
+                                         else if (type == BLTAcceptDataTypeError)
+                                         {
+                                             NSLog(@"...失败。。。");
+                                             SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+                                         }
+                                         else if (type == BLTAcceptDataTypeRequestHistoryNoData)
+                                         {
+                                             NSString *dateString = [[self.startDate dateToString] componentsSeparatedByString:@" "][0];
+                                             NSString *alertString = [NSString stringWithFormat:@"%@没有数据", dateString];
+                                             SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
                                              
-                                             if (type == BLTAcceptDataTypeRequestHistorySportsData)
-                                             {
-                                                 self.startDate = [self.startDate dateAfterDay:1];
-                                                 [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
-                                                 if (object && self.startDate)
-                                                 {
-                                                     [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, self.startDate]];
-                                                 }
-                                             }
-                                             else if (type == BLTAcceptDataTypeError)
-                                             {
-                                                 NSLog(@"...失败。。。");
-                                                 SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
-                                             }
-                                             else if (type == BLTAcceptDataTypeRequestHistoryNoData)
-                                             {
-                                                 NSString *dateString = [[self.startDate dateToString] componentsSeparatedByString:@" "][0];
-                                                 NSString *alertString = [NSString stringWithFormat:@"%@没有数据", dateString];
-                                                 SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
-                                                 
-                                                 [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
-                                                 self.startDate = [self.startDate dateAfterDay:1];
-                                                 [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
-                                             }
-                                         }];
-        [self startTimer];
-    }
-    else
-    {
-        SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
-    }
+                                             [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
+                                             self.startDate = [self.startDate dateAfterDay:1];
+                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
+                                         }
+                                     }];
+    [self startTimer];
+
 }
 
+// 开始同步数据。新设备.
+- (void)startSyncHistoryData
+{
+    [self synHistoryDataWithBackBlock:self.backBlock];
+}
+
+/*
 // 信息提示
 void showMessage(BLTSimpleSendShowMessage showBlock)
 {
@@ -97,7 +98,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             showBlock();
         }
     }
-}
+}*/
 
 // 后台进行数据存储，存储完毕后进行回调.
 - (void)syncInBackGround:(NSArray *)array
@@ -124,23 +125,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }
 }
 
-#pragma mark --- 蓝牙连接后发送连续的指令 ---
-- (void)sendContinuousInstruction
-{
-    NSString *name = [BLTManager sharedInstance].model.bltName;
-    if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
-        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"] ||
-        [name isEqualToString:@"MillionPedometer"])
-    {
-        [self oldDeviceChannel];
-    }
-    else
-    {
-        [self newDeviceChannel];
-    }
-}
-
-// 新设备命令通道.
+// 新设备命令通道. 刚连接时
 - (void)newDeviceChannel
 {
     [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
@@ -160,10 +145,30 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }
 }
 
-// 旧设备命令通道.
-- (void)oldDeviceChannel
+// 请求硬件信息
+- (void)sendRequestHardInfo
 {
-    [BLTSendOld setUserInfoToOldDevice];
+    [BLTSendData sendAccessInformationAboutCurrentHardwareAndFirmware:^(id object, BLTAcceptDataType type) {
+        if (type == BLTAcceptDataTypeInfoAboutHardAndFirm)
+        {
+            NSData *data = (NSData *)object;
+            UInt8 val[20] = {0};
+            [data getBytes:&val length:data.length];
+            
+            [BLTManager sharedInstance].model.hardType =
+            [NSString stringWithFormat:@"%c%c%c%c%c%c",
+             val[4], val[5], val[6], val[7], val[8], val[9]];
+            [BLTManager sharedInstance].model.hardVersion = val[10];
+            [BLTManager sharedInstance].model.hardVersion = val[11];
+        }
+    }];
+}
+
+- (void)sendRequestWeight
+{
+    [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
+    [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
+    }];
 }
 
 - (void)sendRequestHistoryDataSaveDate
@@ -196,49 +201,6 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             }
             
             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
-        }
-    }];
-}
-
-- (void)startSyncHistoryData
-{
-    [self synHistoryDataWithBackBlock:self.backBlock];
-}
-
-// 暂时不支持空中升级。
-- (void)sendUpdateFirmware
-{
-    [BLTSendData sendUpdateFirmware];
-}
-
-- (void)sendRequestWeight
-{
-    /*
-     [BLTSendData sendLookBodyInformationDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
-     
-     }];
-     */
-    
-    [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
-    [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
-    }];
-}
-
-// 请求硬件信息
-- (void)sendRequestHardInfo
-{
-    [BLTSendData sendAccessInformationAboutCurrentHardwareAndFirmware:^(id object, BLTAcceptDataType type) {
-        if (type == BLTAcceptDataTypeInfoAboutHardAndFirm)
-        {
-            NSData *data = (NSData *)object;
-            UInt8 val[20] = {0};
-            [data getBytes:&val length:data.length];
-            
-            [BLTManager sharedInstance].model.hardType =
-            [NSString stringWithFormat:@"%c%c%c%c%c%c",
-             val[4], val[5], val[6], val[7], val[8], val[9]];
-            [BLTManager sharedInstance].model.hardVersion = val[10];
-            [BLTManager sharedInstance].model.hardVersion = val[11];
         }
     }];
 }
@@ -281,21 +243,76 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }
 }
 
-- (void)synHistoryDataEnterForeground
+/**
+ *   ---------------------------------   调用旧设备的命令   --------------------------------------
+ */
+// 旧设备命令通道. 刚连接时设置用户信息
+- (void)oldDeviceChannel
+{
+    [BLTSendOld setUserInfoToOldDevice];
+}
+
+// 旧设备的同步方法.
+- (void)synOldDeviceHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
+{
+    [[BLTSendOld sharedInstance] startSyncHistoryData];
+}
+
+/**
+ *   ---------------------------------   外部调用的命令   --------------------------------------
+ */
+
+#pragma mark --- 蓝牙连接后发送连续的指令 ---
+- (void)sendContinuousInstruction
+{
+    // 纪录最后一次连的设备的uuid。
+    [LS_LastWareUUID setObjectValue:[BLTManager sharedInstance].model.bltID];
+    
+    NSString *name = [BLTManager sharedInstance].model.bltName;
+    if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
+        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"] ||
+        [name isEqualToString:@"MillionPedometer"])
+    {
+        [BLTManager sharedInstance].model.isNewDevice = NO;
+        [self oldDeviceChannel];
+    }
+    else
+    {
+        [BLTManager sharedInstance].model.isNewDevice = YES;
+        [self newDeviceChannel];
+    }
+}
+
+// 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口
+- (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        NSString *name = [BLTManager sharedInstance].model.bltName;
-        if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
-            [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"])
+        if ([BLTManager sharedInstance].model.isNewDevice)
         {
-            
+            [self synNewDeviceHistoryDataWithBackBlock:block];
         }
         else
         {
-            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+            [self synOldDeviceHistoryDataWithBackBlock:block];
         }
     }
+    else
+    {
+        SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
+    }
+}
+
+// 程序进入到前台时的同步方法.
+- (void)synHistoryDataEnterForeground
+{
+    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+}
+
+// 空中升级。
+- (void)sendUpdateFirmware
+{
+    [BLTSendData sendUpdateFirmware];
 }
 
 @end

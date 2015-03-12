@@ -98,14 +98,14 @@
     _percent = 0;
     if (!_timer)
     {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
     }
 }
 
 #define NightVC_TotalPercent 100
 - (void)updateChartView
 {
-    _percent ++;
+    _percent += 5;
     [_chartView reloadData];
     
     if (_percent >= NightVC_TotalPercent)
@@ -304,6 +304,11 @@
 {
     NSLog(@"..左扫..");
 
+    if ([_currentDate isSameWithDate:[NSDate date]])
+    {
+        return;
+    }
+    
     [self updateContentForBarShowViewWithDate:[_currentDate dateAfterDay:1]];
 }
 

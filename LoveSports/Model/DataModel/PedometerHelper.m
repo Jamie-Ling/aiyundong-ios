@@ -16,7 +16,8 @@ DEF_SINGLETON(PedometerHelper)
 + (PedometerModel *)getModelFromDBWithDate:(NSDate *)date
 {
     NSString *dateString = [date dateToString];
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       [dateString componentsSeparatedByString:@" "][0], [LS_LastWareUUID getObjectValue]];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
     if (!model)
@@ -68,7 +69,8 @@ DEF_SINGLETON(PedometerHelper)
 + (BOOL)queryWhetherCurrentDateDataSaveAllDay:(NSDate *)date
 {
     NSString *dateString = [date dateToString];
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", [dateString componentsSeparatedByString:@" "][0]];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       [dateString componentsSeparatedByString:@" "][0], [LS_LastWareUUID getObjectValue]];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
     if (model && model.isSaveAllDay)
@@ -138,7 +140,8 @@ DEF_SINGLETON(PedometerHelper)
     model.detailDistans = distansArray;
     model.totalDistance = tmpDistans;
     
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", model.dateString];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       model.dateString, [LS_LastWareUUID getObjectValue]];
     [PedometerModel updateToDB:model where:where];
     [model savePedometerModelToWeekModelAndMonthModel];
 

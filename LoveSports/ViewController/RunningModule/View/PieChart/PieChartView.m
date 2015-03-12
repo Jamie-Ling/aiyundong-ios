@@ -75,25 +75,27 @@
    
 //drawing
    
-   double sum = 0.0f;
    int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
    
+    double sum = 288 * 2 * 10;
+
+    /*
    for (int i = 0; i < slicesCount; i++)
    {
       sum += [self.datasource pieChartView:self valueForSliceAtIndex:i];
-   }
+   }*/
    
    float startAngle = - M_PI_2;
    float endAngle = 0.0f;
-      
+    
+   double value = 10; //[self.datasource pieChartView:self valueForSliceAtIndex:i];
+
    for (int i = 0; i < slicesCount; i++)
    {
-      double value = [self.datasource pieChartView:self valueForSliceAtIndex:i];
-
       endAngle = startAngle + M_PI*2*value/sum;
       CGContextAddArc(context, centerX, centerY, radius, startAngle, endAngle, false);
    
-      UIColor  *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
+      UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
    
       CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
       CGContextSetLineWidth(context, 16);
@@ -132,7 +134,7 @@
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
             _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalSteps / (model.targetStep + 0.00001) ];
-            percent = model.totalSteps / (model.targetStep + 0.00001);
+            percent = model.totalSteps / (model.targetStep < 1 ? model.totalSteps : 10000);
         }
             break;
             
@@ -140,7 +142,7 @@
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
             _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalCalories / (model.targetCalories + 0.0001)];
-            percent = model.totalCalories / (model.targetCalories + 0.00001);
+            percent = model.totalCalories / (model.targetCalories < 1 ? model.targetCalories : 1000);
         }
             break;
             
@@ -148,13 +150,13 @@
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalDistance];
             _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalDistance / (model.targetDistance + 0.0001)];
-            percent = model.totalDistance / (model.targetDistance + 0.00001);
+            percent = model.totalDistance / (model.targetDistance < 1 ? model.targetDistance : 1000);
         }
             break;
             
         case PieChartViewShowSleep:
         {
-            _timeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", model.totalSleepTime / 60, model.totalSleepTime % 60];
+            _timeLabel.text = [NSString stringWithFormat:@"%02d:%02d", model.totalSleepTime / 60, model.totalSleepTime % 60];
             _durationLabel.text = [NSString stringWithFormat:@"%ld小时", (long)model.targetSleep / 60];
         }
             break;

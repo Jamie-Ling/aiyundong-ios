@@ -115,11 +115,11 @@
     {
         if (fabs(point.y - _beginPoint.y) < 44)
         {
-            if (point.x - _beginPoint.x > 44)
+            if (point.x - _beginPoint.x > 32)
             {
                 [self rightSwipe];
             }
-            else if (point.x - _beginPoint.x < -44)
+            else if (point.x - _beginPoint.x < -32)
             {
                 [self leftSwipe];
             }

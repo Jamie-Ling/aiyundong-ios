@@ -339,6 +339,15 @@ DEF_SINGLETON(BLTAcceptData)
                     NSLog(@"length...%d..%d..%@", val[4], val[5], object);
                 }
             }
+            else if (val[2] == 0x07)
+            {
+                if (val[3] == 01)
+                {
+                    // 旧设备请求运动数据完毕.
+                    _type = BLTAcceptDataTypeOldRequestSportEnd;
+                    object = _syncData;
+                }
+            }
             else if (val[2] == 0x0B)
             {
                 if (val[3] == 01)
@@ -367,9 +376,6 @@ DEF_SINGLETON(BLTAcceptData)
             {
                 if (val[3] == 1)
                 {
-                    // 旧设备请求运动数据完毕.
-                    _type = BLTAcceptDataTypeOldRequestSportEnd;
-                    object = _syncData;
                 }
                 else if (val[4] == 6)
                 {

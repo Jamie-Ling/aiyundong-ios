@@ -42,8 +42,12 @@
 
 #define Screen_Rect ([UIScreen mainScreen ].bounds)
 
-// 当前绑定的设备ID
+// 当前绑定的设备ID, 是个数组.
 #define LS_BindingID        @"LS_BindingID"
+
+// 最后连接的设备的uuid。
+#define LS_LastWareUUID        @"LS_LastWareUUID"
+
 // 是否已经设置过基本时区和度量
 #define LS_SettingBaseTimeZoneInfo  @"LS_SettingBaseTimeZoneInfo"
 

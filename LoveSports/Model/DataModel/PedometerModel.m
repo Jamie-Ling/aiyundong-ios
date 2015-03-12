@@ -40,7 +40,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateDay", @"timeOrder"];
+    return @[@"userName", @"dateDay", @"timeOrder", @"wareUUID"];
 }
 
 // 表版本
@@ -62,7 +62,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateDay", @"currentOrder"];
+    return @[@"userName", @"dateDay", @"currentOrder", @"wareUUID"];
 }
 
 // 表版本
@@ -84,7 +84,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateDay", @"currentOrder"];
+    return @[@"userName", @"dateDay", @"currentOrder", @"wareUUID"];
 }
 
 // 表版本
@@ -119,6 +119,7 @@
 {
     PedometerModel *model = [[PedometerModel alloc] init];
     
+    model.wareUUID = [LS_LastWareUUID getObjectValue];
     model.dateString = [[date dateToString] componentsSeparatedByString:@" "][0];
     
     return model;
@@ -171,6 +172,8 @@
     [data getBytes:&val length:data.length];
     PedometerModel *totalModel = [[PedometerModel alloc] init];
     
+    totalModel.wareUUID = [BLTManager sharedInstance].model.bltID;
+    
     // 第一个包
     totalModel.dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
     
@@ -209,6 +212,7 @@
         if (state == 0)
         {
             SportsModel *model = [[SportsModel alloc] init];
+            model.wareUUID = [BLTManager sharedInstance].model.bltID;
             model.dateDay = totalModel.dateString;
             model.lastOrder = lastOrder;
             model.currentOrder = val[i] + signOrder;
@@ -235,6 +239,7 @@
         else if (state == 8)
         {
             SleepModel *model = [[SleepModel alloc] init];
+            model.wareUUID = [BLTManager sharedInstance].model.bltID;
             model.dateDay = totalModel.dateString;
             model.lastOrder = lastOrder;
             model.currentOrder = val[i] + signOrder;
@@ -292,7 +297,8 @@
         totalModel.isSaveAllDay = YES;
     }
     
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@'", totalModel.dateString];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       totalModel.dateString, totalModel.wareUUID];
     PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)
@@ -524,7 +530,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"dateString"];
+    return @[@"userName", @"dateString", @"wareUUID"];
 }
 
 // 表版本

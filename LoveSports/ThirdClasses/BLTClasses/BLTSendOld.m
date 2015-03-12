@@ -109,6 +109,10 @@ DEF_SINGLETON(BLTSendOld)
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
+
+// ******************************     外部命令调用中心.    **********************************
+
+// 同步旧设备数据从这里开始 重写了父类方法.
 - (void)synHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
@@ -187,6 +191,7 @@ DEF_SINGLETON(BLTSendOld)
     }
 }
 
+// 设置用户信息.
 + (void)setUserInfoToOldDevice
 {
     // type 0代表公制, 1代表英制
@@ -205,8 +210,6 @@ DEF_SINGLETON(BLTSendOld)
 }
 
 @end
-
-
 
 /*
  20:

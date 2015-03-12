@@ -15,15 +15,14 @@
 {
     NSInteger length = [array[1] integerValue];
     NSData *originalData = array[0];
-    NSMutableData *data = [[NSMutableData alloc] init];
     UInt8 val[1024 * 64] = {0};
+    [originalData getBytes:&val length:originalData.length];
     
-    [originalData getBytes:&val length:data.length];
-    
+    NSMutableData *data = [[NSMutableData alloc] init];
     // 将每个数据包的第一个byte清除.
     for (int i = 0; i < originalData.length; i++)
     {
-        if (!(i / 20 == 0))
+        if (!(i % 20 == 0))
         {
             [data appendBytes:&val[i] length:1];
         }
@@ -31,30 +30,41 @@
     
     [data getBytes:&val length:data.length];
     
-    PedometerModel *model = [[PedometerModel alloc] init];
-    
-    // 第一个包
-    model.totalSteps = val[0] | (val[1]  << 8) | (val[2]  << 16) | (val[3]  << 24);
-    model.totalSteps = val[4] | (val[5]  << 8) | (val[6]  << 16) | (val[7]  << 24);
-    model.totalSteps = val[8] | (val[9] << 8)  | (val[10] << 16) | (val[11] << 24);
-    
     int currentDay = 0;
     NSDate *date = [NSDate date];
+    NSString *dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
     NSInteger timeIndex = (date.hour * 60 + date.minute) / 5; //当前5分钟内。数据时前5分钟开始的。
     
     // 去除2个校验码。i是数据包的第一个数据时不计数.
-    PedometerModel *currentModel = [[PedometerModel alloc] init];
-    currentModel.dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       dateString, [LS_LastWareUUID getObjectValue]];
+
+    PedometerModel *currentModel = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+    if (!currentModel)
+    {
+        currentModel = [PedometerModel simpleInitWithDate:date];
+        [PedometerOld creatEmptyDataArrayWithModel:currentModel];
+        [currentModel saveToDB];
+    }
     
+    // 第一个包
+    currentModel.totalSteps    = val[0] | (val[1]  << 8) | (val[2]  << 16) | (val[3]  << 24);
+    currentModel.totalCalories = val[4] | (val[5]  << 8) | (val[6]  << 16) | (val[7]  << 24);
+    currentModel.totalDistance = val[8] | (val[9]  << 8) | (val[10] << 16) | (val[11] << 24);
+    
+    NSLog(@"..%d..%d..%d", currentModel.totalSteps, currentModel.totalCalories, currentModel.totalDistance);
+    [PedometerModel updateToDB:currentModel where:where];
+
     for (int i = 12; i < length - 2; i += 6)
     {
         NSInteger step =        val[i]   | (val[i+1] << 8);
         NSInteger cal =         val[i+2] | (val[i+3] << 8);
         NSInteger distance =    val[i+4] | (val[i+5] << 8);
-        [self updateDataForArray:model with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
+        [self updateDataForArray:currentModel with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
         
         [currentModel savePedometerModelToWeekModelAndMonthModel];
-        NSString *where = [NSString stringWithFormat:@"dateString = '%@'", currentModel.dateString];
+        NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                           currentModel.dateString, [LS_LastWareUUID getObjectValue]];
         PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
         if (model)
         {
@@ -70,14 +80,21 @@
             // 到了下一天。创建新的模型.
             timeIndex = 288;
             currentDay--;
-            currentModel = [[PedometerModel alloc] init];
-            currentModel.dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
+            NSDate *nextDate = [date dateAfterDay:currentDay];
+            NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                              [[nextDate dateToString] componentsSeparatedByString:@" "][0], [LS_LastWareUUID getObjectValue]];
+            currentModel = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+            if (!currentModel)
+            {
+                currentModel = [PedometerModel simpleInitWithDate:nextDate];
+                [PedometerOld creatEmptyDataArrayWithModel:currentModel];
+            }
         }
         
         timeIndex--;
     }
     
-    [model showMessage];
+    [currentModel showMessage];
     
     if (endBlock)
     {
@@ -110,6 +127,7 @@
 {
     NSInteger stepNumber = [numberArray[0] integerValue];
     NSMutableArray *stepsArray = [NSMutableArray arrayWithArray:model.detailSteps];
+    [self fixMutableArray:stepsArray withCount:48];
     NSInteger steps = [stepsArray[order / 6] integerValue];
     steps += stepNumber;
     stepsArray[order / 6] = @(steps);
@@ -118,6 +136,7 @@
     
     NSInteger calNumber = [numberArray[1] integerValue];
     NSMutableArray *calArray = [NSMutableArray arrayWithArray:model.detailCalories];
+    [self fixMutableArray:calArray withCount:48];
     NSInteger calories = [calArray[order / 6] integerValue];
     calories += calNumber;
     calArray[order / 6] = @(calories);
@@ -126,6 +145,7 @@
     
     NSInteger distanceNumber = [numberArray[2] integerValue];
     NSMutableArray *distansArray = [NSMutableArray arrayWithArray:model.detailDistans];
+    [self fixMutableArray:distansArray withCount:48];
     NSInteger distans = [distansArray[order / 6] integerValue];
     distans += distanceNumber;
     distansArray[order / 6] = @(distans);
@@ -134,8 +154,17 @@
     
     NSInteger sleepNumber = [numberArray[2] integerValue];
     NSMutableArray *sleepArray = [NSMutableArray arrayWithArray:model.detailSleeps];
+    [self fixMutableArray:sleepArray withCount:288];
     sleepArray[order] = @(sleepNumber);
-    model.detailCalories = sleepArray;
+    model.detailSleeps = sleepArray;
+}
+
++ (void)fixMutableArray:(NSMutableArray *)array withCount:(int)count
+{
+    for (int i = array.count; i < count; i++)
+    {
+        [array addObject:@(0)];
+    }
 }
 
 @end
