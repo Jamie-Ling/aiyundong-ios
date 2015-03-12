@@ -14,15 +14,29 @@
 + (void)saveDataToModelFromOld:(NSArray *)array withEnd:(PedometerModelSyncEnd)endBlock
 {
     NSInteger length = [array[1] integerValue];
-    NSData *data = array[0];
+    NSData *originalData = array[0];
+    NSMutableData *data = [[NSMutableData alloc] init];
     UInt8 val[1024 * 64] = {0};
+    
+    [originalData getBytes:&val length:data.length];
+    
+    // 将每个数据包的第一个byte清除.
+    for (int i = 0; i < originalData.length; i++)
+    {
+        if (!(i / 20 == 0))
+        {
+            [data appendBytes:&val[i] length:1];
+        }
+    }
+    
     [data getBytes:&val length:data.length];
+    
     PedometerModel *model = [[PedometerModel alloc] init];
     
     // 第一个包
-    model.totalSteps = val[1] | (val[2]  << 8) | (val[3]  << 16) | (val[4]  << 24);
-    model.totalSteps = val[5] | (val[6]  << 8) | (val[7]  << 16) | (val[8]  << 24);
-    model.totalSteps = val[9] | (val[10] << 8) | (val[11] << 16) | (val[12] << 24);
+    model.totalSteps = val[0] | (val[1]  << 8) | (val[2]  << 16) | (val[3]  << 24);
+    model.totalSteps = val[4] | (val[5]  << 8) | (val[6]  << 16) | (val[7]  << 24);
+    model.totalSteps = val[8] | (val[9] << 8)  | (val[10] << 16) | (val[11] << 24);
     
     int currentDay = 0;
     NSDate *date = [NSDate date];
@@ -31,42 +45,36 @@
     // 去除2个校验码。i是数据包的第一个数据时不计数.
     PedometerModel *currentModel = [[PedometerModel alloc] init];
     currentModel.dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
-    for (int i = 12; i < length - 2; i = i + 6)
+    
+    for (int i = 12; i < length - 2; i += 6)
     {
-        if (i/20 == 0)
+        NSInteger step =        val[i]   | (val[i+1] << 8);
+        NSInteger cal =         val[i+2] | (val[i+3] << 8);
+        NSInteger distance =    val[i+4] | (val[i+5] << 8);
+        [self updateDataForArray:model with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
+        
+        [currentModel savePedometerModelToWeekModelAndMonthModel];
+        NSString *where = [NSString stringWithFormat:@"dateString = '%@'", currentModel.dateString];
+        PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+        if (model)
         {
-            i--;
+            [PedometerModel updateToDB:currentModel where:where];
         }
         else
         {
-            NSInteger step =        val[i]   | (val[i+1] << 8);
-            NSInteger cal =         val[i+2] | (val[i+3] << 8);
-            NSInteger distance =    val[i+4] | (val[i+5] << 8);
-            [self updateDataForArray:model with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
-            
-            [currentModel savePedometerModelToWeekModelAndMonthModel];
-            NSString *where = [NSString stringWithFormat:@"dateString = '%@'", currentModel.dateString];
-            PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
-            if (model)
-            {
-                [PedometerModel updateToDB:currentModel where:where];
-            }
-            else
-            {
-                [currentModel saveToDB];
-            }
-            
-            if (timeIndex == 0)
-            {
-                // 到了下一天。创建新的模型.
-                timeIndex = 288;
-                currentDay--;
-                currentModel = [[PedometerModel alloc] init];
-                currentModel.dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
-            }
-
-            timeIndex--;
+            [currentModel saveToDB];
         }
+        
+        if (timeIndex == 0)
+        {
+            // 到了下一天。创建新的模型.
+            timeIndex = 288;
+            currentDay--;
+            currentModel = [[PedometerModel alloc] init];
+            currentModel.dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
+        }
+        
+        timeIndex--;
     }
     
     [model showMessage];
