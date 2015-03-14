@@ -127,8 +127,8 @@ DEF_SINGLETON(BLTManager)
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
     // 延迟链接
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
-    [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
+   // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
+   // [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -136,8 +136,12 @@ DEF_SINGLETON(BLTManager)
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    NSLog(@"advertisementData. ＝ .%@..%@..%@", advertisementData, peripheral, RSSI);
-    // NSString *name = peripheral.name;
+    NSLog(@"advertisementData. ＝ .%@..%@..%@..%d", advertisementData, peripheral, RSSI,peripheral.services.count);
+    for (CBService *service in peripheral.services)
+    {
+        NSLog(@"------------------%@", service);
+    }
+        // NSString *name = peripheral.name;
     
     if (!_isUpdateing)
     {
@@ -167,20 +171,25 @@ DEF_SINGLETON(BLTManager)
             }
             else
             {
+                // 没有被忽略就加入到设备组。
                 if (!DBModel.isIgnore)
                 {
                     [_allWareArray addObject:model];
                 }
             }
         }
-        
-        [model checkBindingState];
+       
+        BOOL binding = [model checkBindingState];
+        if (binding && _connectState != BLTManagerConnected)
+        {
+            // 如果该设备已经绑定并且没有连接设备时就直接连接.
+            [self repareConnectedDevice:model];
+        }
                 
         if (_updateModelBlock)
         {
             _updateModelBlock(_model);
         }
-
     }
     else if (_isUpdateing)
     {

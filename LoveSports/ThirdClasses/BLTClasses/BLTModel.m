@@ -71,15 +71,19 @@
     }
 }
 
-- (void)checkBindingState
+- (BOOL)checkBindingState
 {
     if ([[LS_BindingID getObjectValue] containsObject:self.bltID])
     {
         self.isBinding = YES;
+        
+        return YES;
     }
     else
     {
         self.isBinding = NO;
+        
+        return NO;
     }
 }
 

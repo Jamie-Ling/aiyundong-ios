@@ -42,8 +42,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [UIColor clearColor];
-        self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+        self.backgroundColor = [UIColor whiteColor];
+        // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         NSLog(@".height..%f", self.height);
         _offsetY = (self.height < 485) ? 20.0 : 0.0;
         _percent = 25;
@@ -64,7 +64,11 @@
 - (void)setCurrentDate:(NSDate *)currentDate
 {
     _currentDate = currentDate;
+    _allowAnimation = NO;
+    _percent = 0;
+    [_chartView reloadData];
     
+    NSLog(@"...3333333");
     [self updateContentForChartViewWithDirection:0];
 }
 
@@ -84,23 +88,21 @@
     _percent = 0;
     if (!_timer)
     {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.07 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
     }
     //[self performSelector:@selector(updateChartView) withObject:nil afterDelay:0.02];
 }
 
 - (void)updateChartView
 {
-    _percent += 4;
-    [_chartView reloadData];
-    
-    if (_percent >= (int)(_totalPercent * 100))
+    if (_allowAnimation)
     {
-        [self stopTimer];
-    }
-    else
-    {
-       // [self performSelector:@selector(updateChartView) withObject:nil afterDelay:0.02];
+        _percent += 4;
+        [_chartView reloadData];
+        if (_percent >= (int)(_totalPercent * 100))
+        {
+            [self stopTimer];
+        }
     }
 }
 
@@ -147,7 +149,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
                                      withText:@"星期一"
-                                withTextColor:[UIColor whiteColor]];
+                                withTextColor:[UIColor blackColor]];
     [self addSubview:_weekLabel];
     
     _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.width, 30)
@@ -155,7 +157,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
                                      withText:@"2015/2/2"
-                                withTextColor:[UIColor whiteColor]];
+                                withTextColor:[UIColor blackColor]];
     [self addSubview:_dateLabel];
 }
 
@@ -260,14 +262,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 288 * 2;
+    return 288;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 288 * 2 * (_percent * 0.01))
+        if (index <= 288 * (_percent * 0.01))
         {
             return [UIColor greenColor];
         }

@@ -59,8 +59,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+    self.view.backgroundColor = [UIColor whiteColor];
+    // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
 
     [self loadVerticalButton];
     [self loadLineChart];

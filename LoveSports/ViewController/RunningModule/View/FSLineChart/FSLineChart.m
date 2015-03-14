@@ -103,7 +103,7 @@
             UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
             label.text = text;
             label.font = _indexLabelFont;
-            label.textColor = [UIColor whiteColor];
+            label.textColor = [UIColor blackColor];
             label.backgroundColor = [UIColor clearColor];
             label.numberOfLines = 2;
             
@@ -166,8 +166,8 @@
         
         // If the value is zero then we display the horizontal axis
     
-        CGContextSetStrokeColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
-        CGContextSetLineWidth(ctx, 2);
+        CGContextSetStrokeColorWithColor(ctx, [[UIColor lightGrayColor] CGColor]);
+        CGContextSetLineWidth(ctx, 1);
         
         CGContextMoveToPoint(ctx, 0, self.height - 5);
         CGContextAddLineToPoint(ctx, self.width, self.height - 5);
@@ -204,8 +204,8 @@
         _fillLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
         _fillLayer.bounds = self.bounds;
         _fillLayer.path = fill.CGPath;
-        _fillLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
-        _fillLayer.fillColor = UIColorRGB(197, 234, 237).CGColor;
+        _fillLayer.strokeColor = UIColorRGB(213, 250, 187).CGColor;
+        _fillLayer.fillColor = UIColorRGB(213, 250, 187).CGColor;
         _fillLayer.lineWidth = 1.0;
         _fillLayer.lineJoin = kCALineJoinRound;
     }
@@ -219,7 +219,7 @@
     _pathLayer.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + minBound * scale, self.bounds.size.width, self.bounds.size.height);
     _pathLayer.bounds = self.bounds;
     _pathLayer.path = path.CGPath;
-    _pathLayer.strokeColor = UIColorRGB(197, 234, 237).CGColor;
+    _pathLayer.strokeColor = UIColorRGB(213, 250, 187).CGColor;
     _pathLayer.fillColor = nil;
     _pathLayer.lineWidth = 1.0;
     _pathLayer.lineJoin = kCALineJoinRound;
@@ -231,7 +231,7 @@
     CGFloat minBound = MIN(_min, 0);
     CGFloat maxBound = MAX(_max, 0);
     
-    NSLog(@"....%f..%f", minBound, maxBound);
+    // NSLog(@"....%f..%f", minBound, maxBound);
     CGFloat scale = _axisHeight; // (maxBound - minBound);
     
     //CAShapeLayer *dataPointsLayer = [CAShapeLayer layer];

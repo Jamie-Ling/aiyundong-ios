@@ -218,11 +218,11 @@ DEF_SINGLETON(BLTPeripheral)
         NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
-            [self cleanMutableData:_receiveData];
-            [_receiveData appendData:characteristic.value];
+           // [self cleanMutableData:_receiveData];
+           // [_receiveData appendData:characteristic.value];
             if (_updateBlock)
             {
-                _updateBlock(_receiveData);
+                _updateBlock(characteristic.value);
             }
         }
         else if ([characteristic.UUID isEqual:BLTUUID.rxCharacteristicUUID])
@@ -237,7 +237,6 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([characteristic.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
-            NSLog(@"...04传输...");
             if (_realTimeBlock)
             {
                 _realTimeBlock(characteristic.value);

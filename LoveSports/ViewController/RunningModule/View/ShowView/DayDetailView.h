@@ -16,6 +16,8 @@
 @property (nonatomic, strong) PedometerModel *model;
 @property (nonatomic, strong) NSDate *currentDate;
 
+@property (nonatomic, assign) BOOL allowAnimation;
+
 @property (nonatomic, assign) id <DayDetailViewDelegate> delegate;
 
 - (void)updateContentForView:(PedometerModel *)model;

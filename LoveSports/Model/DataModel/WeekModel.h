@@ -27,14 +27,19 @@
 
 @interface WeekModel : NSObject
 
+@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *wareUUID;
 @property (nonatomic, assign) NSInteger _weekNumber;         // 第几周
 @property (nonatomic, assign) NSInteger _yearNumber;         // 年，如2014
-@property (nonatomic, assign) NSInteger _weekTotalSteps;     // 当天的总步数
-@property (nonatomic, assign) NSInteger _weekTotalCalories;  // 当天的总卡路里
-@property (nonatomic, assign) NSInteger _weekTotalDistance ; // 当天的总路程
+@property (nonatomic, assign) NSInteger _weekTotalSteps;     // 本周的总步数
+@property (nonatomic, assign) NSInteger _weekTotalCalories;  // 本周的总卡路里
+@property (nonatomic, assign) NSInteger _weekTotalDistance ; // 本周的总路程
 @property (nonatomic, strong) NSMutableDictionary *_allSubPedModelArray;
 @property (nonatomic, strong) NSString *showDate;
 
+@property (nonatomic, assign) NSInteger todaySteps;     // 当天的总步数
+@property (nonatomic, assign) NSInteger toadyCalories;  // 当天的总卡路里
+@property (nonatomic, assign) NSInteger todayDistance ; // 当天的总路程
 /**
  *  初始化一个星期模型
  *
@@ -51,6 +56,7 @@
  *  更新汇总信息
  */
 - (void) updateInfo;
+- (void)updateTotalWithModel:(PedometerModel *)model;
 
 @end
 

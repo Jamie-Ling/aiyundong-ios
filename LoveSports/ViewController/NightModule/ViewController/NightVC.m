@@ -60,8 +60,8 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+    self.view.backgroundColor = [UIColor whiteColor];
+    // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     _offsetY = (self.view.height < 485.0) ? 25.0 : 0.0;
     _percent = 0;
@@ -157,7 +157,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
                                      withText:@"星期一"
-                                withTextColor:[UIColor whiteColor]];
+                                withTextColor:[UIColor blackColor]];
     [self.view addSubview:_weekLabel];
     
     _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 50 - _offsetY, self.view.width, 30)
@@ -165,7 +165,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
                                      withText:@"2015/2/2"
-                                withTextColor:[UIColor whiteColor]];
+                                withTextColor:[UIColor blackColor]];
     [self.view addSubview:_dateLabel];
 }
 
@@ -257,14 +257,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 288 * 2;
+    return 288;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 288 * 2 * (_percent * 0.01))
+        if (index <= 288 * (_percent * 0.01))
         {
             if (_chartDataArray && _chartDataArray.count > 0)
             {

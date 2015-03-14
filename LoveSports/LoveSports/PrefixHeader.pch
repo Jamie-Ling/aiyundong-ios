@@ -37,6 +37,8 @@
     #import "PedometerHelper.h"
     #import "XYSandbox.h"
     #import "UIViewController+SystemAdap.h"
+    #import "BLTSendHelp.h"
+    #import "BLTSendOld.h"
 
 #endif
 

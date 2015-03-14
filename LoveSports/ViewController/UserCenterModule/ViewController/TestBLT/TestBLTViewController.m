@@ -46,6 +46,7 @@
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UILabel *switchLabel;
+@property (nonatomic, strong) UISwitch *realTimeSwitch;
 
 @end
 
@@ -75,7 +76,10 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
     
-   
+    DEF_WEAKSELF_(TestBLTViewController);
+    [BLTRealTime sharedInstance].realTimeBlock = ^(BOOL success) {
+        [weakSelf notifiRealTimeSwitchState:YES];
+    };
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -84,6 +88,7 @@
     
     //将要消失时更新存储
     [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisModel];
+    [BLTRealTime sharedInstance].realTimeBlock = nil;
 }
 
 - (void) reloadUserInfoTableView
@@ -248,12 +253,12 @@
     
     if (indexPath.row == 3)
     {
-        UISwitch *select = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, oneCell.width * 0.3, 44)];
+        _realTimeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, oneCell.width * 0.3, 44)];
         
-        select.center = CGPointMake(oneCell.width * 0.75, vOneCellHeight/2.0);
-        select.on = [BLTRealTime sharedInstance].isRealTime;
-        [oneCell.contentView addSubview:select];
-        [select addTarget:self action:@selector(changeSwitchLabel:) forControlEvents:UIControlEventValueChanged];
+        _realTimeSwitch.center = CGPointMake(oneCell.width * 0.75, vOneCellHeight/2.0);
+        _realTimeSwitch.on = [BLTRealTime sharedInstance].isRealTime;
+        [oneCell.contentView addSubview:_realTimeSwitch];
+        [_realTimeSwitch addTarget:self action:@selector(changeSwitchLabel:) forControlEvents:UIControlEventValueChanged];
         
         _switchLabel = title;
     }
@@ -303,6 +308,15 @@
     {
         select.on = !select.on;
         SHOWMBProgressHUD(@"没有链接设备.", @"取消设置", nil, NO, 2.0);
+    }
+}
+
+- (void)notifiRealTimeSwitchState:(BOOL)isOn
+{
+    if (isOn)
+    {
+        _switchLabel.text = @"运动数据实时传输开启中";
+        _realTimeSwitch.on = YES;
     }
 }
 

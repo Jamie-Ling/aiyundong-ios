@@ -79,7 +79,6 @@
 		69EFC1DE1A737ABD00B5BC53 /* 分享.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A11A737ABD00B5BC53 /* 分享.png */; };
 		69EFC1DF1A737ABD00B5BC53 /* 卡路里.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A21A737ABD00B5BC53 /* 卡路里.png */; };
 		69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A31A737ABD00B5BC53 /* 头像@2x.png */; };
-		69EFC1E11A737ABD00B5BC53 /* 日历.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A41A737ABD00B5BC53 /* 日历.png */; };
 		69EFC1E21A737ABD00B5BC53 /* 更多@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A51A737ABD00B5BC53 /* 更多@2x.png */; };
 		69EFC1E31A737ABD00B5BC53 /* 步数按钮.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A61A737ABD00B5BC53 /* 步数按钮.png */; };
 		69EFC1E41A737ABD00B5BC53 /* 距离.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EFC1A71A737ABD00B5BC53 /* 距离.png */; };
@@ -210,6 +209,10 @@
 		F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A31A7937C800D5B170 /* NSDate+XY.m */; };
 		F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A61A79381C00D5B170 /* BLTAcceptData.m */; };
 		F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = F445F7A81A79381C00D5B170 /* BLTSendData.m */; };
+		F44B055C1AB427A20016F5D6 /* BLTSendHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = F44B055B1AB427A20016F5D6 /* BLTSendHelp.m */; };
+		F45870521AB289C2005A72CA /* 日历@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F45870511AB289C2005A72CA /* 日历@2x.png */; };
+		F45870541AB2905A005A72CA /* 睡觉@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F45870531AB2905A005A72CA /* 睡觉@2x.png */; };
+		F45870561AB2914F005A72CA /* 脚印1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F45870551AB2914F005A72CA /* 脚印1@2x.png */; };
 		F45F840B1A7B6698004246E8 /* NoPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F84081A7B6698004246E8 /* NoPasteTextField.m */; };
 		F45F840C1A7B6698004246E8 /* SaveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F45F840A1A7B6698004246E8 /* SaveHelper.m */; };
 		F4644BC01A9447A8003088E9 /* BLTDFUBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BBD1A9447A8003088E9 /* BLTDFUBaseInfo.m */; };
@@ -230,7 +233,6 @@
 		F470E7A51A7FAD680009E649 /* 周选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7681A7FAD680009E649 /* 周选中@2x.png */; };
 		F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7691A7FAD680009E649 /* 奖杯.png */; };
 		F470E7A71A7FAD680009E649 /* 日@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76A1A7FAD680009E649 /* 日@2x.png */; };
-		F470E7A81A7FAD680009E649 /* 日历@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76B1A7FAD680009E649 /* 日历@2x.png */; };
 		F470E7A91A7FAD680009E649 /* 日选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76C1A7FAD680009E649 /* 日选中@2x.png */; };
 		F470E7AA1A7FAD680009E649 /* 更多.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76D1A7FAD680009E649 /* 更多.png */; };
 		F470E7AB1A7FAD680009E649 /* 月@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76E1A7FAD680009E649 /* 月@2x.png */; };
@@ -253,7 +255,6 @@
 		F470E7BC1A7FAD680009E649 /* 周选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7801A7FAD680009E649 /* 周选中.png */; };
 		F470E7BD1A7FAD680009E649 /* 奖杯.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7811A7FAD680009E649 /* 奖杯.png */; };
 		F470E7BE1A7FAD680009E649 /* 日.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7821A7FAD680009E649 /* 日.png */; };
-		F470E7BF1A7FAD680009E649 /* 日历.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7831A7FAD680009E649 /* 日历.png */; };
 		F470E7C01A7FAD680009E649 /* 日选中.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7841A7FAD680009E649 /* 日选中.png */; };
 		F470E7C11A7FAD680009E649 /* 更多.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7851A7FAD680009E649 /* 更多.png */; };
 		F470E7C21A7FAD680009E649 /* 月.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7861A7FAD680009E649 /* 月.png */; };
@@ -272,9 +273,7 @@
 		F470E7CF1A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7941A7FAD680009E649 /* background.jpg */; };
 		F470E7D01A7FAD680009E649 /* T4副本.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7951A7FAD680009E649 /* T4副本.jpg */; };
 		F470E7D11A7FAD680009E649 /* 分享.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7961A7FAD680009E649 /* 分享.png */; };
-		F470E7D21A7FAD680009E649 /* 日历.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7971A7FAD680009E649 /* 日历.png */; };
 		F470E7D31A7FAD680009E649 /* 更多.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7981A7FAD680009E649 /* 更多.png */; };
-		F470E7D41A7FAD680009E649 /* 睡觉@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7991A7FAD680009E649 /* 睡觉@2x.png */; };
 		F470E7D51A7FAD680009E649 /* 睡觉2.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E79A1A7FAD680009E649 /* 睡觉2.png */; };
 		F470E7D61A7FAD680009E649 /* 起床.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E79B1A7FAD680009E649 /* 起床.png */; };
 		F470E7D71A7FAD680009E649 /* 闹钟.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E79C1A7FAD680009E649 /* 闹钟.png */; };
@@ -375,6 +374,8 @@
 		F4CE02801AAC4891005C29FC /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE027F1AAC4891005C29FC /* UserInfoModel.m */; };
 		F4CE02831AAC48AB005C29FC /* UserInfoHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */; };
 		F4CE02861AAC6807005C29FC /* BLTSendOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02851AAC6807005C29FC /* BLTSendOld.m */; };
+		F4FFD8511AB455CE00A387A4 /* DayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8501AB455CE00A387A4 /* DayScrollView.m */; };
+		F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -487,7 +488,6 @@
 		69EFC1A11A737ABD00B5BC53 /* 分享.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分享.png"; sourceTree = "<group>"; };
 		69EFC1A21A737ABD00B5BC53 /* 卡路里.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "卡路里.png"; sourceTree = "<group>"; };
 		69EFC1A31A737ABD00B5BC53 /* 头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "头像@2x.png"; sourceTree = "<group>"; };
-		69EFC1A41A737ABD00B5BC53 /* 日历.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历.png"; sourceTree = "<group>"; };
 		69EFC1A51A737ABD00B5BC53 /* 更多@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "更多@2x.png"; sourceTree = "<group>"; };
 		69EFC1A61A737ABD00B5BC53 /* 步数按钮.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "步数按钮.png"; sourceTree = "<group>"; };
 		69EFC1A71A737ABD00B5BC53 /* 距离.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "距离.png"; sourceTree = "<group>"; };
@@ -689,6 +689,11 @@
 		F445F7A61A79381C00D5B170 /* BLTAcceptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTAcceptData.m; sourceTree = "<group>"; };
 		F445F7A71A79381C00D5B170 /* BLTSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendData.h; sourceTree = "<group>"; };
 		F445F7A81A79381C00D5B170 /* BLTSendData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendData.m; sourceTree = "<group>"; };
+		F44B055A1AB427A20016F5D6 /* BLTSendHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendHelp.h; sourceTree = "<group>"; };
+		F44B055B1AB427A20016F5D6 /* BLTSendHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendHelp.m; sourceTree = "<group>"; };
+		F45870511AB289C2005A72CA /* 日历@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历@2x.png"; sourceTree = "<group>"; };
+		F45870531AB2905A005A72CA /* 睡觉@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "睡觉@2x.png"; sourceTree = "<group>"; };
+		F45870551AB2914F005A72CA /* 脚印1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脚印1@2x.png"; sourceTree = "<group>"; };
 		F45F84071A7B6698004246E8 /* NoPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPasteTextField.h; sourceTree = "<group>"; };
 		F45F84081A7B6698004246E8 /* NoPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPasteTextField.m; sourceTree = "<group>"; };
 		F45F84091A7B6698004246E8 /* SaveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveHelper.h; sourceTree = "<group>"; };
@@ -722,7 +727,6 @@
 		F470E7681A7FAD680009E649 /* 周选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中@2x.png"; sourceTree = "<group>"; };
 		F470E7691A7FAD680009E649 /* 奖杯.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "奖杯.png"; sourceTree = "<group>"; };
 		F470E76A1A7FAD680009E649 /* 日@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日@2x.png"; sourceTree = "<group>"; };
-		F470E76B1A7FAD680009E649 /* 日历@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历@2x.png"; sourceTree = "<group>"; };
 		F470E76C1A7FAD680009E649 /* 日选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日选中@2x.png"; sourceTree = "<group>"; };
 		F470E76D1A7FAD680009E649 /* 更多.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "更多.png"; sourceTree = "<group>"; };
 		F470E76E1A7FAD680009E649 /* 月@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月@2x.png"; sourceTree = "<group>"; };
@@ -745,7 +749,6 @@
 		F470E7801A7FAD680009E649 /* 周选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周选中.png"; sourceTree = "<group>"; };
 		F470E7811A7FAD680009E649 /* 奖杯.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "奖杯.png"; sourceTree = "<group>"; };
 		F470E7821A7FAD680009E649 /* 日.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日.png"; sourceTree = "<group>"; };
-		F470E7831A7FAD680009E649 /* 日历.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历.png"; sourceTree = "<group>"; };
 		F470E7841A7FAD680009E649 /* 日选中.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日选中.png"; sourceTree = "<group>"; };
 		F470E7851A7FAD680009E649 /* 更多.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "更多.png"; sourceTree = "<group>"; };
 		F470E7861A7FAD680009E649 /* 月.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月.png"; sourceTree = "<group>"; };
@@ -764,9 +767,7 @@
 		F470E7941A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E7951A7FAD680009E649 /* T4副本.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "T4副本.jpg"; sourceTree = "<group>"; };
 		F470E7961A7FAD680009E649 /* 分享.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分享.png"; sourceTree = "<group>"; };
-		F470E7971A7FAD680009E649 /* 日历.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "日历.png"; sourceTree = "<group>"; };
 		F470E7981A7FAD680009E649 /* 更多.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "更多.png"; sourceTree = "<group>"; };
-		F470E7991A7FAD680009E649 /* 睡觉@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "睡觉@2x.png"; sourceTree = "<group>"; };
 		F470E79A1A7FAD680009E649 /* 睡觉2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "睡觉2.png"; sourceTree = "<group>"; };
 		F470E79B1A7FAD680009E649 /* 起床.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "起床.png"; sourceTree = "<group>"; };
 		F470E79C1A7FAD680009E649 /* 闹钟.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "闹钟.png"; sourceTree = "<group>"; };
@@ -962,6 +963,10 @@
 		F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHelp.m; sourceTree = "<group>"; };
 		F4CE02841AAC6807005C29FC /* BLTSendOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendOld.h; sourceTree = "<group>"; };
 		F4CE02851AAC6807005C29FC /* BLTSendOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendOld.m; sourceTree = "<group>"; };
+		F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayScrollView.h; sourceTree = "<group>"; };
+		F4FFD8501AB455CE00A387A4 /* DayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayScrollView.m; sourceTree = "<group>"; };
+		F4FFD8541AB456D500A387A4 /* UnlimitScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlimitScroll.h; sourceTree = "<group>"; };
+		F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnlimitScroll.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1175,10 +1180,11 @@
 				69EFC1A11A737ABD00B5BC53 /* 分享.png */,
 				69EFC1A21A737ABD00B5BC53 /* 卡路里.png */,
 				69EFC1A31A737ABD00B5BC53 /* 头像@2x.png */,
-				69EFC1A41A737ABD00B5BC53 /* 日历.png */,
 				69EFC1A61A737ABD00B5BC53 /* 步数按钮.png */,
 				69EFC1A51A737ABD00B5BC53 /* 更多@2x.png */,
 				69EFC1A71A737ABD00B5BC53 /* 距离.png */,
+				F45870551AB2914F005A72CA /* 脚印1@2x.png */,
+				F45870511AB289C2005A72CA /* 日历@2x.png */,
 				69EFC1A81A737ABD00B5BC53 /* 返回.png */,
 				69EFC1A91A737ABD00B5BC53 /* 顶部四格1@2x.png */,
 				69EFC1AA1A737ABD00B5BC53 /* 顶部四格2@2x.png */,
@@ -1724,6 +1730,8 @@
 				F42E75E11A8607AF00FAB64C /* DayDetailView.m */,
 				F42E75E31A8615AF00FAB64C /* TrendChartView.h */,
 				F42E75E41A8615AF00FAB64C /* TrendChartView.m */,
+				F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */,
+				F4FFD8501AB455CE00A387A4 /* DayScrollView.m */,
 			);
 			path = ShowView;
 			sourceTree = "<group>";
@@ -1816,7 +1824,6 @@
 				F470E7681A7FAD680009E649 /* 周选中@2x.png */,
 				F470E7691A7FAD680009E649 /* 奖杯.png */,
 				F470E76A1A7FAD680009E649 /* 日@2x.png */,
-				F470E76B1A7FAD680009E649 /* 日历@2x.png */,
 				F470E76C1A7FAD680009E649 /* 日选中@2x.png */,
 				F470E76D1A7FAD680009E649 /* 更多.png */,
 				F470E76E1A7FAD680009E649 /* 月@2x.png */,
@@ -1846,7 +1853,6 @@
 				F470E7801A7FAD680009E649 /* 周选中.png */,
 				F470E7811A7FAD680009E649 /* 奖杯.png */,
 				F470E7821A7FAD680009E649 /* 日.png */,
-				F470E7831A7FAD680009E649 /* 日历.png */,
 				F470E7841A7FAD680009E649 /* 日选中.png */,
 				F470E7851A7FAD680009E649 /* 更多.png */,
 				F470E7861A7FAD680009E649 /* 月.png */,
@@ -1872,9 +1878,8 @@
 				F470E7941A7FAD680009E649 /* background.jpg */,
 				F470E7951A7FAD680009E649 /* T4副本.jpg */,
 				F470E7961A7FAD680009E649 /* 分享.png */,
-				F470E7971A7FAD680009E649 /* 日历.png */,
 				F470E7981A7FAD680009E649 /* 更多.png */,
-				F470E7991A7FAD680009E649 /* 睡觉@2x.png */,
+				F45870531AB2905A005A72CA /* 睡觉@2x.png */,
 				F470E79A1A7FAD680009E649 /* 睡觉2.png */,
 				F470E79B1A7FAD680009E649 /* 起床.png */,
 				F470E79C1A7FAD680009E649 /* 闹钟.png */,
@@ -1940,6 +1945,8 @@
 				F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */,
 				F4CE02841AAC6807005C29FC /* BLTSendOld.h */,
 				F4CE02851AAC6807005C29FC /* BLTSendOld.m */,
+				F44B055A1AB427A20016F5D6 /* BLTSendHelp.h */,
+				F44B055B1AB427A20016F5D6 /* BLTSendHelp.m */,
 			);
 			path = BLTClasses;
 			sourceTree = "<group>";
@@ -1947,11 +1954,11 @@
 		F4B692E51A6F3EBC00B42395 = {
 			isa = PBXGroup;
 			children = (
+				F4FFD8521AB4569100A387A4 /* View */,
 				F4B693171A6F3F2B00B42395 /* Frameworks */,
 				F4B693181A6F3F2B00B42395 /* Model */,
 				69EFC19C1A737ABD00B5BC53 /* Resources */,
 				F4B6931A1A6F3F2B00B42395 /* ThirdClasses */,
-				F4B6931B1A6F3F2B00B42395 /* View */,
 				69FD41921A7FCC2C0023B74D /* ViewController */,
 				F4B692F01A6F3EBC00B42395 /* LoveSports */,
 				F4B6930A1A6F3EBC00B42395 /* LoveSportsTests */,
@@ -2055,13 +2062,6 @@
 				F4B6932A1A6F401A00B42395 /* IQKeyBoardManager */,
 			);
 			path = ThirdClasses;
-			sourceTree = "<group>";
-		};
-		F4B6931B1A6F3F2B00B42395 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		F4B6932A1A6F401A00B42395 /* IQKeyBoardManager */ = {
@@ -2361,6 +2361,23 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		F4FFD8521AB4569100A387A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F4FFD8531AB456A400A387A4 /* UnlimitScroll */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F4FFD8531AB456A400A387A4 /* UnlimitScroll */ = {
+			isa = PBXGroup;
+			children = (
+				F4FFD8541AB456D500A387A4 /* UnlimitScroll.h */,
+				F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */,
+			);
+			path = UnlimitScroll;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2449,6 +2466,7 @@
 				F470E7D31A7FAD680009E649 /* 更多.png in Resources */,
 				69EFC20F1A737ABD00B5BC53 /* 1_18.png in Resources */,
 				695549551A8D012B00423EA9 /* 提醒效果图.png in Resources */,
+				F45870561AB2914F005A72CA /* 脚印1@2x.png in Resources */,
 				69EFC2131A737ABD00B5BC53 /* right@2x.png in Resources */,
 				69EFC27D1A73DD9100B5BC53 /* user@2x.png in Resources */,
 				F470E7AA1A7FAD680009E649 /* 更多.png in Resources */,
@@ -2458,7 +2476,6 @@
 				F470E7B81A7FAD680009E649 /* background.jpg in Resources */,
 				F470E7D91A7FAD680009E649 /* 顶部四格2.png in Resources */,
 				F470E7D81A7FAD680009E649 /* 顶部四格1.png in Resources */,
-				69EFC1E11A737ABD00B5BC53 /* 日历.png in Resources */,
 				695549341A8CF4D900423EA9 /* 求点赞@2x.png in Resources */,
 				69EFC1E41A737ABD00B5BC53 /* 距离.png in Resources */,
 				69EFC1F91A737ABD00B5BC53 /* login_background@2x.jpg in Resources */,
@@ -2469,6 +2486,7 @@
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
 				69EFC1DE1A737ABD00B5BC53 /* 分享.png in Resources */,
+				F45870541AB2905A005A72CA /* 睡觉@2x.png in Resources */,
 				F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */,
 				69EFC1E61A737ABD00B5BC53 /* 顶部四格1@2x.png in Resources */,
 				F470E7CD1A7FAD680009E649 /* 顶部四格3.png in Resources */,
@@ -2478,7 +2496,6 @@
 				6955493D1A8CF4D900423EA9 /* 背景@2x.png in Resources */,
 				69EFC1F11A737ABD00B5BC53 /* icon3@2x.png in Resources */,
 				F470E7C41A7FAD680009E649 /* 横屏.png in Resources */,
-				F470E7BF1A7FAD680009E649 /* 日历.png in Resources */,
 				69EFC1F31A737ABD00B5BC53 /* title1@2x.png in Resources */,
 				69FD42171A7FCC2C0023B74D /* region.json in Resources */,
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
@@ -2522,13 +2539,10 @@
 				69EFC1DD1A737ABD00B5BC53 /* nav@2x.png in Resources */,
 				69EFC20C1A737ABD00B5BC53 /* 1_15.png in Resources */,
 				F470E7D61A7FAD680009E649 /* 起床.png in Resources */,
-				F470E7D41A7FAD680009E649 /* 睡觉@2x.png in Resources */,
 				F470E7BC1A7FAD680009E649 /* 周选中.png in Resources */,
 				F470E7AC1A7FAD680009E649 /* 月选中@2x.png in Resources */,
 				F470E7C01A7FAD680009E649 /* 日选中.png in Resources */,
-				F470E7D21A7FAD680009E649 /* 日历.png in Resources */,
 				69FD42111A7FCC2C0023B74D /* CitiesList.plist in Resources */,
-				F470E7A81A7FAD680009E649 /* 日历@2x.png in Resources */,
 				F470E7D71A7FAD680009E649 /* 闹钟.png in Resources */,
 				69EFC1DF1A737ABD00B5BC53 /* 卡路里.png in Resources */,
 				69EFC1EF1A737ABD00B5BC53 /* icon1@2x.png in Resources */,
@@ -2563,6 +2577,7 @@
 				F470E7D51A7FAD680009E649 /* 睡觉2.png in Resources */,
 				69EFC2061A737ABD00B5BC53 /* 1_09.png in Resources */,
 				69EFC1E91A737ABD00B5BC53 /* 顶部四格4@2x.png in Resources */,
+				F45870521AB289C2005A72CA /* 日历@2x.png in Resources */,
 				6955492C1A8CF4D900423EA9 /* 关于爱运动商城@2x.png in Resources */,
 				F470E7A91A7FAD680009E649 /* 日选中@2x.png in Resources */,
 				69EFC2121A737ABD00B5BC53 /* backArrow@2x.png in Resources */,
@@ -2687,6 +2702,7 @@
 				698A90C31A6FEB54005BABE6 /* MSIntroView.m in Sources */,
 				69EFC2271A7397C600B5BC53 /* ALBatteryView.m in Sources */,
 				F4B693A91A6F403400B42395 /* RequestHelper.m in Sources */,
+				F4FFD8511AB455CE00A387A4 /* DayScrollView.m in Sources */,
 				69FD42221A7FCC2C0023B74D /* TargetViewController.m in Sources */,
 				F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */,
 				69E097401A873D6E003F2EB9 /* NSDate+DateTools.m in Sources */,
@@ -2708,6 +2724,7 @@
 				69FD421B1A7FCC2C0023B74D /* AboutUSViewController.m in Sources */,
 				F470E7F41A7FB7660009E649 /* CalendarMonthHeaderView.m in Sources */,
 				69EFC2E41A760CD700B5BC53 /* UIImageView+HighlightedWebCache.m in Sources */,
+				F44B055C1AB427A20016F5D6 /* BLTSendHelp.m in Sources */,
 				F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */,
 				F4B6934D1A6F401A00B42395 /* IQUIWindow+Hierarchy.m in Sources */,
 				699242071A768BDF00EFF121 /* NSObject+LKDBHelper.m in Sources */,
@@ -2744,6 +2761,7 @@
 				69FD420F1A7FCC2C0023B74D /* BraceletInfoModel.m in Sources */,
 				69EFC2B01A75D11900B5BC53 /* BSModalDatePickerView.m in Sources */,
 				F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */,
+				F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */,
 				F4B693AD1A6F403400B42395 /* MKNetworkOperation.m in Sources */,
 				69E097481A87B9C1003F2EB9 /* YearModel.m in Sources */,
 				69FD42101A7FCC2C0023B74D /* VersionInfoModel.m in Sources */,

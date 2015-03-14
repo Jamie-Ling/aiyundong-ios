@@ -37,8 +37,8 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [UIColor clearColor];
-        self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+        self.backgroundColor = [UIColor whiteColor];
+        // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
         _showType = TrendChartViewShowDaySteps;
         

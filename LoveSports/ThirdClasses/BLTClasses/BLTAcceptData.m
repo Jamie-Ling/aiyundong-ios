@@ -376,6 +376,9 @@ DEF_SINGLETON(BLTAcceptData)
             {
                 if (val[3] == 1)
                 {
+                    // 旧设备请求运动数据完毕.
+                    _type = BLTAcceptDataTypeOldRequestSportEnd;
+                    object = _syncData;
                 }
                 else if (val[4] == 6)
                 {

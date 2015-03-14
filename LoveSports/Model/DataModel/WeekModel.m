@@ -77,4 +77,39 @@
     }
 }
 
+- (void)updateTotalWithModel:(PedometerModel *)model
+{
+    NSString *dateString = [[[NSDate date] dateToString] componentsSeparatedByString:@" "][0];
+
+    if ([dateString isEqualToString:model.dateString])
+    {
+        _todaySteps = model.totalSteps;
+        _toadyCalories = model.totalCalories;
+        _todayDistance = model.totalDistance;
+    }
+    else
+    {
+        _weekTotalSteps += model.totalSteps;
+        _weekTotalCalories += model.totalCalories;
+        _weekTotalDistance += model.totalDistance;
+    }
+}
+
+// 表名
++ (NSString *)getTableName
+{
+    return @"WeekModel";
+}
+
++ (NSArray *)getPrimaryKeyUnionArray
+{
+    return @[@"_weekNumber", @"_yearNumber", @"userName", @"wareUUID"];
+}
+
+// 表版本
++ (int)getTableVersion
+{
+    return 1;
+}
+
 @end

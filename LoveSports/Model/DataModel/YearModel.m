@@ -31,21 +31,13 @@
  */
 + (void) initOrUpdateTheWeekAndMonthModelFromAPedometerModel: (PedometerModel *) onePedoMeterModel
 {
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterFullStyle];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
-    NSDate *oneDate = [dateFormatter dateFromString:onePedoMeterModel.dateString];
-    if (!oneDate)
-    {
-        [UIView showAlertView:@"日期字符串格式不匹配" andMessage:nil];
-    }
-    
+ 
+    NSDate *oneDate = [NSDate dateWithString:onePedoMeterModel.dateString];
     //取得这一年的模型，没有就创建，有就更新数据
     NSInteger thisYearNumber = oneDate.year;
+    /*
     NSString *where = [NSString stringWithFormat:@"_yearID = '%@'", [NSString stringWithFormat:@"%ld", (long)thisYearNumber]];
     YearModel *thisYearModel = [[YearModel getUsingLKDBHelper] searchSingle:[YearModel class] where:where orderBy:nil];
-    
     if (!thisYearModel)
     {
         thisYearModel = [[YearModel alloc] init];
@@ -53,18 +45,25 @@
         
         [thisYearModel saveToDB];
     }
+     */
     
     //周=-----------------------------------------------
     //取到这一周的模型，没有就创建，更新至年模型中
     
     NSInteger thisWeekNumber = oneDate.weekOfYear;
-    WeekModel *thisWeekModel = [thisYearModel._thisYearAllWeeks objectForKey:[NSString stringWithFormat:@"%ld", (long)thisWeekNumber]];
-    
+    NSString *where = [NSString stringWithFormat:@"_yearID = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisWeekNumber];
+    WeekModel *thisWeekModel = [WeekModel searchSingleWithWhere:where orderBy:nil];
     if (!thisWeekModel)
     {
-        thisWeekModel = [[WeekModel alloc]initWithWeekNumber:thisWeekNumber andYearNumber:thisYearNumber] ;
+        thisWeekModel = [[WeekModel alloc] initWithWeekNumber:thisWeekNumber andYearNumber:thisYearNumber];
+        thisWeekModel.userName = onePedoMeterModel.userName;
+        thisWeekModel.wareUUID = onePedoMeterModel.wareUUID;
+        [thisWeekModel saveToDB];
     }
     
+    [thisWeekModel updateTotalWithModel:onePedoMeterModel];
+    
+    /*
     //从这一周的模型中取这一天的数据，没有就创建，有就更新
     SubOfPedometerModel *thisSubOfPedometerModel = [thisWeekModel._allSubPedModelArray objectForKey:onePedoMeterModel.dateString];
     
@@ -86,18 +85,24 @@
     
     //存入/更新进年模型中
     [thisYearModel._thisYearAllWeeks setObject:thisWeekModel forKey:[NSString stringWithFormat:@"%ld", (long)thisWeekNumber]];
+     */
     
     //月=-----------------------------------------------
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
-
-    MonthModel *thisMonthModel = [thisYearModel._thisYearAllMonths objectForKey:[NSString stringWithFormat:@"%ld", (long)thisMonthNumber]];
-    
+    where = [NSString stringWithFormat:@"_yearID = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisMonthNumber];
+    MonthModel *thisMonthModel = [MonthModel searchSingleWithWhere:where orderBy:nil];
     if (!thisMonthModel)
     {
-        thisMonthModel = [[MonthModel alloc]initWithmonthNumber:thisMonthNumber andYearNumber:thisYearNumber] ;
+        thisMonthModel = [[MonthModel alloc] initWithmonthNumber:thisMonthNumber andYearNumber:thisYearNumber];
+        thisMonthModel.userName = onePedoMeterModel.userName;
+        thisMonthModel.wareUUID = onePedoMeterModel.wareUUID;
+        [thisWeekModel saveToDB];
     }
     
+    [thisMonthModel updateTotalWithModel:onePedoMeterModel];
+    
+    /*
     //从这一月的模型中取这一天的数据，没有就创建，有就更新
     SubOfPedometerModel *thisSubOfPedometerModelForMonth = [thisMonthModel._allSubPedModelArray objectForKey:onePedoMeterModel.dateString];
     
@@ -123,6 +128,7 @@
     //存入/更新数据库
     // [[YearModel getUsingLKDBHelper] insertToDB:thisYearModel];
     [YearModel updateToDB:thisYearModel where:where];
+     */
 }
 
 #pragma mark ---------------- 周相关 -----------------

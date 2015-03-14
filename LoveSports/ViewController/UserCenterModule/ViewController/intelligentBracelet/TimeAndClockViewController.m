@@ -146,12 +146,14 @@
             }
             
             [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:NO success:^(bool success) {
+                /*
                 if (!success)
                 {
                     theSwitch.on = !_thisModel._isAutomaticAlarmClock;
                     _thisModel._isAutomaticAlarmClock = theSwitch.on;
                     [self reloadUserInfoTableView];
                 }
+                 */
             }];
         }
         [self reloadUserInfoTableView];
@@ -172,12 +174,13 @@
             }
             [self reloadUserInfoTableView];
             [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:theSwitch.on success:^(bool success) {
+                /*
                 if (!success)
                 {
                     theSwitch.on = !_thisModel._isHandAlarmClock;
                     _thisModel._isHandAlarmClock = theSwitch.on;
                     [self reloadUserInfoTableView];
-                }
+                }*/
             }];
         }
         else
@@ -185,12 +188,13 @@
             HandSetAlarmClock __weak *tempModel = [_thisModel._allHandSetAlarmClock objectAtIndex:theSwitch.tag % 1000 - 2];
             tempModel._isOpen = theSwitch.on;
             [self sendAlarmClockDataWithAlarm:_thisModel._allAutomaticSetAlarmClock withOpen:theSwitch.on orSetWithByEverySet:theSwitch.on success:^(bool success) {
+                /*
                 if (!success)
                 {
                     theSwitch.on = !tempModel._isOpen;
                     tempModel._isOpen = theSwitch.on;
                     [self reloadUserInfoTableView];
-                }
+                }*/
             }];
         }
         
@@ -248,6 +252,12 @@
 
 - (void) addOneHandClock
 {
+    if (_thisModel._allHandSetAlarmClock.count >= 6)
+    {
+        SHOWMBProgressHUD(@"最多只能添加6个闹钟.", nil, nil, NO, 2.0);
+        return;
+    }
+    
     NSDate *theDate = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

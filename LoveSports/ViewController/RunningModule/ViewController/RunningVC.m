@@ -18,11 +18,15 @@
 #import "TrendChartView.h"
 #import "MJRefresh.h"
 
+#import "DayScrollView.h"
+
 @interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *srcollView;
 @property (nonatomic, strong) DayDetailView *detailView;
 @property (nonatomic, strong) TrendChartView *trendView;
+
+@property (nonatomic, strong) DayScrollView *dayScroll;
 
 @property (nonatomic, assign) CGFloat offsetY;
 @property (nonatomic, assign) BOOL isUpSwipe;
@@ -36,7 +40,12 @@
     [super viewWillAppear:animated];
     
     DEF_WEAKSELF_(RunningVC);
+
     [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
+        [weakSelf updateConnectForView];
+    };
+    
+    [BLTSendOld sharedInstance].backBlock = ^(NSDate *date){
         [weakSelf updateConnectForView];
     };
     
@@ -48,14 +57,15 @@
     [super viewWillDisappear:animated];
     
     [BLTSimpleSend sharedInstance].backBlock = nil;
+    [BLTSendOld sharedInstance].backBlock = nil;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+    self.view.backgroundColor = [UIColor whiteColor];
+   // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     [self loadScrollView];
     NSLog(@"..%@", NSStringFromCGPoint(_srcollView.contentOffset));
 }
@@ -123,7 +133,11 @@
     _detailView = [[DayDetailView alloc] initWithFrame:_srcollView.bounds];
     
     _detailView.delegate = self;
-    [_srcollView addSubview:_detailView];
+    //[_srcollView addSubview:_detailView];
+    
+    _dayScroll = [[DayScrollView alloc] initWithFrame:_srcollView.bounds];
+    
+    [_srcollView addSubview:_dayScroll];
 }
 
 - (void)loadTrendChartView
@@ -183,6 +197,7 @@
      */
 }
 
+// 下拉刷新主界面.
 - (void)updateConnectForView
 {
     NSLog(@"。。。事实刷新主界面");
@@ -195,10 +210,14 @@
     }
     else
     {
+        /*
         if ([_detailView.currentDate isSameWithDate:[NSDate date]])
         {
             [_detailView updateContentForChartViewWithDirection:0];
         }
+         */
+        
+        [_dayScroll updateContentForDayDetailViews];
     }
 }
 

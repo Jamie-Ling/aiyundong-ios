@@ -34,20 +34,20 @@
 
 - (void)loadLabels
 {
-    _signView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width * 0.35, self.height / 5, self.width * 0.3, self.height / 6.6)];
+    _signView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width * 0.35, self.height / 10, self.width * 0.3, self.height / 3.6)];
     _signView.backgroundColor = [UIColor clearColor];
     [self addSubview:_signView];
     
-    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"" withTextColor:[UIColor whiteColor]];
+    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_timeLabel];
     
-    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.34, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor whiteColor]];
+    _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.34, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_minLabel];
     
-    _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor whiteColor]];
+    _targetLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 1.9, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_targetLabel];
     
-    _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor whiteColor]];
+    _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_durationLabel];
 }
 
@@ -77,7 +77,7 @@
    
    int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
    
-    double sum = 288 * 2 * 10;
+    double sum = 288 * 10;
 
     /*
    for (int i = 0; i < slicesCount; i++)
@@ -117,8 +117,8 @@
 {
     _minLabel.hidden = YES;
     _targetLabel.hidden = YES;
-    self.signView.image = [UIImage image:@"home_sports@2x.png"];
-    self.signView.frame = CGRectMake(self.signView.x + 7, self.signView.y - 7, 89 / 2.0, 89 / 2.0);
+    self.signView.image = [UIImage image:@"脚印1.png"];
+    self.signView.frame = CGRectMake(self.signView.x + 9, self.signView.y + 10, 70 / 2.0, 90 / 2.0);
     _durationLabel.frame = CGRectMake(0, self.height / 3 * 2, self.width, self.height / 12);
     _timeLabel.text = @"步数";
    // _targetLabel.text = @"卡路里";
@@ -133,24 +133,24 @@
         case PieChartViewShowSteps:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
-            _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalSteps / (model.targetStep + 0.00001) ];
-            percent = model.totalSteps / (model.targetStep < 1 ? model.totalSteps : 10000);
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000)];
+            percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
         }
             break;
             
         case PieChartViewShowCalories:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
-            _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalCalories / (model.targetCalories + 0.0001)];
-            percent = model.totalCalories / (model.targetCalories < 1 ? model.targetCalories : 1000);
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : 1000)];
+            percent = model.totalCalories / (model.targetCalories > 1 ? model.targetCalories : 1000);
         }
             break;
             
         case PieChartViewShowDistance:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalDistance];
-            _durationLabel.text = [NSString stringWithFormat:@"%02.0f%%", model.totalDistance / (model.targetDistance + 0.0001)];
-            percent = model.totalDistance / (model.targetDistance < 1 ? model.targetDistance : 1000);
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 0.1 / (model.targetDistance > 1 ? model.targetDistance : 1000)];
+            percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);
         }
             break;
             

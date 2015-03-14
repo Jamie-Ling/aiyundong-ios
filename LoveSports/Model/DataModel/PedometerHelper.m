@@ -143,7 +143,7 @@ DEF_SINGLETON(PedometerHelper)
     NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
                        model.dateString, [LS_LastWareUUID getObjectValue]];
     [PedometerModel updateToDB:model where:where];
-    [model savePedometerModelToWeekModelAndMonthModel];
+    // [model savePedometerModelToWeekModelAndMonthModel];
 
     if (endBlock)
     {

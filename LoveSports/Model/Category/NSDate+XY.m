@@ -533,35 +533,6 @@ DUMMY_CLASS(NSDate_XY);
     }
 }
 
-- (BOOL)isDateThisWeek:(NSDate *)date
-{
-    NSDate *start;
-    NSTimeInterval extends;
-    NSCalendar *cal=[NSCalendar autoupdatingCurrentCalendar];
-    NSDate *today=[NSDate date];
-    BOOL success= [cal rangeOfUnit:NSCalendarUnitWeekOfMonth
-                        startDate:&start
-                        interval:&extends
-                        forDate:today];
-    
-    if(!success)
-    {
-        return NO;
-    }
-    
-    NSTimeInterval dateInSecs = [date timeIntervalSinceReferenceDate];
-    NSTimeInterval dayStartInSecs= [start timeIntervalSinceReferenceDate];
-    
-    if(dateInSecs > dayStartInSecs && dateInSecs < (dayStartInSecs+extends))
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
 @end
 
 

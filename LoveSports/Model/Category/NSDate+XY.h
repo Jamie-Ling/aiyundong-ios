@@ -50,5 +50,7 @@
 - (BOOL)isSameWithDate:(NSDate *)date;
 + (NSInteger)timeZone;
 - (NSInteger)compareOtherData:(NSDate *)date;
++ (BOOL)isDateThisWeek:(NSDate *)date;
++ (BOOL)isDateThisMonth:(NSDate *)date_;
 
 @end

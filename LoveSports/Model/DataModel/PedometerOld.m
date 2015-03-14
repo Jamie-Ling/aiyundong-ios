@@ -55,12 +55,44 @@
     NSLog(@"..%d..%d..%d", currentModel.totalSteps, currentModel.totalCalories, currentModel.totalDistance);
     [PedometerModel updateToDB:currentModel where:where];
 
+    NSLog(@"...%@", [NSDate date]);
+
     for (int i = 12; i < length - 2; i += 6)
     {
-        NSInteger step =        val[i]   | (val[i+1] << 8);
-        NSInteger cal =         val[i+2] | (val[i+3] << 8);
-        NSInteger distance =    val[i+4] | (val[i+5] << 8);
-        [self updateDataForArray:currentModel with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
+        NSLog(@"length..%d", i);
+        NSInteger state = (UInt8)(val[i + 1] >> 4);
+        if (state == 8)
+        {
+            NSInteger sleepX = val[i]   | ((val[i+1] & 0x0F) << 8);
+            NSInteger sleepY = val[i+2] | ((val[i+3] & 0x0F) << 8);
+            NSInteger sleepZ = val[i+4] | ((val[i+5] & 0x0F) << 8);
+            NSInteger sleep = sleepX + sleepY + sleepZ;
+            NSInteger sleepState = 0;
+            if (sleep < 800)
+            {
+                sleepState = 0;
+            }
+            else if (sleep > 801 && sleep < 1600)
+            {
+                sleepState = 1;
+            }
+            else if (sleep > 1601 && sleep < 3500)
+            {
+                sleepState = 2;
+            }
+            else
+            {
+                sleepState = 3;
+            }
+            [self updateDataForSleep:currentModel withNumber:sleepState withTimeIndex:timeIndex];
+        }
+        else
+        {
+            NSInteger step =        val[i]   | (val[i+1] << 8);
+            NSInteger cal =         val[i+2] | (val[i+3] << 8);
+            NSInteger distance =    val[i+4] | (val[i+5] << 8);
+            [self updateDataForArray:currentModel with:@[@(step), @(cal), @(distance)] withTimeIndex:timeIndex];
+        }
         
         [currentModel savePedometerModelToWeekModelAndMonthModel];
         NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
@@ -93,7 +125,8 @@
         
         timeIndex--;
     }
-    
+    NSLog(@"...%@", [NSDate date]);
+
     [currentModel showMessage];
     
     if (endBlock)
@@ -151,17 +184,19 @@
     distansArray[order / 6] = @(distans);
     model.detailDistans = distansArray;
     model.totalDistance += distanceNumber;
-    
-    NSInteger sleepNumber = [numberArray[2] integerValue];
+}
+
++ (void)updateDataForSleep:(PedometerModel *)model withNumber:(NSInteger)number withTimeIndex:(NSInteger)order
+{
     NSMutableArray *sleepArray = [NSMutableArray arrayWithArray:model.detailSleeps];
     [self fixMutableArray:sleepArray withCount:288];
-    sleepArray[order] = @(sleepNumber);
+    sleepArray[order] = @(number);
     model.detailSleeps = sleepArray;
 }
 
 + (void)fixMutableArray:(NSMutableArray *)array withCount:(int)count
 {
-    for (int i = array.count; i < count; i++)
+    for (NSInteger i = array.count; i < count; i++)
     {
         [array addObject:@(0)];
     }

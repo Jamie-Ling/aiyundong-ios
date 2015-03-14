@@ -94,6 +94,11 @@ DEF_SINGLETON(BLTRealTime)
 - (void)saveRealTimeDataToDBAndUpdateUI:(NSData *)data
 {
     _isRealTime = YES;
+    if (_realTimeBlock)
+    {
+        _realTimeBlock(YES);
+    }
+    
     NSData *tmpData = [NSData dataWithData:data];
     [[BLTAcceptData sharedInstance] cleanMutableRealTimeData];
 

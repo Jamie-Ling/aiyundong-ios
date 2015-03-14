@@ -61,13 +61,11 @@
     
     [self loadLabels];
     NSString *curUUID = [BLTManager sharedInstance].model.bltID;
-    if ([_model.bltID isEqualToString:curUUID] && _model.isConnected)
+    BOOL binding = [_model checkBindingState];
+    if (binding)
     {
         [self loadBindingAndConnectSetting];
-        [self bltIsConnect];
-    }
-    else if (_model.isConnected)
-    {
+       // [self bltIsConnect];
     }
     else
     {
@@ -216,16 +214,17 @@
     [ignoreButton addTarget:self action:@selector(clickIgnoreButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:ignoreButton];
     
+    /*
     UIButton *connectButton = [UIButton
                               simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
                               withTitle:@"连接"
                               withSelectTitle:@"连接"
                               withColor:UIColorRGB(253, 180, 30)];
     [connectButton addTarget:self action:@selector(connectButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:connectButton];
+    [self.view addSubview:connectButton];*/
     
     _bindingButton = [UIButton
-                      simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
+                      simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
                       withTitle:@"绑定"
                       withSelectTitle:@"绑定"
                       withColor:UIColorRGB(253, 180, 30)];

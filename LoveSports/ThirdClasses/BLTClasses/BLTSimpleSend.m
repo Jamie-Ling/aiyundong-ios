@@ -268,10 +268,10 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     // 纪录最后一次连的设备的uuid。
     [LS_LastWareUUID setObjectValue:[BLTManager sharedInstance].model.bltID];
     
+    // MillionPedometer==P118 W240=ActivityTracker
     NSString *name = [BLTManager sharedInstance].model.bltName;
-    if ([name isEqualToString:@"W240"] || [name isEqualToString:@"W285"] ||
-        [name isEqualToString:@"P118"] || [name isEqualToString:@"P118S"] ||
-        [name isEqualToString:@"MillionPedometer"])
+    if ([name isEqualToString:@"ActivityTracker"]  || [name isEqualToString:@"W285"] ||
+        [name isEqualToString:@"MillionPedometer"] || [name isEqualToString:@"P118S"])
     {
         [BLTManager sharedInstance].model.isNewDevice = NO;
         [self oldDeviceChannel];

@@ -45,7 +45,7 @@
 
 + (void)addBindingDeviceWithUUID:(NSString *)string;
 + (void)removeBindingDeviceWithUUID:(NSString *)string;
-- (void)checkBindingState;
+- (BOOL)checkBindingState;
 + (void)updateDeviceName:(NSString *)name;
 
 @end

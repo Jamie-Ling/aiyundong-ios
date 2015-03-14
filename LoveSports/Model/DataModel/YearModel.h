@@ -18,6 +18,8 @@ typedef enum {
 
 @interface YearModel : NSObject
 
+@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *wareUUID;
 @property (nonatomic, strong) NSString *_yearID;                        //年份，作为ID。 如2014
 @property (nonatomic, strong) NSMutableDictionary *_thisYearAllWeeks;   //这一年内所有有数据的周模型
 @property (nonatomic, strong) NSMutableDictionary *_thisYearAllMonths;  //这一年内所有有数据的月模型

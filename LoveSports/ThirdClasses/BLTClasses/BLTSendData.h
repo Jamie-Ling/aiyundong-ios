@@ -6,6 +6,9 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+// 暂时不搞的，第一个版本. 1.11-12 1.23-28, 1.43-48 0.1-0.3
+
+
 #import <Foundation/Foundation.h>
 #import "BLTAcceptData.h"
 #import "Header.h"
