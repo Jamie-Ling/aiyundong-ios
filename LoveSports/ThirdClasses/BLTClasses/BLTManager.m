@@ -237,8 +237,11 @@ DEF_SINGLETON(BLTManager)
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
+    NSLog(@".111model...%@", model.bltName);
+
     if (self.discoverPeripheral != model.peripheral)
     {
+        [self dismissLink];
         _connectState = BLTManagerConnecting;
         _model = model;
         self.discoverPeripheral = model.peripheral;
@@ -264,6 +267,7 @@ DEF_SINGLETON(BLTManager)
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
     NSLog(@"...正在连接...");
+    _isConnectNext = NO;
     _connectState = BLTManagerConnected;
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
@@ -290,7 +294,10 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
 {
     _connectState = BLTManagerConnectFail;
     NSLog(@"链接失败");
-    [self startCan];
+    if (!_isConnectNext)
+    {
+        [self startCan];
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -299,14 +306,17 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 {
     _connectState = BLTManagerNoConnect;
     NSLog(@"失去链接..%@", error);
-    [self startCan];
     
     if (_disConnectBlock)
     {
         _disConnectBlock();
     }
-    
     [[BLTPeripheral sharedInstance] errorMessage];
+    
+    if (!_isConnectNext)
+    {
+        [self startCan];
+    }
 }
 
 #pragma mark --- 向外围设备发送数据 ---

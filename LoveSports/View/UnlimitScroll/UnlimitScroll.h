@@ -25,6 +25,9 @@ typedef BOOL (^UnlimitScrollAllowScroll)(UnlimitScroll *view, int index);
 @property (nonatomic, strong) UnlimitScrollUpdateViews updateBlock;
 @property (nonatomic, strong) UnlimitScrollAllowScroll allowBlock;
 
+// 限制是否在右边。
+@property (nonatomic, assign) BOOL isRight;
+
 @end
 
 @protocol UnlimitScrollDelegate <NSObject>

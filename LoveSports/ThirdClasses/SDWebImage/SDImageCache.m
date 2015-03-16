@@ -384,7 +384,8 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
     });
 }
 
-- (void)cleanDisk {
+- (void)cleanDisk
+{
     [self cleanDiskWithCompletionBlock:nil];
 }
 

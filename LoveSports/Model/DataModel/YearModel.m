@@ -51,7 +51,7 @@
     //取到这一周的模型，没有就创建，更新至年模型中
     
     NSInteger thisWeekNumber = oneDate.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearID = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisWeekNumber];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisWeekNumber];
     WeekModel *thisWeekModel = [WeekModel searchSingleWithWhere:where orderBy:nil];
     if (!thisWeekModel)
     {
@@ -90,14 +90,14 @@
     //月=-----------------------------------------------
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
-    where = [NSString stringWithFormat:@"_yearID = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisMonthNumber];
+    where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld", (long)thisYearNumber, (long)thisMonthNumber];
     MonthModel *thisMonthModel = [MonthModel searchSingleWithWhere:where orderBy:nil];
     if (!thisMonthModel)
     {
         thisMonthModel = [[MonthModel alloc] initWithmonthNumber:thisMonthNumber andYearNumber:thisYearNumber];
         thisMonthModel.userName = onePedoMeterModel.userName;
         thisMonthModel.wareUUID = onePedoMeterModel.wareUUID;
-        [thisWeekModel saveToDB];
+        [thisMonthModel saveToDB];
     }
     
     [thisMonthModel updateTotalWithModel:onePedoMeterModel];
@@ -290,7 +290,7 @@
 {
     NSInteger year = date.year;
     NSInteger order = date.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %d AND _weekNumber = %d", year, order];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld", (long)year, (long)order];
     WeekModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)
@@ -344,7 +344,7 @@
     }
     
     NSInteger month = index - (currentYear - LS_Baseyear) * 12;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %d AND _monthNumber = %d", currentYear, month];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld", (long)currentYear, (long)month];
     MonthModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)

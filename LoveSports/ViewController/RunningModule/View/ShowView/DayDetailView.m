@@ -64,12 +64,23 @@
 - (void)setCurrentDate:(NSDate *)currentDate
 {
     _currentDate = currentDate;
+    
+    // 将内存之前的图标清除...
     _allowAnimation = NO;
     _percent = 0;
     [_chartView reloadData];
     
-    NSLog(@"...3333333");
     [self updateContentForChartViewWithDirection:0];
+}
+
+- (void)setAllowAnimation:(BOOL)allowAnimation
+{
+    _allowAnimation = allowAnimation;
+    
+    if (_allowAnimation)
+    {
+        [self startTimer];
+    }
 }
 
 - (void)loadPieChartView
@@ -85,24 +96,20 @@
 
 - (void)startTimer
 {
-    _percent = 0;
     if (!_timer)
     {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.07 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
     }
-    //[self performSelector:@selector(updateChartView) withObject:nil afterDelay:0.02];
 }
 
 - (void)updateChartView
 {
-    if (_allowAnimation)
+    _percent += 5;
+    [_chartView reloadData];
+
+    if (_percent >= (int)(_totalPercent * 100))
     {
-        _percent += 4;
-        [_chartView reloadData];
-        if (_percent >= (int)(_totalPercent * 100))
-        {
-            [self stopTimer];
-        }
+        [self stopTimer];
     }
 }
 
@@ -200,13 +207,20 @@
     _scrollView = [UIScrollView simpleInit:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)
                                   withShow:NO
                                 withBounce:YES];
-    [self addSubview:_scrollView];
-    [self loadLineChart];
+    // [self addSubview:_scrollView];
     _scrollView.contentSize = CGSizeMake(_scrollView.width * 6, _scrollView.height);
     
+    _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)];
+    
+    _fsLineView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_fsLineView];
+    [self loadLineChart];
+
+    /*
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionUp;
     [_scrollView addGestureRecognizer:swipe];
+     */
 }
 
 - (void)upSwipe
@@ -224,11 +238,11 @@
     NSMutableArray *bottomTitles = [[NSMutableArray alloc] init];
     for (int i = 0; i < 49; i++)
     {
-        NSString *string = [NSString stringWithFormat:@"%02d:%@\n", i / 2, (((i % 2) == 0) ? @"00" : @"30")];
+        NSString *string = [NSString stringWithFormat:@"%d", i / 2];
         [bottomTitles addObject:string];
     }
     
-    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(15.0, 20, _scrollView.width * 6 - 30.0, _scrollView.height - 40)];
+    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _scrollView.width - 20, _scrollView.height - 40)];
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = (int)bottomTitles.count - 1; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
@@ -239,7 +253,13 @@
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
     };
-    [_scrollView addSubview:_lineChart];
+    
+    _lineChart.hiddenBlock = ^(NSInteger index) {
+        BOOL hidden = ((index % 6) != 0);
+        return hidden;
+    };
+
+    [_fsLineView addSubview:_lineChart];
     
     [self updateContentForChartViewWithDirection:0];
 }
@@ -309,7 +329,7 @@
                                 //  if (percent > -0.1)
                                   {
                                       weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
-                                      [weakSelf startTimer];
+                                      //[weakSelf startTimer];
                                   }
                               }];
     
@@ -318,6 +338,7 @@
     
     if (_lastButton.tag == 2000)
     {
+        
         [_chartData addObjectsFromArray:_model.detailSteps];
     }
     else if (_lastButton.tag == 2001)

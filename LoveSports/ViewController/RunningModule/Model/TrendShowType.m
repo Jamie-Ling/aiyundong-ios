@@ -91,6 +91,7 @@
     return @[chartDataArray, daysArray];
 }
 
+// Year类完全变成了一个辅助类，没实际用处。
 + (NSArray *)getShowDataArrayWithWeekDate:(NSDate *)date withShowType:(TrendChartShowType)showType
 {
     NSArray *array = [YearModel getWeekModelArrayWithDate:date withReturnModel:YES];
@@ -102,15 +103,15 @@
         WeekModel *model = array[i];
         if (showType == TrendChartViewShowWeekSteps)
         {
-            chartDataArray[i] = @(model._weekTotalSteps);
+            chartDataArray[i] = @(model._weekTotalSteps + model.todaySteps);
         }
         else if (showType == TrendChartViewShowWeekCalories)
         {
-            chartDataArray[i] = @(model._weekTotalCalories);
+            chartDataArray[i] = @(model._weekTotalCalories + model.toadyCalories);
         }
         else
         {
-            chartDataArray[i] = @(model._weekTotalDistance);
+            chartDataArray[i] = @(model._weekTotalDistance + model.todayDistance);
         }
         
         daysArray[i] = model.showDate;
@@ -130,15 +131,15 @@
         MonthModel *model = array[i];
         if (showType == TrendChartViewShowMonthSteps)
         {
-            chartDataArray[i] = @(model._monthTotalSteps);
+            chartDataArray[i] = @(model._monthTotalSteps + model.todaySteps);
         }
         else if (showType == TrendChartViewShowMonthCalories)
         {
-            chartDataArray[i] = @(model._monthTotalCalories);
+            chartDataArray[i] = @(model._monthTotalCalories + model.toadyCalories);
         }
         else
         {
-            chartDataArray[i] = @(model._monthTotalDistance);
+            chartDataArray[i] = @(model._monthTotalDistance + model.todayDistance);
         }
         
         daysArray[i] = model.showDate;

@@ -12,4 +12,15 @@
 
 DEF_SINGLETON(UserInfoHelp)
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _userModel = [[UserInfoModel alloc] init];
+    }
+    
+    return self;
+}
+
 @end

@@ -27,6 +27,7 @@ typedef void(^BLTManagerFail)();
 typedef void(^BLTManagerElecQuantity)();
 
 @property (nonatomic, strong) BLTModel *model;
+@property (nonatomic, assign) BOOL isConnectNext;
 @property (nonatomic, strong) NSMutableArray *allWareArray;
 @property (nonatomic, strong) BLTManagerUpdateModel updateModelBlock;
 @property (nonatomic, strong) BLTManagerDisConnect disConnectBlock;

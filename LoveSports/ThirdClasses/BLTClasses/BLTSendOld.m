@@ -197,7 +197,7 @@ DEF_SINGLETON(BLTSendOld)
     // type 0代表公制, 1代表英制
     [BLTSendOld sendOldSetUserInfo:[NSDate date]
                       withBirthDay:[NSDate dateWithString:@"1985-03-21"]
-                        withWeight:170
+                        withWeight:60
                    withTargetSteps:10000
                           withStep:50
                           withType:0

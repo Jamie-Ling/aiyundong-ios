@@ -128,6 +128,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 // 新设备命令通道. 刚连接时
 - (void)newDeviceChannel
 {
+    NSLog(@"[NSDate date]...%@",[NSDate date] );
     [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetLocTime)
         {
@@ -159,7 +160,10 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             [NSString stringWithFormat:@"%c%c%c%c%c%c",
              val[4], val[5], val[6], val[7], val[8], val[9]];
             [BLTManager sharedInstance].model.hardVersion = val[10];
-            [BLTManager sharedInstance].model.hardVersion = val[11];
+            [BLTManager sharedInstance].model.firmVersion = val[11];
+            
+            NSLog(@"..%@..%ld..%ld", [BLTManager sharedInstance].model.hardType,
+                  (long)[BLTManager sharedInstance].model.hardVersion, (long)[BLTManager sharedInstance].model.firmVersion);
         }
     }];
 }
@@ -255,6 +259,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 // 旧设备的同步方法.
 - (void)synOldDeviceHistoryDataWithBackBlock:(BLTSendDataBackUpdate)block
 {
+    [BLTSendOld sharedInstance].backBlock = block;
     [[BLTSendOld sharedInstance] startSyncHistoryData];
 }
 

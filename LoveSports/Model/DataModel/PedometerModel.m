@@ -521,6 +521,15 @@
     self.targetDistance = [self StepsConvertDistance:self.targetStep withPace:self.stepSize];
 }
 
+// 从用户信息为模型添加各种目标.
+- (void)addTargetForModelFromUserInfo
+{
+    _targetStep = [UserInfoHelp sharedInstance].userModel.targetSteps;
+    _targetCalories = [UserInfoHelp sharedInstance].userModel.targetCalories;
+    _targetDistance = [UserInfoHelp sharedInstance].userModel.targetDistance;
+    _targetSleep = [UserInfoHelp sharedInstance].userModel.targetSleep;
+}
+
 // 表名
 + (NSString *)getTableName
 {

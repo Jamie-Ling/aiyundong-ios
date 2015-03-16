@@ -10,10 +10,24 @@
 
 @implementation UserInfoModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _targetSteps= 5000;
+        _targetCalories = 10000;
+        _targetDistance = 10 * 100;
+        _targetSleep = 60 * 8;
+    }
+    
+    return self;
+}
+
 // 表名
 + (NSString *)getTableName
 {
-    return @"PedometerTable";
+    return @"UserInfoModel";
 }
 
 // 复合主键

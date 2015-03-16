@@ -82,8 +82,8 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 @property (nonatomic, assign) NSInteger fastRunTime ;       // 当天快速跑步时间
 
 @property (nonatomic, assign) NSInteger targetStep;         // 目标步数
-@property (nonatomic, assign) CGFloat targetCalories;     // 目标卡路里
-@property (nonatomic, assign) CGFloat targetDistance;     // 目标距离
+@property (nonatomic, assign) CGFloat targetCalories;       // 目标卡路里
+@property (nonatomic, assign) CGFloat targetDistance;       // 目标距离
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
 @property (nonatomic, assign) NSInteger stepSize;           // 步距
@@ -108,11 +108,14 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 // 将数据分成阶段展示.
 - (void)modelToDetailShowWithTimeOrder:(int)lastOrder;
+
 // 将模型保存到周表和月表
 - (void)savePedometerModelToWeekModelAndMonthModel;
 
 - (void)showMessage;
 
+// 从用户信息为模型添加各种目标.
+- (void)addTargetForModelFromUserInfo;
 
 @end
 

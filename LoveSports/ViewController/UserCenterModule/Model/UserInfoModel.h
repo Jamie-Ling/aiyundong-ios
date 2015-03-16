@@ -23,6 +23,11 @@
 @property (nonatomic, assign) CGFloat weight;       // 体重
 @property (nonatomic, assign) CGFloat step;         // 步距
 
+@property (nonatomic, assign) NSInteger targetSteps;      // 目标步数
+@property (nonatomic, assign) CGFloat targetCalories;     // 目标卡路里
+@property (nonatomic, assign) CGFloat targetDistance;     // 目标距离
+@property (nonatomic, assign) NSInteger targetSleep;      // 目标睡眠
+
 @property (nonatomic, strong) BraceletInfoModel *braceletModel;
 
 @end

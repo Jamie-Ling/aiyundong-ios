@@ -148,8 +148,8 @@
             
         case PieChartViewShowDistance:
         {
-            _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalDistance];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 0.1 / (model.targetDistance > 1 ? model.targetDistance : 1000)];
+            _timeLabel.text = [NSString stringWithFormat:@"%.02f", (long)model.totalDistance * 0.01];
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 1.0 / (model.targetDistance > 1 ? model.targetDistance : 1000)];
             percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);
         }
             break;

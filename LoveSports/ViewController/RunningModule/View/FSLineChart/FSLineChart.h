@@ -29,6 +29,8 @@ typedef NSString *(^FSLabelForIndexGetter)(NSUInteger index);
 // Same as above, but for the value (for adding a currency, or a unit symbol for example)
 typedef NSString *(^FSLabelForValueGetter)(CGFloat value);
 
+typedef BOOL (^FSLineChartHiddenBlock)(NSInteger index);
+
 typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
     ValueLabelLeft,
     ValueLabelRight
@@ -46,6 +48,8 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 @property (nonatomic) UIColor* valueLabelTextColor;
 @property (nonatomic) UIColor* valueLabelBackgroundColor;
 @property (nonatomic) ValueLabelPositionType valueLabelPosition;
+
+@property (nonatomic, strong) FSLineChartHiddenBlock hiddenBlock;
 
 // Number of visible step in the chart
 @property (nonatomic) int gridStep;
@@ -86,6 +90,8 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 @property (nonatomic) CGFloat animationDuration;
 
 @property (nonatomic, assign) NSInteger levelNumber;
+
+@property (nonatomic, strong) NSArray *titlesArray;
 
 // Set the actual data for the chart, and then render it to the view.
 - (void)setChartData:(NSArray *)chartData;

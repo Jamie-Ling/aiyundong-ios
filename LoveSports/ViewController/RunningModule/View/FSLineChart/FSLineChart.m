@@ -108,6 +108,11 @@
             label.numberOfLines = 2;
             
             [self addSubview:label];
+
+            if (_hiddenBlock)
+            {
+                label.hidden = _hiddenBlock(i);
+            }
         }
     }
     
@@ -154,14 +159,17 @@
     {
         for(int i = 0;i < _horizontalGridStep + 1; i++)
         {
-            CGContextSetStrokeColorWithColor(ctx, [_innerGridColor CGColor]);
-            CGContextSetLineWidth(ctx, 1);
-            
-            CGPoint point = CGPointMake((i) * _axisWidth / _horizontalGridStep * scale + _margin, _margin);
-            
-            CGContextMoveToPoint(ctx, point.x, self.height - 5);
-            CGContextAddLineToPoint(ctx, point.x, self.height);
-            CGContextStrokePath(ctx);
+            if (_hiddenBlock && !_hiddenBlock(i))
+            {
+                CGContextSetStrokeColorWithColor(ctx, [_innerGridColor CGColor]);
+                CGContextSetLineWidth(ctx, 1);
+                
+                CGPoint point = CGPointMake((i) * _axisWidth / _horizontalGridStep * scale + _margin, _margin);
+                
+                CGContextMoveToPoint(ctx, point.x, self.height - 5);
+                CGContextAddLineToPoint(ctx, point.x, self.height);
+                CGContextStrokePath(ctx);
+            }
         }
         
         // If the value is zero then we display the horizontal axis
@@ -234,7 +242,7 @@
     // NSLog(@"....%f..%f", minBound, maxBound);
     CGFloat scale = _axisHeight; // (maxBound - minBound);
     
-    //CAShapeLayer *dataPointsLayer = [CAShapeLayer layer];
+    // CAShapeLayer *dataPointsLayer = [CAShapeLayer layer];
     
     for(int i = 0; i < _data.count; i++)
     {
@@ -245,9 +253,9 @@
                                           withAlignment:NSTextAlignmentCenter
                                            withFontSize:12.0
                                                withText:@""
-                                         withTextColor:[UIColor whiteColor]];
+                                         withTextColor:[UIColor clearColor]];
         [self addSubview:label];
-        label.center = CGPointMake(p.x, p.y - 15);
+        label.center = CGPointMake(p.x, p.y);
         label.text = [NSString stringWithFormat:@"%ld", (long)[_data[i] integerValue]];
         
         p.y +=  minBound * scale;

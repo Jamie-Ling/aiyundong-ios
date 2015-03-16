@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) PedometerModel *model;
 @property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, strong) UIView *fsLineView;
 
 @property (nonatomic, assign) BOOL allowAnimation;
 

@@ -43,9 +43,38 @@
         self.scrollView.pagingEnabled = YES;
         [self addSubview:self.scrollView];
         self.currentPageIndex = 1;
+        
+        [self addSwipeForScrollView];
     }
     
     return self;
+}
+
+- (void)addSwipeForScrollView
+{
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe)];
+    swipe.direction = UISwipeGestureRecognizerDirectionLeft;
+  //  [self.scrollView addGestureRecognizer:swipe];
+    
+    swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe)];
+    swipe.direction = UISwipeGestureRecognizerDirectionRight;
+  //  [self.scrollView addGestureRecognizer:swipe];
+}
+
+- (void)leftSwipe
+{
+    NSLog(@"..左扫..");
+    
+    self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
+    [self configContentViews];
+}
+
+- (void)rightSwipe
+{
+    NSLog(@"..右扫..");
+    
+    self.currentPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
+    [self configContentViews];
 }
 
 - (void)setViewsArray:(NSArray *)viewsArray
@@ -126,7 +155,7 @@
 {
     if (!decelerate)
     {
-        [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+      //  [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
     }
 }
 
@@ -171,12 +200,27 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+    if (_allowBlock)
+    {
+        BOOL allow = _isRight ? _allowBlock(self, -1) : _allowBlock(self, 1);
+        if (allow)
+        {
+            [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+        }
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+   // [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+    if (_allowBlock)
+    {
+        BOOL allow = _isRight ? _allowBlock(self, -1) : _allowBlock(self, 1);
+        if (allow)
+        {
+            [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+        }
+    }
 }
 
 #pragma mark -

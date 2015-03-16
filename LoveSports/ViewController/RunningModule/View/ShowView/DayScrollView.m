@@ -32,11 +32,6 @@
        
         detailView.currentDate = [date dateAfterDay:i - 1];
         [_viewsArray addObject:detailView];
-        
-        if (i == 1)
-        {
-            detailView.allowAnimation = YES;
-        }
     }
     
     [self loadUnlimitScrollView];
@@ -47,6 +42,7 @@
     _scrollView = [[UnlimitScroll alloc] initWithFrame:self.bounds];
     
     _scrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:1.0];
+    _scrollView.isRight = YES;
     _scrollView.viewsArray = _viewsArray;
     
     DEF_WEAKSELF_(DayScrollView);
@@ -58,6 +54,12 @@
     };
     
     [self addSubview:_scrollView];
+}
+
+- (void)startChartAnimation
+{
+    DayDetailView *detailView = _viewsArray[1];
+    detailView.allowAnimation = YES;
 }
 
 - (void)updateDetailViewsDataWithIndex:(NSInteger)index
@@ -88,6 +90,16 @@
         {
             return YES;
         }
+        else
+        {
+            // DayDetailView *detailView = _viewsArray[2];
+            // detailView.allowAnimation = YES;
+        }
+    }
+    else
+    {
+        // DayDetailView *detailView = _viewsArray[0];
+        // detailView.allowAnimation = YES;
     }
     
     return NO;
@@ -95,15 +107,13 @@
 
 - (void)updateContentForDayDetailViews
 {
-    NSLog(@"11111");
     DayDetailView *detailView = _viewsArray[1];
     NSDate *date = detailView.currentDate;
     
     if ([date isSameWithDate:[NSDate date]])
     {
-        NSLog(@"22222");
-
         detailView.currentDate = detailView.currentDate;
+        detailView.allowAnimation = YES;
     }
 }
 

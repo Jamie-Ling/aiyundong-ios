@@ -35,8 +35,8 @@
 {
     [super viewDidLoad];
     
-    _tabBarFrame = CGRectMake(0, 0, self.view.bounds.size.width, 64);
-    _contentFrame = CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64);
+    _tabBarFrame = CGRectMake(0, 0, self.width, 64);
+    _contentFrame = CGRectMake(0, 64, self.width, self.height - 64);
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -57,8 +57,8 @@
     _tabBar.delegate = self;
     [self.view addSubview:_tabBar];
     
-    _tabBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 64);
-    _contentView.frame = CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64);
+    _tabBar.frame = CGRectMake(0, 0, self.width, 64);
+    _contentView.frame = CGRectMake(0, 64, self.width, self.height - 64);
     
     self.tempItems = nil;
     

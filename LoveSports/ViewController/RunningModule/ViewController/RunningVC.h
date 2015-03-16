@@ -8,6 +8,6 @@
 
 #import "ZKKViewController.h"
 
-@interface RunningVC : ZKKViewController
+@interface RunningVC : UITableViewController
 
 @end

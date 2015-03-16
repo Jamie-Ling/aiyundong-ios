@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSMutableArray *viewsArray;
 
 - (void)updateContentForDayDetailViews;
+- (void)startChartAnimation;
 
 @end

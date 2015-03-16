@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UILabel *wareUUID;
 @property (nonatomic, strong) UILabel *wareName;
 @property (nonatomic, strong) UIButton *removeButton;
+@property (nonatomic, strong) UIButton *brokenButton;
+@property (nonatomic, strong) UIButton *connectButton;
 
 @property (nonatomic, strong) TimeZoneView *timeView;
 
@@ -61,11 +63,16 @@
     
     [self loadLabels];
     NSString *curUUID = [BLTManager sharedInstance].model.bltID;
+    BOOL isConnect = [_model.bltID isEqualToString:curUUID];
     BOOL binding = [_model checkBindingState];
-    if (binding)
+    if (binding && isConnect)
     {
         [self loadBindingAndConnectSetting];
        // [self bltIsConnect];
+    }
+    else if (binding && !isConnect)
+    {
+        [self loaoNoConnectAndBindingSetting];
     }
     else
     {
@@ -86,6 +93,16 @@
 {
     // SHOWMBProgressHUD(@"该设备连接突然断开", nil, nil, NO, 2.0);
     // [self performSelector:@selector(popCurrentVC) withObject:nil afterDelay:2.0];
+    
+    BOOL binding = [_model checkBindingState];
+    if (binding)
+    {
+        [self loaoNoConnectAndBindingSetting];
+    }
+    else
+    {
+        [self loadNoBindingAndNoConnectSetting];
+    }
 }
 
 - (void)popCurrentVC
@@ -190,8 +207,18 @@
 
 - (void)loadBindingAndConnectSetting
 {
+    /*
+    _brokenButton = [UIButton
+                      simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                      withTitle:@"断开该设备"
+                      withSelectTitle:@"连接该设备"
+                      withColor:UIColorRGB(253, 180, 30)];
+    [_brokenButton addTarget:self action:@selector(brokenLinkButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_brokenButton];
+     */
+    
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                     simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
                      withTitle:@"解除绑定"
                      withSelectTitle:@"解除绑定"
                      withColor:UIColorRGB(253, 180, 30)];
@@ -199,9 +226,23 @@
     [self.view addSubview:_removeButton];
 }
 
-- (void)loadConnectAndNoBindingSetting
+- (void)loaoNoConnectAndBindingSetting
 {
-
+    _connectButton = [UIButton
+                               simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                               withTitle:@"连接该设备"
+                               withSelectTitle:@"连接该设备"
+                               withColor:UIColorRGB(253, 180, 30)];
+    [_connectButton addTarget:self action:@selector(connectDeviceButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_connectButton];
+    
+    _removeButton = [UIButton
+                     simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
+                     withTitle:@"解除绑定"
+                     withSelectTitle:@"解除绑定"
+                     withColor:UIColorRGB(253, 180, 30)];
+    [_removeButton addTarget:self action:@selector(removeHardWare) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_removeButton];
 }
 
 - (void)loadNoBindingAndNoConnectSetting
@@ -212,7 +253,7 @@
                               withSelectTitle:@"忽略此设备"
                               withColor:UIColorRGB(253, 180, 30)];
     [ignoreButton addTarget:self action:@selector(clickIgnoreButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:ignoreButton];
+    // [self.view addSubview:ignoreButton];
     
     /*
     UIButton *connectButton = [UIButton
@@ -221,7 +262,8 @@
                               withSelectTitle:@"连接"
                               withColor:UIColorRGB(253, 180, 30)];
     [connectButton addTarget:self action:@selector(connectButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:connectButton];*/
+    [self.view addSubview:connectButton];
+     */
     
     _bindingButton = [UIButton
                       simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
@@ -241,6 +283,12 @@
     SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 5);
 }
 
+- (void)brokenLinkButton:(UIButton *)button
+{
+    button.selected = !button.selected;
+    [[BLTManager sharedInstance] dismissLink];
+}
+
 - (void)removeHardWare
 {
     _model.isBinding = NO;
@@ -253,9 +301,16 @@
 }
 
 // 连接设备但是无法绑定
-- (void)connectButton
+- (void)connectDeviceButton:(UIButton *)button
 {
-
+    button.selected = !button.selected;
+    // [[BLTManager sharedInstance] dismissLink];
+    // [[BLTManager sharedInstance] repareConnectedDevice:_model];
+    [BLTManager sharedInstance].isConnectNext = YES;
+    [[BLTManager sharedInstance] repareConnectedDevice:_model];
+    
+    NSLog(@"..%@", _model.bltName);
+    SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 5);
 }
 
 // 忽略该设备
@@ -304,7 +359,7 @@
     [self loadLabels];
     [self loadBindingAndConnectSetting];
     
-    if (![LS_SettingBaseTimeZoneInfo getBOOLValue])
+    if (![LS_SettingBaseTimeZoneInfo getBOOLValue] && [BLTManager sharedInstance].model.isNewDevice)
     {
         _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
         
@@ -312,6 +367,7 @@
         _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
         [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
     }
+     
 }
 
 #pragma mark --- UITextField Delegate ---

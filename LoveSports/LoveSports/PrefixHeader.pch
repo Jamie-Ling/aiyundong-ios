@@ -39,6 +39,7 @@
     #import "UIViewController+SystemAdap.h"
     #import "BLTSendHelp.h"
     #import "BLTSendOld.h"
+    #import "UserInfoHelp.h"
 
 #endif
 

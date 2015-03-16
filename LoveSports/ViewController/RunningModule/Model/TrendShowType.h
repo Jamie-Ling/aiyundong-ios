@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+// 趋势表获取数据的帮助类.
+
 typedef enum {
     TrendChartViewShowDaySteps = 0,
     TrendChartViewShowDayCalories = 1,

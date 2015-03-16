@@ -129,6 +129,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    NSLog(@".[self timeZone]...%d..%d..%d", [self timeZone], date.hour, date.minute);
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday, [self timeZone], date.hour, date.minute, date.second};
@@ -171,8 +172,8 @@ DEF_SINGLETON(BLTSendData)
 }
 
 + (void)sendPasswordProtectionDataWithOpen:(BOOL)open
-                          withPassword:(NSString *)password
-                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
+                              withPassword:(NSString *)password
+                           withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     NSInteger number = [password integerValue];
     UInt8 val[7] = {0xBE, 0x01, 0x05, 0xED, open, (UInt8)(number >> 8), (UInt8)number};
