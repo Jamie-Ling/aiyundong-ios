@@ -1,0 +1,156 @@
+//
+//  TrendDetailView.m
+//  LoveSports
+//
+//  Created by zorro on 15/3/19.
+//  Copyright (c) 2015年 zorro. All rights reserved.
+//
+
+#import "TrendDetailView.h"
+
+@interface TrendShowType ()
+
+@property (nonatomic, strong) UIButton *lastButton;
+
+@end
+
+@implementation TrendDetailView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor whiteColor];
+        // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+        
+        _showType = TrendChartViewShowDaySteps;
+        
+        _dayDate = [NSDate date];
+        _weekDate = [NSDate date];
+        _monthIndex = [NSDate date].month;
+        
+        [self loadBaseView];
+    }
+    
+    return self;
+}
+
+- (void)setCurrentDate:(NSDate *)currentDate
+{
+    _dayDate = currentDate;
+    _weekDate = currentDate;
+    _monthIndex = [YearModel monthOfYearWithDate:currentDate];
+    
+    [self updateContentForChartViewWithDirection:0];
+}
+
+- (void)loadBaseView
+{
+    _baseView = [[UIView alloc] initWithFrame:self.bounds];
+    _baseView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_baseView];
+    
+    [self loadLineChart];
+}
+
+-(void)loadLineChart
+{
+    // Generating some dummy data
+    
+    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(self.width * 0.05, 0, self.width * 0.9, self.height)];
+    _lineChart.isDate = YES;
+    _lineChart.verticalGridStep = 6;
+    _lineChart.horizontalGridStep = LS_TrendChartShowCount; // 151,187,205,0.2
+    _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
+    _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
+    _lineChart.labelForValue = ^(CGFloat value) {
+        return [NSString stringWithFormat:@""];
+    };
+    [_baseView addSubview:_lineChart];
+    
+    [self refreshTrendChartViewWithDayDate:_dayDate];
+}
+
+// 日刷新
+- (void)refreshTrendChartViewWithDayDate:(NSDate *)date
+{
+    _dayDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithDayDate:_dayDate withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 周刷新
+- (void)refreshTrendChartViewWithWeekDate:(NSDate *)date
+{
+    _weekDate = date;
+    NSArray *array = [TrendShowType getShowDataArrayWithWeekDate:_weekDate withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 月刷新
+- (void)refreshTrendChartViewWithMonthIndex:(NSInteger)index
+{
+    _monthIndex = index;
+    NSArray *array = [TrendShowType getShowDataArrayWithMonthIndex:_monthIndex withShowType:_showType];
+    
+    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
+}
+
+// 传入数据刷新
+- (void)refreshTrendChartViewWithChartData:(NSArray *)ChartData withTitle:(NSArray *)titlesArray
+{
+    _lineChart.labelForIndex = ^(NSUInteger item) {
+        return titlesArray[item];
+    };
+    [_lineChart setChartData:ChartData];
+}
+
+// 左右滑动进行数据变换。
+- (void)updateContentForChartViewWithDirection:(NSInteger)direction
+{
+    if (_showType < 3)
+    {
+        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
+    }
+    else if (_showType < 6)
+    {
+        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
+    }
+    else
+    {
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
+    }
+}
+
+// 点击6个按钮后图表进行切换。
+- (void)reloadTrendChartViewWith:(TrendChartShowType)type
+{
+    //_showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
+    _showType = type;
+    
+    if (type < 3)
+    {
+        [self refreshTrendChartViewWithDayDate:_dayDate];
+    }
+    else if (type < 6)
+    {
+        [self refreshTrendChartViewWithWeekDate:_weekDate];
+    }
+    else
+    {
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex];
+    }
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@end

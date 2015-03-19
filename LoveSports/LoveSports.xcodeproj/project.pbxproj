@@ -368,6 +368,8 @@
 		F4BF5F6E1A6F529E004C433D /* ZKKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5F681A6F529E004C433D /* ZKKViewController.m */; };
 		F4BF5FF41A6FC95C004C433D /* ZKKTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5FF31A6FC95C004C433D /* ZKKTabBar.m */; };
 		F4BF5FF71A6FCD20004C433D /* ZKKTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF5FF61A6FCD20004C433D /* ZKKTabBarController.m */; };
+		F4C41D1D1ABB00BE00107F6C /* TrendScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C41D1C1ABB00BE00107F6C /* TrendScrollView.m */; };
+		F4C41D201ABB01AF00107F6C /* TrendDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C41D1F1ABB01AF00107F6C /* TrendDetailView.m */; };
 		F4C4FD251A8DFF71003A946F /* TrendShowType.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C4FD241A8DFF71003A946F /* TrendShowType.m */; };
 		F4CE02671AABF39A005C29FC /* DownloadEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02661AABF39A005C29FC /* DownloadEntity.m */; };
 		F4CE02711AABF3D5005C29FC /* libZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4CE02701AABF3D5005C29FC /* libZipArchive.a */; };
@@ -938,6 +940,10 @@
 		F4BF5FF31A6FC95C004C433D /* ZKKTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKKTabBar.m; sourceTree = "<group>"; };
 		F4BF5FF51A6FCD20004C433D /* ZKKTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKKTabBarController.h; sourceTree = "<group>"; };
 		F4BF5FF61A6FCD20004C433D /* ZKKTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKKTabBarController.m; sourceTree = "<group>"; };
+		F4C41D1B1ABB00BE00107F6C /* TrendScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendScrollView.h; sourceTree = "<group>"; };
+		F4C41D1C1ABB00BE00107F6C /* TrendScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendScrollView.m; sourceTree = "<group>"; };
+		F4C41D1E1ABB01AF00107F6C /* TrendDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendDetailView.h; sourceTree = "<group>"; };
+		F4C41D1F1ABB01AF00107F6C /* TrendDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendDetailView.m; sourceTree = "<group>"; };
 		F4C4FD231A8DFF71003A946F /* TrendShowType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendShowType.h; sourceTree = "<group>"; };
 		F4C4FD241A8DFF71003A946F /* TrendShowType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendShowType.m; sourceTree = "<group>"; };
 		F4CE02651AABF39A005C29FC /* DownloadEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadEntity.h; sourceTree = "<group>"; };
@@ -1719,10 +1725,14 @@
 			children = (
 				F42E75E01A8607AF00FAB64C /* DayDetailView.h */,
 				F42E75E11A8607AF00FAB64C /* DayDetailView.m */,
-				F42E75E31A8615AF00FAB64C /* TrendChartView.h */,
-				F42E75E41A8615AF00FAB64C /* TrendChartView.m */,
 				F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */,
 				F4FFD8501AB455CE00A387A4 /* DayScrollView.m */,
+				F42E75E31A8615AF00FAB64C /* TrendChartView.h */,
+				F42E75E41A8615AF00FAB64C /* TrendChartView.m */,
+				F4C41D1B1ABB00BE00107F6C /* TrendScrollView.h */,
+				F4C41D1C1ABB00BE00107F6C /* TrendScrollView.m */,
+				F4C41D1E1ABB01AF00107F6C /* TrendDetailView.h */,
+				F4C41D1F1ABB01AF00107F6C /* TrendDetailView.m */,
 			);
 			path = ShowView;
 			sourceTree = "<group>";
@@ -2622,6 +2632,7 @@
 				F4B693E31A6F40D200B42395 /* NSString+Extension.m in Sources */,
 				F4CE02671AABF39A005C29FC /* DownloadEntity.m in Sources */,
 				F43979F21AB550680033B7BB /* MJRefreshGifHeader.m in Sources */,
+				F4C41D201ABB01AF00107F6C /* TrendDetailView.m in Sources */,
 				F4B693981A6F403400B42395 /* FMDatabase.m in Sources */,
 				F4644BC11A9447A8003088E9 /* BLTDFUHelper.m in Sources */,
 				69FD41911A7FCC100023B74D /* JSBadgeView.m in Sources */,
@@ -2715,6 +2726,7 @@
 				69FD420F1A7FCC2C0023B74D /* BraceletInfoModel.m in Sources */,
 				69EFC2B01A75D11900B5BC53 /* BSModalDatePickerView.m in Sources */,
 				F445F7A91A79381C00D5B170 /* BLTAcceptData.m in Sources */,
+				F4C41D1D1ABB00BE00107F6C /* TrendScrollView.m in Sources */,
 				F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */,
 				F4B693AD1A6F403400B42395 /* MKNetworkOperation.m in Sources */,
 				69E097481A87B9C1003F2EB9 /* YearModel.m in Sources */,

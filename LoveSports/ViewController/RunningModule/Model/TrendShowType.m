@@ -85,7 +85,7 @@
             chartDataArray[i] = @(model.totalDistance);
         }
         
-        daysArray[i] = [model.dateString substringFromIndex:5];
+        daysArray[i] = model.dateString;
     }
     
     return @[chartDataArray, daysArray];

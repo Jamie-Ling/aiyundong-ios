@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TrendShowType.h"
+#import "TrendScrollView.h"
+
 @protocol TrendChartViewDelegate;
 
 @interface TrendChartView : UIView
@@ -18,6 +20,9 @@
 @property (nonatomic, assign) NSInteger monthIndex;
 
 @property (nonatomic, assign) TrendChartShowType showType;
+@property (nonatomic, strong) TrendScrollView *scrollView;
+
+@property (nonatomic, strong) UILabel *yearLabel;
 
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction;
 

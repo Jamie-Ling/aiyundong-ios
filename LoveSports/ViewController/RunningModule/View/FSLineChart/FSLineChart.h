@@ -92,6 +92,7 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 @property (nonatomic, assign) NSInteger levelNumber;
 
 @property (nonatomic, strong) NSArray *titlesArray;
+@property (nonatomic, assign) BOOL isDate;
 
 // Set the actual data for the chart, and then render it to the view.
 - (void)setChartData:(NSArray *)chartData;

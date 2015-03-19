@@ -49,7 +49,7 @@
         [self loadCalendarButton];
         [self loadSegmentedControl];
         [self loadLandscapeButton];
-        [self loadLineChart];
+        [self loadTrendScrollView];
         [self loadChartStyleButtons];
     }
     
@@ -175,6 +175,21 @@
     [self refreshTrendChartViewWithDayDate:_dayDate];
 }
 
+- (void)loadTrendScrollView
+{
+    _scrollView = [[TrendScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                    120,
+                                                                    self.width,
+                                                                    200)];
+    [self addSubview:_scrollView];
+    
+    DEF_WEAKSELF_(TrendChartView);
+    _scrollView.yearBlock = ^ (UIView *view, id object) {
+        NSDate *date = (NSDate *)object;
+        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%ld年", (long)date.year];
+    };
+}
+
 // 日刷新
 - (void)refreshTrendChartViewWithDayDate:(NSDate *)date
 {
@@ -266,6 +281,13 @@
             _lastButton = button;
         }
     }
+    
+    _yearLabel = [self addSubLabelWithRect:CGRectMake(4, 350, 44, 20)
+                             withAlignment:NSTextAlignmentCenter
+                              withFontSize:13
+                                  withText:[NSString stringWithFormat:@"%ld年", [NSDate date].year]
+                             withTextColor:[UIColor blackColor]
+                                   withTag:3000];
 }
 
 - (void)clcikChartStyleButton:(UIButton *)button

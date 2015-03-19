@@ -304,7 +304,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }
     else
     {
-        SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
+        // SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
     }
 }
 

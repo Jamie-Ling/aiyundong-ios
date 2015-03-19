@@ -244,7 +244,7 @@
     
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _scrollView.width - 20, _scrollView.height - 40)];
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = (int)bottomTitles.count - 1; // 151,187,205,0.2
+    _lineChart.horizontalGridStep = (int)bottomTitles.count; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForIndex = ^(NSUInteger item) {

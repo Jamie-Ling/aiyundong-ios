@@ -79,7 +79,7 @@
         int q = (int)_data.count / _horizontalGridStep;
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
         
-        for(int i = 0;i< _horizontalGridStep + 1; i++)
+        for(int i = 0;i< _horizontalGridStep; i++)
         {
             NSInteger itemIndex = q * i;
             if(itemIndex >= _data.count)
@@ -87,7 +87,10 @@
                 itemIndex = _data.count - 1;
             }
             
+            
             NSString* text = _labelForIndex(itemIndex);
+            NSString *showText = _isDate ? [text substringFromIndex:5] : text;
+            
             
             if(!text)
                 continue;
@@ -95,20 +98,28 @@
             CGPoint p = CGPointMake(_margin + i * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
             CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
             
-            float width =[text boundingRectWithSize:rect.size
+            float width =[showText boundingRectWithSize:rect.size
                                             options:NSStringDrawingUsesLineFragmentOrigin
                                          attributes:@{NSFontAttributeName:_indexLabelFont}
                                             context:nil].size.width;
             
-            UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
-            label.text = text;
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
             label.font = _indexLabelFont;
             label.textColor = [UIColor blackColor];
             label.backgroundColor = [UIColor clearColor];
             label.numberOfLines = 2;
-            
             [self addSubview:label];
-
+            label.text = showText;
+            
+            if (_isDate)
+            {
+                NSDate *date = [NSDate dateWithString:text];
+                if (date.weekday == 1 || date.weekday == 7)
+                {
+                    label.textColor = [UIColor redColor];
+                }
+            }
+            
             if (_hiddenBlock)
             {
                 label.hidden = _hiddenBlock(i);
