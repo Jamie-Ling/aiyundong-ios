@@ -43,18 +43,10 @@
 		6970ED141A826974009572D5 /* 周选中1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED131A826973009572D5 /* 周选中1.png */; };
 		6970ED161A826A2D009572D5 /* 休选中.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970ED151A826A2D009572D5 /* 休选中.png */; };
 		6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6970ED261A83B152009572D5 /* TestBLTViewController.m */; };
-		698A90CD1A6FEF76005BABE6 /* ObjectCTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90CC1A6FEF76005BABE6 /* ObjectCTools.m */; };
 		698A90EB1A6FF91D005BABE6 /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = 698A90EA1A6FF91D005BABE6 /* UIView_extra.m */; };
 		699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6992420F1A77425200EFF121 /* game_button_select_Highlighted@2x.png */; };
 		699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 699242101A77425200EFF121 /* game_button_select_Normal@2x.png */; };
-		69C950631ABA66D300BEC7DC /* BLTAcceptData.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FAF1ABA66D300BEC7DC /* BLTAcceptData.m */; };
-		69C950641ABA66D300BEC7DC /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FB11ABA66D300BEC7DC /* BLTManager.m */; };
-		69C950651ABA66D400BEC7DC /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FB31ABA66D300BEC7DC /* BLTModel.m */; };
-		69C950661ABA66D400BEC7DC /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FB51ABA66D300BEC7DC /* BLTPeripheral.m */; };
-		69C950671ABA66D400BEC7DC /* BLTRealTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FB71ABA66D300BEC7DC /* BLTRealTime.m */; };
-		69C950681ABA66D400BEC7DC /* BLTSendData.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FB91ABA66D300BEC7DC /* BLTSendData.m */; };
-		69C950691ABA66D400BEC7DC /* BLTSimpleSend.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FBB1ABA66D300BEC7DC /* BLTSimpleSend.m */; };
-		69C9506A1ABA66D400BEC7DC /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FBD1ABA66D300BEC7DC /* BLTUUID.m */; };
+		69AB09871ABAB00D00F68031 /* libBLTAndModel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AB09861ABAB00D00F68031 /* libBLTAndModel.a */; };
 		69C9506B1ABA66D400BEC7DC /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FC11ABA66D300BEC7DC /* FMDatabase+InMemoryOnDiskIO.m */; };
 		69C9506C1ABA66D400BEC7DC /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FC41ABA66D300BEC7DC /* FMDatabase.m */; };
 		69C9506D1ABA66D400BEC7DC /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C94FC61ABA66D300BEC7DC /* FMDatabaseAdditions.m */; };
@@ -126,14 +118,6 @@
 		69C950AF1ABA66D400BEC7DC /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C9505E1ABA66D300BEC7DC /* CalendarView.m */; };
 		69C950B01ABA66D400BEC7DC /* chack.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C9505F1ABA66D300BEC7DC /* chack.png */; };
 		69C950B11ABA66D400BEC7DC /* NSDate+WQCalendarLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950621ABA66D300BEC7DC /* NSDate+WQCalendarLogic.m */; };
-		69C950C31ABA679F00BEC7DC /* MonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950B41ABA679F00BEC7DC /* MonthModel.m */; };
-		69C950C41ABA679F00BEC7DC /* NoPasteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950B61ABA679F00BEC7DC /* NoPasteTextField.m */; };
-		69C950C51ABA679F00BEC7DC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950B81ABA679F00BEC7DC /* PedometerHelper.m */; };
-		69C950C61ABA679F00BEC7DC /* PedometerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950BA1ABA679F00BEC7DC /* PedometerModel.m */; };
-		69C950C71ABA679F00BEC7DC /* SaveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950BC1ABA679F00BEC7DC /* SaveHelper.m */; };
-		69C950C81ABA679F00BEC7DC /* ShowManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950BE1ABA679F00BEC7DC /* ShowManage.m */; };
-		69C950C91ABA679F00BEC7DC /* WeekModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950C01ABA679F00BEC7DC /* WeekModel.m */; };
-		69C950CA1ABA679F00BEC7DC /* YearModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C950C21ABA679F00BEC7DC /* YearModel.m */; };
 		69E0973A1A873D6E003F2EB9 /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69E097291A873D6E003F2EB9 /* DateTools.bundle */; };
 		69E0973B1A873D6E003F2EB9 /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E0972D1A873D6E003F2EB9 /* DTError.m */; };
 		69E0973C1A873D6E003F2EB9 /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E0972F1A873D6E003F2EB9 /* DTTimePeriod.m */; };
@@ -410,28 +394,30 @@
 		6970ED251A83B152009572D5 /* TestBLTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBLTViewController.h; sourceTree = "<group>"; };
 		6970ED261A83B152009572D5 /* TestBLTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBLTViewController.m; sourceTree = "<group>"; };
 		698A90CA1A6FEF76005BABE6 /* GlobalTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalTool.h; sourceTree = "<group>"; };
-		698A90CB1A6FEF76005BABE6 /* ObjectCTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectCTools.h; sourceTree = "<group>"; };
-		698A90CC1A6FEF76005BABE6 /* ObjectCTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectCTools.m; sourceTree = "<group>"; };
 		698A90E91A6FF91D005BABE6 /* UIView_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_extra.h; sourceTree = "<group>"; };
 		698A90EA1A6FF91D005BABE6 /* UIView_extra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_extra.m; sourceTree = "<group>"; };
 		6992420F1A77425200EFF121 /* game_button_select_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_button_select_Highlighted@2x.png"; sourceTree = "<group>"; };
 		699242101A77425200EFF121 /* game_button_select_Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_button_select_Normal@2x.png"; sourceTree = "<group>"; };
-		69C94FAE1ABA66D300BEC7DC /* BLTAcceptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTAcceptData.h; sourceTree = "<group>"; };
-		69C94FAF1ABA66D300BEC7DC /* BLTAcceptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTAcceptData.m; sourceTree = "<group>"; };
-		69C94FB01ABA66D300BEC7DC /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
-		69C94FB11ABA66D300BEC7DC /* BLTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTManager.m; sourceTree = "<group>"; };
-		69C94FB21ABA66D300BEC7DC /* BLTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTModel.h; sourceTree = "<group>"; };
-		69C94FB31ABA66D300BEC7DC /* BLTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTModel.m; sourceTree = "<group>"; };
-		69C94FB41ABA66D300BEC7DC /* BLTPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTPeripheral.h; sourceTree = "<group>"; };
-		69C94FB51ABA66D300BEC7DC /* BLTPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTPeripheral.m; sourceTree = "<group>"; };
-		69C94FB61ABA66D300BEC7DC /* BLTRealTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTRealTime.h; sourceTree = "<group>"; };
-		69C94FB71ABA66D300BEC7DC /* BLTRealTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTRealTime.m; sourceTree = "<group>"; };
-		69C94FB81ABA66D300BEC7DC /* BLTSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendData.h; sourceTree = "<group>"; };
-		69C94FB91ABA66D300BEC7DC /* BLTSendData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendData.m; sourceTree = "<group>"; };
-		69C94FBA1ABA66D300BEC7DC /* BLTSimpleSend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSimpleSend.h; sourceTree = "<group>"; };
-		69C94FBB1ABA66D300BEC7DC /* BLTSimpleSend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSimpleSend.m; sourceTree = "<group>"; };
-		69C94FBC1ABA66D300BEC7DC /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
-		69C94FBD1ABA66D300BEC7DC /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
+		69AB09711ABAAC0900F68031 /* BLTAcceptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTAcceptData.h; sourceTree = "<group>"; };
+		69AB09721ABAAC0900F68031 /* BLTHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTHeader.h; sourceTree = "<group>"; };
+		69AB09731ABAAC0900F68031 /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
+		69AB09741ABAAC0900F68031 /* BLTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTModel.h; sourceTree = "<group>"; };
+		69AB09751ABAAC0900F68031 /* BLTPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTPeripheral.h; sourceTree = "<group>"; };
+		69AB09761ABAAC0900F68031 /* BLTRealTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTRealTime.h; sourceTree = "<group>"; };
+		69AB09771ABAAC0900F68031 /* BLTSendData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendData.h; sourceTree = "<group>"; };
+		69AB09781ABAAC0900F68031 /* BLTSetHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSetHeader.h; sourceTree = "<group>"; };
+		69AB09791ABAAC0900F68031 /* BLTSimpleSend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSimpleSend.h; sourceTree = "<group>"; };
+		69AB097A1ABAAC0900F68031 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
+		69AB097B1ABAAC0900F68031 /* MonthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthModel.h; sourceTree = "<group>"; };
+		69AB097C1ABAAC0900F68031 /* NoPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPasteTextField.h; sourceTree = "<group>"; };
+		69AB097D1ABAAC0900F68031 /* ObjectCTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectCTools.h; sourceTree = "<group>"; };
+		69AB097E1ABAAC0900F68031 /* PedometerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerHelper.h; sourceTree = "<group>"; };
+		69AB097F1ABAAC0900F68031 /* PedometerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerModel.h; sourceTree = "<group>"; };
+		69AB09801ABAAC0900F68031 /* SaveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveHelper.h; sourceTree = "<group>"; };
+		69AB09811ABAAC0900F68031 /* ShowManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowManage.h; sourceTree = "<group>"; };
+		69AB09821ABAAC0900F68031 /* WeekModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekModel.h; sourceTree = "<group>"; };
+		69AB09831ABAAC0900F68031 /* YearModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearModel.h; sourceTree = "<group>"; };
+		69AB09861ABAB00D00F68031 /* libBLTAndModel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLTAndModel.a; sourceTree = "<group>"; };
 		69C94FC01ABA66D300BEC7DC /* FMDatabase+InMemoryOnDiskIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+InMemoryOnDiskIO.h"; sourceTree = "<group>"; };
 		69C94FC11ABA66D300BEC7DC /* FMDatabase+InMemoryOnDiskIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+InMemoryOnDiskIO.m"; sourceTree = "<group>"; };
 		69C94FC31ABA66D300BEC7DC /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -574,22 +560,6 @@
 		69C950601ABA66D300BEC7DC /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		69C950611ABA66D300BEC7DC /* NSDate+WQCalendarLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WQCalendarLogic.h"; sourceTree = "<group>"; };
 		69C950621ABA66D300BEC7DC /* NSDate+WQCalendarLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WQCalendarLogic.m"; sourceTree = "<group>"; };
-		69C950B31ABA679F00BEC7DC /* MonthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthModel.h; sourceTree = "<group>"; };
-		69C950B41ABA679F00BEC7DC /* MonthModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthModel.m; sourceTree = "<group>"; };
-		69C950B51ABA679F00BEC7DC /* NoPasteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPasteTextField.h; sourceTree = "<group>"; };
-		69C950B61ABA679F00BEC7DC /* NoPasteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPasteTextField.m; sourceTree = "<group>"; };
-		69C950B71ABA679F00BEC7DC /* PedometerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerHelper.h; sourceTree = "<group>"; };
-		69C950B81ABA679F00BEC7DC /* PedometerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerHelper.m; sourceTree = "<group>"; };
-		69C950B91ABA679F00BEC7DC /* PedometerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerModel.h; sourceTree = "<group>"; };
-		69C950BA1ABA679F00BEC7DC /* PedometerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerModel.m; sourceTree = "<group>"; };
-		69C950BB1ABA679F00BEC7DC /* SaveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveHelper.h; sourceTree = "<group>"; };
-		69C950BC1ABA679F00BEC7DC /* SaveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveHelper.m; sourceTree = "<group>"; };
-		69C950BD1ABA679F00BEC7DC /* ShowManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowManage.h; sourceTree = "<group>"; };
-		69C950BE1ABA679F00BEC7DC /* ShowManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowManage.m; sourceTree = "<group>"; };
-		69C950BF1ABA679F00BEC7DC /* WeekModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekModel.h; sourceTree = "<group>"; };
-		69C950C01ABA679F00BEC7DC /* WeekModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekModel.m; sourceTree = "<group>"; };
-		69C950C11ABA679F00BEC7DC /* YearModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearModel.h; sourceTree = "<group>"; };
-		69C950C21ABA679F00BEC7DC /* YearModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearModel.m; sourceTree = "<group>"; };
 		69E097291A873D6E003F2EB9 /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		69E0972A1A873D6E003F2EB9 /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		69E0972B1A873D6E003F2EB9 /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -910,6 +880,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69AB09871ABAB00D00F68031 /* libBLTAndModel.a in Frameworks */,
 				F4B693291A6F3FEF00B42395 /* QuartzCore.framework in Frameworks */,
 				F4B693271A6F3FE700B42395 /* libsqlite3.0.dylib in Frameworks */,
 				F4B693251A6F3FCA00B42395 /* CoreBluetooth.framework in Frameworks */,
@@ -993,16 +964,56 @@
 			isa = PBXGroup;
 			children = (
 				698A90CA1A6FEF76005BABE6 /* GlobalTool.h */,
-				698A90CB1A6FEF76005BABE6 /* ObjectCTools.h */,
-				698A90CC1A6FEF76005BABE6 /* ObjectCTools.m */,
 			);
 			path = PublicTools;
+			sourceTree = "<group>";
+		};
+		69AB096E1ABAAC0900F68031 /* BLT-0.8 */ = {
+			isa = PBXGroup;
+			children = (
+				69AB09861ABAB00D00F68031 /* libBLTAndModel.a */,
+				69AB096F1ABAAC0900F68031 /* include */,
+			);
+			path = "BLT-0.8";
+			sourceTree = "<group>";
+		};
+		69AB096F1ABAAC0900F68031 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				69AB09701ABAAC0900F68031 /* BLTAndModel */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		69AB09701ABAAC0900F68031 /* BLTAndModel */ = {
+			isa = PBXGroup;
+			children = (
+				69AB09711ABAAC0900F68031 /* BLTAcceptData.h */,
+				69AB09721ABAAC0900F68031 /* BLTHeader.h */,
+				69AB09731ABAAC0900F68031 /* BLTManager.h */,
+				69AB09741ABAAC0900F68031 /* BLTModel.h */,
+				69AB09751ABAAC0900F68031 /* BLTPeripheral.h */,
+				69AB09761ABAAC0900F68031 /* BLTRealTime.h */,
+				69AB09771ABAAC0900F68031 /* BLTSendData.h */,
+				69AB09781ABAAC0900F68031 /* BLTSetHeader.h */,
+				69AB09791ABAAC0900F68031 /* BLTSimpleSend.h */,
+				69AB097A1ABAAC0900F68031 /* BLTUUID.h */,
+				69AB097B1ABAAC0900F68031 /* MonthModel.h */,
+				69AB097C1ABAAC0900F68031 /* NoPasteTextField.h */,
+				69AB097D1ABAAC0900F68031 /* ObjectCTools.h */,
+				69AB097E1ABAAC0900F68031 /* PedometerHelper.h */,
+				69AB097F1ABAAC0900F68031 /* PedometerModel.h */,
+				69AB09801ABAAC0900F68031 /* SaveHelper.h */,
+				69AB09811ABAAC0900F68031 /* ShowManage.h */,
+				69AB09821ABAAC0900F68031 /* WeekModel.h */,
+				69AB09831ABAAC0900F68031 /* YearModel.h */,
+			);
+			path = BLTAndModel;
 			sourceTree = "<group>";
 		};
 		69C94FAC1ABA66D300BEC7DC /* ThirdClasses */ = {
 			isa = PBXGroup;
 			children = (
-				69C94FAD1ABA66D300BEC7DC /* BLTClasses */,
 				69C94FBE1ABA66D300BEC7DC /* FMDB */,
 				69C94FCD1ABA66D300BEC7DC /* IQKeyBoardManager */,
 				69C94FEE1ABA66D300BEC7DC /* LKDBHelper */,
@@ -1015,29 +1026,6 @@
 				69C950501ABA66D300BEC7DC /* ZFCalendar */,
 			);
 			path = ThirdClasses;
-			sourceTree = "<group>";
-		};
-		69C94FAD1ABA66D300BEC7DC /* BLTClasses */ = {
-			isa = PBXGroup;
-			children = (
-				69C94FAE1ABA66D300BEC7DC /* BLTAcceptData.h */,
-				69C94FAF1ABA66D300BEC7DC /* BLTAcceptData.m */,
-				69C94FB01ABA66D300BEC7DC /* BLTManager.h */,
-				69C94FB11ABA66D300BEC7DC /* BLTManager.m */,
-				69C94FB21ABA66D300BEC7DC /* BLTModel.h */,
-				69C94FB31ABA66D300BEC7DC /* BLTModel.m */,
-				69C94FB41ABA66D300BEC7DC /* BLTPeripheral.h */,
-				69C94FB51ABA66D300BEC7DC /* BLTPeripheral.m */,
-				69C94FB61ABA66D300BEC7DC /* BLTRealTime.h */,
-				69C94FB71ABA66D300BEC7DC /* BLTRealTime.m */,
-				69C94FB81ABA66D300BEC7DC /* BLTSendData.h */,
-				69C94FB91ABA66D300BEC7DC /* BLTSendData.m */,
-				69C94FBA1ABA66D300BEC7DC /* BLTSimpleSend.h */,
-				69C94FBB1ABA66D300BEC7DC /* BLTSimpleSend.m */,
-				69C94FBC1ABA66D300BEC7DC /* BLTUUID.h */,
-				69C94FBD1ABA66D300BEC7DC /* BLTUUID.m */,
-			);
-			path = BLTClasses;
 			sourceTree = "<group>";
 		};
 		69C94FBE1ABA66D300BEC7DC /* FMDB */ = {
@@ -1354,29 +1342,6 @@
 				69C950621ABA66D300BEC7DC /* NSDate+WQCalendarLogic.m */,
 			);
 			path = ZFCalendar;
-			sourceTree = "<group>";
-		};
-		69C950B21ABA679F00BEC7DC /* DataModel */ = {
-			isa = PBXGroup;
-			children = (
-				69C950B31ABA679F00BEC7DC /* MonthModel.h */,
-				69C950B41ABA679F00BEC7DC /* MonthModel.m */,
-				69C950B51ABA679F00BEC7DC /* NoPasteTextField.h */,
-				69C950B61ABA679F00BEC7DC /* NoPasteTextField.m */,
-				69C950B71ABA679F00BEC7DC /* PedometerHelper.h */,
-				69C950B81ABA679F00BEC7DC /* PedometerHelper.m */,
-				69C950B91ABA679F00BEC7DC /* PedometerModel.h */,
-				69C950BA1ABA679F00BEC7DC /* PedometerModel.m */,
-				69C950BB1ABA679F00BEC7DC /* SaveHelper.h */,
-				69C950BC1ABA679F00BEC7DC /* SaveHelper.m */,
-				69C950BD1ABA679F00BEC7DC /* ShowManage.h */,
-				69C950BE1ABA679F00BEC7DC /* ShowManage.m */,
-				69C950BF1ABA679F00BEC7DC /* WeekModel.h */,
-				69C950C01ABA679F00BEC7DC /* WeekModel.m */,
-				69C950C11ABA679F00BEC7DC /* YearModel.h */,
-				69C950C21ABA679F00BEC7DC /* YearModel.m */,
-			);
-			path = DataModel;
 			sourceTree = "<group>";
 		};
 		69E097271A873D6E003F2EB9 /* DateTools */ = {
@@ -2060,6 +2025,7 @@
 		F4B692E51A6F3EBC00B42395 = {
 			isa = PBXGroup;
 			children = (
+				69AB096E1ABAAC0900F68031 /* BLT-0.8 */,
 				F4B693171A6F3F2B00B42395 /* Frameworks */,
 				F4B693181A6F3F2B00B42395 /* Model */,
 				69EFC19C1A737ABD00B5BC53 /* Resources */,
@@ -2140,7 +2106,6 @@
 		F4B693181A6F3F2B00B42395 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				69C950B21ABA679F00BEC7DC /* DataModel */,
 				F4BF5F5B1A6F529E004C433D /* BaseClass */,
 				F4B693EA1A6F442B00B42395 /* NetworkMode */,
 				F4B693D01A6F40D200B42395 /* Category */,
@@ -2503,12 +2468,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69C950C71ABA679F00BEC7DC /* SaveHelper.m in Sources */,
 				69FD42251A7FCC2C0023B74D /* UserCenterVC.m in Sources */,
 				69C950781ABA66D400BEC7DC /* IQBarButtonItem.m in Sources */,
 				69C9508B1ABA66D400BEC7DC /* MKNetworkEngine.m in Sources */,
 				69FD42281A7FCC2C0023B74D /* UpdatePasswordViewController.m in Sources */,
-				69C950CA1ABA679F00BEC7DC /* YearModel.m in Sources */,
 				69EFC2B21A75D11900B5BC53 /* BSModalPickerView.m in Sources */,
 				F4B693E61A6F40D200B42395 /* UIImage+ZKK.m in Sources */,
 				69C950951ABA66D400BEC7DC /* MSIntroView.m in Sources */,
@@ -2528,7 +2491,6 @@
 				F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */,
 				69EFC21A1A738BD600B5BC53 /* FlatRoundedImageView.m in Sources */,
 				69C9508C1ABA66D400BEC7DC /* MKNetworkOperation.m in Sources */,
-				69C950C41ABA679F00BEC7DC /* NoPasteTextField.m in Sources */,
 				69EFC2B11A75D11900B5BC53 /* BSModalPickerBase.m in Sources */,
 				69C950801ABA66D400BEC7DC /* NSObject+LKDBHelper.m in Sources */,
 				69FD420D1A7FCC2C0023B74D /* WareInfoCell.m in Sources */,
@@ -2550,7 +2512,6 @@
 				F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */,
 				69EFC2271A7397C600B5BC53 /* ALBatteryView.m in Sources */,
 				69C950851ABA66D400BEC7DC /* NSDate+RFC1123.m in Sources */,
-				69C950C81ABA679F00BEC7DC /* ShowManage.m in Sources */,
 				69C950991ABA66D400BEC7DC /* XYPopupViewHelper.m in Sources */,
 				69FD42221A7FCC2C0023B74D /* TargetViewController.m in Sources */,
 				F445F7A41A7937C800D5B170 /* NSDate+XY.m in Sources */,
@@ -2568,16 +2529,13 @@
 				F49693191A872075008D81CA /* UIScrollView+Simple.m in Sources */,
 				69C950A01ABA66D400BEC7DC /* SDWebImageManager.m in Sources */,
 				69FD421A1A7FCC2C0023B74D /* PAGameAnswerItem.m in Sources */,
-				69C950661ABA66D400BEC7DC /* BLTPeripheral.m in Sources */,
 				69C950721ABA66D400BEC7DC /* IQUIView+Hierarchy.m in Sources */,
 				69EFC2191A738BD600B5BC53 /* FlatRoundedButton.m in Sources */,
-				69C950C51ABA679F00BEC7DC /* PedometerHelper.m in Sources */,
 				69C950A11ABA66D400BEC7DC /* SDWebImagePrefetcher.m in Sources */,
 				69C950841ABA66D400BEC7DC /* NSData+MKBase64.m in Sources */,
 				69FD421B1A7FCC2C0023B74D /* AboutUSViewController.m in Sources */,
 				F4BF5F691A6F529E004C433D /* XYSandbox.m in Sources */,
 				69C950761ABA66D400BEC7DC /* IQSegmentedNextPrevious.m in Sources */,
-				69C950631ABA66D300BEC7DC /* BLTAcceptData.m in Sources */,
 				69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */,
 				6970ED121A826266009572D5 /* WeekView.m in Sources */,
 				F4B6931E1A6F3F3E00B42395 /* README.md in Sources */,
@@ -2595,11 +2553,9 @@
 				69FD42041A7FCC2C0023B74D /* RegisterVC.m in Sources */,
 				69FD421D1A7FCC2C0023B74D /* BindIngDeviceViewController.m in Sources */,
 				69C950911ABA66D400BEC7DC /* readme.md in Sources */,
-				69C950681ABA66D400BEC7DC /* BLTSendData.m in Sources */,
 				69C9506C1ABA66D400BEC7DC /* FMDatabase.m in Sources */,
 				69C950A31ABA66D400BEC7DC /* UIImage+GIF.m in Sources */,
 				F4BF5F6B1A6F529E004C433D /* XYThread.m in Sources */,
-				69C950C61ABA679F00BEC7DC /* PedometerModel.m in Sources */,
 				69C950831ABA66D400BEC7DC /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				F4BF5F5A1A6F5197004C433D /* UITableView+Animation.m in Sources */,
 				F4B693E71A6F40D200B42395 /* UILabel+Custom.m in Sources */,
@@ -2618,21 +2574,16 @@
 				69FD421F1A7FCC2C0023B74D /* BraceletInfoViewController.m in Sources */,
 				F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */,
 				69C9507F1ABA66D400BEC7DC /* LKDBUtils.m in Sources */,
-				69C9506A1ABA66D400BEC7DC /* BLTUUID.m in Sources */,
 				69C9507B1ABA66D400BEC7DC /* IQUIView+IQKeyboardToolbar.m in Sources */,
-				69C950671ABA66D400BEC7DC /* BLTRealTime.m in Sources */,
-				69C950651ABA66D400BEC7DC /* BLTModel.m in Sources */,
 				69C950741ABA66D400BEC7DC /* IQKeyboardManager.m in Sources */,
 				69C9509C1ABA66D400BEC7DC /* SDWebImageCompat.m in Sources */,
 				69C950A41ABA66D400BEC7DC /* UIImage+MultiFormat.m in Sources */,
 				F4B693E51A6F40D200B42395 /* UIButton+Simple.m in Sources */,
 				69C950791ABA66D400BEC7DC /* IQTitleBarButtonItem.m in Sources */,
-				69C950C91ABA679F00BEC7DC /* WeekModel.m in Sources */,
 				69FD42241A7FCC2C0023B74D /* UpdateBraceletNameViewController.m in Sources */,
 				69C9507E1ABA66D400BEC7DC /* LKDBHelper.m in Sources */,
 				F4C4FD251A8DFF71003A946F /* TrendShowType.m in Sources */,
 				69E0973E1A873D6E003F2EB9 /* DTTimePeriodCollection.m in Sources */,
-				69C950641ABA66D300BEC7DC /* BLTManager.m in Sources */,
 				69E0973C1A873D6E003F2EB9 /* DTTimePeriod.m in Sources */,
 				69FD42051A7FCC2C0023B74D /* MapVC.m in Sources */,
 				69C9506B1ABA66D400BEC7DC /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
@@ -2644,7 +2595,6 @@
 				69C9508F1ABA66D400BEC7DC /* EAIntroView.m in Sources */,
 				69C9509E1ABA66D400BEC7DC /* SDWebImageDownloader.m in Sources */,
 				69C950771ABA66D400BEC7DC /* IQTextView.m in Sources */,
-				69C950C31ABA679F00BEC7DC /* MonthModel.m in Sources */,
 				69C950AF1ABA66D400BEC7DC /* CalendarView.m in Sources */,
 				69C950971ABA66D400BEC7DC /* UIView+PopView.m in Sources */,
 				6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */,
@@ -2662,9 +2612,7 @@
 				69FD42211A7FCC2C0023B74D /* DeviceUpdateViewController.m in Sources */,
 				69C950AB1ABA66D400BEC7DC /* CalendarHomeView.m in Sources */,
 				698A90EB1A6FF91D005BABE6 /* UIView_extra.m in Sources */,
-				698A90CD1A6FEF76005BABE6 /* ObjectCTools.m in Sources */,
 				69FD42021A7FCC2C0023B74D /* HomeVC.m in Sources */,
-				69C950691ABA66D400BEC7DC /* BLTSimpleSend.m in Sources */,
 				69C9507A1ABA66D400BEC7DC /* IQToolbar.m in Sources */,
 				69FD42071A7FCC2C0023B74D /* NightVC.m in Sources */,
 				69EFC2521A73A8EA00B5BC53 /* UITextField+_extra.m in Sources */,
@@ -2810,6 +2758,11 @@
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BLT",
+					"$(PROJECT_DIR)/BLT-0.8",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
@@ -2826,6 +2779,11 @@
 				INFOPLIST_FILE = LoveSports/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BLT",
+					"$(PROJECT_DIR)/BLT-0.8",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};

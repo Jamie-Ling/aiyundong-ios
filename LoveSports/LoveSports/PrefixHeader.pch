@@ -36,26 +36,9 @@
     #import "NSObject+Property.h"
     #import "BLTRealTime.h"
     #import "PedometerHelper.h"
+    #import "BLTSetHeader.h"
 
 #endif
-
-// 当前绑定的设备ID
-#define LS_BindingID        @"LS_BindingID"
-// 是否已经设置过基本时区和度量
-#define LS_SettingBaseTimeZoneInfo  @"LS_SettingBaseTimeZoneInfo"
-
-// 最后同步的时间
-#define LS_LastSyncDate     @"LS_LastSyncDate"
-// 最后同步的序号
-#define LS_LastSyncOrder    @"LS_LastSyncOrder"
-
-// 趋势表一次展示的个数
-#define LS_TrendChartShowCount  (7)
-
-#define LS_RealTimeTransState  @"LS_RealTimeTransState"
-
-// 基准年
-#define LS_Baseyear (2015)
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLTHeader.h"
 
 @interface StepsModel : NSObject
 

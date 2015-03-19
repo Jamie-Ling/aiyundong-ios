@@ -7,6 +7,7 @@
 //
 
 #import "PedometerModel.h"
+#import "BLTHeader.h"
 
 @interface PedometerHelper : PedometerModel
 

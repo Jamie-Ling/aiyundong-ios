@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BLTPeripheral.h"
 #import "BLTModel.h"
+#import "BLTHeader.h"
 
 typedef enum {
     BLTManagerNoConnect = 0,

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BLTHeader.h"
 
 @interface BLTModel : NSObject
 
