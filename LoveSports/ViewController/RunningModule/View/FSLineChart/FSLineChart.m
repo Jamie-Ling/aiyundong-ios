@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FSLineChart.h"
 #import "UIColor+FSPalette.h"
+#import "NSDate+DateTools.h"
 
 @interface FSLineChart ()
 
@@ -47,6 +48,7 @@
     {
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = NO;
+        _showType = FSLineChartShowNoType;
         [self setDefaultParameters];
     }
     
@@ -89,7 +91,7 @@
             
             
             NSString* text = _labelForIndex(itemIndex);
-            NSString *showText = _isDate ? [text substringFromIndex:5] : text;
+            NSString *showText = _showType ? [text substringFromIndex:5] : text;
             
             
             if(!text)
@@ -111,12 +113,38 @@
             [self addSubview:label];
             label.text = showText;
             
-            if (_isDate)
+            if (_showType == FSLineChartShowDateType)
             {
                 NSDate *date = [NSDate dateWithString:text];
                 if (date.weekday == 1 || date.weekday == 7)
                 {
                     label.textColor = [UIColor redColor];
+                }
+                if ([date isSameWithDate:[NSDate date]])
+                {
+                    label.textColor = [UIColor greenColor];
+                }
+            }
+            else if (_showType == FSLineChartShowWeekType)
+            {
+                NSDate *date = [NSDate date];
+                NSArray *array = [text componentsSeparatedByString:@"/"];
+                NSInteger textYear = [array[0] integerValue];
+                NSInteger textWeek = [array[1] integerValue];
+                if (textYear == date.year && textWeek == date.weekOfYear)
+                {
+                    label.textColor = [UIColor greenColor];
+                }
+            }
+            else if (_showType == FSLineChartShowMonthType)
+            {
+                NSDate *date = [NSDate date];
+                NSArray *array = [text componentsSeparatedByString:@"/"];
+                NSInteger textYear = [array[0] integerValue];
+                NSInteger textMonth = [array[1] integerValue];
+                if (textYear == date.year && textMonth == date.month)
+                {
+                    label.textColor = [UIColor greenColor];
                 }
             }
             
@@ -168,7 +196,7 @@
     // draw grid
     if(_drawInnerGrid)
     {
-        for(int i = 0;i < _horizontalGridStep + 1; i++)
+        for(int i = 0; i < _horizontalGridStep; i++)
         {
             if (_hiddenBlock && !_hiddenBlock(i))
             {
@@ -176,7 +204,6 @@
                 CGContextSetLineWidth(ctx, 1);
                 
                 CGPoint point = CGPointMake((i) * _axisWidth / _horizontalGridStep * scale + _margin, _margin);
-                
                 CGContextMoveToPoint(ctx, point.x, self.height - 5);
                 CGContextAddLineToPoint(ctx, point.x, self.height);
                 CGContextStrokePath(ctx);
@@ -299,7 +326,7 @@
     _axisWidth = self.frame.size.width - 2 * _margin;
     _axisHeight = self.frame.size.height - 2 * _margin;
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-    _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    _innerGridColor = [UIColor lightGrayColor];
     _drawInnerGrid = YES;
     _bezierSmoothing = YES;
     _bezierSmoothingTension = 0.0;

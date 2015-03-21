@@ -16,5 +16,9 @@
 @property (nonatomic, strong) NSMutableArray *viewsArray;
 
 @property (nonatomic, strong) UIViewSimpleBlock yearBlock;
+@property (nonatomic, assign) TrendChartShowType showType;
+
+// 点击按钮后图标进行刷新
+- (void)reloadTrendChartViewWith:(TrendChartShowType)type;
 
 @end

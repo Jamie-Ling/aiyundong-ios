@@ -297,7 +297,7 @@
     {
         if (!model.showDate)
         {
-            model.showDate = [NSString stringWithFormat:@"%ld年\n第%ld周", (long)year, (long)order];
+            model.showDate = [NSString stringWithFormat:@"%ld/%ld周", (long)year, (long)order];
         }
         
         return model;
@@ -319,7 +319,7 @@
                        withReturnModel:(BOOL)noEmpty
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = -1 * (LS_TrendChartShowCount); i <= 0; i++)
+    for (int i = 0; i < 8; i++)
     {
         NSDate *tmpDate = [date dateAfterDay:i * 7];
         WeekModel *model = [YearModel getTheWeekModelWithDate:tmpDate withReturnModel:noEmpty];
@@ -330,8 +330,7 @@
     return array;
 }
 
-+ (MonthModel *)getTheWeekModelWithIndex:(NSInteger)index
-                         withReturnModel:(BOOL)noEmpty
++ (NSInteger)getYearWithMonthIndex:(NSInteger)index
 {
     NSInteger currentYear = LS_Baseyear;
     if (index > 0)
@@ -343,6 +342,14 @@
         currentYear = currentYear + index / 12 - 1;
     }
     
+    return currentYear;
+}
+
++ (MonthModel *)getTheWeekModelWithIndex:(NSInteger)index
+                         withReturnModel:(BOOL)noEmpty
+{
+    
+    NSInteger currentYear = [self getYearWithMonthIndex:index];
     NSInteger month = index - (currentYear - LS_Baseyear) * 12;
     NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld", (long)currentYear, (long)month];
     MonthModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
@@ -351,7 +358,7 @@
     {
         if (!model.showDate)
         {
-            model.showDate = [NSString stringWithFormat:@"%ld年\n  %ld月", (long)currentYear, (long)month];
+            model.showDate = [NSString stringWithFormat:@"%ld/%ld月", (long)currentYear, (long)month];
         }
         
         return model;
@@ -375,7 +382,7 @@
                        withReturnModel:(BOOL)noEmpty
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = -1 * (LS_TrendChartShowCount); i <= 0; i++)
+    for (int i = 0; i < 8; i++)
     {
         NSInteger tmpIndex = i + index;
         MonthModel *model = [YearModel getTheWeekModelWithIndex:tmpIndex withReturnModel:noEmpty];

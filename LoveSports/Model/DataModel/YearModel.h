@@ -128,6 +128,11 @@ typedef enum {
 + (NSArray *)getMonthModelArrayWithIndex:(NSInteger)index
                          withReturnModel:(BOOL)noEmpty;
 
+
+// 根据月序号返回年份。
++ (NSInteger)getYearWithMonthIndex:(NSInteger)index;
+
+
 @end
 
 

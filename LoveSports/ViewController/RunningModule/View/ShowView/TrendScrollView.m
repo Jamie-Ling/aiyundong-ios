@@ -30,11 +30,22 @@
     {
         TrendDetailView *detailView = [[TrendDetailView alloc] initWithFrame:self.bounds];
         
-        detailView.currentDate = [date dateAfterDay:(i - 1) * 7];
+        detailView.currentDate = [date dateAfterDay:(i - 1) * 8];
+        detailView.weekDate = [date dateAfterDay:(i - 1) * 56];
+        detailView.monthIndex = date.month + (i - 1) * 8;
         [_viewsArray addObject:detailView];
+        
+        detailView.yearBlock = ^ (UIView *view, id objdect) {
+            
+        };
     }
     
     [self loadUnlimitScrollView];
+}
+
+- (void)refreshCurrentYearLabel:(NSNumber *)year
+{
+
 }
 
 - (void)loadUnlimitScrollView
@@ -57,19 +68,17 @@
 
 - (void)updateDetailViewsDataWithIndex:(NSInteger)index
 {
-    TrendDetailView *detailView = _viewsArray[index];
-    NSDate *date = detailView.dayDate;
-    
     for (int i = 0; i < 3; i++)
     {
         TrendDetailView *detailView = _viewsArray[i];
-        detailView.currentDate = [date dateAfterDay:(i - 1) * 7];
+        //detailView.currentDate = [date dateAfterDay:(i - 1) * 8];
+        NSInteger currentYear = [detailView updateContentForChartViewWithDirection:index - 1];
         
         if (i == 1)
         {
             if (_yearBlock)
             {
-                _yearBlock(self, detailView.dayDate);
+                _yearBlock(self, @(currentYear));
             }
         }
     }
@@ -78,18 +87,35 @@
 - (BOOL)setBoundaryOfScrollView:(int)index
 {
     TrendDetailView *detailView = _viewsArray[1];
-    NSDate *date = detailView.dayDate;
     
     if (index == -1)
     {
-        if ([date isSameWithDate:[NSDate date]])
+        if (_showType < 3)
         {
-            return YES;
+            NSDate *date = detailView.dayDate;
+            if ([date isSameWithDate:[NSDate date]])
+            {
+                return YES;
+            }        }
+        else if (_showType < 6)
+        {
+            NSDate *weekDate = detailView.weekDate;
+            if ([weekDate isSameWithDate:[NSDate date]])
+            {
+                return YES;
+            }
         }
         else
         {
-            // DayDetailView *detailView = _viewsArray[2];
-            // detailView.allowAnimation = YES;
+            NSInteger currentIndex = [YearModel monthOfYearWithDate:[NSDate date]];
+            
+            NSInteger monthIndex = detailView.monthIndex;
+            NSLog(@".currentIndex..%ld..%ld", (long)currentIndex, (long)monthIndex);
+
+            if (currentIndex == monthIndex)
+            {
+                return YES;
+            }
         }
     }
     else
@@ -111,6 +137,20 @@
         detailView.currentDate = detailView.dayDate;
     }
 }
+
+// 点击按钮后图标进行刷新
+- (void)reloadTrendChartViewWith:(TrendChartShowType)type
+{
+    _showType = type;
+    for (int i = 0; i < 3; i++)
+    {
+        TrendDetailView *detailView = _viewsArray[i];
+    
+        [detailView reloadTrendChartViewWith:type];
+    }
+
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

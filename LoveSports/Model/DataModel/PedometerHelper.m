@@ -49,7 +49,7 @@ DEF_SINGLETON(PedometerHelper)
 + (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < LS_TrendChartShowCount; i++)
+    for (int i = 0; i < 8; i++)
     {
         NSDate *curDate = [date dateAfterDay:i];
         PedometerModel *model = [PedometerHelper getModelFromDBWithDate:curDate];

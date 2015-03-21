@@ -19,9 +19,10 @@
 @property (nonatomic, assign) NSInteger monthIndex;
 
 @property (nonatomic, assign) TrendChartShowType showType;
+@property (nonatomic, strong) UIViewSimpleBlock yearBlock;
 
 - (void)setCurrentDate:(NSDate *)currentDate;
-- (void)updateContentForChartViewWithDirection:(NSInteger)direction;
+- (NSInteger)updateContentForChartViewWithDirection:(NSInteger)direction;
 - (void)reloadTrendChartViewWith:(TrendChartShowType)type;
 
 @end

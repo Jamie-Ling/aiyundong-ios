@@ -292,12 +292,10 @@ DEF_SINGLETON(BLTManager)
 didFailToConnectPeripheral:(CBPeripheral *)peripheral
                  error:(NSError *)error
 {
+    _isConnectNext = NO;
     _connectState = BLTManagerConnectFail;
     NSLog(@"链接失败");
-    if (!_isConnectNext)
-    {
-        [self startCan];
-    }
+    [self startCan];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -311,6 +309,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     {
         _disConnectBlock();
     }
+    
     [[BLTPeripheral sharedInstance] errorMessage];
     
     if (!_isConnectNext)

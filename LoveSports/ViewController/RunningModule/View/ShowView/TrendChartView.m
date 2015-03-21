@@ -181,12 +181,12 @@
                                                                     120,
                                                                     self.width,
                                                                     200)];
+    _scrollView.showType = _showType;
     [self addSubview:_scrollView];
     
     DEF_WEAKSELF_(TrendChartView);
     _scrollView.yearBlock = ^ (UIView *view, id object) {
-        NSDate *date = (NSDate *)object;
-        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%ld年", (long)date.year];
+        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@年", object];
     };
 }
 
@@ -303,6 +303,11 @@
 - (void)reloadTrendChartView
 {
     _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
+ 
+    [_scrollView reloadTrendChartViewWith:_showType];
+    
+    /*
+    _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
     
     if (_showType < 3)
     {
@@ -316,6 +321,7 @@
     {
         [self refreshTrendChartViewWithMonthIndex:_monthIndex];
     }
+     */
 }
 
 - (void)loadShareButton

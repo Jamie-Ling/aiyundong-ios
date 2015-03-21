@@ -21,6 +21,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    FSLineChartShowNoType = 0,
+    FSLineChartShowDateType = 1,
+    FSLineChartShowWeekType = 2,
+    FSLineChartShowMonthType = 3
+} FSLineChartShowType;
+
 @interface FSLineChart : UIView
 
 // Block definition for getting a label for a set index (use case: date, units,...)
@@ -92,7 +99,7 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 @property (nonatomic, assign) NSInteger levelNumber;
 
 @property (nonatomic, strong) NSArray *titlesArray;
-@property (nonatomic, assign) BOOL isDate;
+@property (nonatomic, assign) FSLineChartShowType showType;
 
 // Set the actual data for the chart, and then render it to the view.
 - (void)setChartData:(NSArray *)chartData;

@@ -29,7 +29,7 @@
         _monthNumber = monthNumber;
         _yearNumber = yearNumber;
         
-        _showDate = [NSString stringWithFormat:@"%ld年\n  %ld月", (long)yearNumber, (long)monthNumber];
+        _showDate = [NSString stringWithFormat:@"%ld/%ld月", (long)yearNumber, (long)monthNumber];
     }
     return self;
 }

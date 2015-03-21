@@ -39,9 +39,20 @@
 - (void)setCurrentDate:(NSDate *)currentDate
 {
     _dayDate = currentDate;
-    _weekDate = currentDate;
-    _monthIndex = [YearModel monthOfYearWithDate:currentDate];
-    
+    // _weekDate = currentDate;
+    // _monthIndex = [YearModel monthOfYearWithDate:currentDate];
+    [self updateContentForChartViewWithDirection:0];
+}
+
+- (void)setWeekDate:(NSDate *)weekDate
+{
+    _weekDate = weekDate;
+    [self updateContentForChartViewWithDirection:0];
+}
+
+- (void)setMonthIndex:(NSInteger)monthIndex
+{
+    _monthIndex = monthIndex;
     [self updateContentForChartViewWithDirection:0];
 }
 
@@ -59,13 +70,16 @@
     // Generating some dummy data
     
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(self.width * 0.05, 0, self.width * 0.9, self.height)];
-    _lineChart.isDate = YES;
+    _lineChart.showType = FSLineChartShowDateType;
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = LS_TrendChartShowCount; // 151,187,205,0.2
+    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@""];
+    };
+    _lineChart.hiddenBlock = ^(NSInteger index) {
+        return NO;
     };
     [_baseView addSubview:_lineChart];
     
@@ -109,20 +123,26 @@
 }
 
 // 左右滑动进行数据变换。
-- (void)updateContentForChartViewWithDirection:(NSInteger)direction
+- (NSInteger)updateContentForChartViewWithDirection:(NSInteger)direction
 {
+    NSInteger currentYear = LS_Baseyear;
     if (_showType < 3)
     {
         [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
+        currentYear = _dayDate.year;
     }
     else if (_showType < 6)
     {
-        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
+        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 56)]];
+        currentYear = _weekDate.year;
     }
     else
     {
         [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
+        currentYear = [YearModel getYearWithMonthIndex:_monthIndex];
     }
+    
+    return currentYear;
 }
 
 // 点击6个按钮后图表进行切换。
@@ -133,14 +153,17 @@
     
     if (type < 3)
     {
+        _lineChart.showType = FSLineChartShowDateType;
         [self refreshTrendChartViewWithDayDate:_dayDate];
     }
     else if (type < 6)
     {
+        _lineChart.showType = FSLineChartShowWeekType;
         [self refreshTrendChartViewWithWeekDate:_weekDate];
     }
     else
     {
+        _lineChart.showType = FSLineChartShowMonthType;
         [self refreshTrendChartViewWithMonthIndex:_monthIndex];
     }
 }
