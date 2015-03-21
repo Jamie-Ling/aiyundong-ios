@@ -21,8 +21,9 @@
 @property (nonatomic, assign) TrendChartShowType showType;
 @property (nonatomic, strong) UIViewSimpleBlock yearBlock;
 
-- (void)setCurrentDate:(NSDate *)currentDate;
 - (NSInteger)updateContentForChartViewWithDirection:(NSInteger)direction;
-- (void)reloadTrendChartViewWith:(TrendChartShowType)type;
+- (NSInteger)reloadTrendChartViewWith:(TrendChartShowType)type;
+// 检查当前视图的日期是否是今天。
+- (BOOL)checkCurrentDateOfDetailViewIsToday;
 
 @end

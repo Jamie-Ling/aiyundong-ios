@@ -52,6 +52,18 @@
     return self;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    self.scrollView.contentSize = CGSizeMake(self.width * 3, self.height);
+    
+    for (int i = 0; i < self.contentViews.count; i++)
+    {
+        UIView *contentView = self.contentViews[i];
+        contentView.frame = CGRectMake((i - 1) * self.width, 0, self.width, self.height);
+    }
+}
+
 - (void)addSwipeForScrollView
 {
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe)];

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UISegmentedControl *segement;
 @property (nonatomic, assign) NSInteger segIndex;
 
+@property (nonatomic, strong) UIButton *calendarButton;
 @property (nonatomic, strong) CalendarHomeView *calenderView;
 @property (nonatomic, strong) UIButton *lastButton;
 
@@ -62,7 +63,7 @@
     _weekDate = currentDate;
     _monthIndex = [YearModel monthOfYearWithDate:currentDate];
     
-    [self updateContentForChartViewWithDirection:0];
+    [self reloadTrendChartView];
 }
 
 - (void)loadCalendarButton
@@ -73,6 +74,7 @@
     
     [calendarButton addTarget:self action:@selector(clickCalendarButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:calendarButton];
+    _calendarButton = calendarButton;
 }
 
 - (void)clickCalendarButton
@@ -157,30 +159,9 @@
     [self addSubview:_dateLabel];
 }
 
--(void)loadLineChart
-{
-    // Generating some dummy data
- 
-    CGRect rect = CGRectMake((self.width - self.width * 0.9) / 2, 120, self.width * 0.9, 200);
-    _lineChart = [[FSLineChart alloc] initWithFrame:rect];
-    _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = LS_TrendChartShowCount; // 151,187,205,0.2
-    _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
-    _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
-    _lineChart.labelForValue = ^(CGFloat value) {
-        return [NSString stringWithFormat:@""];
-    };
-    [self addSubview:_lineChart];
-    
-    [self refreshTrendChartViewWithDayDate:_dayDate];
-}
-
 - (void)loadTrendScrollView
 {
-    _scrollView = [[TrendScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                    120,
-                                                                    self.width,
-                                                                    200)];
+    _scrollView = [[TrendScrollView alloc] initWithFrame:CGRectMake(0, self.height * 0.22, self.width, self.height * 0.36)];
     _scrollView.showType = _showType;
     [self addSubview:_scrollView];
     
@@ -188,74 +169,6 @@
     _scrollView.yearBlock = ^ (UIView *view, id object) {
         weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@年", object];
     };
-}
-
-// 日刷新
-- (void)refreshTrendChartViewWithDayDate:(NSDate *)date
-{
-    _dayDate = date;
-    NSArray *array = [TrendShowType getShowDataArrayWithDayDate:_dayDate withShowType:_showType];
-    
-    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
-}
-
-// 周刷新
-- (void)refreshTrendChartViewWithWeekDate:(NSDate *)date
-{
-    _weekDate = date;
-    NSArray *array = [TrendShowType getShowDataArrayWithWeekDate:_weekDate withShowType:_showType];
-    
-    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
-}
-
-// 月刷新
-- (void)refreshTrendChartViewWithMonthIndex:(NSInteger)index
-{
-    _monthIndex = index;
-    NSArray *array = [TrendShowType getShowDataArrayWithMonthIndex:_monthIndex withShowType:_showType];
-    
-    [self refreshTrendChartViewWithChartData:array[0] withTitle:array[1]];
-}
-
-// 传入数据刷新
-- (void)refreshTrendChartViewWithChartData:(NSArray *)ChartData withTitle:(NSArray *)titlesArray
-{
-    _lineChart.labelForIndex = ^(NSUInteger item) {
-        return titlesArray[item];
-    };
-    [_lineChart setChartData:ChartData];
-}
-
-// 左右滑动进行数据变换。
-- (void)updateContentForChartViewWithDirection:(NSInteger)direction
-{
-    if (_showType < 3)
-    {
-        if (direction == 1 && [_dayDate isSameWithDate:[NSDate date]])
-        {
-            return;
-        }
-        
-        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
-    }
-    else if (_showType < 6)
-    {
-        if (direction == 1 && [_weekDate isSameWithDate:[NSDate date]])
-        {
-            return;
-        }
-        
-        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 49)]];
-    }
-    else
-    {
-        if (direction == 1 && _monthIndex == [NSDate date].month)
-        {
-            return;
-        }
-        
-        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
-    }
 }
 
 // 步数，卡路里，距离切换.
@@ -305,23 +218,6 @@
     _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
  
     [_scrollView reloadTrendChartViewWith:_showType];
-    
-    /*
-    _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
-    
-    if (_showType < 3)
-    {
-        [self refreshTrendChartViewWithDayDate:_dayDate];
-    }
-    else if (_showType < 6)
-    {
-        [self refreshTrendChartViewWithWeekDate:_weekDate];
-    }
-    else
-    {
-        [self refreshTrendChartViewWithMonthIndex:_monthIndex];
-    }
-     */
 }
 
 - (void)loadShareButton

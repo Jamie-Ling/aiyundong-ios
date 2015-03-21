@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) UILabel *yearLabel;
 
-- (void)updateContentForChartViewWithDirection:(NSInteger)direction;
+- (void)reloadTrendChartView;
 
 @end
 

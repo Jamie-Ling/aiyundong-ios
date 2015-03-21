@@ -40,6 +40,7 @@
     #import "BLTSendHelp.h"
     #import "BLTSendOld.h"
     #import "UserInfoHelp.h"
+    #import "DataShare.h"
 
 #endif
 

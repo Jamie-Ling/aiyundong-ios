@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
-// 趋势表获取数据的帮助类.
+// 趋势表获取数据的帮助类. 使用此类大大的简化代码的冗余程度。
 
 typedef enum {
     TrendChartViewShowDaySteps = 0,

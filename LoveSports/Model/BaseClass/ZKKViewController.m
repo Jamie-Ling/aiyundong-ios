@@ -51,6 +51,7 @@
 
 - (void)loadGestureRecognizer
 {
+    /*
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipe];
@@ -69,6 +70,7 @@
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
     [self.view addGestureRecognizer:pan];
+     */
 }
 
 - (void)leftSwipe

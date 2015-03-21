@@ -8,11 +8,13 @@
 
 #import "ZKKViewController.h"
 #import "TrendShowType.h"
+#import "LSTrendView.h"
 
 @interface LandscapeVC : ZKKViewController
 
 @property (nonatomic, strong) NSDate *dayDate;
 @property (nonatomic, assign) TrendChartShowType showType;
+@property (nonatomic, strong) LSTrendView *trendView;
 
 - (instancetype)initWithDate:(NSDate *)date
                 withWeekDate:(NSDate *)weekDate

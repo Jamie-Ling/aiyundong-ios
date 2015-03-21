@@ -10,6 +10,7 @@
 
 @implementation TrendShowType
 
+// 发生点击事件时调用这个方法.
 + (TrendChartShowType)showWithIndex:(NSInteger)index withButton:(UIButton *)button
 {
     TrendChartShowType type = TrendChartViewShowDaySteps;
@@ -63,6 +64,7 @@
     return type;
 }
 
+// 当需要显示每天的数据时使用这个方法。
 + (NSArray *)getShowDataArrayWithDayDate:(NSDate *)date withShowType:(TrendChartShowType)showType
 {
     NSArray *array = [PedometerHelper getEveryDayTrendDataWithDate:date];
@@ -92,6 +94,7 @@
 }
 
 // Year类完全变成了一个辅助类，没实际用处。
+// 需要显示每周的数据时用这个方法.
 + (NSArray *)getShowDataArrayWithWeekDate:(NSDate *)date withShowType:(TrendChartShowType)showType
 {
     NSArray *array = [YearModel getWeekModelArrayWithDate:date withReturnModel:YES];
@@ -120,6 +123,7 @@
     return @[chartDataArray, daysArray];
 }
 
+// 需要显示每月的数据时使用这个方法.
 + (NSArray *)getShowDataArrayWithMonthIndex:(NSInteger)index withShowType:(TrendChartShowType)showType
 {
     NSArray *array = [YearModel getMonthModelArrayWithIndex:index withReturnModel:YES];

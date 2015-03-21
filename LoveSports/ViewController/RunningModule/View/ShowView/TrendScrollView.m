@@ -26,26 +26,17 @@
 - (void)loadTrendDetailView
 {
     NSDate *date = [NSDate date];
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 3; i++)
     {
         TrendDetailView *detailView = [[TrendDetailView alloc] initWithFrame:self.bounds];
         
-        detailView.currentDate = [date dateAfterDay:(i - 1) * 8];
-        detailView.weekDate = [date dateAfterDay:(i - 1) * 56];
-        detailView.monthIndex = date.month + (i - 1) * 8;
+        detailView.dayDate = [date dateAfterDay:(i - 1) * (int)[DataShare sharedInstance].showCount];
+        detailView.weekDate = [date dateAfterDay:(i - 1) * 7 * (int)[DataShare sharedInstance].showCount];
+        detailView.monthIndex = date.month + (i - 1) * [DataShare sharedInstance].showCount;
         [_viewsArray addObject:detailView];
-        
-        detailView.yearBlock = ^ (UIView *view, id objdect) {
-            
-        };
     }
     
     [self loadUnlimitScrollView];
-}
-
-- (void)refreshCurrentYearLabel:(NSNumber *)year
-{
-
 }
 
 - (void)loadUnlimitScrollView
@@ -90,33 +81,7 @@
     
     if (index == -1)
     {
-        if (_showType < 3)
-        {
-            NSDate *date = detailView.dayDate;
-            if ([date isSameWithDate:[NSDate date]])
-            {
-                return YES;
-            }        }
-        else if (_showType < 6)
-        {
-            NSDate *weekDate = detailView.weekDate;
-            if ([weekDate isSameWithDate:[NSDate date]])
-            {
-                return YES;
-            }
-        }
-        else
-        {
-            NSInteger currentIndex = [YearModel monthOfYearWithDate:[NSDate date]];
-            
-            NSInteger monthIndex = detailView.monthIndex;
-            NSLog(@".currentIndex..%ld..%ld", (long)currentIndex, (long)monthIndex);
-
-            if (currentIndex == monthIndex)
-            {
-                return YES;
-            }
-        }
+        return  [detailView checkCurrentDateOfDetailViewIsToday];
     }
     else
     {
@@ -134,7 +99,7 @@
     
     if ([date isSameWithDate:[NSDate date]])
     {
-        detailView.currentDate = detailView.dayDate;
+        detailView.dayDate = detailView.dayDate;
     }
 }
 
@@ -146,11 +111,18 @@
     {
         TrendDetailView *detailView = _viewsArray[i];
     
-        [detailView reloadTrendChartViewWith:type];
+        NSInteger currentYear = [detailView reloadTrendChartViewWith:type];
+        
+        if (i == 1)
+        {
+            if (_yearBlock)
+            {
+                _yearBlock(self, @(currentYear));
+            }
+        }
     }
 
 }
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

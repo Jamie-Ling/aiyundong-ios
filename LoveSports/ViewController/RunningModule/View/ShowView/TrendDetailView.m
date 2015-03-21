@@ -36,7 +36,7 @@
     return self;
 }
 
-- (void)setCurrentDate:(NSDate *)currentDate
+- (void)setDayDate:(NSDate *)currentDate
 {
     _dayDate = currentDate;
     // _weekDate = currentDate;
@@ -72,7 +72,7 @@
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(self.width * 0.05, 0, self.width * 0.9, self.height)];
     _lineChart.showType = FSLineChartShowDateType;
     _lineChart.verticalGridStep = 6;
-    _lineChart.horizontalGridStep = 8; // 151,187,205,0.2
+    _lineChart.horizontalGridStep = (int)[DataShare sharedInstance].showCount; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForValue = ^(CGFloat value) {
@@ -128,17 +128,17 @@
     NSInteger currentYear = LS_Baseyear;
     if (_showType < 3)
     {
-        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * 8)]];
+        [self refreshTrendChartViewWithDayDate:[_dayDate dateAfterDay:((int)direction * (int)[DataShare sharedInstance].showCount)]];
         currentYear = _dayDate.year;
     }
     else if (_showType < 6)
     {
-        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 56)]];
+        [self refreshTrendChartViewWithWeekDate:[_weekDate dateAfterDay:((int)direction * 7 * (int)[DataShare sharedInstance].showCount)]];
         currentYear = _weekDate.year;
     }
     else
     {
-        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * 8)];
+        [self refreshTrendChartViewWithMonthIndex:_monthIndex + ((int)direction * [DataShare sharedInstance].showCount)];
         currentYear = [YearModel getYearWithMonthIndex:_monthIndex];
     }
     
@@ -146,26 +146,63 @@
 }
 
 // 点击6个按钮后图表进行切换。
-- (void)reloadTrendChartViewWith:(TrendChartShowType)type
+- (NSInteger)reloadTrendChartViewWith:(TrendChartShowType)type
 {
     //_showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
     _showType = type;
     
+    NSInteger currentYear = LS_Baseyear;
     if (type < 3)
     {
         _lineChart.showType = FSLineChartShowDateType;
         [self refreshTrendChartViewWithDayDate:_dayDate];
+        currentYear = _dayDate.year;
     }
     else if (type < 6)
     {
         _lineChart.showType = FSLineChartShowWeekType;
         [self refreshTrendChartViewWithWeekDate:_weekDate];
+        currentYear = _weekDate.year;
     }
     else
     {
         _lineChart.showType = FSLineChartShowMonthType;
         [self refreshTrendChartViewWithMonthIndex:_monthIndex];
+        currentYear = [YearModel getYearWithMonthIndex:_monthIndex];
     }
+    
+    return currentYear;
+}
+
+- (BOOL)checkCurrentDateOfDetailViewIsToday
+{
+    if (_showType < 3)
+    {
+        NSDate *date = self.dayDate;
+        if ([date isSameWithDate:[NSDate date]])
+        {
+            return YES;
+        }
+    }
+    else if (_showType < 6)
+    {
+        NSDate *weekDate = self.weekDate;
+        if ([weekDate isSameWithDate:[NSDate date]])
+        {
+            return YES;
+        }
+    }
+    else
+    {
+        NSInteger currentIndex = [YearModel monthOfYearWithDate:[NSDate date]];
+        NSInteger monthIndex = self.monthIndex;
+        if (currentIndex == monthIndex)
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 /*

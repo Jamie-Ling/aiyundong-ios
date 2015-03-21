@@ -319,7 +319,7 @@
                        withReturnModel:(BOOL)noEmpty
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < [DataShare sharedInstance].showCount; i++)
     {
         NSDate *tmpDate = [date dateAfterDay:i * 7];
         WeekModel *model = [YearModel getTheWeekModelWithDate:tmpDate withReturnModel:noEmpty];
@@ -382,7 +382,7 @@
                        withReturnModel:(BOOL)noEmpty
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < [DataShare sharedInstance].showCount; i++)
     {
         NSInteger tmpIndex = i + index;
         MonthModel *model = [YearModel getTheWeekModelWithIndex:tmpIndex withReturnModel:noEmpty];
