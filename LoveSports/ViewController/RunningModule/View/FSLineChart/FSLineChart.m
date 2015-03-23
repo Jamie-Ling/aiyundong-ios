@@ -57,11 +57,6 @@
 
 - (void)setChartData:(NSArray *)chartData
 {
-    for (UIView *view in self.subviews)
-    {
-        [view removeFromSuperview];
-    }
-    
     _data = [NSMutableArray arrayWithArray:chartData];
     
     [self computeBounds];
@@ -72,8 +67,10 @@
         _max = 1;
     }
     
+    // 画图
     [self strokeChart];
-    [self strokeDataPoints];
+    // 画点
+    // [self strokeDataPoints];
     
     if(_labelForIndex)
     {
@@ -81,7 +78,7 @@
         int q = (int)_data.count / _horizontalGridStep;
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
         
-        for(int i = 0;i< _horizontalGridStep; i++)
+        for(int i = 0;i < _horizontalGridStep; i++)
         {
             NSInteger itemIndex = q * i;
             if(itemIndex >= _data.count)
@@ -89,13 +86,8 @@
                 itemIndex = _data.count - 1;
             }
             
-            
-            NSString* text = _labelForIndex(itemIndex);
+            NSString *text = _labelForIndex(itemIndex);
             NSString *showText = _showType ? [text substringFromIndex:5] : text;
-            
-            
-            if(!text)
-                continue;
             
             CGPoint p = CGPointMake(_margin + i * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
             CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
@@ -105,15 +97,23 @@
                                          attributes:@{NSFontAttributeName:_indexLabelFont}
                                             context:nil].size.width;
             
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
-            label.font = _indexLabelFont;
+            UILabel *label = (UILabel *)[self viewWithTag:666 + i];
+            if (!label)
+            {
+                label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
+                label.tag = 666 + i;
+                label.font = _indexLabelFont;
+                label.backgroundColor = [UIColor clearColor];
+                [self addSubview:label];
+            }
+            
             label.textColor = [UIColor blackColor];
-            label.backgroundColor = [UIColor clearColor];
-            label.numberOfLines = 2;
-            [self addSubview:label];
             label.text = showText;
             
-            if (_showType == FSLineChartShowDateType)
+            if (_showType == FSLineChartShowNoType)
+            {
+            }
+            else if (_showType == FSLineChartShowDateType)
             {
                 NSDate *date = [NSDate dateWithString:text];
                 if (date.weekday == 1 || date.weekday == 7)
@@ -256,6 +256,7 @@
         _fillLayer.lineJoin = kCALineJoinRound;
     }
     
+    /*
     if (!_pathLayer)
     {
         _pathLayer = [CAShapeLayer layer];
@@ -269,6 +270,7 @@
     _pathLayer.fillColor = nil;
     _pathLayer.lineWidth = 1.0;
     _pathLayer.lineJoin = kCALineJoinRound;
+     */
 }
 
 //   画点。
@@ -277,7 +279,6 @@
     CGFloat minBound = MIN(_min, 0);
     CGFloat maxBound = MAX(_max, 0);
     
-    // NSLog(@"....%f..%f", minBound, maxBound);
     CGFloat scale = _axisHeight; // (maxBound - minBound);
     
     // CAShapeLayer *dataPointsLayer = [CAShapeLayer layer];
@@ -286,6 +287,7 @@
     {
         CGPoint p = [self getPointForIndex:i withScale:scale];
         
+        /*
         UILabel *label  = [UILabel customLabelWithRect:CGRectMake(0, 0, 40, 20)
                                               withColor:[UIColor clearColor]
                                           withAlignment:NSTextAlignmentCenter
@@ -295,6 +297,7 @@
         [self addSubview:label];
         label.center = CGPointMake(p.x, p.y);
         label.text = [NSString stringWithFormat:@"%ld", (long)[_data[i] integerValue]];
+         */
         
         p.y +=  minBound * scale;
 

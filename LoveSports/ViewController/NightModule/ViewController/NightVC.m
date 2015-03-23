@@ -177,8 +177,8 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     
-    NSInteger width = ((int)(_scrollView.width * (5 + 1 / 16.0) / 49)) * 49;
-    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(0, 0, width, _scrollView.height)];
+    NSInteger width = _scrollView.width; //((int)(_scrollView.width * (5 + 1 / 16.0) / 49)) * 49;
+    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(20, 0, width - 40, _scrollView.height)];
     [_scrollView addSubview:_showView];
     _scrollView.contentSize = _showView.frame.size;
     
@@ -200,6 +200,7 @@
     
     if (model.detailSleeps && model.detailSleeps.count > 0)
     {
+        /*
         for (int i = 0; i < model.detailSleeps.count - 5; i += 6)
         {
             NSInteger number = [model.detailSleeps[i] intValue]     + [model.detailSleeps[i + 1] intValue] +
@@ -212,13 +213,21 @@
         {
             [array addObject:@(0)];
         }
+         */
+        
+        for (int i = 0; i < model.detailSteps.count; i++)
+        {
+            
+        }
     }
     else
     {
+        /*
         for (int i = 0; i < 49; i++)
         {
             [array addObject:@(0)];
         }
+         */
     }
     
     [_showView updateContentForView:array];
@@ -270,7 +279,7 @@
             {
                 if (_chartDataArray.count > index)
                 {
-                    return [UIColor colorWithIndex:[_chartDataArray[index] integerValue]];
+                    return [UIColor colorWithIndex:(int)[_chartDataArray[index] integerValue]];
                 }
                 else
                 {

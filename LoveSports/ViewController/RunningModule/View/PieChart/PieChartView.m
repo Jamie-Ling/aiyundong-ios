@@ -156,7 +156,7 @@
             
         case PieChartViewShowSleep:
         {
-            _timeLabel.text = [NSString stringWithFormat:@"%02d:%02d", model.totalSleepTime / 60, model.totalSleepTime % 60];
+            _timeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", model.totalSleepTime / 60, model.totalSleepTime % 60];
             _durationLabel.text = [NSString stringWithFormat:@"%ld小时", (long)model.targetSleep / 60];
         }
             break;

@@ -54,7 +54,7 @@
         [self loadCalendarButton];
         [self loadDateLabel];
         [self loadChartStyleButtons];
-        [self loadScrollView];
+        [self loadFSLineView];
         // [self loadShareButton];
     }
     
@@ -201,35 +201,14 @@
     [self updateContentFromClickChangeEvent];
 }
 
-- (void)loadScrollView
+- (void)loadFSLineView
 {
     CGFloat offsetY = _chartView.totalHeight + 50;
-    _scrollView = [UIScrollView simpleInit:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)
-                                  withShow:NO
-                                withBounce:YES];
-    // [self addSubview:_scrollView];
-    _scrollView.contentSize = CGSizeMake(_scrollView.width * 6, _scrollView.height);
-    
     _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)];
     
     _fsLineView.backgroundColor = [UIColor clearColor];
     [self addSubview:_fsLineView];
     [self loadLineChart];
-
-    /*
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upSwipe)];
-    swipe.direction = UISwipeGestureRecognizerDirectionUp;
-    [_scrollView addGestureRecognizer:swipe];
-     */
-}
-
-- (void)upSwipe
-{
-    NSLog(@"上");
-    if ([_delegate respondsToSelector:@selector(dayDetailViewSwipeUp)])
-    {
-        [_delegate dayDetailViewSwipeUp];
-    }
 }
 
 -(void)loadLineChart
@@ -242,16 +221,13 @@
         [bottomTitles addObject:string];
     }
     
-    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _scrollView.width - 20, _scrollView.height - 40)];
+    _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _fsLineView.width - 20, _fsLineView.height)];
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = (int)bottomTitles.count; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
     _lineChart.labelForIndex = ^(NSUInteger item) {
         return bottomTitles[item];
-    };
-    _lineChart.labelForValue = ^(CGFloat value) {
-        return [NSString stringWithFormat:@""];
     };
     
     _lineChart.hiddenBlock = ^(NSInteger index) {
@@ -326,11 +302,7 @@
     [_chartView updateContentForViewWithModel:_model
                                     withState:(PieChartViewShowState)(_lastButton.tag - 2000)
                               withReloadBlock:^(CGFloat percent) {
-                                //  if (percent > -0.1)
-                                  {
-                                      weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
-                                      //[weakSelf startTimer];
-                                  }
+                                    weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
                               }];
     
     [_chartData removeAllObjects];

@@ -46,7 +46,7 @@
         [self addSubview:self.scrollView];
         self.currentPageIndex = 1;
         
-        [self addSwipeForScrollView];
+     //   [self addSwipeForScrollView];
     }
     
     return self;
@@ -165,13 +165,6 @@
 
 #pragma mark -
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate)
-    {
-      //  [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
-    }
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -224,9 +217,16 @@
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+    {
+        [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
+    }
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-   // [scrollView setContentOffset:CGPointMake(CGRectGetWidth(scrollView.frame), 0) animated:YES];
     if (_allowBlock)
     {
         BOOL allow = _isRight ? _allowBlock(self, -1) : _allowBlock(self, 1);

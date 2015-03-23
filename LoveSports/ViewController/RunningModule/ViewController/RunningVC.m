@@ -97,7 +97,6 @@
     _srcollView.delegate = self;
     _srcollView.pagingEnabled = YES;
     _srcollView.contentSize = CGSizeMake(_srcollView.width, _srcollView.height * 2);
-    // [self.view addSubview:_srcollView];
 
     self.tableView.tableHeaderView = _srcollView;
     
@@ -220,28 +219,12 @@
     {
         CGFloat offsetY = scrollView.contentOffset.y;
         
-        NSLog(@"..%f", offsetY);
-        
         if (offsetY > 0)
         {
             [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
         }
     }
 }
-
-/*
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (_isUpSwipe && _offsetY > 60.0)
-    {
-       // [self upSwipe];
-    }
-    
-    _offsetY = 0;
-    
-   // NSLog(@"...%f.", scrollView.contentOffset.y);
-}
- */
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

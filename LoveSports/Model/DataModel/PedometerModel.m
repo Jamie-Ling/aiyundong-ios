@@ -330,6 +330,80 @@
     [YearModel initOrUpdateTheWeekAndMonthModelFromAPedometerModel:self];
 }
 
+- (void)setStartAndEndForSleepTime
+{
+    /*
+    NSDate *tmpDate = [NSDate dateWithString:self.dateString];
+    NSDate *lastdate = [tmpDate dateAfterDay:-1];
+    NSString *tmpDateString = [[tmpDate dateToString] componentsSeparatedByString:@" "][0];
+    NSString *lastWhere = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                           tmpDateString, self.wareUUID];
+    PedometerModel *lastModel = [PedometerModel searchSingleWithWhere:lastWhere orderBy:nil];
+    if (lastModel)
+    {
+        self.sleepTodayStartTime = lastModel.sleepNextStartTime;
+        if (self.sleepArray.count > 0)
+        {
+            SleepModel *model = self.sleepArray[0];
+            self.sleepTodayEndTime = model.currentOrder;
+            
+            model = [self.sleepArray lastObject];
+            self.sleepNextStartTime = model.currentOrder;
+        }
+        else
+        {
+            self.sleepTodayEndTime = 0;
+            self.sleepNextStartTime = 0;
+        }
+    }
+    else
+    {
+        if (sleeps.count > 0)
+        {
+            SleepModel *model = sleeps[0];
+            totalModel.sleepTodayEndTime = model.currentOrder;
+            
+            model = [sleeps lastObject];
+            totalModel.sleepNextStartTime = model.currentOrder;
+        }
+    }
+*/
+}
+
+// 取出今天睡眠开始的模型
+- (SleepModel *)getSleepModelForTodaySleepSartTime
+{
+    for (int i = 0; i < self.sleepArray.count ; i++)
+    {
+        SleepModel *model = self.sleepArray[i];
+        
+        if (model.currentOrder < 144)
+        {
+            return model;
+        }
+    }
+    
+    return nil;
+}
+
+// 取出今天睡眠开始的模型
+/*
+- (SleepModel *)getSleepModelForTodaySleepSartTime
+{
+    for (int i = 0; i < self.sleepArray.count ; i++)
+    {
+        SleepModel *model = self.sleepArray[i];
+        
+        if (model.currentOrder < 144)
+        {
+            return model;
+        }
+    }
+    
+    return nil;
+}
+ */
+
 // 为今天的模型附加上昨天的睡眠模型
 - (void)setLastSleepData
 {

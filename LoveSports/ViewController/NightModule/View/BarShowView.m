@@ -12,6 +12,8 @@
 @interface BarShowView ()
 
 @property (nonatomic, strong) BarGraphView *barView;
+@property (nonatomic, strong) UILabel *startLabel;
+@property (nonatomic, strong) UILabel *endLabel;
 
 @end
 
@@ -32,6 +34,21 @@
 
 - (void)loadLabels
 {
+    _startLabel = [self addSubLabelWithRect:CGRectMake(10, self.height - 30, 60, 24)
+                              withAlignment:NSTextAlignmentCenter
+                               withFontSize:14.0
+                                   withText:@"23:34"
+                              withTextColor:[UIColor lightGrayColor]
+                                    withTag:999];
+    
+    _endLabel = [self addSubLabelWithRect:CGRectMake(self.width - 70, self.height - 30, 60, 24)
+                            withAlignment:NSTextAlignmentCenter
+                             withFontSize:14.0
+                                 withText:@"07:34"
+                            withTextColor:[UIColor lightGrayColor]
+                                  withTag:999];
+    
+    /*
     for (int i = 24; i < 49; i++)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0 + self.frame.size.width/49*(i-24), self.frame.size.height - 14, self.frame.size.width/49, 14)];
@@ -55,6 +72,8 @@
         label.text = string;
         [self addSubview:label];
     }
+     */
+    
 }
 
 - (void)loadBarGraphView

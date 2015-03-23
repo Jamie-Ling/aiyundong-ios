@@ -104,7 +104,7 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.hardwareRevisionStringUUID] forService:service];
         }
-        if ([service.UUID isEqual:BLTUUID.updateServiceUUID])
+        else if ([service.UUID isEqual:BLTUUID.updateServiceUUID])
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.controlPointCharacteristicUUID, BLTUUID.packetCharacteristicUUID] forService:service];
         }

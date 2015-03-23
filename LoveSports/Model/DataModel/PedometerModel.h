@@ -86,6 +86,10 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 @property (nonatomic, assign) CGFloat targetDistance;       // 目标距离
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
+@property (nonatomic, assign) NSInteger sleepTodayStartTime;// 今天开始的睡眠时间
+@property (nonatomic, assign) NSInteger sleepTodayEndTime;  // 今天结束的睡眠时间
+@property (nonatomic, assign) NSInteger sleepNextStartTime; // 明天开始睡眠的时间
+
 @property (nonatomic, assign) NSInteger stepSize;           // 步距
 @property (nonatomic, assign) CGFloat weight;               // 体重
 
