@@ -303,6 +303,8 @@
 		F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CE1A766E03002A5382 /* BLTPeripheral.m */; };
 		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
+		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
+		F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E71AC06C580075D99E /* NightScrollView.m */; };
 		F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56F61A8F777C00955BBC /* PedometerHelper.m */; };
 		F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */; };
 		F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */; };
@@ -815,6 +817,10 @@
 		F49529CF1A766E03002A5382 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
 		F49529D01A766E03002A5382 /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
 		F496931A1A872952008D81CA /* home_sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_sports@2x.png"; sourceTree = "<group>"; };
+		F4A536E31AC06A0B0075D99E /* NightDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightDetailView.h; sourceTree = "<group>"; };
+		F4A536E41AC06A0B0075D99E /* NightDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightDetailView.m; sourceTree = "<group>"; };
+		F4A536E61AC06C580075D99E /* NightScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightScrollView.h; sourceTree = "<group>"; };
+		F4A536E71AC06C580075D99E /* NightScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightScrollView.m; sourceTree = "<group>"; };
 		F4AD56F61A8F777C00955BBC /* PedometerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerHelper.m; sourceTree = "<group>"; };
 		F4AD56FA1A8F779B00955BBC /* BLTRealTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTRealTime.h; sourceTree = "<group>"; };
 		F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTRealTime.m; sourceTree = "<group>"; };
@@ -1783,6 +1789,10 @@
 				695549141A8CF34A00423EA9 /* BarShowView.m */,
 				F43F8EDD1A81065B008A431B /* BarGraphView.h */,
 				F43F8EDE1A81065B008A431B /* BarGraphView.m */,
+				F4A536E31AC06A0B0075D99E /* NightDetailView.h */,
+				F4A536E41AC06A0B0075D99E /* NightDetailView.m */,
+				F4A536E61AC06C580075D99E /* NightScrollView.h */,
+				F4A536E71AC06C580075D99E /* NightScrollView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2640,9 +2650,11 @@
 				69EFC2E01A760CD700B5BC53 /* SDWebImagePrefetcher.m in Sources */,
 				698A90BC1A6FEB54005BABE6 /* EAIntroPage.m in Sources */,
 				F4B693E31A6F40D200B42395 /* NSString+Extension.m in Sources */,
+				F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */,
 				F4CE02671AABF39A005C29FC /* DownloadEntity.m in Sources */,
 				F43979F21AB550680033B7BB /* MJRefreshGifHeader.m in Sources */,
 				F4C41D201ABB01AF00107F6C /* TrendDetailView.m in Sources */,
+				F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */,
 				F4B693981A6F403400B42395 /* FMDatabase.m in Sources */,
 				F4644BC11A9447A8003088E9 /* BLTDFUHelper.m in Sources */,
 				69FD41911A7FCC100023B74D /* JSBadgeView.m in Sources */,
