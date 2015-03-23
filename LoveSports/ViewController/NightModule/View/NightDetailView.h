@@ -10,4 +10,7 @@
 
 @interface NightDetailView : UIView
 
+@property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, assign) BOOL allowAnimation;
+
 @end

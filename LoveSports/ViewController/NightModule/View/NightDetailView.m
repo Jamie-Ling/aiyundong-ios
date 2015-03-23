@@ -26,7 +26,6 @@
 @property (nonatomic, strong) PedometerModel *model;
 
 @property (nonatomic, strong) CalendarHomeView *calenderView;
-@property (nonatomic, strong) NSDate *currentDate;
 @property (nonatomic, strong) NSArray *chartDataArray;
 
 @property (nonatomic, assign) NSInteger percent;
@@ -53,7 +52,6 @@
         [self loadCalendarButton];
         [self loadDateLabel];
         [self loadScrollView];
-        [self loadShareButton];
     }
     
     return self;
@@ -63,7 +61,22 @@
 {
     _currentDate = currentDate;
     
+    // 将内存之前的图标清除...
+    _allowAnimation = NO;
+    _percent = 0;
+    [_chartView reloadData];
+    
     [self updateContentForBarShowViewWithDate:_currentDate];
+}
+
+- (void)setAllowAnimation:(BOOL)allowAnimation
+{
+    _allowAnimation = allowAnimation;
+    
+    if (_allowAnimation)
+    {
+        [self startTimer];
+    }
 }
 
 - (void)loadPieChartView
@@ -79,7 +92,6 @@
 
 - (void)startTimer
 {
-    _percent = 0;
     if (!_timer)
     {
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateChartView) userInfo:nil repeats:YES];
@@ -155,8 +167,8 @@
 
 - (void)loadScrollView
 {
-    NSInteger width = _scrollView.width; //((int)(_scrollView.width * (5 + 1 / 16.0) / 49)) * 49;
-    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(20, 0, width - 40, 160 - _offsetY)];
+    NSInteger width = self.width;
+    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(20, _chartView.totalHeight + 20, width - 40, 160 - _offsetY)];
     [self addSubview:_showView];
     
     [self updateContentForBarShowViewWithDate:_currentDate];
@@ -223,15 +235,6 @@
 - (void)updateContentForChartView:(PedometerModel *)model
 {
     
-}
-
-- (void)loadShareButton
-{
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(self.width - 45, self.height - 99, 90/2.0, 70/2.0)
-                                              withImage:@"分享@2x.png"
-                                        withSelectImage:@"分享@2x.png"];
-    
-    [self addSubview:calendarButton];
 }
 
 #pragma mark --- PieChartViewDelegate ---

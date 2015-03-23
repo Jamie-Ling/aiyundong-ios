@@ -7,8 +7,11 @@
 //
 
 #import "NightVC.h"
+#import "NightScrollView.h"
 
 @interface NightVC ()
+
+@property (nonatomic, strong) NightScrollView *scrollView;
 
 @end
 
@@ -37,7 +40,27 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
+    
+    [self loadNightScrollView];
 }
+
+- (void)loadNightScrollView
+{
+    _scrollView = [[NightScrollView alloc] initWithFrame:self.view.bounds];
+    
+    [self addSubview:_scrollView];
+    [self loadShareButton];
+}
+
+- (void)loadShareButton
+{
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(self.width - 45, self.height - 99, 90/2.0, 70/2.0)
+                                              withImage:@"分享@2x.png"
+                                        withSelectImage:@"分享@2x.png"];
+    
+    [self addSubview:calendarButton];
+}
+
 #pragma mark --- 重写父类方法 ---
 - (void)leftSwipe
 {

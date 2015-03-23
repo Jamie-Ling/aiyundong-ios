@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UnlimitScroll.h"
+#import "NightDetailView.h"
 
 @interface NightScrollView : UIView
+
+@property (nonatomic, strong) UnlimitScroll *scrollView;
+@property (nonatomic, strong) NSMutableArray *viewsArray;
+
+- (void)updateContentForNightDetailViews;
+- (void)startChartAnimation;
 
 @end
