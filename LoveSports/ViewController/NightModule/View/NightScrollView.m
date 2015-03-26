@@ -16,7 +16,6 @@
     if (self)
     {
         _viewsArray = [[NSMutableArray alloc] initWithCapacity:0];
-        
         [self loadNightDetailView];
     }
     
@@ -105,7 +104,7 @@
     return NO;
 }
 
-- (void)updateContentForDayDetailViews
+- (void)updateContentForNightDetailViews
 {
     NightDetailView *detailView = _viewsArray[1];
     NSDate *date = detailView.currentDate;

@@ -46,6 +46,7 @@ DEF_SINGLETON(PedometerHelper)
     }
 }
 
+// 取出趋势图所需要的每天的模型.
 + (NSArray *)getEveryDayTrendDataWithDate:(NSDate *)date
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];

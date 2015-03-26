@@ -46,7 +46,7 @@
         [self addSubview:self.scrollView];
         self.currentPageIndex = 1;
         
-     //   [self addSwipeForScrollView];
+        // [self addSwipeForScrollView];
     }
     
     return self;
@@ -68,11 +68,11 @@
 {
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionLeft;
-  //  [self.scrollView addGestureRecognizer:swipe];
+    [self.scrollView addGestureRecognizer:swipe];
     
     swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipe)];
     swipe.direction = UISwipeGestureRecognizerDirectionRight;
-  //  [self.scrollView addGestureRecognizer:swipe];
+    [self.scrollView addGestureRecognizer:swipe];
 }
 
 - (void)leftSwipe

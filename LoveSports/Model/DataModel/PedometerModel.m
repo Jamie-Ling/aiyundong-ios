@@ -109,6 +109,7 @@
         _totalCalories = 0.0001;
         _targetDistance = 0.0001;
         _targetSleep = 0.0001;
+        _sleepNextStartTime = 144;
     }
     
     return self;
@@ -279,7 +280,8 @@
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
-    [totalModel setLastSleepData];
+    [totalModel setStartAndEndForSleepTime];
+    [totalModel setLastSleepDataForCurrentModel];
     [totalModel setTargetDataForModel];
 
     // 将数据保存到周－月表
@@ -330,82 +332,57 @@
     [YearModel initOrUpdateTheWeekAndMonthModelFromAPedometerModel:self];
 }
 
+// 为今天的模型附上今天睡觉结束的时间和明天开始睡觉的时间.
 - (void)setStartAndEndForSleepTime
 {
-    /*
+    // 取出昨天的数据。
     NSDate *tmpDate = [NSDate dateWithString:self.dateString];
     NSDate *lastdate = [tmpDate dateAfterDay:-1];
-    NSString *tmpDateString = [[tmpDate dateToString] componentsSeparatedByString:@" "][0];
-    NSString *lastWhere = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
-                           tmpDateString, self.wareUUID];
-    PedometerModel *lastModel = [PedometerModel searchSingleWithWhere:lastWhere orderBy:nil];
+ 
+    PedometerModel *lastModel = [PedometerHelper getModelFromDBWithDate:lastdate];
     if (lastModel)
     {
         self.sleepTodayStartTime = lastModel.sleepNextStartTime;
-        if (self.sleepArray.count > 0)
+    }
+    else
+    {
+        self.sleepTodayStartTime = 144;
+    }
+    
+    if (self.sleepArray.count > 0)
+    {
+        // 今天睡眠结束的时间就是运动开始的时间。
+        if (self.sportsArray.count > 0)
         {
-            SleepModel *model = self.sleepArray[0];
-            self.sleepTodayEndTime = model.currentOrder;
-            
-            model = [self.sleepArray lastObject];
-            self.sleepNextStartTime = model.currentOrder;
+            SportsModel *model = self.sportsArray[0];
+            self.sleepTodayEndTime = model.currentOrder > 144 ? 144 : model.currentOrder + 144;
         }
         else
         {
-            self.sleepTodayEndTime = 0;
-            self.sleepNextStartTime = 0;
+            self.sleepTodayEndTime = 144;
+        }
+        
+        // 第二天睡眠开始的时间就是今天晚上睡眠开始的时间
+        for (int i = 0; i < self.sleepArray.count; i++)
+        {
+            SleepModel *model = self.sleepArray[i];
+            if (model.currentOrder > 144)
+            {
+                self.sleepNextStartTime = model.currentOrder - 144;
+                break;
+            }
         }
     }
     else
     {
-        if (sleeps.count > 0)
-        {
-            SleepModel *model = sleeps[0];
-            totalModel.sleepTodayEndTime = model.currentOrder;
-            
-            model = [sleeps lastObject];
-            totalModel.sleepNextStartTime = model.currentOrder;
-        }
+        // 如果没有数据。说明没有睡眠时间.
+        self.sleepTodayEndTime = 144;
+        self.sleepNextStartTime = 144;
     }
-*/
 }
 
-// 取出今天睡眠开始的模型
-- (SleepModel *)getSleepModelForTodaySleepSartTime
-{
-    for (int i = 0; i < self.sleepArray.count ; i++)
-    {
-        SleepModel *model = self.sleepArray[i];
-        
-        if (model.currentOrder < 144)
-        {
-            return model;
-        }
-    }
-    
-    return nil;
-}
-
-// 取出今天睡眠开始的模型
-/*
-- (SleepModel *)getSleepModelForTodaySleepSartTime
-{
-    for (int i = 0; i < self.sleepArray.count ; i++)
-    {
-        SleepModel *model = self.sleepArray[i];
-        
-        if (model.currentOrder < 144)
-        {
-            return model;
-        }
-    }
-    
-    return nil;
-}
- */
-
-// 为今天的模型附加上昨天的睡眠模型
-- (void)setLastSleepData
+// 为当前的模型附加上昨天的睡眠模型
+- (void)setLastSleepDataForCurrentModel
 {
     NSDate *date = [NSDate dateWithString:self.dateString];
     PedometerModel *model = [PedometerHelper getModelFromDBWithDate:date];
