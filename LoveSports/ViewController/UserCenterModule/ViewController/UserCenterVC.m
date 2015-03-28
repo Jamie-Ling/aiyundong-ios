@@ -57,10 +57,10 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     //初始化
-    _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱动运手环", @"梆定硬件", @"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动商城", nil];
+    _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理", @"用户信息",@"", @"爱动运手环", @"梆定硬件", @"", @"消息", @"朋友", @"",@"爱运动商城",  @"", @"求点赞", @"关于爱运动商城", nil];
     
     // @"消息", @"朋友",@"",
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理",@"", @"爱运动手环", @"绑定硬件", @"", @"爱运动商城", @"用户信息", @"", @"求点赞", @"清除缓存", @"关于爱运动", nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理", @"用户信息",@"", @"爱动运手环", @"绑定硬件", @"", @"消息", @"朋友", @"",@"爱运动商城",  @"", @"求点赞", @"关于爱运动", nil];
     
     //tableview
     [self addTableView];
@@ -75,9 +75,10 @@
     _userHeadPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey];
     
     //得到现在的手环,先删除旧手环信息
-    [_cellTitleArray removeObjectAtIndex:2];
-    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
-    [_cellTitleArray insertObject:_showModel._name atIndex:2];
+    NSLog(@"手环名字切换，由于名字暂时不能更改。不再切换");
+//    [_cellTitleArray removeObjectAtIndex:3];
+//    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+//    [_cellTitleArray insertObject:_showModel._name atIndex:3];
     
     //刷新界面
     [self updateElecQuantity];
@@ -406,7 +407,7 @@
             [oneCell.contentView addSubview:userImageButton];
         }
             break;
-        case 2:
+        case 3:
         {
             ALBatteryView *batteryView = [[ALBatteryView alloc] initWithFrame:CGRectMake(0, 0, 12.8 * 2, 12.8 * 2)];
                 [batteryView setCenter:CGPointMake(rightImageView.x - batteryView.width / 2.0 - 12.0, vOneCellHeight / 2.0)];
@@ -417,13 +418,13 @@
             }
             if (_dumpEnergy > 100)
             {
-                _dumpEnergy = 100;
+                _dumpEnergy = 10;
             }
             
-            [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:NO];
+            [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:YES];
             [oneCell.contentView addSubview:batteryView];
             
-            [rightTitle setText:[NSString stringWithFormat:@"%02ld%%", (long)_dumpEnergy]];
+            [rightTitle setText:[NSString stringWithFormat:@"%.0ld%%", (long)_dumpEnergy]];
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(batteryView.x - 2 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
@@ -472,47 +473,47 @@
             [self accountManage];
         }
             break;
-        case 2:
+        case 3:
         {
             [self intelligentBracelet];
         }
             break;
-        case 3:
+        case 4:
         {
             [self bindingDevice];
         }
             break;
-        case 500:
+        case 6:
         {
             [self message];
         }
             break;
-        case 600:
+        case 7:
         {
             [self friends];
         }
             break;
-        case 5:
+        case 9:
         {
             [self ourShop];
         }
             break;
-        case 6:
+        case 1:
         {
             [self userInfo];
         }
             break;
-        case 8:
+        case 11:
         {
             [self praise];
         }
             break;
-        case 9:
+        case 900:
         {
             [self clearCache];
         }
             break;
-        case 10:
+        case 12:
         {
             [self aboutUs];
         }

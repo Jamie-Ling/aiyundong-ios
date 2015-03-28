@@ -90,8 +90,11 @@
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"常出没地区 ：", @"运动宣言 ：", nil];
-    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfStepLongKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
+//    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
+    
+    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
+//    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfStepLongKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
+    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, @"",kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, @"", kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
   
@@ -415,7 +418,7 @@
     }
     else
     {
-        lastIndex= [lastHeight integerValue] - vHeightMin(YES);
+        lastIndex= [lastHeight floatValue] - vHeightMin(YES);
        
         if (!_isMetricSystem)
         {
@@ -424,9 +427,9 @@
             {
                 lastIndex = 0;
             }
-            if (lastIndex > vHeightMax(NO) - vHeightMin(NO) + 1)
+            if (lastIndex > (vHeightMax(NO) - vHeightMin(NO) + 1) * 10)
             {
-                lastIndex = vHeightMax(NO) - vHeightMin(NO) + 1;
+                lastIndex = (vHeightMax(NO) - vHeightMin(NO) + 1) * 10;
             }
         }
         else
@@ -435,9 +438,9 @@
             {
                 lastIndex = 0;
             }
-            if (lastIndex > vHeightMax(YES) - vHeightMin(YES) + 1)
+            if (lastIndex > (vHeightMax(YES) - vHeightMin(YES) + 1) * 10)
             {
-                lastIndex = vHeightMax(YES) - vHeightMin(YES) + 1;
+                lastIndex = (vHeightMax(YES) - vHeightMin(YES) + 1) * 10;
             }
         }
     }
@@ -662,7 +665,7 @@
         {
             switch (indexPath.row)
             {
-                case 2:
+                case 3:
                 {
                     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -673,7 +676,7 @@
                     nameString = [NSString stringWithFormat:@"%.0f岁", fabs(age)];
                 }
                     break;
-                case 4:
+                case 5:
                 {
                     nameString = [NSString stringWithFormat:@"%@cm", nameString];
                     if (!_isMetricSystem)
@@ -682,7 +685,7 @@
                     }
                 }
                     break;
-                case 5:
+                case 6:
                 {
                     nameString = [NSString stringWithFormat:@"%@kg", nameString];
                     if (!_isMetricSystem)
@@ -691,7 +694,7 @@
                     }
                 }
                     break;
-                case 6:
+                case 600:
                 {
                     nameString = [NSString stringWithFormat:@"%@cm", nameString];
                     if (!_isMetricSystem)
@@ -744,29 +747,29 @@
         case 1:
             [self changeNickName];
             break;
-        case 2:
+        case 3:
             [self changeBirth];
             break;
-        case 3:
+        case 4:
             [self changeGender];
             break;
             
-        case 4:
+        case 5:
             [self changeHeight];
             break;
-        case 5:
+        case 6:
             [self changeWeight];
             break;
-        case 6:
+        case 600:
             [self changeStepLong];
             break;
-        case 7:
+        case 8:
             [self changeInteresting];
             break;
-        case 8:
+        case 9:
             [self changeCity];
             break;
-        case 9:
+        case 10:
             [self changeDeclaration];
             break;
         default:
