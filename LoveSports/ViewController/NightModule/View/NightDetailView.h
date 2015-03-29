@@ -13,4 +13,6 @@
 @property (nonatomic, strong) NSDate *currentDate;
 @property (nonatomic, assign) BOOL allowAnimation;
 
+@property (nonatomic, strong) UIViewSimpleBlock backBlock;
+
 @end

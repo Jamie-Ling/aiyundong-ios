@@ -17,8 +17,8 @@
     {
         self.backgroundColor = [UIColor clearColor];
         
-        _hori = 10;
-        _vert = 30;
+        _hori = 9;
+        _vert = 10;
     }
     
     return self;

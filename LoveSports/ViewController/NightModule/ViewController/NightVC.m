@@ -8,6 +8,7 @@
 
 #import "NightVC.h"
 #import "NightScrollView.h"
+#import "ShareView.h"
 
 @interface NightVC ()
 
@@ -38,7 +39,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor clearColor];
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     [self loadNightScrollView];
@@ -54,11 +55,8 @@
 
 - (void)loadShareButton
 {
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(self.width - 45, self.height - 99, 90/2.0, 70/2.0)
-                                              withImage:@"分享@2x.png"
-                                        withSelectImage:@"分享@2x.png"];
-    
-    [self addSubview:calendarButton];
+    SphereMenu *sphereMenu = [[ShareView sharedInstance] simpleWithPoint:CGPointMake(self.width - 22.5, self.height - 86)];
+    [self addSubview:sphereMenu];
 }
 
 #pragma mark --- 重写父类方法 ---

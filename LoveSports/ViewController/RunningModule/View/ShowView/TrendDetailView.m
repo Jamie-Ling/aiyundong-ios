@@ -8,7 +8,7 @@
 
 #import "TrendDetailView.h"
 
-@interface TrendShowType ()
+@interface TrendDetailView ()
 
 @property (nonatomic, strong) UIButton *lastButton;
 
@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
         _showType = TrendChartViewShowDaySteps;

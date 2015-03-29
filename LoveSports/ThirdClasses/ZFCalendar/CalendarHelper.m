@@ -17,7 +17,7 @@ DEF_SINGLETON(CalendarHelper)
     if (self) {
         
         CGRect rect = ([UIScreen mainScreen ].bounds);
-        rect = CGRectMake(2, rect.size.height * 0.10, rect.size.width - 4.0, rect.size.height * 0.8);
+        rect = CGRectMake(2, 480 * 0.20, 320 - 4.0, 320);
         _calenderView = [[CalendarHomeView alloc] initWithFrame:rect];
         
         [_calenderView setLoveSportsToDay:365 ToDateforString:nil];

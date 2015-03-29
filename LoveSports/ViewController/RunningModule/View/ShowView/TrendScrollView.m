@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        self.backgroundColor = [UIColor clearColor];
         _viewsArray = [[NSMutableArray alloc] initWithCapacity:0];
         
         [self loadTrendDetailView];
@@ -42,7 +43,6 @@
 - (void)loadUnlimitScrollView
 {
     _scrollView = [[UnlimitScroll alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height + 40)];
-    _scrollView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1.0];
     _scrollView.isRight = YES;
     _scrollView.viewsArray = _viewsArray;
     

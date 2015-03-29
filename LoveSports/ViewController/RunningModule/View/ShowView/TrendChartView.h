@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TrendShowType.h"
 #import "TrendScrollView.h"
+#import "TrendTypeView.h"
 
 @protocol TrendChartViewDelegate;
 
@@ -21,9 +22,11 @@
 
 @property (nonatomic, assign) TrendChartShowType showType;
 @property (nonatomic, strong) TrendScrollView *scrollView;
+@property (nonatomic, strong) TrendTypeView *typeView;
 
 @property (nonatomic, strong) UILabel *yearLabel;
 
+- (void)setCurrentDate:(NSDate *)currentDate;
 - (void)reloadTrendChartView;
 
 @end

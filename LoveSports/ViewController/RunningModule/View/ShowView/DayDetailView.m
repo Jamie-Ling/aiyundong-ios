@@ -62,7 +62,6 @@
         [self loadDateLabel];
         [self loadChartStyleButtons];
         [self loadFSLineView];
-        [self loadShareButton];
     }
     
     return self;
@@ -172,7 +171,10 @@
 
 - (void)clickBackButton:(UIButton *)button
 {
-    
+    if (_backBlock)
+    {
+        _backBlock(self, nil);
+    }
 }
 
 - (void)loadDateLabel
@@ -357,7 +359,6 @@
     
     if (_lastButton.tag == 2000)
     {
-        
         [_chartData addObjectsFromArray:_model.detailSteps];
     }
     else if (_lastButton.tag == 2001)

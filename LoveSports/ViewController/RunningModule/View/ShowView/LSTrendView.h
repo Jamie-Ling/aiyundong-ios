@@ -10,4 +10,6 @@
 
 @interface LSTrendView : TrendChartView
 
+@property (nonatomic, strong) UIViewSimpleBlock backBlock;
+
 @end

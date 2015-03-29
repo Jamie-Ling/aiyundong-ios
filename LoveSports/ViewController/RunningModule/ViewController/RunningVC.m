@@ -19,6 +19,7 @@
 #import "MJRefresh.h"
 
 #import "DayScrollView.h"
+#import "ShareView.h"
 
 @interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate, UIScrollViewDelegate>
 
@@ -88,6 +89,7 @@
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     [self loadScrollView];
+    [self loadShareButton];
 }
 
 - (void)loadScrollView
@@ -193,6 +195,12 @@
     
     _trendView.delegate = self;
     [_srcollView addSubview:_trendView];
+}
+
+- (void)loadShareButton
+{
+    SphereMenu *sphereMenu = [[ShareView sharedInstance] simpleWithPoint:CGPointMake(self.width - 22.5, self.height - 86)];
+    [self addSubview:sphereMenu];
 }
 
 #pragma mark --- TrendChartViewDelegate ---

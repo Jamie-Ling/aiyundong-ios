@@ -19,6 +19,7 @@
 @property (nonatomic, assign) BOOL allowAnimation;
 
 @property (nonatomic, assign) id <DayDetailViewDelegate> delegate;
+@property (nonatomic, strong) UIViewSimpleBlock backBlock;
 
 - (void)updateContentForView:(PedometerModel *)model;
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction;

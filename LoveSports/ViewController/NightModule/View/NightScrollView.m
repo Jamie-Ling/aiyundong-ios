@@ -31,6 +31,11 @@
         
         detailView.currentDate = [date dateAfterDay:i - 1];
         [_viewsArray addObject:detailView];
+        
+        DEF_WEAKSELF_(NightScrollView);
+        detailView.backBlock = ^(UIView *view, id object) {
+            [weakSelf updateContentToToday];
+        };
     }
     
     [self loadUnlimitScrollView];
@@ -115,6 +120,26 @@
         detailView.allowAnimation = YES;
     }
 }
+
+- (void)updateContentToToday
+{
+    [UIView transitionWithView:self
+                      duration:0.35
+                       options:UIViewAnimationOptionTransitionFlipFromRight | UIViewAnimationOptionAllowUserInteraction
+                    animations:^{
+                        NSDate *date = [NSDate date];
+                        for (int i = 0; i < 3; ++i)
+                        {
+                            NightDetailView *detailView = _viewsArray[i];
+                            detailView.currentDate = [date dateAfterDay:i - 1];
+                            if (i == 1)
+                            {
+                                detailView.allowAnimation = YES;
+                            }
+                        }
+                    } completion:nil];
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -9,6 +9,7 @@
 #import "LandscapeVC.h"
 #import "FSLineChart.h"
 #import "PedometerModel.h"
+#import "ShareView.h"
 
 @interface LandscapeVC ()
 
@@ -65,8 +66,8 @@
     self.view.backgroundColor = [UIColor yellowColor];
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
 
-    [self loadVerticalButton];
     [self loadLSTrendView];
+    [self loadShareButton];
 }
 
 - (void)loadLSTrendView
@@ -74,21 +75,22 @@
     _trendView = [[LSTrendView alloc] initWithFrame:CGRectMake(0, 0, self.height, self.width)];
     
     [self addSubview:_trendView];
-}
-
-- (void)loadVerticalButton
-{
-    UIButton *verticalButton = [UIButton simpleWithRect:CGRectMake(self.view.height - 90, 0, 90, 70)
-                                               withImage:@"竖屏@2x.png"
-                                         withSelectImage:@"竖屏@2x.png"];
     
-    [verticalButton addTarget:self action:@selector(verticalViewData) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:verticalButton];
+    DEF_WEAKSELF_(LandscapeVC);
+    _trendView.backBlock = ^(UIView *view, id object) {
+        [weakSelf verticalViewData];
+    };
 }
 
 - (void)verticalViewData
 {
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+- (void)loadShareButton
+{
+    SphereMenu *sphereMenu = [[ShareView sharedInstance] simpleWithPoint:CGPointMake(self.height - 22.5, self.width - 20)];
+    [self addSubview:sphereMenu];
 }
 
 // 下面的是6.0以后的

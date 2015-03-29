@@ -13,15 +13,17 @@
 #import "CalendarHomeView.h"
 #import "PedometerModel.h"
 #import "CalendarHelper.h"
-#import "SphereMenu.h"
+#import "TrendStepView.h"
 
-@interface TrendChartView () <SphereMenuDelegate>
+@interface TrendChartView ()
 
 @property (nonatomic, strong) FSLineChart *lineChart;
 @property (nonatomic, strong) UILabel *weekLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UISegmentedControl *segement;
 @property (nonatomic, assign) NSInteger segIndex;
+
+@property (nonatomic, strong) TrendStepView *stepView;
 
 @property (nonatomic, strong) UIButton *calendarButton;
 @property (nonatomic, strong) CalendarHomeView *calenderView;
@@ -39,7 +41,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = UIColorRGB(247, 247, 247);
         // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         
         _showType = TrendChartViewShowDaySteps;
@@ -49,10 +51,10 @@
         _monthIndex = [NSDate date].month;
         
         [self loadCalendarButton];
-        [self loadSegmentedControl];
+        [self loadTrendStepView];
         [self loadLandscapeButton];
         [self loadTrendScrollView];
-        [self loadChartStyleButtons];
+        [self loadTrendTypeView];
     }
     
     return self;
@@ -96,10 +98,8 @@
 {
     _segement = [[UISegmentedControl alloc] initWithItems:@[@"日", @"周", @"月"]];
     _segement.frame = CGRectMake((self.width - 200) / 2, 30, 200, 40);
-    
     _segement.backgroundColor = [UIColor clearColor];
     _segement.tintColor = [UIColor clearColor];
-    //[_segement setBackgroundImage:[UIImage image:@"日@2x.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_segement setImage:[UIImage image:@"日选中@2x.png"] forSegmentAtIndex:0];
     [_segement setImage:[UIImage image:@"周@2x.png"] forSegmentAtIndex:1];
     [_segement setImage:[UIImage image:@"月@2x.png"] forSegmentAtIndex:2];
@@ -121,6 +121,18 @@
     _segIndex = _segement.selectedSegmentIndex;
     
     [self reloadTrendChartView];
+}
+
+- (void)loadTrendStepView
+{
+    DEF_WEAKSELF_(TrendChartView);
+    _stepView = [[TrendStepView alloc] initWithFrame:CGRectMake((self.width - 150) / 2, 30, 150, 50)
+                                           withBlock:^(UIView *aView, id object) {
+                                               weakSelf.segIndex = [(NSNumber *)object integerValue];
+                                               [weakSelf reloadTrendChartView];
+                                           }];
+    [self addSubview:_stepView];
+    _segIndex = 0;
 }
 
 - (void)loadLandscapeButton
@@ -173,28 +185,17 @@
 }
 
 // 步数，卡路里，距离切换.
-- (void)loadChartStyleButtons
+- (void)loadTrendTypeView
 {
-    CGFloat offsetX = ((self.width - 60) - 90 * 3) / 2;
-    NSArray *images = @[@"足迹@2x.png", @"能量@2x.png", @"路程@2x.png"];
-    NSArray *selectImages = @[@"足迹-选中@2x.png", @"能量选中@2x.png", @"路程选中@2x.png"];
-    
-    for (int i = 0; i < images.count; i++)
-    {
-        UIButton *button = [UIButton simpleWithRect:CGRectMake(30 + (90 + offsetX) * i , 340, 90, 89)
-                                          withImage:images[i]
-                                    withSelectImage:selectImages[i]];
-        
-        button.tag = 2000 + i;
-        [button addTarget:self action:@selector(clcikChartStyleButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button];
-        
-        if (i == 0)
-        {
-            button.selected = YES;
-            _lastButton = button;
-        }
-    }
+    DEF_WEAKSELF_(TrendChartView);
+    _typeView = [[TrendTypeView alloc] initWithFrame:CGRectMake(0, 370, self.width, 64)
+                                          withOffset:45
+                                           withBlock:^(UIView *aView, id object) {
+                                               weakSelf.lastButton = (UIButton *)object;
+                                               [weakSelf reloadTrendChartView];
+                                           }];
+    [self addSubview:_typeView];
+    _lastButton = _typeView.lastButton;
     
     _yearLabel = [self addSubLabelWithRect:CGRectMake(4, 350, 44, 20)
                              withAlignment:NSTextAlignmentCenter
@@ -204,30 +205,12 @@
                                    withTag:3000];
 }
 
-- (void)clcikChartStyleButton:(UIButton *)button
-{
-    _lastButton.selected = NO;
-    button.selected = YES;
-    _lastButton = button;
-    
-    [self reloadTrendChartView];
-}
-
 // 点击6个按钮后图表进行切换。
 - (void)reloadTrendChartView
 {
     _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
  
     [_scrollView reloadTrendChartViewWith:_showType];
-}
-
-- (void)loadShareButton
-{
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(self.width - 45, self.height - 99, 90/2.0, 70/2.0)
-                                              withImage:@"分享@2x.png"
-                                        withSelectImage:@"分享@2x.png"];
-    
-    [self addSubview:calendarButton];
 }
 
 @end
