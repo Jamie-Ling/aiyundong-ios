@@ -14,16 +14,22 @@
 #import "ShowWareView.h"
 #import "NSObject+Property.h"
 #import "CalendarHelper.h"
+#import "DashLineView.h"
+#import "GraphicButton.h"
+#import "ShareView.h"
 
 @interface DayDetailView () <PieChartViewDelegate, PieChartViewDataSource>
 
 @property (nonatomic, strong) PieChartView *chartView;
 @property (nonatomic, strong) FSLineChart *lineChart;
+@property (nonatomic, strong) DashLineView *dashView;
 @property (nonatomic, strong) UILabel *weekLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 
-@property (nonatomic) CalendarHomeView *calenderView;
-@property (nonatomic, strong) UIButton *lastButton;
+@property (nonatomic, strong) CalendarHomeView *calenderView;
+
+@property (nonatomic, strong) GraphicButton *lastButton;
+@property (nonatomic, strong) UIButton *backButton;
 
 @property (nonatomic, strong) NSMutableArray *chartData;
 
@@ -42,7 +48,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = UIColorRGB(247, 247, 247);
         // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
         NSLog(@".height..%f", self.height);
         _offsetY = (self.height < 485) ? 20.0 : 0.0;
@@ -52,10 +58,11 @@
 
         [self loadPieChartView];
         [self loadCalendarButton];
+        [self loadBackButton];
         [self loadDateLabel];
         [self loadChartStyleButtons];
         [self loadFSLineView];
-        // [self loadShareButton];
+        [self loadShareButton];
     }
     
     return self;
@@ -64,6 +71,11 @@
 - (void)setCurrentDate:(NSDate *)currentDate
 {
     _currentDate = currentDate;
+    
+    if (_backButton)
+    {
+        [_backButton rotationAccordingWithDate:currentDate];
+    }
     
     // 将内存之前的图标清除...
     _allowAnimation = NO;
@@ -127,12 +139,21 @@
 
 - (void)loadCalendarButton
 {
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(0, 0, 90, 70)
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(20, 18, 50, 44)
                                               withImage:@"日历.png"
                                         withSelectImage:@"日历.png"];
     
     [calendarButton addTarget:self action:@selector(clickCalendarButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:calendarButton];
+}
+
+- (void)loadBackButton
+{
+    _backButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
+                                 withImage:@"返回@2x.png"
+                           withSelectImage:@"返回@2x.png"];
+    [_backButton addTouchUpTarget:self action:@selector(clickBackButton:)];
+    [self addSubview:_backButton];
 }
 
 - (void)clickCalendarButton
@@ -147,6 +168,11 @@
     } dismissBlock:^(UIView *_view) {
         [CalendarHelper sharedInstance].calendarblock = nil;
     }];
+}
+
+- (void)clickBackButton:(UIButton *)button
+{
+    
 }
 
 - (void)loadDateLabel
@@ -170,16 +196,15 @@
 
 - (void)loadChartStyleButtons
 {
-    CGFloat offsetX = ((self.width - 60) - 90 * 3) / 2;
-    NSArray *images = @[@"足迹@2x.png", @"能量@2x.png", @"路程@2x.png"];
-    NSArray *selectImages = @[@"足迹-选中@2x.png", @"能量选中@2x.png", @"路程选中@2x.png"];
+    CGFloat offsetX = ((self.width - 60) - 100 * 3) / 2;
+    NSArray *images = @[@"脚印-小@2x.png", @"能量@2x.png", @"路程@2x.png"];
+    NSArray *selectImages = @[@"脚印-小选中@2x.png", @"能量选中@2x.png", @"路程选中@2x.png"];
     
     for (int i = 0; i < images.count; i++)
     {
-        UIButton *button = [UIButton simpleWithRect:CGRectMake(30 + (90 + offsetX) * i , _chartView.totalHeight - 15, 90, 89)
-                                          withImage:images[i]
-                                    withSelectImage:selectImages[i]];
+        GraphicButton *button = [[GraphicButton alloc] initWithFrame:CGRectMake(30 + (100 + offsetX) * i , _chartView.totalHeight + 10, 100, 40)];
         
+        button.imageArray =  @[images[i], selectImages[i]];
         button.tag = 2000 + i;
         [button addTarget:self action:@selector(clcikChartStyleButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
@@ -192,11 +217,30 @@
     }
 }
 
+- (void)updateContentForGraphicButtons:(PedometerModel *)model
+{
+    NSArray *array = @[@(model.totalSteps), @(model.totalCalories), @(model.totalDistance)];
+    for (int i = 0; i < 3; i++)
+    {
+        GraphicButton *button = (GraphicButton *)[self viewWithTag:2000 + i];
+        
+        if (i != 2)
+        {
+            button.subTitle = [NSString stringWithFormat:@"%@", array[i]];
+        }
+        else
+        {
+            NSInteger distance = [array[i] integerValue];
+            button.subTitle = [NSString stringWithFormat:@"%0.2fkm", distance / 100.0];
+        }
+    }
+}
+
 - (void)clcikChartStyleButton:(UIButton *)button
 {
     _lastButton.selected = NO;
     button.selected = YES;
-    _lastButton = button;
+    _lastButton = (GraphicButton *)button;
     
     [self updateContentFromClickChangeEvent];
 }
@@ -204,10 +248,14 @@
 - (void)loadFSLineView
 {
     CGFloat offsetY = _chartView.totalHeight + 50;
-    _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)];
+    _dashView = [[DashLineView alloc] initWithFrame:CGRectMake(10, offsetY + 15.0, self.width - 20, self.height - offsetY - 120)];
+    [_dashView setHoriAndVert:9 vert:10];
+    [self addSubview:_dashView];
     
+    _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)];
     _fsLineView.backgroundColor = [UIColor clearColor];
     [self addSubview:_fsLineView];
+    
     [self loadLineChart];
 }
 
@@ -226,6 +274,7 @@
     _lineChart.horizontalGridStep = (int)bottomTitles.count; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
+    _lineChart.increase = 6;
     _lineChart.labelForIndex = ^(NSUInteger item) {
         return bottomTitles[item];
     };
@@ -242,11 +291,8 @@
 
 - (void)loadShareButton
 {
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(self.width - 45, self.height - 99, 90/2.0, 70/2.0)
-                                              withImage:@"分享@2x.png"
-                                        withSelectImage:@"分享@2x.png"];
-    
-    [self addSubview:calendarButton];
+    SphereMenu *sphereMenu = [[ShareView sharedInstance] simpleWithPoint:CGPointMake(self.width - 22.5, self.height - 66)];
+    [self addSubview:sphereMenu];
 }
 
 #pragma mark --- PieChartViewDelegate ---
@@ -267,11 +313,11 @@
     {
         if (index <= 288 * (_percent * 0.01))
         {
-            return [UIColor greenColor];
+            return UIColorRGB(82, 182, 21);
         }
         else
         {
-            return [UIColor lightGrayColor];
+            return UIColorRGB(205, 205, 205);
         }
     }
     else
@@ -289,6 +335,7 @@
 {
     _model = model;
     
+    [self updateContentForGraphicButtons:model];
     [self updateContentFromClickChangeEvent];
     _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
     NSDate *date = [NSDate dateWithString:model.dateString];

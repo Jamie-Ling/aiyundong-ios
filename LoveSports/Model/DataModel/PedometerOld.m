@@ -8,6 +8,7 @@
 
 #import "PedometerOld.h"
 #import "BLTSendOld.h"
+#import "PedometerHelper.h"
 
 @implementation PedometerOld
 
@@ -42,9 +43,7 @@
     PedometerModel *currentModel = [PedometerModel searchSingleWithWhere:where orderBy:nil];
     if (!currentModel)
     {
-        currentModel = [PedometerModel simpleInitWithDate:date];
-        [PedometerOld creatEmptyDataArrayWithModel:currentModel];
-        [currentModel saveToDB];
+        currentModel = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
     }
     
     // 第一个包
@@ -124,7 +123,7 @@
             if (!currentModel)
             {
                 currentModel = [PedometerModel simpleInitWithDate:nextDate];
-                [PedometerOld creatEmptyDataArrayWithModel:currentModel];
+                [PedometerHelper creatEmptyDataArrayWithModel:currentModel];
             }
         }
         
@@ -140,25 +139,6 @@
     }
 }
 
-// 为模型创建空值的对象
-+ (void)creatEmptyDataArrayWithModel:(PedometerModel *)model
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 48; i++)
-    {
-        [array addObject:@(0)];
-    }
-    model.detailSteps = [NSArray arrayWithArray:array];
-    model.detailCalories = [NSArray arrayWithArray:array];
-    model.detailDistans = [NSArray arrayWithArray:array];
-    
-    array = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 288; i++)
-    {
-        [array addObject:@(0)];
-    }
-    model.detailSleeps = [NSArray arrayWithArray:array];
-}
 
 // 将所有的值放入数组中.
 + (void)updateDataForArray:(PedometerModel *)model

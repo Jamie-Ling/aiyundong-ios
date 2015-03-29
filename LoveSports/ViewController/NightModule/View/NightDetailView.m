@@ -185,12 +185,11 @@
     [_chartView updateContentForViewWithModel:model withState:PieChartViewShowSleep withReloadBlock:nil];
     [self startTimer];
     
+    /*
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    
     if (model.detailSleeps && model.detailSleeps.count > 0)
     {
-        /*
-         for (int i = 0; i < model.detailSleeps.count - 5; i += 6)
+         for (int i = 0; i < model.detailSleeps.count; i++)
          {
          NSInteger number = [model.detailSleeps[i] intValue]     + [model.detailSleeps[i + 1] intValue] +
          [model.detailSleeps[i + 2] intValue] + [model.detailSleeps[i + 3] intValue] +
@@ -198,28 +197,21 @@
          [array addObject:@(18 - number)];
          }
          
-         for (NSInteger i = array.count; i < 49; i++)
+         for (NSInteger i = array.count; i < 288; i++)
          {
          [array addObject:@(0)];
          }
-         */
-        
-        for (int i = 0; i < model.detailSteps.count; i++)
-        {
-            
-        }
     }
     else
     {
-        /*
-         for (int i = 0; i < 49; i++)
+         for (int i = 0; i < 288; i++)
          {
-         [array addObject:@(0)];
+             [array addObject:@(0)];
          }
-         */
     }
+     */
     
-    [_showView updateContentForView:array];
+    [_showView updateContentForView:model.detailSleeps withStart:model.sleepTodayStartTime withEnd:model.sleepTodayEndTime];
 }
 
 - (void)updateContentForLabel:(PedometerModel *)model

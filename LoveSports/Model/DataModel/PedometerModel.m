@@ -110,6 +110,8 @@
         _targetDistance = 0.0001;
         _targetSleep = 0.0001;
         _sleepNextStartTime = 144;
+        _sleepTodayStartTime = 144;
+        _sleepTodayEndTime = 144;
     }
     
     return self;

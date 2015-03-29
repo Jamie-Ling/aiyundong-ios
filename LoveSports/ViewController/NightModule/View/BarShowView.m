@@ -34,14 +34,14 @@
 
 - (void)loadLabels
 {
-    _startLabel = [self addSubLabelWithRect:CGRectMake(10, self.height - 30, 60, 24)
+    _startLabel = [self addSubLabelWithRect:CGRectMake(0, self.height - 14, 60, 14)
                               withAlignment:NSTextAlignmentCenter
                                withFontSize:14.0
                                    withText:@"23:34"
                               withTextColor:[UIColor lightGrayColor]
                                     withTag:999];
     
-    _endLabel = [self addSubLabelWithRect:CGRectMake(self.width - 70, self.height - 30, 60, 24)
+    _endLabel = [self addSubLabelWithRect:CGRectMake(self.width - 60, self.height - 14, 60, 14)
                             withAlignment:NSTextAlignmentCenter
                              withFontSize:14.0
                                  withText:@"07:34"
@@ -83,9 +83,25 @@
     [self addSubview:_barView];
 }
 
-- (void)updateContentForView:(NSArray *)array
+- (void)updateContentForView:(NSArray *)array withStart:(NSInteger)start withEnd:(NSInteger)end
 {
-    _barView.array = array;
+    NSString *startString = [NSString stringWithFormat:@"%02ld:%02ld", 12 + (start) * 5 / 60, (start) * 5 % 60];
+    if (start == 144)
+    {
+        startString = @"00:00";
+    }
+    NSString *endString = [NSString stringWithFormat:@"%02ld:%02ld", (end) * 5 / 60 - 12, (end) * 5 % 60];
+    _startLabel.text = startString;
+    _endLabel.text = endString;
+
+    if (array.count >= end)
+    {
+        _barView.array = array; //[array subarrayWithRange:NSMakeRange(start, end - start)];
+    }
+    else
+    {
+        _barView.array = nil;
+    }
 }
 
 @end

@@ -10,6 +10,6 @@
 
 @interface BarShowView : UIView
 
-- (void)updateContentForView:(NSArray *)array;
+- (void)updateContentForView:(NSArray *)array withStart:(NSInteger)start withEnd:(NSInteger)end;
 
 @end

@@ -22,8 +22,7 @@ DEF_SINGLETON(PedometerHelper)
     
     if (!model)
     {
-        model = [PedometerModel simpleInitWithDate:date];
-        [model saveToDB];
+        model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
     }
     
     return model;
@@ -84,17 +83,40 @@ DEF_SINGLETON(PedometerHelper)
     }
 }
 
+// 为模型创建空值的对象
++ (void)creatEmptyDataArrayWithModel:(PedometerModel *)model
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 48; i++)
+    {
+        [array addObject:@(0)];
+    }
+    model.detailSteps = [NSArray arrayWithArray:array];
+    model.detailCalories = [NSArray arrayWithArray:array];
+    model.detailDistans = [NSArray arrayWithArray:array];
+    
+    array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 288; i++)
+    {
+        [array addObject:@(0)];
+    }
+    model.detailSleeps = [NSArray arrayWithArray:array];
+}
+
 // 保存空模型到数据库.
-+ (void)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date
++ (PedometerModel *)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date
 {
     PedometerModel *model = [PedometerModel simpleInitWithDate:date];
     
     if (![date isSameWithDate:[NSDate date]])
     {
+        [PedometerHelper creatEmptyDataArrayWithModel:model];
         model.isSaveAllDay = YES;
     }
     
     [model saveToDB];
+    
+    return model;
 }
 
 // 实时传输更新ui界面

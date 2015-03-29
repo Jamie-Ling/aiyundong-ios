@@ -26,12 +26,9 @@
 
 - (void)setArray:(NSArray *)array
 {
-    if (array)
-    {
-        _array = array;
-        
-        [self setNeedsDisplay];
-    }
+    _array = array;
+    
+    [self setNeedsDisplay];
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -44,18 +41,37 @@
     
     CGFloat width = 0;
     CGContextRef con = UIGraphicsGetCurrentContext();
+    CGFloat interval = (self.frame.size.width - 40) / _array.count;
     for (NSNumber *number in _array)
     {
         CGMutablePathRef path = CGPathCreateMutable();
-        CGRect rectAngle = CGRectMake(width, self.frame.size.height * (1 - [self getHeightWithIndex:[number integerValue]]), self.frame.size.width / 49, self.frame.size.height * [self getHeightWithIndex:[number integerValue]]);
+        CGRect rectAngle = CGRectMake(width + 20, self.height * (1 - [self getHeightWithIndex:[number integerValue]]), interval, self.height * [self getHeightWithIndex:[number integerValue]]);
         CGPathAddRect(path, NULL, rectAngle);
         CGContextAddPath(con, path);
         [[self getColorWithIndex:[number integerValue]] setFill];
         CGContextSetLineWidth(con, 0.0);
         CGContextDrawPath(con, kCGPathFillStroke);
         CGPathRelease(path);
-        width += self.frame.size.width / 49;
+        width += interval;
     }
+    
+    /*
+    NSArray *array = @[[NSValue valueWithCGRect:CGRectMake(0, self.height * 0.5, 20, self.height * 0.5)],
+                       [NSValue valueWithCGRect:CGRectMake(self.width - 20, self.height * 0.5, 20, self.height * 0.5)]];
+    for (int i = 0; i < array.count; i++)
+    {
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        NSValue *value = array[i];
+        CGRect rectAngle = [value CGRectValue];
+        CGPathAddRect(path, NULL, rectAngle);
+        CGContextAddPath(con, path);
+        [UIColor blackColor];
+        CGContextSetLineWidth(con, 0.0);
+        CGContextDrawPath(con, kCGPathFillStroke);
+        CGPathRelease(path);
+    }
+     */
 }
 
 - (UIColor *)getColorWithIndex:(NSInteger)index
@@ -107,7 +123,7 @@
         return 10;
     }
     
-    return 0;
+    return 5;
 }
 
 @end

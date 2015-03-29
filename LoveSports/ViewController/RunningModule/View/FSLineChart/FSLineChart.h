@@ -100,6 +100,7 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 
 @property (nonatomic, strong) NSArray *titlesArray;
 @property (nonatomic, assign) FSLineChartShowType showType;
+@property (nonatomic, assign) int increase;
 
 // Set the actual data for the chart, and then render it to the view.
 - (void)setChartData:(NSArray *)chartData;

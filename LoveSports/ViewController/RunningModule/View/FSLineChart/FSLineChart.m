@@ -78,7 +78,7 @@
         int q = (int)_data.count / _horizontalGridStep;
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
         
-        for(int i = 0;i < _horizontalGridStep; i++)
+        for(int i = 0;i < _horizontalGridStep; i = i + _increase)
         {
             NSInteger itemIndex = q * i;
             if(itemIndex >= _data.count)
@@ -97,11 +97,11 @@
                                          attributes:@{NSFontAttributeName:_indexLabelFont}
                                             context:nil].size.width;
             
-            UILabel *label = (UILabel *)[self viewWithTag:666 + i];
+            UILabel *label = (UILabel *)[self viewWithTag:66666 + i];
             if (!label)
             {
-                label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 8, width + 2, 28)];
-                label.tag = 666 + i;
+                label = [[UILabel alloc] initWithFrame:CGRectMake(p.x - width / 2, p.y + 5, width + 2, 28)];
+                label.tag = 66666 + i;
                 label.font = _indexLabelFont;
                 label.backgroundColor = [UIColor clearColor];
                 [self addSubview:label];
@@ -148,10 +148,12 @@
                 }
             }
             
+            /*
             if (_hiddenBlock)
             {
                 label.hidden = _hiddenBlock(i);
             }
+             */
         }
     }
     
@@ -196,9 +198,9 @@
     // draw grid
     if(_drawInnerGrid)
     {
-        for(int i = 0; i < _horizontalGridStep; i++)
+        for(int i = 0; i < _horizontalGridStep; i = i + _increase)
         {
-            if (_hiddenBlock && !_hiddenBlock(i))
+            // if (_hiddenBlock && !_hiddenBlock(i))
             {
                 CGContextSetStrokeColorWithColor(ctx, [_innerGridColor CGColor]);
                 CGContextSetLineWidth(ctx, 1);
@@ -341,6 +343,7 @@
     _dataPointRadius = 1;
     _dataPointColor = _color;
     _dataPointBackgroundColor = _color;
+    _increase = 1;
     
     // Labels attributes
     _indexLabelBackgroundColor = [UIColor clearColor];

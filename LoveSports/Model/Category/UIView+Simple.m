@@ -379,6 +379,15 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
     return button;
 }
 
+- (void)rotationAccordingWithDate:(NSDate *)date
+{
+    NSInteger days = abs((int)[date distanceInDaysToDate:[NSDate date]]);
+    CGFloat scale = -M_2_PI * 0.25 * (days > 6 ? 6 : days);
+    
+    self.transform = CGAffineTransformIdentity;
+    self.transform = CGAffineTransformMakeRotation(scale);
+}
+
 @end
 
 @implementation UILabel (Simple)

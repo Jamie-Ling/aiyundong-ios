@@ -107,6 +107,8 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector);
              withSelectTitle:(NSString *)selTitle
                    withColor:(UIColor *)color;
 
+- (void)rotationAccordingWithDate:(NSDate *)date;
+
 @end
 
 @interface UILabel (Simple)

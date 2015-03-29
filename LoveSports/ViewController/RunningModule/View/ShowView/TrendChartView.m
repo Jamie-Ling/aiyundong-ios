@@ -13,8 +13,9 @@
 #import "CalendarHomeView.h"
 #import "PedometerModel.h"
 #import "CalendarHelper.h"
+#import "SphereMenu.h"
 
-@interface TrendChartView ()
+@interface TrendChartView () <SphereMenuDelegate>
 
 @property (nonatomic, strong) FSLineChart *lineChart;
 @property (nonatomic, strong) UILabel *weekLabel;
@@ -68,7 +69,7 @@
 
 - (void)loadCalendarButton
 {
-    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(15, 70, 45, 35)
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(20, 18, 45, 35)
                                               withImage:@"日历.png"
                                         withSelectImage:@"日历.png"];
     
@@ -124,9 +125,9 @@
 
 - (void)loadLandscapeButton
 {
-    UIButton *landscapeButton = [UIButton simpleWithRect:CGRectMake(self.width - 60, 70, 45, 35)
-                                               withImage:@"竖屏@2x.png"
-                                         withSelectImage:@"竖屏@2x.png"];
+    UIButton *landscapeButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
+                                               withImage:@"旋转屏幕@2x.png"
+                                         withSelectImage:@"旋转屏幕@2x.png"];
     
     [landscapeButton addTarget:self action:@selector(landscapeViewData) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:landscapeButton];
