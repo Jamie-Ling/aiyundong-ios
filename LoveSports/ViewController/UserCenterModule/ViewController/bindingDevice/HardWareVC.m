@@ -146,7 +146,7 @@
                                         withSelectTitle:@"确认"
                                               withColor:[UIColor greenColor]];
             [button addTarget:self action:@selector(editDeviceName:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:button];
+            // [self addSubview:button];
             
             _textFiled = [UITextField simpleInit:CGRectMake(100, 15 + i * (80) + (75 - 44)/2.0, width, 44)
                                        withImage:nil

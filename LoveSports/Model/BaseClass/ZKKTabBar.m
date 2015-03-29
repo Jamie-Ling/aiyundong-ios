@@ -13,7 +13,7 @@
 @interface ZKKTabBar ()
 
 @property (nonatomic, strong) UIButton *lastButton;
-
+@property (nonatomic, strong) UIView *signView;
 @end
 
 @implementation ZKKTabBar
@@ -25,10 +25,10 @@
     {
         self.backgroundColor = [UIColor clearColor];
         _backgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _backgroundView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_backgroundView];
         
         self.itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-        
         for (int i = 0; i < items.count; i++)
         {
             UIButton *button = items[i];
@@ -43,10 +43,29 @@
                 _lastButton = button;
                 button.selected = YES;
             }
+            else if (i == 2 || i == 3 || i == 4)
+            {
+                button.userInteractionEnabled = NO;
+            }
         }
+        
+        [self loadLineViewAndSignView];
     }
     
     return self;
+}
+
+- (void)loadLineViewAndSignView
+{
+    [_backgroundView addSubViewWithRect:CGRectMake(0, _backgroundView.height - 1, _backgroundView.width, 1)
+                              withColor:UIColorRGB(223, 223, 223)
+                              withImage:nil];
+    
+    _signView = [_backgroundView addSubViewWithRect:CGRectMake((_lastButton.width - 45) / 2,
+                                                               _backgroundView.height - 3,
+                                                               45, 3)
+                                          withColor:UIColorRGB(238, 10, 0)
+                                          withImage:nil];
 }
 
 - (void)tabBarButtonClick:(UIButton *)sender
@@ -71,6 +90,11 @@
     UIButton *btn = [self.itemsArray objectAtIndex:index];
     btn.selected = YES;
     _lastButton = btn;
+    
+    if (index != 5)
+    {
+        _signView.center = CGPointMake(_lastButton.center.x, _signView.center.y);
+    }
     
     if ([_delegate respondsToSelector:@selector(tabBar:didSelectIndex:)])
     {

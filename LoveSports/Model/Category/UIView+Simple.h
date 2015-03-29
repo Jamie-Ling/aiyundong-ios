@@ -15,6 +15,15 @@
 #import <UIKit/UIKit.h>
 typedef void(^UIViewSimpleBlock)(UIView *aView, id object);
 
+CGRect FitScreenRect(CGRect ip4, CGRect ip5, CGRect ip6, CGRect ip6p, CGRect ipad);
+CGRect FitSimpleRect(CGRect ip, CGRect ipad);
+
+id FitScreenString(id ip4, id ip5, id ip6, id ip6p, id ipad);
+id FitSimpleString(id ip, id ipad);
+
+CGFloat FitScreenNumber(CGFloat ip4, CGFloat ip5, CGFloat ip6, CGFloat ip6p, CGFloat ipad);
+CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad);
+
 @interface UIView (Simple)
 
 @property (nonatomic, assign) CGFloat x;

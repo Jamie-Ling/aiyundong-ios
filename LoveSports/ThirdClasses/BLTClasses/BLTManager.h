@@ -35,6 +35,8 @@ typedef void(^BLTManagerElecQuantity)();
 @property (nonatomic, strong) BLTManagerFail failBlock;
 @property (nonatomic, strong) BLTManagerElecQuantity elecQuantityBlock;
 
+@property (nonatomic, strong) NSArray *containNames;
+
 @property (nonatomic, assign) BLTManagerConnectState connectState;
 
 @property (nonatomic, assign) BOOL isUpdateing;

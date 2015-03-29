@@ -8,8 +8,128 @@
 
 #import "UIView+Simple.h"
 
-@implementation UIView (Simple)
+CGRect FitScreenRect(CGRect ip4, CGRect ip5, CGRect ip6, CGRect ip6p, CGRect ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else if (LS_IpFourDevice)
+    {
+        return ip4;
+    }
+    else if (LS_IpFiveDevice)
+    {
+        return ip5;
+    }
+    else if (LS_IpSixDevice)
+    {
+        return ip6;
+    }
+    else if (LS_IpSixPDevice)
+    {
+        return ip6p;
+    }
+    else
+    {
+        return ipad;
+    }
+}
 
+CGRect FitSimpleRect(CGRect ip, CGRect ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else
+    {
+        return ip;
+    }
+}
+
+id FitScreenString(id ip4, id ip5, id ip6, id ip6p, id ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else if (LS_IpFourDevice)
+    {
+        return ip4;
+    }
+    else if (LS_IpFiveDevice)
+    {
+        return ip5;
+    }
+    else if (LS_IpSixDevice)
+    {
+        return ip6;
+    }
+    else if (LS_IpSixPDevice)
+    {
+        return ip6p;
+    }
+    else
+    {
+        return ipad;
+    }
+}
+
+id FitSimpleString(id ip, id ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else
+    {
+        return ip;
+    }
+}
+
+CGFloat FitScreenNumber(CGFloat ip4, CGFloat ip5, CGFloat ip6, CGFloat ip6p, CGFloat ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else if (LS_IpFourDevice)
+    {
+        return ip4;
+    }
+    else if (LS_IpFiveDevice)
+    {
+        return ip5;
+    }
+    else if (LS_IpSixDevice)
+    {
+        return ip6;
+    }
+    else if (LS_IpSixPDevice)
+    {
+        return ip6p;
+    }
+    else
+    {
+        return ipad;
+    }
+    
+}
+
+CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad)
+{
+    if (LS_PadDevice)
+    {
+        return ipad;
+    }
+    else
+    {
+        return ip;
+    }
+}
+
+@implementation UIView (Simple)
 - (void)setImage:(UIImage *)image
 {
     self.layer.contents = (id)image.CGImage;

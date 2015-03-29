@@ -206,6 +206,19 @@
 		F430E44E1AC798F1004E7130 /* SleepTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E44D1AC798F1004E7130 /* SleepTimeView.m */; };
 		F430E4521AC7A51E004E7130 /* TrendStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E4511AC7A51E004E7130 /* TrendStepView.m */; };
 		F430E4551AC7AC39004E7130 /* TrendTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E4541AC7AC39004E7130 /* TrendTypeView.m */; };
+		F430E4611AC7C9E0004E7130 /* 顶部四格-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E4561AC7C9E0004E7130 /* 顶部四格-1@2x.png */; };
+		F430E4621AC7C9E0004E7130 /* 顶部四格-1选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E4571AC7C9E0004E7130 /* 顶部四格-1选中@2x.png */; };
+		F430E4631AC7C9E0004E7130 /* 顶部四格-2-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E4581AC7C9E0004E7130 /* 顶部四格-2-选中@2x.png */; };
+		F430E4641AC7C9E0004E7130 /* 顶部四格-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E4591AC7C9E0004E7130 /* 顶部四格-2@2x.png */; };
+		F430E4651AC7C9E0004E7130 /* 顶部四格-3-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45A1AC7C9E0004E7130 /* 顶部四格-3-选中@2x.png */; };
+		F430E4661AC7C9E0004E7130 /* 顶部四格-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45B1AC7C9E0004E7130 /* 顶部四格-3@2x.png */; };
+		F430E4671AC7C9E0004E7130 /* 顶部四格-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45C1AC7C9E0004E7130 /* 顶部四格-4@2x.png */; };
+		F430E4681AC7C9E0004E7130 /* 顶部四格-4选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45D1AC7C9E0004E7130 /* 顶部四格-4选中@2x.png */; };
+		F430E4691AC7C9E0004E7130 /* 顶部四格-5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45E1AC7C9E0004E7130 /* 顶部四格-5@2x.png */; };
+		F430E46A1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E45F1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png */; };
+		F430E46B1AC7C9E0004E7130 /* 默认头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F430E4601AC7C9E0004E7130 /* 默认头像@2x.png */; };
+		F430E46D1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F430E46C1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf */; };
+		F430E4701AC80A42004E7130 /* LoginBindingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E46F1AC80A42004E7130 /* LoginBindingVC.m */; };
 		F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F432BE511A80F8BE0058F87D /* LandscapeVC.m */; };
 		F43979ED1AB550680033B7BB /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F43979D51AB550670033B7BB /* MJRefresh.bundle */; };
 		F43979EE1AB550680033B7BB /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F43979D81AB550670033B7BB /* MJRefreshComponent.m */; };
@@ -244,10 +257,6 @@
 		F470E7AB1A7FAD680009E649 /* 月@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76E1A7FAD680009E649 /* 月@2x.png */; };
 		F470E7AC1A7FAD680009E649 /* 月选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E76F1A7FAD680009E649 /* 月选中@2x.png */; };
 		F470E7AD1A7FAD680009E649 /* 竖屏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7701A7FAD680009E649 /* 竖屏@2x.png */; };
-		F470E7B41A7FAD680009E649 /* 顶部四格1.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7771A7FAD680009E649 /* 顶部四格1.png */; };
-		F470E7B51A7FAD680009E649 /* 顶部四格2.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7781A7FAD680009E649 /* 顶部四格2.png */; };
-		F470E7B61A7FAD680009E649 /* 顶部四格3.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7791A7FAD680009E649 /* 顶部四格3.png */; };
-		F470E7B71A7FAD680009E649 /* 顶部四格4.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E77A1A7FAD680009E649 /* 顶部四格4.png */; };
 		F470E7B81A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E77C1A7FAD680009E649 /* background.jpg */; };
 		F470E7B91A7FAD680009E649 /* t3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E77D1A7FAD680009E649 /* t3.jpg */; };
 		F470E7BA1A7FAD680009E649 /* 分享.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E77E1A7FAD680009E649 /* 分享.png */; };
@@ -693,6 +702,20 @@
 		F430E4511AC7A51E004E7130 /* TrendStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendStepView.m; sourceTree = "<group>"; };
 		F430E4531AC7AC39004E7130 /* TrendTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendTypeView.h; sourceTree = "<group>"; };
 		F430E4541AC7AC39004E7130 /* TrendTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendTypeView.m; sourceTree = "<group>"; };
+		F430E4561AC7C9E0004E7130 /* 顶部四格-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-1@2x.png"; sourceTree = "<group>"; };
+		F430E4571AC7C9E0004E7130 /* 顶部四格-1选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-1选中@2x.png"; sourceTree = "<group>"; };
+		F430E4581AC7C9E0004E7130 /* 顶部四格-2-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-2-选中@2x.png"; sourceTree = "<group>"; };
+		F430E4591AC7C9E0004E7130 /* 顶部四格-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-2@2x.png"; sourceTree = "<group>"; };
+		F430E45A1AC7C9E0004E7130 /* 顶部四格-3-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-3-选中@2x.png"; sourceTree = "<group>"; };
+		F430E45B1AC7C9E0004E7130 /* 顶部四格-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-3@2x.png"; sourceTree = "<group>"; };
+		F430E45C1AC7C9E0004E7130 /* 顶部四格-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-4@2x.png"; sourceTree = "<group>"; };
+		F430E45D1AC7C9E0004E7130 /* 顶部四格-4选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-4选中@2x.png"; sourceTree = "<group>"; };
+		F430E45E1AC7C9E0004E7130 /* 顶部四格-5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-5@2x.png"; sourceTree = "<group>"; };
+		F430E45F1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格-5选中@2x.png"; sourceTree = "<group>"; };
+		F430E4601AC7C9E0004E7130 /* 默认头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "默认头像@2x.png"; sourceTree = "<group>"; };
+		F430E46C1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ITC Avant Garde Book SWA.ttf"; sourceTree = "<group>"; };
+		F430E46E1AC80A42004E7130 /* LoginBindingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginBindingVC.h; sourceTree = "<group>"; };
+		F430E46F1AC80A42004E7130 /* LoginBindingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginBindingVC.m; sourceTree = "<group>"; };
 		F432BE501A80F8BE0058F87D /* LandscapeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeVC.h; sourceTree = "<group>"; };
 		F432BE511A80F8BE0058F87D /* LandscapeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeVC.m; sourceTree = "<group>"; };
 		F43979D51AB550670033B7BB /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
@@ -755,10 +778,6 @@
 		F470E76E1A7FAD680009E649 /* 月@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月@2x.png"; sourceTree = "<group>"; };
 		F470E76F1A7FAD680009E649 /* 月选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "月选中@2x.png"; sourceTree = "<group>"; };
 		F470E7701A7FAD680009E649 /* 竖屏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏@2x.png"; sourceTree = "<group>"; };
-		F470E7771A7FAD680009E649 /* 顶部四格1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格1.png"; sourceTree = "<group>"; };
-		F470E7781A7FAD680009E649 /* 顶部四格2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格2.png"; sourceTree = "<group>"; };
-		F470E7791A7FAD680009E649 /* 顶部四格3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格3.png"; sourceTree = "<group>"; };
-		F470E77A1A7FAD680009E649 /* 顶部四格4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "顶部四格4.png"; sourceTree = "<group>"; };
 		F470E77C1A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E77D1A7FAD680009E649 /* t3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t3.jpg; sourceTree = "<group>"; };
 		F470E77E1A7FAD680009E649 /* 分享.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分享.png"; sourceTree = "<group>"; };
@@ -1722,6 +1741,8 @@
 			children = (
 				69FD41E31A7FCC2C0023B74D /* BindIngDeviceViewController.h */,
 				69FD41E41A7FCC2C0023B74D /* BindIngDeviceViewController.m */,
+				F430E46E1AC80A42004E7130 /* LoginBindingVC.h */,
+				F430E46F1AC80A42004E7130 /* LoginBindingVC.m */,
 				69FD41E51A7FCC2C0023B74D /* HardWareVC.h */,
 				69FD41E61A7FCC2C0023B74D /* HardWareVC.m */,
 			);
@@ -1891,6 +1912,18 @@
 		F470E7631A7FAD680009E649 /* t3 */ = {
 			isa = PBXGroup;
 			children = (
+				F430E46C1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf */,
+				F430E4561AC7C9E0004E7130 /* 顶部四格-1@2x.png */,
+				F430E4571AC7C9E0004E7130 /* 顶部四格-1选中@2x.png */,
+				F430E4581AC7C9E0004E7130 /* 顶部四格-2-选中@2x.png */,
+				F430E4591AC7C9E0004E7130 /* 顶部四格-2@2x.png */,
+				F430E45A1AC7C9E0004E7130 /* 顶部四格-3-选中@2x.png */,
+				F430E45B1AC7C9E0004E7130 /* 顶部四格-3@2x.png */,
+				F430E45C1AC7C9E0004E7130 /* 顶部四格-4@2x.png */,
+				F430E45D1AC7C9E0004E7130 /* 顶部四格-4选中@2x.png */,
+				F430E45E1AC7C9E0004E7130 /* 顶部四格-5@2x.png */,
+				F430E45F1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png */,
+				F430E4601AC7C9E0004E7130 /* 默认头像@2x.png */,
 				F4C4C8361AC6E01C005D511A /* icon-facebook@2x.png */,
 				F4C4C8381AC6E028005D511A /* icon-twitter@2x.png */,
 				F4C4C8341AC6E013005D511A /* icon-email@2x.png */,
@@ -1907,10 +1940,6 @@
 				F470E76E1A7FAD680009E649 /* 月@2x.png */,
 				F470E76F1A7FAD680009E649 /* 月选中@2x.png */,
 				F470E7701A7FAD680009E649 /* 竖屏@2x.png */,
-				F470E7771A7FAD680009E649 /* 顶部四格1.png */,
-				F470E7781A7FAD680009E649 /* 顶部四格2.png */,
-				F470E7791A7FAD680009E649 /* 顶部四格3.png */,
-				F470E77A1A7FAD680009E649 /* 顶部四格4.png */,
 				F4C4C8201AC6D426005D511A /* 脚印-小@2x.png */,
 				F4C4C8211AC6D426005D511A /* 脚印-小选中@2x.png */,
 				F4C4C8221AC6D426005D511A /* 路程@2x.png */,
@@ -2546,10 +2575,9 @@
 				69EFC1E41A737ABD00B5BC53 /* 距离.png in Resources */,
 				F4C4C8371AC6E01C005D511A /* icon-facebook@2x.png in Resources */,
 				69EFC1F91A737ABD00B5BC53 /* login_background@2x.jpg in Resources */,
-				F470E7B71A7FAD680009E649 /* 顶部四格4.png in Resources */,
+				F430E4681AC7C9E0004E7130 /* 顶部四格-4选中@2x.png in Resources */,
 				6955492D1A8CF4D900423EA9 /* 右箭头@2x.png in Resources */,
 				699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */,
-				F470E7B61A7FAD680009E649 /* 顶部四格3.png in Resources */,
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
 				69EFC1DE1A737ABD00B5BC53 /* 分享.png in Resources */,
@@ -2557,6 +2585,7 @@
 				F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */,
 				69EFC1E61A737ABD00B5BC53 /* 顶部四格1@2x.png in Resources */,
 				F470E7CD1A7FAD680009E649 /* 顶部四格3.png in Resources */,
+				F430E46A1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png in Resources */,
 				6970ED141A826974009572D5 /* 周选中1.png in Resources */,
 				6970ED161A826A2D009572D5 /* 休选中.png in Resources */,
 				69EFC2031A737ABD00B5BC53 /* 1_06.png in Resources */,
@@ -2576,6 +2605,7 @@
 				6955493B1A8CF4D900423EA9 /* 电池电量-满@2x.png in Resources */,
 				69EFC1FD1A737ABD00B5BC53 /* 微博@2x.png in Resources */,
 				F4C4C8281AC6D426005D511A /* 路程@2x.png in Resources */,
+				F430E4661AC7C9E0004E7130 /* 顶部四格-3@2x.png in Resources */,
 				69EFC1DC1A737ABD00B5BC53 /* home.jpg in Resources */,
 				695549501A8D012B00423EA9 /* 加号.png in Resources */,
 				6955492F1A8CF4D900423EA9 /* 头像@2x.png in Resources */,
@@ -2592,11 +2622,9 @@
 				695549541A8D012B00423EA9 /* 左箭头.png in Resources */,
 				69EFC2041A737ABD00B5BC53 /* 1_07.png in Resources */,
 				F470E7C11A7FAD680009E649 /* 更多.png in Resources */,
-				F470E7B51A7FAD680009E649 /* 顶部四格2.png in Resources */,
 				69EFC2291A7397C600B5BC53 /* battery@2x.png in Resources */,
 				F470E7A71A7FAD680009E649 /* 日@2x.png in Resources */,
 				69EFC1EA1A737ABD00B5BC53 /* bg1@2x.png in Resources */,
-				F470E7B41A7FAD680009E649 /* 顶部四格1.png in Resources */,
 				F470E7C61A7FAD680009E649 /* 能量选中_big@2x.png in Resources */,
 				695549521A8D012B00423EA9 /* 图2.png in Resources */,
 				69EFC2001A737ABD00B5BC53 /* 1_03.png in Resources */,
@@ -2610,6 +2638,7 @@
 				F470E7BC1A7FAD680009E649 /* 周选中.png in Resources */,
 				F470E7AC1A7FAD680009E649 /* 月选中@2x.png in Resources */,
 				F470E7C01A7FAD680009E649 /* 日选中.png in Resources */,
+				F430E4621AC7C9E0004E7130 /* 顶部四格-1选中@2x.png in Resources */,
 				69FD42111A7FCC2C0023B74D /* CitiesList.plist in Resources */,
 				F470E7D71A7FAD680009E649 /* 闹钟.png in Resources */,
 				69EFC1DF1A737ABD00B5BC53 /* 卡路里.png in Resources */,
@@ -2620,6 +2649,7 @@
 				6955493A1A8CF4D900423EA9 /* 电池电量-低@2x.png in Resources */,
 				69EFC21C1A738E4A00B5BC53 /* testImage.jpg in Resources */,
 				F470E7C21A7FAD680009E649 /* 月.png in Resources */,
+				F430E46D1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf in Resources */,
 				F4C4C8391AC6E028005D511A /* icon-twitter@2x.png in Resources */,
 				F4C4C82A1AC6D426005D511A /* 能量@2x.png in Resources */,
 				F470E7A51A7FAD680009E649 /* 周选中@2x.png in Resources */,
@@ -2630,14 +2660,17 @@
 				6955494F1A8D012B00423EA9 /* 背景.png in Resources */,
 				69EFC1E51A737ABD00B5BC53 /* 返回.png in Resources */,
 				F470E7F61A7FB7660009E649 /* chack.png in Resources */,
+				F430E4671AC7C9E0004E7130 /* 顶部四格-4@2x.png in Resources */,
 				69EFC2791A73DAAE00B5BC53 /* btn_bg@2x.png in Resources */,
 				69EFC1EB1A737ABD00B5BC53 /* bg2@2x.png in Resources */,
 				69EFC1F51A737ABD00B5BC53 /* title3@2x.png in Resources */,
 				F470E7C81A7FAD680009E649 /* 足迹@2x.png in Resources */,
+				F430E46B1AC7C9E0004E7130 /* 默认头像@2x.png in Resources */,
 				695549511A8D012B00423EA9 /* 图1.png in Resources */,
 				69EFC1FF1A737ABD00B5BC53 /* 1_02.png in Resources */,
 				695549381A8CF4D900423EA9 /* 爱运动商城@2x.png in Resources */,
 				F470E7C51A7FAD680009E649 /* 能量_big@2x.png in Resources */,
+				F430E4641AC7C9E0004E7130 /* 顶部四格-2@2x.png in Resources */,
 				69EFC1FE1A737ABD00B5BC53 /* 1_01.png in Resources */,
 				69EFC2011A737ABD00B5BC53 /* 1_04.png in Resources */,
 				F470E7D01A7FAD680009E649 /* T4副本.jpg in Resources */,
@@ -2646,7 +2679,9 @@
 				69EFC1F01A737ABD00B5BC53 /* icon2@2x.png in Resources */,
 				69EFC2B91A75EB0A00B5BC53 /* 添加按钮@2x.png in Resources */,
 				F470E7D51A7FAD680009E649 /* 睡觉2.png in Resources */,
+				F430E4651AC7C9E0004E7130 /* 顶部四格-3-选中@2x.png in Resources */,
 				69EFC2061A737ABD00B5BC53 /* 1_09.png in Resources */,
+				F430E4631AC7C9E0004E7130 /* 顶部四格-2-选中@2x.png in Resources */,
 				69EFC1E91A737ABD00B5BC53 /* 顶部四格4@2x.png in Resources */,
 				F45870521AB289C2005A72CA /* 日历@2x.png in Resources */,
 				6955492C1A8CF4D900423EA9 /* 关于爱运动商城@2x.png in Resources */,
@@ -2677,10 +2712,12 @@
 				69EFC1FA1A737ABD00B5BC53 /* Login.jpg in Resources */,
 				F4B693561A6F401A00B42395 /* IQKeyboardManager.bundle in Resources */,
 				F4B692FF1A6F3EBC00B42395 /* Images.xcassets in Resources */,
+				F430E4611AC7C9E0004E7130 /* 顶部四格-1@2x.png in Resources */,
 				F4C4C8261AC6D426005D511A /* 脚印-小@2x.png in Resources */,
 				69EFC2281A7397C600B5BC53 /* battery.png in Resources */,
 				69EFC2101A737ABD00B5BC53 /* 1_19.png in Resources */,
 				F4C4C81C1AC6C920005D511A /* 分享@2x.png in Resources */,
+				F430E4691AC7C9E0004E7130 /* 顶部四格-5@2x.png in Resources */,
 				69EFC27C1A73DD9100B5BC53 /* lock@2x.png in Resources */,
 				F470E7D11A7FAD680009E649 /* 分享.png in Resources */,
 				69EFC1F41A737ABD00B5BC53 /* title2@2x.png in Resources */,
@@ -2711,6 +2748,7 @@
 			files = (
 				F4B693AA1A6F403400B42395 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				F445F7AA1A79381C00D5B170 /* BLTSendData.m in Sources */,
+				F430E4701AC80A42004E7130 /* LoginBindingVC.m in Sources */,
 				69FD42251A7FCC2C0023B74D /* UserCenterVC.m in Sources */,
 				F470E7F01A7FB7660009E649 /* CalendarDayModel.m in Sources */,
 				69FD42281A7FCC2C0023B74D /* UpdatePasswordViewController.m in Sources */,

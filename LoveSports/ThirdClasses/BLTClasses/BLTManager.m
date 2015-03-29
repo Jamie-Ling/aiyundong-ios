@@ -58,6 +58,8 @@ DEF_SINGLETON(BLTManager)
         };
         
         _model = [[BLTModel alloc] init];
+        
+        _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer", @"W285", @"P118S"];
     }
     
     return self;
@@ -136,12 +138,12 @@ DEF_SINGLETON(BLTManager)
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    NSLog(@"advertisementData. ＝ .%@..%@..%@..%d", advertisementData, peripheral, RSSI,peripheral.services.count);
-    for (CBService *service in peripheral.services)
+    NSLog(@"advertisementData. ＝ .%@..", advertisementData);
+    NSString *name = peripheral.name;
+    if (![_containNames containsObject:name])
     {
-        NSLog(@"------------------%@", service);
+       // return;
     }
-        // NSString *name = peripheral.name;
     
     if (!_isUpdateing)
     {
@@ -159,8 +161,7 @@ DEF_SINGLETON(BLTManager)
             model = [[BLTModel alloc] init];
             
             model.bltID = idString ? idString : @"";
-            NSString *adverString = advertisementData[@"kCBAdvDataLocalName"];
-            model.bltName = adverString ? adverString : (peripheral.name ? peripheral.name : @"");
+            model.bltName = name;
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
             model.peripheral = peripheral;
             

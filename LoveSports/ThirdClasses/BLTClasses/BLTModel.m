@@ -100,6 +100,28 @@
     }
 }
 
+- (NSString *)imageForsignalStrength
+{
+    NSInteger rssi = [_bltRSSI integerValue];
+    
+    if (rssi < 55)
+    {
+        return @"signal_4_5.png";
+    }
+    else if (rssi < 80)
+    {
+        return @"signal_3_5.png";
+    }
+    else if (rssi < 110)
+    {
+        return @"signal_2_5.png";
+    }
+    else
+    {
+        return @"signal_1_5.png";
+    }
+}
+
 // 主键
 + (NSString *) getPrimaryKey
 {

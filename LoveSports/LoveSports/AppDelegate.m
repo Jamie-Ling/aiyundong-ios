@@ -26,7 +26,8 @@
     // Override point for customization after application launch.
    // 80770100 008d0200 00130000 009a0100 00000000
 
-    NSLog(@"..%d.%d..%d..%d", 0x77 | (0x01 << 8), 0x8d | (0x02 << 8), 0x13 | (0x00 << 8),  0x9a | (0x01 << 8) );
+    [[DataShare sharedInstance] checkDeviceModel];
+
     // 启动蓝牙并自动接受数据
     [BLTAcceptData sharedInstance];
     [BLTRealTime sharedInstance];

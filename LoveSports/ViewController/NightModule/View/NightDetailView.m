@@ -48,7 +48,7 @@
     if (self)
     {
         self.backgroundColor = UIColorRGB(247, 247, 247);
-        _offsetY = (frame.size.height < 485.0) ? 25.0 : 0.0;
+        _offsetY = (frame.size.height < 485.0) ? 20.0 : 0.0;
         _percent = 0;
         
         _currentDate = [NSDate date];
@@ -67,6 +67,11 @@
 - (void)setCurrentDate:(NSDate *)currentDate
 {
     _currentDate = currentDate;
+    
+    if (_backButton)
+    {
+        [_backButton rotationAccordingWithDate:currentDate];
+    }
     
     // 将内存之前的图标清除...
     _allowAnimation = NO;
@@ -199,7 +204,12 @@
 - (void)loadBarShowView
 {
     NSInteger width = self.width;
-    _showView = [[BarShowView alloc] initWithFrame:CGRectMake(20, _sleepView.totalHeight + 20, width - 40, 160 - _offsetY)];
+    CGRect rect = FitScreenRect(CGRectMake(20, _sleepView.totalHeight + 10, width - 40, 140 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 20, width - 40, 160 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 30, width - 40, 250 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 40, width - 40, 260 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 20, width - 40, 160 - _offsetY));
+    _showView = [[BarShowView alloc] initWithFrame:rect];
     [self addSubview:_showView];
     
     [self updateContentForBarShowViewWithDate:_currentDate];
@@ -208,7 +218,7 @@
 #pragma mark --- PieChartViewDelegate ---
 -(CGFloat)centerCircleRadius
 {
-    return 81;
+    return 81 - _offsetY * 0.5;
 }
 
 #pragma mark --- PieChartViewDataSource ---

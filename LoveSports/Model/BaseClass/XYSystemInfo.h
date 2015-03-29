@@ -71,6 +71,7 @@
 +(BOOL) isPhone35;
 +(BOOL) isPhoneRetina35;
 +(BOOL) isPhoneRetina4;
++(BOOL) isPhoneSix; // 6
 +(BOOL) isPhoneSixPlus;
 +(BOOL) isPad;
 +(BOOL) isPadRetina;

@@ -47,5 +47,6 @@
 + (void)removeBindingDeviceWithUUID:(NSString *)string;
 - (BOOL)checkBindingState;
 + (void)updateDeviceName:(NSString *)name;
+- (NSString *)imageForsignalStrength;
 
 @end

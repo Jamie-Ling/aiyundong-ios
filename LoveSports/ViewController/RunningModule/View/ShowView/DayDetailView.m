@@ -249,12 +249,14 @@
 
 - (void)loadFSLineView
 {
-    CGFloat offsetY = _chartView.totalHeight + 50;
-    _dashView = [[DashLineView alloc] initWithFrame:CGRectMake(10, offsetY + 15.0, self.width - 20, self.height - offsetY - 120)];
+    CGFloat height = FitScreenNumber(self.height, self.height, self.height - 40, self.height - 80, self.height);
+    CGFloat offsetY =  FitScreenNumber(_chartView.totalHeight + 50, _chartView.totalHeight + 50,
+                                       _chartView.totalHeight + 60, _chartView.totalHeight + 80, _chartView.totalHeight + 50);
+    _dashView = [[DashLineView alloc] initWithFrame:CGRectMake(10, offsetY + 15.0, self.width - 20, height - offsetY - 120)];
     [_dashView setHoriAndVert:9 vert:10];
     [self addSubview:_dashView];
     
-    _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, self.height - offsetY - 120)];
+    _fsLineView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, self.width, height - offsetY - 120)];
     _fsLineView.backgroundColor = [UIColor clearColor];
     [self addSubview:_fsLineView];
     

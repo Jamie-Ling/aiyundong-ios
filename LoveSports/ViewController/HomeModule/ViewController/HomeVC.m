@@ -28,9 +28,9 @@
 {
     [super viewDidLoad];
     
-    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"1_01"]];
+    [self.tabBar setBackgroundImage:[UIImage imageNamed:@""]];
     
-    [self setSelectedIndex:1];
+    [self setSelectedIndex:0];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -44,26 +44,28 @@
     UserCenterVC *vc1 = [[UserCenterVC alloc] init];
     RunningVC *vc2 = [[RunningVC alloc] init];
     NightVC *vc3 = [[NightVC alloc] init];
-   // MapVC *vc4 = [[MapVC alloc] init];
-   // CoffeeVC *vc5 = [[CoffeeVC alloc] init];
+    MapVC *vc4 = [[MapVC alloc] init];
+    CoffeeVC *vc5 = [[CoffeeVC alloc] init];
     MoreVC *vc6 = [[MoreVC alloc] init];
     
-    NSArray *vcArray = @[vc1, vc2, vc3, vc6];
+    NSArray *vcArray = @[vc2, vc3, vc4, vc5, vc6, vc1];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    NSArray *imagesArray = @[@"头像", @"顶部四格1", @"顶部四格2", @"更多"];
+    NSArray *imagesArray = @[@"顶部四格-1@2x.png", @"顶部四格-2@2x.png", @"", @"", @"", @"默认头像@2x.png"];
+    NSArray *selImagesArray = @[@"顶部四格-1选中@2x.png", @"顶部四格-2-选中@2x.png", @"", @"", @"", @"默认头像@2x.png"];
+
     for (int i = 0; i < vcArray.count; i++)
     {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, vc2.width / 4, 64)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, vc2.width / 6, 40)];
         
         button.backgroundColor = [UIColor clearColor];
         button.exclusiveTouch = YES;
         button.selected = NO;
         [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:selImagesArray[i]] forState:UIControlStateSelected];
        
         //注意，头像按钮是用户设置的（来自服务器或本地设置）  --- jamie
-        if (i == 0)
+        if (i == 5)
         {
             button = [[ObjectCTools shared] getARoundedButtonWithSize:40 withImageUrl:[[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey]];
         }
@@ -83,7 +85,7 @@
 //重用父类方法，实现用户中心的导航条推出方式-1
 - (void) tabBar:(ZKKTabBar *)tabBar didSelectIndex:(NSInteger)index
 {
-    if (_firstComeUserCenterVC && index == 0)
+    if (index == 5)
     {
         //动画显示推出用户中心
         [self pushTheUserCenterVCByAnimation];
@@ -91,15 +93,17 @@
         
         return;
     }
-    if (index == 3)
+    if (index == 2 || index == 3 || index == 4)
     {
         
         return;
     }
-    if (index == 0)
+    
+    if (index == 5)
     {
-        _firstComeUserCenterVC = YES;
+        // _firstComeUserCenterVC = YES;
     }
+    
     [super tabBar:tabBar didSelectIndex:index];
 }
 
@@ -107,13 +111,13 @@
 - (void) pushTheUserCenterVCByAnimation
 {
         CATransition *animation = [CATransition animation];
-        [animation setDuration:1.0];
+        [animation setDuration:0.35];
         [animation setType:kCATransitionFade]; //淡入淡出
         [animation setSubtype:kCATransitionFromLeft];
         [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
         [self.navigationController.view.layer addAnimation:animation forKey:nil];
 
-        [self.navigationController pushViewController:[self.viewControllers objectAtIndex:0] animated:NO];
+        [self.navigationController pushViewController:[self.viewControllers lastObject] animated:NO];
 }
 
 //重用父类方法，实现用户中心的导航条推出方式-2

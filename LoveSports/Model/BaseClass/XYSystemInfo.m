@@ -282,6 +282,22 @@ static const char * __jb_app = NULL;
 #endif	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 }
 
++(BOOL) isPhoneSix
+{
+#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+    if ( [self isDevicePad] )
+    {
+        return NO;
+    }
+    else
+    {
+        return [XYSystemInfo isScreenSize:CGSizeMake(750, 1334)];
+    }
+#else	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+    return NO;
+#endif	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+}
+
 +(BOOL) isPhoneSixPlus
 {
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)

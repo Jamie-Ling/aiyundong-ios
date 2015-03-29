@@ -38,7 +38,8 @@
     _signView.backgroundColor = [UIColor clearColor];
     [self addSubview:_signView];
     
-    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:42.0 withText:@"" withTextColor:[UIColor blackColor]];
+    CGFloat font = FitScreenNumber(36, 42, 42, 42, 42);
+    _timeLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6, self.height / 3, self.width / 6 * 4, self.height / 3) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:font withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_timeLabel];
     
     _minLabel = [UILabel customLabelWithRect:CGRectMake(self.width / 6 * 4.34, self.height / 2.15, self.width / 4.8, self.height / 6) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:14.0 withText:@"" withTextColor:[UIColor blackColor]];

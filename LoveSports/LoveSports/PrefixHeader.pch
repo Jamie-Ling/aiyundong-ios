@@ -64,12 +64,18 @@
 #define LS_LastSyncOrder    @"LS_LastSyncOrder"
 
 // 趋势表一次展示的个数
-#define LS_TrendChartShowCount  (7)
+// #define LS_TrendChartShowCount  (7)
 
 #define LS_RealTimeTransState  @"LS_RealTimeTransState"
 
 // 基准年
 #define LS_Baseyear (2015)
+
+#define LS_PadDevice ([DataShare sharedInstance].isPad)
+#define LS_IpFourDevice ([DataShare sharedInstance].isIp4s)
+#define LS_IpFiveDevice ([DataShare sharedInstance].isIp5)
+#define LS_IpSixDevice ([DataShare sharedInstance].isIp6)
+#define LS_IpSixPDevice ([DataShare sharedInstance].isIp6P)
 
 
 

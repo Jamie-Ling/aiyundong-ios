@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) id <ShowWareViewDelegate> delegate;
 
+- (instancetype)initWithFrame:(CGRect)frame withOpenHead:(BOOL)open;
+
 @end
 
 @protocol ShowWareViewDelegate <NSObject>

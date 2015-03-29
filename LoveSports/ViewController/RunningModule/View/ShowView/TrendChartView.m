@@ -187,8 +187,13 @@
 // 步数，卡路里，距离切换.
 - (void)loadTrendTypeView
 {
+    CGRect rect = FitScreenRect(CGRectMake(0, 320, self.width, 64),
+                                CGRectMake(0, 370, self.width, 64),
+                                CGRectMake(0, 450, self.width, 64),
+                                CGRectMake(0, 500, self.width, 64),
+                                CGRectMake(0, 370, self.width, 64));
     DEF_WEAKSELF_(TrendChartView);
-    _typeView = [[TrendTypeView alloc] initWithFrame:CGRectMake(0, 370, self.width, 64)
+    _typeView = [[TrendTypeView alloc] initWithFrame:rect
                                           withOffset:45
                                            withBlock:^(UIView *aView, id object) {
                                                weakSelf.lastButton = (UIButton *)object;
@@ -197,10 +202,15 @@
     [self addSubview:_typeView];
     _lastButton = _typeView.lastButton;
     
-    _yearLabel = [self addSubLabelWithRect:CGRectMake(4, 350, 44, 20)
+    rect = FitScreenRect(CGRectMake(4, 300, 44, 20),
+                         CGRectMake(4, 350, 44, 20),
+                         CGRectMake(4, 400, 44, 20),
+                         CGRectMake(4, 450, 44, 20),
+                         CGRectMake(4, 350, 44, 20));
+    _yearLabel = [self addSubLabelWithRect:rect
                              withAlignment:NSTextAlignmentCenter
                               withFontSize:13
-                                  withText:[NSString stringWithFormat:@"%ld年", [NSDate date].year]
+                                  withText:[NSString stringWithFormat:@"%ld年", (long)[NSDate date].year]
                              withTextColor:[UIColor blackColor]
                                    withTag:3000];
 }

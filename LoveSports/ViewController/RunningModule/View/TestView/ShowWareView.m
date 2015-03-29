@@ -9,8 +9,43 @@
 #import "ShowWareView.h"
 #import "BLTManager.h"
 #import "WareInfoCell.h"
+#import "MJRefresh.h"
+
+@interface ShowWareView ()
+
+@property (nonatomic, assign) BOOL isOpenHead;
+@property (nonatomic, strong) UIImageView *headImage;
+
+@end
 
 @implementation ShowWareView
+
+- (instancetype)initWithFrame:(CGRect)frame withOpenHead:(BOOL)open
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
+        
+        _isShowAll = YES;
+        _isOpenHead = open;
+        [self loadShowModels];
+        [self loadTableView];
+        // [self loadButton];
+        
+        __weak ShowWareView *safeSelf = self;
+        [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
+        {
+            if (safeSelf.tableView)
+            {
+                [safeSelf reFreshDevice];
+            }
+        };
+    }
+    
+    return self;
+}
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -18,11 +53,12 @@
     if (self)
     {
         self.backgroundColor = [UIColor clearColor];
-        self.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
 
+        _isShowAll = YES;
+        _isOpenHead = YES;
         [self loadShowModels];
         [self loadTableView];
-        [self loadButton];
+        // [self loadButton];
         
         __weak ShowWareView *safeSelf = self;
         [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
@@ -94,13 +130,45 @@
 
 - (void)loadTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - 64.0)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_tableView];
+    
+    [self loadHeadImage];
+    
+    DEF_WEAKSELF_(ShowWareView);
+    // 添加下拉刷新控件
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        [[BLTManager sharedInstance] checkOtherDevices];
+
+        // 模仿2秒后刷新成功
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [weakSelf.tableView.header endRefreshing];
+            [weakSelf reFreshDevice];
+        });
+    }];
+    
+    [_tableView.header setTitle:@"更新设备." forState:MJRefreshHeaderStateIdle];
+    [_tableView.header setTitle:@"正在扫描设备中..." forState:MJRefreshHeaderStatePulling];
+    [_tableView.header setTitle:@"下拉刷新,重新搜索" forState:MJRefreshHeaderStateRefreshing];
+}
+
+- (void)loadHeadImage
+{
+    if (_isOpenHead)
+    {
+        _headImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        _headImage.animationImages = @[UIImageNamed(@"睡觉@2x.png"), UIImageNamed(@"起床.png")];
+        _headImage.animationRepeatCount = 9999;
+        _headImage.animationDuration = 0.5;
+        [_headImage startAnimating];
+        _tableView.tableHeaderView = _headImage;
+    }
 }
 
 - (void)loadButton
