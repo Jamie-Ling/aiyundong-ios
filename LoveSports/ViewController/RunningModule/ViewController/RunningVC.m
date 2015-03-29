@@ -126,7 +126,7 @@
         [self setTitleForNoConnect];
     }
     
-    [self.tableView.legendHeader beginRefreshing];
+    // [self.tableView.legendHeader beginRefreshing];
 }
 
 - (void)setTitleForConnect

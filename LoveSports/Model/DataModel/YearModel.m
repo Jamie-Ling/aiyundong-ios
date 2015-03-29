@@ -51,7 +51,7 @@
     //取到这一周的模型，没有就创建，更新至年模型中
     
     NSInteger thisWeekNumber = oneDate.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld", (long)thisYearNumber, (long)thisWeekNumber];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisWeekNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
     WeekModel *thisWeekModel = [WeekModel searchSingleWithWhere:where orderBy:nil];
     if (!thisWeekModel)
     {
@@ -90,7 +90,7 @@
     //月=-----------------------------------------------
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
-    where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld", (long)thisYearNumber, (long)thisMonthNumber];
+    where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisMonthNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
     MonthModel *thisMonthModel = [MonthModel searchSingleWithWhere:where orderBy:nil];
     if (!thisMonthModel)
     {
