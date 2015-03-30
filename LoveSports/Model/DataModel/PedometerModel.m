@@ -10,6 +10,7 @@
 #import "BLTSendData.h"
 #import "ShowManage.h"
 #import "PedometerHelper.h"
+#import "UserInfoHelp.h"
 
 @implementation StepsModel
 
@@ -175,6 +176,7 @@
     [data getBytes:&val length:data.length];
     PedometerModel *totalModel = [[PedometerModel alloc] init];
     
+    totalModel.userName = [UserInfoHelp sharedInstance].userModel.userName;
     totalModel.wareUUID = [BLTManager sharedInstance].model.bltID;
     
     // 第一个包

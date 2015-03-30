@@ -13,8 +13,7 @@
 
 @property (nonatomic, strong) UserInfoModel *userModel;
 
-// 哪个被修改了久设置为yes， 退出当前vc的时候调我的方法.
-// 参考文件BLTSendHelp.h
+// 哪个被修改了就设置为yes
 // 手环设置
 @property (nonatomic, assign) BOOL target;          // 目标
 @property (nonatomic, assign) BOOL step;            // 步距

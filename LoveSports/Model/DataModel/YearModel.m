@@ -7,7 +7,7 @@
 //
 
 #import "YearModel.h"
-
+#import "UserInfoHelp.h"
 
 @implementation YearModel
 @synthesize _thisYearAllWeeks, _yearID, _thisYearAllMonths;
@@ -290,7 +290,7 @@
 {
     NSInteger year = date.year;
     NSInteger order = date.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld", (long)year, (long)order];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)year, (long)order, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
     WeekModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)
@@ -351,7 +351,7 @@
     
     NSInteger currentYear = [self getYearWithMonthIndex:index];
     NSInteger month = index - (currentYear - LS_Baseyear) * 12;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld", (long)currentYear, (long)month];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)currentYear, (long)month, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
     MonthModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)
