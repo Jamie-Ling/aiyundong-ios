@@ -1,5 +1,5 @@
 //
-//  BLTService.h
+//  BLTManager.h
 //  ProductionTest
 //
 //  Created by zorro on 15-1-16.

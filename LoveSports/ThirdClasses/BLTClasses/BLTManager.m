@@ -1,6 +1,6 @@
 
 //
-//  BLTService.m
+//  BLTManager.m
 //  ProductionTest
 //
 //  Created by zorro on 15-1-16.
@@ -242,7 +242,10 @@ DEF_SINGLETON(BLTManager)
 
     if (self.discoverPeripheral != model.peripheral)
     {
-        [self dismissLink];
+        if (_discoverPeripheral)
+        {
+            [self dismissLink];
+        }
         _connectState = BLTManagerConnecting;
         _model = model;
         self.discoverPeripheral = model.peripheral;
@@ -423,7 +426,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         [self firmWareUpdateEnd:success];
     };
     
-    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 120);
+    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 80);
 }
 
 - (void)firmWareUpdateEnd:(BOOL)success

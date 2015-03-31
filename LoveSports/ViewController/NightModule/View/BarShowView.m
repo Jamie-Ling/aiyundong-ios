@@ -15,6 +15,9 @@
 @property (nonatomic, strong) UILabel *startLabel;
 @property (nonatomic, strong) UILabel *endLabel;
 
+@property (nonatomic, strong) UIView *leftView;
+@property (nonatomic, strong) UIView *rightView;
+
 @end
 
 @implementation BarShowView
@@ -25,22 +28,28 @@
     if (self)
     {
         self.backgroundColor = [UIColor clearColor];
-        [self loadLabels];
+        [self loadLabelsAndViews];
         [self loadBarGraphView];
     }
     
     return self;
 }
 
-- (void)loadLabels
+- (void)loadLabelsAndViews
 {
+    _leftView = [self addSubViewWithRect:CGRectMake(2, -37.5, 37.5, 37.5)
+                               withColor:[UIColor clearColor]
+                               withImage:@"小图标1@2x.png"];
+    _rightView = [self addSubViewWithRect:CGRectMake(self.width - 40, -37.5, 37.5, 37.5)
+                                withColor:[UIColor clearColor]
+                                withImage:@"小图标3@2x.png"];
+
     _startLabel = [self addSubLabelWithRect:CGRectMake(0, self.height - 14, 60, 14)
                               withAlignment:NSTextAlignmentCenter
                                withFontSize:14.0
                                    withText:@"23:34"
                               withTextColor:[UIColor lightGrayColor]
                                     withTag:999];
-    
     _endLabel = [self addSubLabelWithRect:CGRectMake(self.width - 60, self.height - 14, 60, 14)
                             withAlignment:NSTextAlignmentCenter
                              withFontSize:14.0

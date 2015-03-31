@@ -160,6 +160,7 @@ DUMMY_CLASS(NSDate_XY);
         {
             NSString *dateString = [NSString stringWithFormat:@"%@ 00:00:00", string];
             NSDate *date = [NSDate dateWithString:dateString];
+            // 加上当前时区
             date = [date dateByAddingTimeInterval:[NSDate timeZone] * 3600];
             
             return date;

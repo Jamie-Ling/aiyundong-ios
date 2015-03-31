@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString *nickName;   // 昵称
 
 @property (nonatomic, strong) NSString *password;   // 密码
-@property (nonatomic, strong) NSString *birthDay;   // 生日
+@property (nonatomic, strong) NSString *birthDay;   // 生日   格式为1990-05-01
 @property (nonatomic, strong) NSString *gender;     // 性别
 
 @property (nonatomic, assign) NSInteger age;        // 年龄

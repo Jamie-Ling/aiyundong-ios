@@ -246,6 +246,9 @@
 		F4644BC01A9447A8003088E9 /* BLTDFUBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BBD1A9447A8003088E9 /* BLTDFUBaseInfo.m */; };
 		F4644BC11A9447A8003088E9 /* BLTDFUHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4644BBF1A9447A8003088E9 /* BLTDFUHelper.m */; };
 		F467BD171AA5A8490049D863 /* CalendarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F467BD161AA5A8490049D863 /* CalendarHelper.m */; };
+		F46A76301AC97F84000D5EDB /* 小图标1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46A762D1AC97F84000D5EDB /* 小图标1@2x.png */; };
+		F46A76311AC97F84000D5EDB /* 小图标2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46A762E1AC97F84000D5EDB /* 小图标2@2x.png */; };
+		F46A76321AC97F84000D5EDB /* 小图标3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46A762F1AC97F84000D5EDB /* 小图标3@2x.png */; };
 		F470E7A11A7FAD680009E649 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7641A7FAD680009E649 /* background.jpg */; };
 		F470E7A21A7FAD680009E649 /* t3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F470E7651A7FAD680009E649 /* t3.jpg */; };
 		F470E7A41A7FAD680009E649 /* 周@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7671A7FAD680009E649 /* 周@2x.png */; };
@@ -767,6 +770,9 @@
 		F4644BBF1A9447A8003088E9 /* BLTDFUHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTDFUHelper.m; sourceTree = "<group>"; };
 		F467BD151AA5A8490049D863 /* CalendarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHelper.h; sourceTree = "<group>"; };
 		F467BD161AA5A8490049D863 /* CalendarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarHelper.m; sourceTree = "<group>"; };
+		F46A762D1AC97F84000D5EDB /* 小图标1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "小图标1@2x.png"; sourceTree = "<group>"; };
+		F46A762E1AC97F84000D5EDB /* 小图标2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "小图标2@2x.png"; sourceTree = "<group>"; };
+		F46A762F1AC97F84000D5EDB /* 小图标3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "小图标3@2x.png"; sourceTree = "<group>"; };
 		F470E7641A7FAD680009E649 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		F470E7651A7FAD680009E649 /* t3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t3.jpg; sourceTree = "<group>"; };
 		F470E7671A7FAD680009E649 /* 周@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "周@2x.png"; sourceTree = "<group>"; };
@@ -1982,6 +1988,9 @@
 		F470E7931A7FAD680009E649 /* t4 */ = {
 			isa = PBXGroup;
 			children = (
+				F46A762D1AC97F84000D5EDB /* 小图标1@2x.png */,
+				F46A762E1AC97F84000D5EDB /* 小图标2@2x.png */,
+				F46A762F1AC97F84000D5EDB /* 小图标3@2x.png */,
 				F470E7941A7FAD680009E649 /* background.jpg */,
 				F470E7951A7FAD680009E649 /* T4副本.jpg */,
 				F470E7961A7FAD680009E649 /* 分享.png */,
@@ -2581,6 +2590,7 @@
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
 				69EFC1DE1A737ABD00B5BC53 /* 分享.png in Resources */,
+				F46A76301AC97F84000D5EDB /* 小图标1@2x.png in Resources */,
 				F45870541AB2905A005A72CA /* 睡觉@2x.png in Resources */,
 				F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */,
 				69EFC1E61A737ABD00B5BC53 /* 顶部四格1@2x.png in Resources */,
@@ -2671,6 +2681,7 @@
 				695549381A8CF4D900423EA9 /* 爱运动商城@2x.png in Resources */,
 				F470E7C51A7FAD680009E649 /* 能量_big@2x.png in Resources */,
 				F430E4641AC7C9E0004E7130 /* 顶部四格-2@2x.png in Resources */,
+				F46A76311AC97F84000D5EDB /* 小图标2@2x.png in Resources */,
 				69EFC1FE1A737ABD00B5BC53 /* 1_01.png in Resources */,
 				69EFC2011A737ABD00B5BC53 /* 1_04.png in Resources */,
 				F470E7D01A7FAD680009E649 /* T4副本.jpg in Resources */,
@@ -2708,6 +2719,7 @@
 				69EFC1E21A737ABD00B5BC53 /* 更多@2x.png in Resources */,
 				69EFC1F21A737ABD00B5BC53 /* skipButton@2x.png in Resources */,
 				6955494D1A8D012B00423EA9 /* 添加振动.png in Resources */,
+				F46A76321AC97F84000D5EDB /* 小图标3@2x.png in Resources */,
 				698A90C11A6FEB54005BABE6 /* LICENSE in Resources */,
 				69EFC1FA1A737ABD00B5BC53 /* Login.jpg in Resources */,
 				F4B693561A6F401A00B42395 /* IQKeyboardManager.bundle in Resources */,

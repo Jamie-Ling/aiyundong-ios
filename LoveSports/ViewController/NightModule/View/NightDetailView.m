@@ -204,10 +204,10 @@
 - (void)loadBarShowView
 {
     NSInteger width = self.width;
-    CGRect rect = FitScreenRect(CGRectMake(20, _sleepView.totalHeight + 10, width - 40, 140 - _offsetY),
-                                CGRectMake(20, _sleepView.totalHeight + 20, width - 40, 160 - _offsetY),
-                                CGRectMake(20, _sleepView.totalHeight + 30, width - 40, 250 - _offsetY),
-                                CGRectMake(20, _sleepView.totalHeight + 40, width - 40, 260 - _offsetY),
+    CGRect rect = FitScreenRect(CGRectMake(20, _sleepView.totalHeight + 40, width - 40, 110 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 40, width - 40, 140 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 60, width - 40, 210 - _offsetY),
+                                CGRectMake(20, _sleepView.totalHeight + 70, width - 40, 260 - _offsetY),
                                 CGRectMake(20, _sleepView.totalHeight + 20, width - 40, 160 - _offsetY));
     _showView = [[BarShowView alloc] initWithFrame:rect];
     [self addSubview:_showView];

@@ -15,6 +15,7 @@
 
 @interface AlarmClockModel : NSObject
 
+@property (nonatomic, assign) BOOL open;
 @property (nonatomic, assign) NSInteger hour;
 @property (nonatomic, assign) NSInteger minutes;
 @property (nonatomic, assign) NSInteger seconds;
