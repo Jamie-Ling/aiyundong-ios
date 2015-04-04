@@ -12,36 +12,7 @@
 #import <Foundation/Foundation.h>
 #import "BLTAcceptData.h"
 #import "Header.h"
-
-@interface AlarmClockModel : NSObject
-
-@property (nonatomic, assign) BOOL open;
-@property (nonatomic, assign) NSInteger hour;
-@property (nonatomic, assign) NSInteger minutes;
-@property (nonatomic, assign) NSInteger seconds;
-@property (nonatomic, assign) UInt8 repeat;
-
-/**
- *  得到一个代表星期几的Uint8
- *
- *  @param weekNumber 0~7，1：代表每周一, 0代表无
- *
- *  @return 得到的Uint8
- */
-+ (UInt8) getAUint8FromeWeekNumber: (NSInteger) weekNumber;
-
-/**
- *  设置所有时间（时分秒&重复周期）
- *
- *  @param timeString  格式：23:01 或者  23:01:45
- *  @param repeatUntStringArray 装uint8的字符串数组如【@"1", @"2"】,代表每周一周二重复
- *  @param isFullWeekDay  是否是每天重复（周1至周日全部重复）
- */
-- (void) setAllTimeFromTimeString: (NSString *) timeString
-         withRepeatUntStringArray: (NSArray *) repeatUntStringArray
-                  withFullWeekDay: (BOOL) isFullWeekDay;
-
-@end
+#import "AlarmClockModel.h"
 
 @interface BLTSendData : NSObject
 typedef void(^BLTSendDataBackUpdate)(NSDate *date);

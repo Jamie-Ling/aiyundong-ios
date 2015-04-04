@@ -31,7 +31,7 @@
 #import "VersionInfoModel.h"
 #import "DeviceUpdateViewController.h"
 #import "TestBLTViewController.h"
-
+#import "AlarmClockVC.h"
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
@@ -186,7 +186,10 @@
         _timeAndClockVC = [[TimeAndClockViewController alloc] init];
     }
     _timeAndClockVC._thisModel = _thisBraceletInfoModel;
-    [self.navigationController pushViewController:_timeAndClockVC animated:YES];
+    
+    AlarmClockVC *alarmVC = [[AlarmClockVC alloc] init];
+    
+    [self.navigationController pushViewController:alarmVC animated:YES];
     
 }
 

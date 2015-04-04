@@ -506,7 +506,7 @@
     //去除点击的选中色
     [tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
     
-    if (indexPath.section == 1 && indexPath.row >= 2)
+   // if (indexPath.section == 1 && indexPath.row >= 2)
     {
         [self changeTimeWithIndex:indexPath.row - 2];
     }

@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSMutableArray *_allHandSetAlarmClock;  //手动设置的闹钟
 @property (nonatomic, strong) NSMutableArray *_allAutomaticSetAlarmClock;  //自动设置的闹钟
 @property (nonatomic, assign) BOOL _is24HoursTime;  //是否是24小时制
+@property (nonatomic, strong) NSArray alarmArray;  //闹钟
 
 @property (nonatomic, assign) BOOL _longTimeSetRemind;  //久坐提醒
 @property (nonatomic, assign) BOOL _PreventLossRemind;  //防止丢失的提醒

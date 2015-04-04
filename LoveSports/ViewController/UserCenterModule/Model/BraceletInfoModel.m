@@ -134,14 +134,12 @@
     
     _isShowMetricSystem = YES;
     
-    
     if ([[_userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
     {
         _isShowMetricSystem = NO;
     }
     
     [self initAllSetAlarmClock];
-    
 }
 
 /**

@@ -48,3 +48,7 @@ typedef void(^NSObjectSimpleBlock)(id object);
                            withModel:(BOOL)metric;
 
 @end
+
+@interface NSMutableArray (Order)
+
+@end

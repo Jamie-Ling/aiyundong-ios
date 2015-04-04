@@ -124,9 +124,7 @@
     
     [self.panel removeFromSuperview];
     [self.backdropView removeFromSuperview];
-    
    
-    
     self.panel = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - BSMODALPICKER_PANEL_HEIGHT, self.bounds.size.width, BSMODALPICKER_PANEL_HEIGHT)];
     self.panel.autoresizesSubviews = YES;
     self.panel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
@@ -148,8 +146,11 @@
     [self.panel setHeight:self.panel.height + kNavigationBarHeight];
     [self.panel setCenterY:self.panel.centerY - kNavigationBarHeight];
     
-    _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.frame.size.width * 0, self.panel.frame.size.height  - kNavigationBarHeight, self.panel.frame.size.width * 1.0, kNavigationBarHeight) withWeekBlock:^(WeekView *weekView) {
-        _dayArray = weekView.selArray;
+    
+    DEF_WEAKSELF_(BSModalPickerBase);
+    _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.width * 0, self.panel.height  - kNavigationBarHeight, self.panel.width * 1.0, kNavigationBarHeight)
+                                  withWeekBlock:^(WeekView *weekView) {
+        weakSelf._dayArray = weekView.selArray;
     }];
     
     [self.panel addSubview:_weekView];

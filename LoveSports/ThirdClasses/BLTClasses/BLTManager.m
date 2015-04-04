@@ -393,7 +393,6 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         _discoverPeripheral.delegate = nil;
         [_centralManager cancelPeripheralConnection:_discoverPeripheral];
         _discoverPeripheral = nil;
-        [BLTPeripheral sharedInstance].peripheral = nil;
     }
     
     _model = nil;
@@ -433,6 +432,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 {
     _isUpdateing = NO;
     _updateModel = nil;
+    _discoverPeripheral.delegate = nil;
+    _discoverPeripheral = nil;
     _connectState = BLTManagerNoConnect;
     [self startCan];
     

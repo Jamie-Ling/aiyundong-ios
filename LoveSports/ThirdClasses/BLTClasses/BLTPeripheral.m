@@ -87,6 +87,7 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         NSLog(@"发生错误.");
+        [[BLTManager sharedInstance] dismissLink];
     }
     
     for (CBService *service in peripheral.services)
@@ -119,6 +120,7 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         NSLog(@"特征错误...");
+        [[BLTManager sharedInstance] dismissLink];
     }
     
     for (CBCharacteristic *charac in service.characteristics)

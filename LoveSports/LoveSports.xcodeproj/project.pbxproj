@@ -406,6 +406,10 @@
 		F4CE02801AAC4891005C29FC /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE027F1AAC4891005C29FC /* UserInfoModel.m */; };
 		F4CE02831AAC48AB005C29FC /* UserInfoHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */; };
 		F4CE02861AAC6807005C29FC /* BLTSendOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CE02851AAC6807005C29FC /* BLTSendOld.m */; };
+		F4DB02361ACF89C100892B16 /* AlarmClockVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB02351ACF89C100892B16 /* AlarmClockVC.m */; };
+		F4DB02391ACF8A4B00892B16 /* AlarmClockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB02381ACF8A4B00892B16 /* AlarmClockCell.m */; };
+		F4DB023C1ACF8B2B00892B16 /* AlarmClockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */; };
+		F4DB02401ACF916F00892B16 /* LeftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB023F1ACF916F00892B16 /* LeftItem.m */; };
 		F4FFD8511AB455CE00A387A4 /* DayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8501AB455CE00A387A4 /* DayScrollView.m */; };
 		F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */; };
 /* End PBXBuildFile section */
@@ -1033,6 +1037,14 @@
 		F4CE02821AAC48AB005C29FC /* UserInfoHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoHelp.m; sourceTree = "<group>"; };
 		F4CE02841AAC6807005C29FC /* BLTSendOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSendOld.h; sourceTree = "<group>"; };
 		F4CE02851AAC6807005C29FC /* BLTSendOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSendOld.m; sourceTree = "<group>"; };
+		F4DB02341ACF89C100892B16 /* AlarmClockVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmClockVC.h; sourceTree = "<group>"; };
+		F4DB02351ACF89C100892B16 /* AlarmClockVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmClockVC.m; sourceTree = "<group>"; };
+		F4DB02371ACF8A4B00892B16 /* AlarmClockCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmClockCell.h; sourceTree = "<group>"; };
+		F4DB02381ACF8A4B00892B16 /* AlarmClockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmClockCell.m; sourceTree = "<group>"; };
+		F4DB023A1ACF8B2B00892B16 /* AlarmClockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmClockModel.h; sourceTree = "<group>"; };
+		F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmClockModel.m; sourceTree = "<group>"; };
+		F4DB023E1ACF916F00892B16 /* LeftItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftItem.h; sourceTree = "<group>"; };
+		F4DB023F1ACF916F00892B16 /* LeftItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftItem.m; sourceTree = "<group>"; };
 		F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayScrollView.h; sourceTree = "<group>"; };
 		F4FFD8501AB455CE00A387A4 /* DayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayScrollView.m; sourceTree = "<group>"; };
 		F4FFD8541AB456D500A387A4 /* UnlimitScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlimitScroll.h; sourceTree = "<group>"; };
@@ -1770,6 +1782,7 @@
 				69FD41F11A7FCC2C0023B74D /* TimeAndClockViewController.m */,
 				69FD41F21A7FCC2C0023B74D /* UpdateBraceletNameViewController.h */,
 				69FD41F31A7FCC2C0023B74D /* UpdateBraceletNameViewController.m */,
+				F4DB02331ACF898700892B16 /* AlarmClockVC */,
 			);
 			path = intelligentBracelet;
 			sourceTree = "<group>";
@@ -1901,6 +1914,8 @@
 				F45F840A1A7B6698004246E8 /* SaveHelper.m */,
 				F4CB16561ABD3F44008C4374 /* DataShare.h */,
 				F4CB16571ABD3F44008C4374 /* DataShare.m */,
+				F4DB023A1ACF8B2B00892B16 /* AlarmClockModel.h */,
+				F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -2485,9 +2500,30 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		F4DB02331ACF898700892B16 /* AlarmClockVC */ = {
+			isa = PBXGroup;
+			children = (
+				F4DB02341ACF89C100892B16 /* AlarmClockVC.h */,
+				F4DB02351ACF89C100892B16 /* AlarmClockVC.m */,
+				F4DB02371ACF8A4B00892B16 /* AlarmClockCell.h */,
+				F4DB02381ACF8A4B00892B16 /* AlarmClockCell.m */,
+			);
+			path = AlarmClockVC;
+			sourceTree = "<group>";
+		};
+		F4DB023D1ACF916900892B16 /* LeftItem */ = {
+			isa = PBXGroup;
+			children = (
+				F4DB023E1ACF916F00892B16 /* LeftItem.h */,
+				F4DB023F1ACF916F00892B16 /* LeftItem.m */,
+			);
+			path = LeftItem;
+			sourceTree = "<group>";
+		};
 		F4FFD8521AB4569100A387A4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F4DB023D1ACF916900892B16 /* LeftItem */,
 				F4C4C83C1AC6E43A005D511A /* ShareView */,
 				F4C4C8301AC6DA4A005D511A /* SphereMenu */,
 				F4C4C82C1AC6D538005D511A /* GraphicButton */,
@@ -2775,6 +2811,7 @@
 				69FD42081A7FCC2C0023B74D /* FSLineChart.m in Sources */,
 				F43F8EDF1A81065B008A431B /* BarGraphView.m in Sources */,
 				F43979F31AB550680033B7BB /* MJRefreshHeader.m in Sources */,
+				F4DB02361ACF89C100892B16 /* AlarmClockVC.m in Sources */,
 				F4B693BB1A6F404A00B42395 /* XYPopupViewHelper.m in Sources */,
 				F4B693B81A6F404A00B42395 /* MBHUBAutoPop.m in Sources */,
 				69FD42091A7FCC2C0023B74D /* UIColor+FSPalette.m in Sources */,
@@ -2867,6 +2904,7 @@
 				69EFC2DA1A760CD600B5BC53 /* SDImageCache.m in Sources */,
 				F4BF5F6E1A6F529E004C433D /* ZKKViewController.m in Sources */,
 				F470E7EF1A7FB7660009E649 /* CalendarDayCell.m in Sources */,
+				F4DB023C1ACF8B2B00892B16 /* AlarmClockModel.m in Sources */,
 				69FD42011A7FCC2C0023B74D /* CoffeeVC.m in Sources */,
 				F4B6934F1A6F401A00B42395 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				69E0973F1A873D6E003F2EB9 /* DTTimePeriodGroup.m in Sources */,
@@ -2893,6 +2931,7 @@
 				69FD42101A7FCC2C0023B74D /* VersionInfoModel.m in Sources */,
 				69E0973D1A873D6E003F2EB9 /* DTTimePeriodChain.m in Sources */,
 				F4B693A81A6F403400B42395 /* NSString+MKNetworkKitAdditions.m in Sources */,
+				F4DB02391ACF8A4B00892B16 /* AlarmClockCell.m in Sources */,
 				69FD42031A7FCC2C0023B74D /* LoginVC.m in Sources */,
 				F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */,
 				69FD420C1A7FCC2C0023B74D /* TimeZoneView.m in Sources */,
@@ -2938,6 +2977,7 @@
 				695549151A8CF34A00423EA9 /* BarShowView.m in Sources */,
 				F4B693A71A6F403400B42395 /* NSDictionary+RequestEncoding.m in Sources */,
 				F4B6939C1A6F403400B42395 /* FMResultSet.m in Sources */,
+				F4DB02401ACF916F00892B16 /* LeftItem.m in Sources */,
 				F4B693501A6F401A00B42395 /* IQSegmentedNextPrevious.m in Sources */,
 				69FD42211A7FCC2C0023B74D /* DeviceUpdateViewController.m in Sources */,
 				F4B693511A6F401A00B42395 /* IQTextView.m in Sources */,
