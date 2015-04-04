@@ -34,14 +34,7 @@
 //#define vStepLongMax(a)   (a ? 120 : vChangeToFT(120))
 
 
-#define vHeightMin(a)    (a ? 60 : 3.0)
-#define vHeightMax(a)   (a ? 220 : 9.0)
 
-#define vWeightMin(a)   (a ? 20 : 44)
-#define vWeightMax(a)   (a ? 297 : 654)
-
-#define vStepLongMin(a)   (a ? 30 : 1.0)
-#define vStepLongMax(a)   (a ? 120 : 5.0)
 
 #import "UserInfoViewController.h"
 #import "FlatRoundedButton.h"

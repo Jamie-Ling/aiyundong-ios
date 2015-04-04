@@ -25,6 +25,67 @@ DEF_SINGLETON(UserInfoHelp)
     return self;
 }
 
+/**
+ *  更新用户信息（实时获取最新的用户信息给到--》这个类的userModel）
+ *
+ *  @param userIngModel 正在用的Model(因为不会实时存到数据库），如果没有，可以传入nil
+ *
+ *  @return 最新的用户信息
+ */
+- (UserInfoModel *) updateUserInfo: (BraceletInfoModel *) userIngModel;
+{
+    if (!_userModel)
+    {
+        _userModel = [[UserInfoModel alloc] init];
+    }
+    
+    NSDictionary *userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];  //最早是放userdefaults（因为Key名的不确定性）中，所以后面没有再花时间去修改了。这里直接转换到下面的模型里面
+    if (!userInfoDictionary)
+    {
+        NSLog(@"没有用户存在");
+        return nil;
+    }
+    
+    _userModel.userName = @"用户名待完善";
+    _userModel.password = @"密码待完善";
+    _userModel.nickName = [userInfoDictionary objectForKey:kUserInfoOfNickNameKey];
+    _userModel.avatar = [userInfoDictionary objectForKey:kUserInfoOfHeadPhotoKey];
+    _userModel.birthDay = @"没多大用，暂未存储";
+    _userModel.gender = [userInfoDictionary objectForKey:kUserInfoOfSexKey];
+    _userModel.age = [[userInfoDictionary objectForKey:kUserInfoOfAgeKey] integerValue];
+    _userModel.height = [[userInfoDictionary objectForKey:kUserInfoOfHeightKey] floatValue];
+    _userModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] floatValue];
+    _userModel.step = [[userInfoDictionary objectForKey:kUserInfoOfStepLongKey] integerValue];
+    
+    
+    if (!_userModel.braceletModel)
+    {
+        if (userIngModel)
+        {
+            _userModel.braceletModel = userIngModel;
+        }
+        else
+        {
+            BraceletInfoModel   *showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+            _userModel.braceletModel = showModel;
+            
+        }
+    }
+    
+    
+    _userModel.targetSteps = _userModel.braceletModel._stepNumber;
+    //    _userModel.targetCalories = 1; //@"没有设置这一项了，得去算";
+    //    _userModel.targetDistance = 1; //@"没有设置这一项了，得去算";
+    //    _userModel.targetSleep = 1; //@"没有设置这一项了，得去算";
+    
+    //***注意是否是公制这个参数，存储时未做转换（多次切换时会有误差，所以直接存的是设置单位对应的数值）
+    //   参数在这里： _userModel.braceletModel._isShowMetricSystem
+    _userModel.isMetricSystem = _userModel.braceletModel._isShowMetricSystem;
+    
+    return _userModel;
+}
+
+
 - (void)setTarget:(BOOL)target
 {
     _target = target;
@@ -137,12 +198,12 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetSedentariness:(NSObjectSimpleBlock)backBlock
 {
-
+    
 }
 
 - (void)sendSetAlarmClock:(NSObjectSimpleBlock)backBlock
 {
-
+    
 }
 
 @end

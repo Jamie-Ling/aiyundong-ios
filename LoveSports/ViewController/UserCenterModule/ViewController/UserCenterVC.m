@@ -77,8 +77,11 @@
     //得到现在的手环,先删除旧手环信息
     NSLog(@"手环名字切换，由于名字暂时不能更改。不再切换");
 //    [_cellTitleArray removeObjectAtIndex:3];
-//    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
+    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
 //    [_cellTitleArray insertObject:_showModel._name atIndex:3];
+    
+    //给到这个model
+    [[UserInfoHelp sharedInstance] updateUserInfo:_showModel];
     
     //刷新界面
     [self updateElecQuantity];

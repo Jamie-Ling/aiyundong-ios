@@ -30,6 +30,15 @@
 // 用户信息
 @property (nonatomic, assign) BOOL userInfo;
 
+/**
+ *  更新用户信息（实时获取最新的用户信息给到--》这个类的userModel）
+ *
+ *  @param userIngModel 正在用的Model(因为不会实时存到数据库），如果没有，可以传入nil
+ *
+ *  @return 最新的用户信息
+ */
+- (UserInfoModel *) updateUserInfo: (BraceletInfoModel *) userIngModel;
+
 AS_SINGLETON(UserInfoHelp)
 
 // 设置用户信息. backBlock 外部使用直接用nil。

@@ -35,13 +35,15 @@
 @property (nonatomic, assign) BOOL _showSteps;
 @property (nonatomic, assign) BOOL _showKa;
 @property (nonatomic, assign) BOOL _showDistance;
-@property (nonatomic, assign) BOOL _isShowMetricSystem;  //是否是公制
+@property (nonatomic, assign, setter = setShowMetricSystem:) BOOL _isShowMetricSystem;  //是否是公制
 @property (nonatomic, assign) BOOL _isAutomaticAlarmClock;    //是否自动闹钟
 @property (nonatomic, assign) BOOL _isHandAlarmClock;    //是否自动闹钟
 @property (nonatomic, strong) NSMutableArray *_allHandSetAlarmClock;  //手动设置的闹钟
 @property (nonatomic, strong) NSMutableArray *_allAutomaticSetAlarmClock;  //自动设置的闹钟
 @property (nonatomic, assign) BOOL _is24HoursTime;  //是否是24小时制
 @property (nonatomic, strong) NSArray *alarmArray;  //闹钟
+
+@property (nonatomic, assign) BOOL _isSyn;  //是否实时同步
 
 @property (nonatomic, assign) BOOL _longTimeSetRemind;  //久坐提醒
 @property (nonatomic, assign) BOOL _PreventLossRemind;  //防止丢失的提醒

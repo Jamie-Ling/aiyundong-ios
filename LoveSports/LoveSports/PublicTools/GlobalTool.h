@@ -166,8 +166,8 @@ typedef enum{
 #define kBraceletLongSetBeginTime @"8:00"
 #define kBraceletLongSetOverTime24 @"18:00"
 #define kBraceletLongSetOverTime @"6:00"
-#define kBraceletLongSetRemind24  [NSString stringWithFormat:@"每隔45分钟\n%@ ~ %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime24]  //久坐提醒  // 24小时制
-#define kBraceletLongSetRemind  [NSString stringWithFormat:@"每隔45分钟\n上午 %@ ~ 下午 %@", kBraceletLongSetBeginTime, kBraceletLongSetOverTime] //久坐提醒  // 12小时制
+#define kBraceletLongSetRemind24  [NSString stringWithFormat:@"%@ ~ %@ 每隔45分钟", kBraceletLongSetBeginTime, kBraceletLongSetOverTime24]  //久坐提醒  // 24小时制
+#define kBraceletLongSetRemind  [NSString stringWithFormat:@"上午 %@ ~ 下午 %@ 每隔45分钟", kBraceletLongSetBeginTime, kBraceletLongSetOverTime] //久坐提醒  // 12小时制
 
 #define kBLTSendFaileMessage  @"请检查蓝牙连接情况"  //蓝牙控制失败提示
 

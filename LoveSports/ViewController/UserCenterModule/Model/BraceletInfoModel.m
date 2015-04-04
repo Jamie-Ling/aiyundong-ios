@@ -61,7 +61,7 @@
 
 
 @implementation BraceletInfoModel
-@synthesize _allHandSetAlarmClock, _is24HoursTime, _isAutomaticAlarmClock, _isLeftHand, _isShowMetricSystem, _longTimeSetRemind, _name, _PreventLossRemind, _showDistance, _showKa, _showSteps, _showTime, _target, _orderID, _deviceID, _deviceElectricity, _deviceVersion, _isHandAlarmClock, _allAutomaticSetAlarmClock;
+@synthesize _allHandSetAlarmClock, _is24HoursTime, _isAutomaticAlarmClock, _isLeftHand, _isShowMetricSystem, _longTimeSetRemind, _name, _PreventLossRemind, _showDistance, _showKa, _showSteps, _showTime, _target, _orderID, _deviceID, _deviceElectricity, _deviceVersion, _isHandAlarmClock, _allAutomaticSetAlarmClock, _isSyn;
 
 @synthesize _defaultName;
 
@@ -140,6 +140,14 @@
     }
     
     [self initAllSetAlarmClock];
+}
+
+//set方法
+- (void) setShowMetricSystem:(BOOL)isShowMetricSystem
+{
+    _isShowMetricSystem = isShowMetricSystem;
+    
+    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue:isShowMetricSystem ? @"1" : @"0"];
 }
 
 /**

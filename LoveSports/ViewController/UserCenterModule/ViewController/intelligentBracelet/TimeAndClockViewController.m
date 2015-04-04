@@ -43,6 +43,7 @@
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
+    
     NSArray *list1Array = [NSArray arrayWithObjects:@"24小时制", @"自动设置", nil];
     NSArray *list2Array = [NSArray arrayWithObjects:@"振动闹钟", nil];
     _titleArray = [NSMutableArray arrayWithObjects:list1Array, list2Array, nil];

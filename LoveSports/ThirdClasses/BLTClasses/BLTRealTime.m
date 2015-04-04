@@ -58,6 +58,12 @@ DEF_SINGLETON(BLTRealTime)
     else
     {
         SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        
+        //add by jamie
+        if (block)
+        {
+            block(NO);
+        }
     };
 }
 
@@ -87,6 +93,12 @@ DEF_SINGLETON(BLTRealTime)
     else
     {
         SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        
+        //add by jamie
+        if (block)
+        {
+            block(NO);
+        }
     }
 }
 
