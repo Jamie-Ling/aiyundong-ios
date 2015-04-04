@@ -19,6 +19,7 @@
         _alarmTime = @"12:00";
         _repeat = 0;
         _height = 56.0;
+        _seconds = 0;
     }
     
     return self;
@@ -94,7 +95,7 @@
 
 + (NSArray *)getAlarmClockFromDB
 {
-    NSArray *array = [AlarmClockModel searchWithWhere:nil orderBy:@"index" offset:0 count:5];
+    NSArray *array = [AlarmClockModel searchWithWhere:nil orderBy:@"orderIndex" offset:0 count:5];
     
     if (!array || array.count == 0)
     {
@@ -117,7 +118,7 @@
 {
     AlarmClockModel *model = [[AlarmClockModel alloc] init];
     
-    model.index = index;
+    model.orderIndex = index;
     
     return model;
 }
@@ -200,7 +201,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"index"];
+    return @[@"userName", @"orderIndex"];
 }
 
 // 表版本
@@ -208,6 +209,5 @@
 {
     return 1;
 }
-
 
 @end

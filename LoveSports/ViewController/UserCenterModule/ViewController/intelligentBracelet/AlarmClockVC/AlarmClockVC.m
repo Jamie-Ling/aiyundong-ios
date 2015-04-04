@@ -36,7 +36,7 @@
 {
     UIButton *button = [UIButton simpleWithRect:CGRectMake(0, 0, 44, 44)
                                       withTitle:@"保存"
-                                withSelectTitle:nil
+                                withSelectTitle:@"保存"
                                       withColor:[UIColor clearColor]];
     [button addTouchUpTarget:self action:@selector(clickSaveButton:)];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -139,8 +139,9 @@
                                        NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
                                        model.weekArray = datePicker._dayArray;
                                        model.alarmTime = choiceString;
-                                       
+
                                        [weakSelf.tableView reloadData];
+                                       [model updateToDB];
                                    }
                                }];
 }
