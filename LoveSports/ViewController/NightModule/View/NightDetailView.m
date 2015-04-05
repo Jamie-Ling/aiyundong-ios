@@ -25,7 +25,6 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) BarShowView *showView;
-@property (nonatomic, strong) PedometerModel *model;
 
 @property (nonatomic, strong) UIButton *backButton;
 
@@ -54,9 +53,6 @@
         _currentDate = [NSDate date];
         
         [self loadPieChartView];
-        [self loadCalendarButton];
-        [self loadBackButton];
-        [self loadDateLabel];
         [self loadSleepTimeView];
         [self loadBarShowView];
     }
@@ -70,7 +66,7 @@
     
     if (_backButton)
     {
-        [_backButton rotationAccordingWithDate:currentDate];
+       // [_backButton rotationAccordingWithDate:currentDate];
     }
     
     // 将内存之前的图标清除...
@@ -262,6 +258,7 @@
     _currentDate = date;
     PedometerModel *model = [PedometerHelper getModelFromDBWithDate:_currentDate];
     
+    _model = model;
     [self updateContentForLabel:model];
     _chartDataArray = model.detailSleeps;
     
@@ -303,10 +300,12 @@
 {
     _model = model;
     
+    /*
     _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
     NSDate *date = [NSDate dateWithString:model.dateString];
     NSString *weekString = [NSObject numberTransferWeek:date.weekday];
     _weekLabel.text = weekString;
+     */
 }
 
 - (void)updateContentForChartView:(PedometerModel *)model

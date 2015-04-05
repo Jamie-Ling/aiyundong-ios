@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSDate *currentDate;
 @property (nonatomic, assign) BOOL allowAnimation;
+@property (nonatomic, strong) PedometerModel *model;
 
 @property (nonatomic, strong) UIViewSimpleBlock backBlock;
 @property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;

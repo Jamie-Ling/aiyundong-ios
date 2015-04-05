@@ -14,8 +14,11 @@
 
 @property (nonatomic, strong) UnlimitScroll *scrollView;
 @property (nonatomic, strong) NSMutableArray *viewsArray;
+@property (nonatomic, strong) UIViewSimpleBlock buttonRotationBlock;
 
 - (void)updateContentForNightDetailViews;
 - (void)startChartAnimation;
+- (void)updateContentToToday;
+- (void)updateContentWithDate:(NSDate *)date;
 
 @end

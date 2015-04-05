@@ -9,10 +9,15 @@
 #import "NightVC.h"
 #import "NightScrollView.h"
 #import "ShareView.h"
+#import "CalendarHelper.h"
 
 @interface NightVC ()
 
 @property (nonatomic, strong) NightScrollView *scrollView;
+
+@property (nonatomic, strong) UILabel *weekLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UIButton *backButton;
 
 @end
 
@@ -26,6 +31,13 @@
     [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
         [weakSelf updateConnectForView];
     };
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_scrollView startChartAnimation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -43,6 +55,66 @@
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     [self loadNightScrollView];
+    [self loadCalendarButton];
+    [self loadDateLabel];
+    [self loadBackButton];
+}
+
+- (void)loadCalendarButton
+{
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(20, 18, 50, 44)
+                                              withImage:@"日历.png"
+                                        withSelectImage:@"日历.png"];
+    
+    [calendarButton addTarget:self action:@selector(clickCalendarButton) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:calendarButton];
+}
+
+- (void)loadBackButton
+{
+    _backButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
+                                 withImage:@"返回@2x.png"
+                           withSelectImage:@"返回@2x.png"];
+    [_backButton addTouchUpTarget:self action:@selector(clickBackButton:)];
+    [self addSubview:_backButton];
+}
+
+- (void)clickCalendarButton
+{
+    DEF_WEAKSELF_(NightVC);
+    [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
+        NSLog(@"..%@", [model date]);
+        [weakSelf.scrollView updateContentWithDate:[model date]];
+    };
+    
+    [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
+    } dismissBlock:^(UIView *_view) {
+        [CalendarHelper sharedInstance].calendarblock = nil;
+    }];
+}
+
+- (void)clickBackButton:(UIButton *)button
+{
+    [_scrollView updateContentToToday];
+}
+
+- (void)loadDateLabel
+{
+    _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 30)
+                                    withColor:[UIColor clearColor]
+                                withAlignment:NSTextAlignmentCenter
+                                 withFontSize:20
+                                     withText:@"星期一"
+                                withTextColor:[UIColor blackColor]];
+    [self addSubview:_weekLabel];
+    
+    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.width, 30)
+                                    withColor:[UIColor clearColor]
+                                withAlignment:NSTextAlignmentCenter
+                                 withFontSize:20
+                                     withText:@"2015/2/2"
+                                withTextColor:[UIColor blackColor]];
+    [self addSubview:_dateLabel];
 }
 
 - (void)loadNightScrollView
@@ -51,6 +123,21 @@
     
     [self addSubview:_scrollView];
     [self loadShareButton];
+    
+    DEF_WEAKSELF_(NightVC);
+    _scrollView.buttonRotationBlock = ^(UIView *view, id object) {
+        [weakSelf updateContentForLabelsAndButton:(NightDetailView *)view];
+    };
+}
+
+- (void)updateContentForLabelsAndButton:(NightDetailView *)detailView
+{
+    _dateLabel.text = [detailView.model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+    NSDate *date = detailView.currentDate;
+    NSString *weekString = [NSObject numberTransferWeek:date.weekday];
+    _weekLabel.text = weekString;
+    
+    [_backButton rotationAccordingWithDate:date];
 }
 
 - (void)loadShareButton

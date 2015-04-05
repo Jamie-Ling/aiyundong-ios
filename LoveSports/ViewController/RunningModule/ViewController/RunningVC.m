@@ -21,6 +21,8 @@
 #import "DayScrollView.h"
 #import "ShareView.h"
 
+#import "CalendarHelper.h"
+
 @interface RunningVC () <TrendChartViewDelegate, DayDetailViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *srcollView;
@@ -28,6 +30,11 @@
 @property (nonatomic, strong) TrendChartView *trendView;
 
 @property (nonatomic, strong) DayScrollView *dayScroll;
+
+@property (nonatomic, strong) UILabel *weekLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
+
+@property (nonatomic, strong) UIButton *backButton;
 
 @property (nonatomic, assign) CGFloat offsetY;
 @property (nonatomic, assign) BOOL isUpSwipe;
@@ -90,6 +97,67 @@
     
     [self loadScrollView];
     [self loadShareButton];
+    [self loadCalendarButton];
+    [self loadDateLabel];
+    [self loadBackButton];
+}
+
+- (void)loadCalendarButton
+{
+    UIButton *calendarButton = [UIButton simpleWithRect:CGRectMake(20, 18, 50, 44)
+                                              withImage:@"日历.png"
+                                        withSelectImage:@"日历.png"];
+    
+    [calendarButton addTarget:self action:@selector(clickCalendarButton) forControlEvents:UIControlEventTouchUpInside];
+    [_srcollView addSubview:calendarButton];
+}
+
+- (void)clickCalendarButton
+{
+    DEF_WEAKSELF_(RunningVC);
+    [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
+        NSLog(@"..%@", [model date]);
+        // weakSelf.currentDate = [model date];
+        [weakSelf.dayScroll updateContentWithDate:[model date]];
+    };
+    
+    [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {
+    } dismissBlock:^(UIView *_view) {
+        [CalendarHelper sharedInstance].calendarblock = nil;
+    }];
+}
+
+- (void)loadBackButton
+{
+    _backButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
+                                 withImage:@"返回@2x.png"
+                           withSelectImage:@"返回@2x.png"];
+    [_backButton addTouchUpTarget:self action:@selector(clickBackButton:)];
+    [_srcollView addSubview:_backButton];
+}
+
+- (void)clickBackButton:(UIButton *)button
+{
+    [_dayScroll updateContentToToday];
+}
+
+- (void)loadDateLabel
+{
+    _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 30)
+                                    withColor:[UIColor clearColor]
+                                withAlignment:NSTextAlignmentCenter
+                                 withFontSize:20
+                                     withText:@"星期一"
+                                withTextColor:[UIColor blackColor]];
+    [_srcollView addSubview:_weekLabel];
+    
+    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.width, 30)
+                                    withColor:[UIColor clearColor]
+                                withAlignment:NSTextAlignmentCenter
+                                 withFontSize:20
+                                     withText:@"2015/2/2"
+                                withTextColor:[UIColor blackColor]];
+    [_srcollView addSubview:_dateLabel];
 }
 
 - (void)loadScrollView
@@ -187,6 +255,20 @@
     _dayScroll = [[DayScrollView alloc] initWithFrame:_srcollView.bounds];
     
     [_srcollView addSubview:_dayScroll];
+    DEF_WEAKSELF_(RunningVC);
+    _dayScroll.buttonRotationBlock = ^(UIView *view, id object) {
+        [weakSelf updateContentForLabelsAndButton:(DayDetailView *)view];
+    };
+}
+
+- (void)updateContentForLabelsAndButton:(DayDetailView *)detailView
+{
+    _dateLabel.text = [detailView.model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+    NSDate *date = detailView.currentDate;
+    NSString *weekString = [NSObject numberTransferWeek:date.weekday];
+    _weekLabel.text = weekString;
+    
+    [_backButton rotationAccordingWithDate:date];
 }
 
 - (void)loadTrendChartView

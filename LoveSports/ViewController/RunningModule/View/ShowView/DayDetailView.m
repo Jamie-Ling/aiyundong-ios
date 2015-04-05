@@ -57,9 +57,6 @@
         _currentDate = [NSDate date];
 
         [self loadPieChartView];
-        [self loadCalendarButton];
-        [self loadBackButton];
-        [self loadDateLabel];
         [self loadChartStyleButtons];
         [self loadFSLineView];
     }
@@ -73,7 +70,7 @@
     
     if (_backButton)
     {
-        [_backButton rotationAccordingWithDate:currentDate];
+       // [_backButton rotationAccordingWithDate:currentDate];
     }
     
     // 将内存之前的图标清除...
@@ -345,10 +342,12 @@
     
     [self updateContentForGraphicButtons:model];
     [self updateContentFromClickChangeEvent];
+    /*
     _dateLabel.text = [model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
     NSDate *date = [NSDate dateWithString:model.dateString];
     NSString *weekString = [NSObject numberTransferWeek:date.weekday];
     _weekLabel.text = weekString;
+     */
 }
 
 - (void)updateContentFromClickChangeEvent

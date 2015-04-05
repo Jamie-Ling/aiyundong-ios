@@ -32,13 +32,7 @@
         detailView.currentDate = [date dateAfterDay:i - 1];
         [_viewsArray addObject:detailView];
         
-        DEF_WEAKSELF_(NightScrollView);
-        detailView.backBlock = ^(UIView *view, id object) {
-            [weakSelf updateContentToToday];
-        };
-        detailView.switchDateBlock = ^(UIView *view, id object) {
-            [weakSelf updateContentWithDate:object];
-        };
+        
     }
     
     [self loadUnlimitScrollView];
@@ -67,6 +61,11 @@
 {
     NightDetailView *detailView = _viewsArray[1];
     detailView.allowAnimation = YES;
+    
+    if (_buttonRotationBlock)
+    {
+        _buttonRotationBlock(detailView, nil);
+    }
 }
 
 - (void)updateDetailViewsDataWithIndex:(NSInteger)index
@@ -74,16 +73,7 @@
     NightDetailView *detailView = _viewsArray[index];
     NSDate *date = detailView.currentDate;
     
-    for (int i = 0; i < 3; i++)
-    {
-        NightDetailView *detailView = _viewsArray[i];
-        detailView.currentDate = [date dateAfterDay:i - 1];
-        
-        if (i == 1)
-        {
-            detailView.allowAnimation = YES;
-        }
-    }
+    [self updateContentWithDate:date];
 }
 
 - (BOOL)setBoundaryOfScrollView:(int)index
@@ -131,15 +121,7 @@
                        options:UIViewAnimationOptionTransitionFlipFromRight | UIViewAnimationOptionAllowUserInteraction
                     animations:^{
                         NSDate *date = [NSDate date];
-                        for (int i = 0; i < 3; ++i)
-                        {
-                            NightDetailView *detailView = _viewsArray[i];
-                            detailView.currentDate = [date dateAfterDay:i - 1];
-                            if (i == 1)
-                            {
-                                detailView.allowAnimation = YES;
-                            }
-                        }
+                        [self updateContentWithDate:date];
                     } completion:nil];
 }
 
@@ -151,11 +133,10 @@
         detailView.currentDate = [date dateAfterDay:i - 1];
         if (i == 1)
         {
-            detailView.allowAnimation = YES;
+            [self startChartAnimation];
         }
     }
 }
-
 
 /*
 // Only override drawRect: if you perform custom drawing.
