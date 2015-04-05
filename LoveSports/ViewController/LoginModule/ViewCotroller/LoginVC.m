@@ -61,7 +61,7 @@
     [_groundView addSubview:_headImage];
 
     NSArray *viewImages = @[@"username_1_07@2x.png", @"password_1_10@2x.png"];
-    NSArray *placeholder = @[@"请输入账号, 测试阶段", @"直接登录进入"];
+    NSArray *placeholder = @[@"请输入账号, 测试阶段", @"直接登录请点击访客模式"];
     NSArray *textArray = @[@"fly_it@qq.com", @"123456"];
     for (int i = 0; i < 2; i++)
     {
@@ -163,9 +163,6 @@
 
 - (void)clickLoginButton
 {
-    [self pushToHomeVC];
-    return;
-    
     UITextField *textField1 = (UITextField *)[_groundView viewWithTag:LoginVC_TextField_Tag];
     UITextField *textField2 = (UITextField *)[_groundView viewWithTag:LoginVC_TextField_Tag + 1];
     
@@ -188,8 +185,6 @@
     [[UserModelEntity sharedInstance] userModelRequestWithRighArgus:@[textField1.text, textField2.text] withRequestType:UserModelEntityRequestLogin];
     
     SHOWMBProgressHUDIndeterminate(nil, @"登录中...", NO);
-    
-    [self pushToHomeVC];
 }
 
 - (void)pushToHomeVC
@@ -203,7 +198,7 @@
 
 - (void)clickVisitorButton
 {
-   
+    [self pushToHomeVC];
 }
 
 // 模态推出注册界面。可以自行改为push根据业务需求

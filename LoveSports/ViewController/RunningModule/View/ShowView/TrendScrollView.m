@@ -124,6 +124,19 @@
 
 }
 
+// 无用的方法.
+- (void)updateContentWithDate:(NSDate *)date
+{
+    for (int i = 0; i < 3; i++)
+    {
+        TrendDetailView *detailView = _viewsArray[i];
+        
+        detailView.dayDate = [date dateAfterDay:(i - 1) * (int)[DataShare sharedInstance].showCount];
+        detailView.weekDate = [date dateAfterDay:(i - 1) * 7 * (int)[DataShare sharedInstance].showCount];
+        detailView.monthIndex = date.month + (i - 1) * [DataShare sharedInstance].showCount;
+    }
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

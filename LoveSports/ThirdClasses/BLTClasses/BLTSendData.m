@@ -42,15 +42,24 @@ DEF_SINGLETON(BLTSendData)
 + (UInt8)timeZone
 {
     UInt8 sign = [NSDate timeZone] > 0 ? 0 : (0x01 << 7);
-    return (UInt8)(sign | abs([NSDate timeZone]));
+    return (UInt8)(sign | (abs([NSDate timeZone] * 2)));
+}
+
++ (UInt8)activityTimeZone:(NSInteger)timeZone
+{
+    UInt8 sign = timeZone > 0 ? 0 : (0x01 << 7);
+    return (UInt8)(sign | (abs([NSDate timeZone] * 2)));
 }
 
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
-                           withHourly:(NSInteger)hourly
+                           withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[7] = {0xBE, 0x01, 0x01, 0xFE, scale, hourly, [self timeZone]};
-    [self sendDataToWare:&val withLength:7 withUpdate:block];
+    NSDate *date = [NSDate date];
+    UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, scale, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
+                    [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
+                    date.weekday, date.hour, date.minute, date.second};
+    [self sendDataToWare:&val withLength:16 withUpdate:block];
 }
 
 // 设置本地时间，每次开程序都需要。
@@ -181,13 +190,12 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
 
-+ (void)sendAlarmClockDataWithOpen:(UInt8)open
-                         withAlarm:(NSArray *)alarms
-                   withUpdateBlock:(BLTAcceptDataUpdateValue)block
++ (void)sendAlarmClockDataWithAlarm:(NSArray *)alarms
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[20] = {0xBE, 0x01, 0x09, 0xFE, open};
+    UInt8 val[20] = {0xBE, 0x01, 0x09, 0xFE};
     
-    int count = 4;
+    int count = 3;
     if (alarms)
     {
         for (AlarmClockModel *model in alarms)

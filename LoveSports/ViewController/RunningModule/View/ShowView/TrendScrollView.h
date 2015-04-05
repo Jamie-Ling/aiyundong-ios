@@ -20,5 +20,6 @@
 
 // 点击按钮后图标进行刷新
 - (void)reloadTrendChartViewWith:(TrendChartShowType)type;
+- (void)updateContentWithDate:(NSDate *)date;
 
 @end

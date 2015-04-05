@@ -160,7 +160,11 @@
     DEF_WEAKSELF_(DayDetailView)
     [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
         NSLog(@"..%@", [model date]);
-        weakSelf.currentDate = [model date];
+       // weakSelf.currentDate = [model date];
+        if (weakSelf.switchDateBlock)
+        {
+            weakSelf.switchDateBlock(weakSelf, [model date]);
+        }
     };
 
     [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {

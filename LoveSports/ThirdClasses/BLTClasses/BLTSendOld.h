@@ -29,9 +29,8 @@ AS_SINGLETON(BLTSendOld)
 + (void)sendOldRequestUserInfoWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 // 设置闹钟
-+ (void)sendOldSetAlarmClockDataWithOpen:(UInt8)open
-                               withAlarm:(NSArray *)alarms
-                         withUpdateBlock:(BLTAcceptDataUpdateValue)block;
++ (void)sendOldSetAlarmClockDataWithAlarm:(NSArray *)alarms
+                          withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 // 请求运动数据长度
 + (void)sendOldRequestDataInfoLengthWithUpdateBlock:(BLTAcceptDataUpdateValue)block;

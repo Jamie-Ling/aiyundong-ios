@@ -186,7 +186,7 @@
         }
     }
 
-    _repeat = val;
+    _repeat = val | ( _isOpen << 7);
     NSArray *array = [_alarmTime componentsSeparatedByString:@":"];
     _hour = [array[0] integerValue];
     _minutes = [array[1] integerValue];

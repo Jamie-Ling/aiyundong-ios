@@ -62,8 +62,8 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 @property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
 @property (nonatomic, strong) NSString *userName;           // 用户名
-@property (nonatomic, strong) NSString *dateString;
-@property (nonatomic, assign) NSInteger totalBytes;
+@property (nonatomic, strong) NSString *dateString;         // 日期
+@property (nonatomic, assign) NSInteger totalBytes;         // 数据包 。
 @property (nonatomic, assign) NSInteger settingBytes;
 
 @property (nonatomic, assign) NSInteger totalSteps;         // 当天的总步数

@@ -72,7 +72,7 @@
     if (buttonIndex == 1)
     {
         [BLTSendData sendBasicSetOfInformationData:_seg1.selectedSegmentIndex
-                                        withHourly:_seg2.selectedSegmentIndex
+                                        withActivityTimeZone:8
                                    withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                    }];
     }

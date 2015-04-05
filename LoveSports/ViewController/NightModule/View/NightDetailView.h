@@ -14,5 +14,6 @@
 @property (nonatomic, assign) BOOL allowAnimation;
 
 @property (nonatomic, strong) UIViewSimpleBlock backBlock;
+@property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;
 
 @end

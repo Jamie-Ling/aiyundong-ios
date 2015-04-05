@@ -33,8 +33,8 @@
     _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width , self.view.height - 64)];
     
     _wareView.delegate = self;
-    //_wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-    //[_wareView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:nil dismissBlock:nil];
+    // _wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
+    // [_wareView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:nil dismissBlock:nil];
     [self.view addSubview:_wareView];
     
     [self loadSkipButton];

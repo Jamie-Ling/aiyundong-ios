@@ -95,7 +95,7 @@
         textfield.tag = RegisterVC_TextField_Tag + i;
         [_groundView addSubview:textfield];
         
-        if (i == 2 || i == 3)
+        if (i == 1 || i == 2)
         {
             textfield.secureTextEntry = YES;
         }
@@ -130,7 +130,8 @@
     UITextField *textField2 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 1];
     UITextField *textField3 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 2];
     UITextField *textField4 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 3];
-    
+    UITextField *textField5 = (UITextField *)[_groundView viewWithTag:RegisterVC_TextField_Tag + 4];
+
     // 注册的昵称和密码如果有什么要求可自行另外添加。这里只判断不为空
     
     if ((!textField1 || textField1.text.length == 0)
@@ -150,14 +151,16 @@
     }
     */
     
-    if (![textField3.text isEqualToString:textField4.text])
+    if (![textField2.text isEqualToString:textField3.text])
     {
         SHOWMBProgressHUD(@"密码不一致", nil, nil, NO, 2.0);
         return;
     }
     
     [UserModelEntity sharedInstance].delegate = self;
-    [[UserModelEntity sharedInstance]  userModelRequestWithRighArgus:@[] withRequestType:UserModelEntityRequestRegister];
+    [[UserModelEntity sharedInstance] userModelRequestWithRighArgus:@[textField1.text, textField2.text,
+                                                                      textField4.text, textField5.text]
+                                                    withRequestType:UserModelEntityRequestRegister];
     
     SHOWMBProgressHUDIndeterminate(nil, @"注册中...", NO);
 }

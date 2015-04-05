@@ -369,7 +369,7 @@
                                     NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                                     
                                     _thisModel._timeAbsoluteValue = [nowSelectedString integerValue];
-                                    [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                    [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withActivityTimeZone:8         withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                         if (type == BLTAcceptDataTypeSetBaseInfo) {
                                             NSLog(@"设置时差绝对值成功");
                                         }

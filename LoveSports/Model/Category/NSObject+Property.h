@@ -13,6 +13,8 @@ typedef void(^NSObjectSimpleBlock)(id object);
 
 @property (nonatomic, readonly) NSArray *attributeList;
 
++ (BOOL)queryCurrentTimeSystem;
+
 + (NSString *)numberTransferWeek:(NSInteger)number;
 
 // 步数转卡路里， metric 为no时传入的(weight)重量为磅，长度(distance)英里和(pace)英尺

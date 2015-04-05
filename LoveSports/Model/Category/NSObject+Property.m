@@ -33,6 +33,17 @@
     return array;
 }
 
++ (BOOL)queryCurrentTimeSystem
+{
+    // 获取系统是24小时制或者12小时制
+    NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
+    NSRange containsA = [formatStringForHours rangeOfString:@"a"];
+    BOOL hasAMPM = (containsA.location != NSNotFound);
+    // hasAMPM == TURE为12小时制，否则为24小时制
+    
+    return hasAMPM;
+}
+
 + (NSString *)numberTransferWeek:(NSInteger)number
 {
     NSDictionary *dict = @{@(2) : @"星期一",

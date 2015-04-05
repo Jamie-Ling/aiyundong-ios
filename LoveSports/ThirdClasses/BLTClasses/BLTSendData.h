@@ -36,11 +36,11 @@ AS_SINGLETON(BLTSendData)
 *  设置用户基本信息
 *
 *  @param scale  公/英制
-*  @param hourly 小时制
+*  @param timeZone 经常活动时区
 *  @param lag    时差的绝对值
 */
 + (void)sendBasicSetOfInformationData:(NSInteger)scale
-                           withHourly:(NSInteger)hourly
+                 withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /** // 不用写，每次打开程序会自动发送
@@ -140,9 +140,8 @@ AS_SINGLETON(BLTSendData)
  *  @param alarms AlarmClockModel 数组
  *  @param block  回调
  */
-+ (void)sendAlarmClockDataWithOpen:(UInt8)open
-                         withAlarm:(NSArray *)alarms
-                   withUpdateBlock:(BLTAcceptDataUpdateValue)block;
++ (void)sendAlarmClockDataWithAlarm:(NSArray *)alarms
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /** // 需要界面
  *  久坐提醒

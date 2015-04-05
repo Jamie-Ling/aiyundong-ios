@@ -57,7 +57,6 @@ DEF_SINGLETON(UserInfoHelp)
     _userModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] floatValue];
     _userModel.step = [[userInfoDictionary objectForKey:kUserInfoOfStepLongKey] integerValue];
     
-    
     if (!_userModel.braceletModel)
     {
         if (userIngModel)
@@ -71,7 +70,6 @@ DEF_SINGLETON(UserInfoHelp)
             
         }
     }
-    
     
     _userModel.targetSteps = _userModel.braceletModel._stepNumber;
     //    _userModel.targetCalories = 1; //@"没有设置这一项了，得去算";

@@ -367,7 +367,6 @@
         _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
         [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
     }
-     
 }
 
 #pragma mark --- UITextField Delegate ---

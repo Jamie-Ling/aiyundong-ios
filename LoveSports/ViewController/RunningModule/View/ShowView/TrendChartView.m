@@ -76,7 +76,7 @@
                                         withSelectImage:@"日历.png"];
     
     [calendarButton addTarget:self action:@selector(clickCalendarButton) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:calendarButton];
+    // [self addSubview:calendarButton];
     _calendarButton = calendarButton;
 }
 
@@ -85,7 +85,7 @@
     DEF_WEAKSELF_(TrendChartView);
     [CalendarHelper sharedInstance].calendarblock = ^(CalendarDayModel *model) {
         NSLog(@"..%@", [model date]);
-        weakSelf.currentDate = [model date];
+         weakSelf.currentDate = [model date];
     };
     
     [[CalendarHelper sharedInstance].calenderView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:^(UIView *_view) {

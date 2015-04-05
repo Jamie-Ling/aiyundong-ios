@@ -25,6 +25,7 @@
 @property (nonatomic, strong) TrendTypeView *typeView;
 
 @property (nonatomic, strong) UILabel *yearLabel;
+@property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;
 
 - (void)setCurrentDate:(NSDate *)currentDate;
 - (void)reloadTrendChartView;

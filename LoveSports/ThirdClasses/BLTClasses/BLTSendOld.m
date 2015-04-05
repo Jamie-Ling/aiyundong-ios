@@ -39,13 +39,13 @@ DEF_SINGLETON(BLTSendOld)
 }
 
 // 四
-+ (void)sendOldSetAlarmClockDataWithOpen:(UInt8)open
-                               withAlarm:(NSArray *)alarms
-                         withUpdateBlock:(BLTAcceptDataUpdateValue)block
++ (void)sendOldSetAlarmClockDataWithAlarm:(NSArray *)alarms
+                          withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[16] = {0x0A, 0x01, 0x00, open};
+    UInt8 val[16] = {0x0A, 0x01, 0x00, 0x00};
     
     int count = 3;
+    int openIndex = 0;
     if (alarms)
     {
         for (AlarmClockModel *model in alarms)
@@ -55,6 +55,9 @@ DEF_SINGLETON(BLTSendOld)
             {
                 break;
             }
+            
+            val[3] = val[3] | (model.isOpen << openIndex);
+            openIndex++;
             
             val[count] = model.hour;
             count++;

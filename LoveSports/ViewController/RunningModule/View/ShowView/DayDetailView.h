@@ -20,6 +20,7 @@
 
 @property (nonatomic, assign) id <DayDetailViewDelegate> delegate;
 @property (nonatomic, strong) UIViewSimpleBlock backBlock;
+@property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;
 
 - (void)updateContentForView:(PedometerModel *)model;
 - (void)updateContentForChartViewWithDirection:(NSInteger)direction;

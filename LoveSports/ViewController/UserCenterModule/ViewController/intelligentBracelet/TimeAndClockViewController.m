@@ -123,18 +123,6 @@
         {
             NSLog(@"更改是否24时制的状态：%d", theSwitch.on);
             _thisModel._is24HoursTime = theSwitch.on;
-            
-            [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withHourly:_thisModel._is24HoursTime withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                if (type == BLTAcceptDataTypeSetBaseInfo) {
-                    NSLog(@"设置24小时制成功");
-                }
-                else
-                {
-                    NSLog(@"设置24小时制失败");
-                    theSwitch.on = !_thisModel._is24HoursTime;
-                    _thisModel._is24HoursTime = theSwitch.on;
-                }
-            }];
         }
         if (theSwitch.tag == 1)
         {
@@ -653,7 +641,7 @@
         }
     }
     
-    [BLTSendData sendAlarmClockDataWithOpen:00000001 withAlarm:setOpenArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendAlarmClockDataWithAlarm:setOpenArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetSedentaryRemind)
         {
             NSLog(@"设置打开闹钟成功");
@@ -666,7 +654,7 @@
         }
     }];
     
-    [BLTSendData sendAlarmClockDataWithOpen:00000000 withAlarm:setCloseArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+    [BLTSendData sendAlarmClockDataWithAlarm:setCloseArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetSedentaryRemind)
         {
             NSLog(@"设置关闭闹钟成功");

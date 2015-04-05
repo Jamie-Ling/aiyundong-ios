@@ -145,8 +145,8 @@
     [_tableView addLegendHeaderWithRefreshingBlock:^{
         [[BLTManager sharedInstance] checkOtherDevices];
 
-        // 模仿2秒后刷新成功
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 模仿5秒后刷新成功
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             // 结束刷新
             [weakSelf.tableView.header endRefreshing];
             [weakSelf reFreshDevice];
@@ -197,7 +197,15 @@
         cell = [[WareInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
     }
     
+    NSLog(@"1..%d..%d", indexPath.row, _showArray.count);
+    if (indexPath.row >= _showArray.count)
+    {
+        NSLog(@"..4");
+        return nil;
+    }
+    
     BLTModel *model = _showArray[indexPath.row];
+    NSLog(@"2");
     [cell updateContentForWareInfoCell:model withHeight:100.0];
     
     return cell;
@@ -205,6 +213,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"...3..%d", _showArray.count);
     return _showArray.count;
 }
 

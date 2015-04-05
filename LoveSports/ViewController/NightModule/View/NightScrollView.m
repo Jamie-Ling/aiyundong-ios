@@ -36,6 +36,9 @@
         detailView.backBlock = ^(UIView *view, id object) {
             [weakSelf updateContentToToday];
         };
+        detailView.switchDateBlock = ^(UIView *view, id object) {
+            [weakSelf updateContentWithDate:object];
+        };
     }
     
     [self loadUnlimitScrollView];
@@ -138,6 +141,19 @@
                             }
                         }
                     } completion:nil];
+}
+
+- (void)updateContentWithDate:(NSDate *)date
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        NightDetailView *detailView = _viewsArray[i];
+        detailView.currentDate = [date dateAfterDay:i - 1];
+        if (i == 1)
+        {
+            detailView.allowAnimation = YES;
+        }
+    }
 }
 
 

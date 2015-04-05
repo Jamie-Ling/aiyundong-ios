@@ -50,16 +50,17 @@ DEF_SINGLETON(UserModelEntity)
     }
     
     HttpRequest *hr = [self.requestHelper post:_baseLink[requestType] params:dict];
-
+    NSLog(@".hr = .%@", hr);
     [hr succeed:^(MKNetworkOperation *op) {
         NSString *str = [op responseString];
-        NSLog(@"..%@",str);
+        NSLog(@".op = .%@",str);
         if (str)
         {
             [self saveData:str withRequestType:requestType];
         }
     } failed:^(MKNetworkOperation *op, NSError *err) {
         
+        HIDDENMBProgressHUD;
         [self requestFailWithString:nil withRequestType:requestType];
     }];
     
@@ -72,12 +73,12 @@ DEF_SINGLETON(UserModelEntity)
     {
         case UserModelEntityRequestRegister:
         {
-        
+            HIDDENMBProgressHUD;
         }
             break;
         case UserModelEntityRequestLogin:
         {
-            
+            HIDDENMBProgressHUD;
         }
             break;
         case UserModelEntityRequestUpload:
