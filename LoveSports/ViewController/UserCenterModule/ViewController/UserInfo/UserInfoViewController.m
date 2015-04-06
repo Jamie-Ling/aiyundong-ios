@@ -66,6 +66,9 @@
     
     UITableView *_listTableView;
     BOOL _isMetricSystem;
+    UILabel *_notConectLabel;
+    
+    BOOL _haveConect;
     
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -94,6 +97,8 @@
     
     //tableview
     [self addTableView];
+    
+    [self addDidnotConectLabel];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -101,6 +106,8 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
+    
+    [self readyForSet];
     
     [self reloadUserInfoTableView];
 }
@@ -173,6 +180,25 @@
 }
 
 #pragma mark ---------------- 页面布局 -----------------
+
+//设置前的准备---防止中间断开了
+- (BOOL) readyForSet
+{
+    if ([BLTManager sharedInstance].connectState != BLTManagerConnected)
+    {
+        //没有连接设备
+        _haveConect = NO;
+        [_notConectLabel setHidden:NO];
+        //        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
+        [self reloadUserInfoTableView];  //刷新UI
+        return NO;
+    }
+    [_notConectLabel setHidden:YES];
+    _haveConect = YES;
+    return YES;
+}
+
+
 - (void) addTableView
 {
     _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, vTableViewLeaveTop, vOneCellWidth, kScreenHeight - vTableViewLeaveTop - 64) style:UITableViewStylePlain];
@@ -717,6 +743,28 @@
     
     [rightTitle setCenter:CGPointMake(title.right + 2 + rightTitle.width / 2.0, vOneCellHeight / 2.0)];
     [oneCell.contentView addSubview:rightTitle];
+    
+    
+    if (!_haveConect)
+    {
+        oneCell.userInteractionEnabled = NO;
+        [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
+
+    }
+    else
+    {
+        oneCell.userInteractionEnabled = YES;
+        [oneCell.contentView setBackgroundColor:kBackgroundColor];
+
+    }
+    
+    if (indexPath.row == 9)
+    {
+        //将活动地屏蔽
+        oneCell.userInteractionEnabled = NO;
+        [rightImageView setHidden:YES];
+        
+    }
     //设置点选颜色
     //    [oneCell setSelectedBackgroundView:[[UIView alloc] initWithFrame:oneCell.frame]];
     //    //kHexRGB(0x0e822f)
@@ -924,6 +972,31 @@
     
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
     [self reloadUserInfoTableView];
+}
+
+#pragma mark ---------------- 未连接相关 -----------------
+/**
+ *  添加未连接的按钮
+ */
+- (void) addDidnotConectLabel
+{
+    CGRect titleFrame = CGRectMake(0, 0, kButtonDefaultWidth, 35);
+    _notConectLabel = [[ObjectCTools shared] getACustomLableFrame:titleFrame
+                                                  backgroundColor:[UIColor blackColor]
+                                                             text:@"没有连接设备，无法进行相关设置"
+                                                        textColor:[UIColor whiteColor]
+                                                             font:[UIFont boldSystemFontOfSize:15]
+                                                    textAlignment:NSTextAlignmentCenter
+                                                    lineBreakMode:0
+                                                    numberOfLines:0];
+    [_notConectLabel.layer setBorderColor:[[UIColor redColor] CGColor] ];
+    [_notConectLabel.layer setCornerRadius:5.0];
+    [_notConectLabel.layer setMasksToBounds:YES];
+    //    [_notConectLabel sizeToFit];
+    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight)];
+    [self.view addSubview:_notConectLabel];
+    
+    [_notConectLabel setHidden:YES];
 }
 
 

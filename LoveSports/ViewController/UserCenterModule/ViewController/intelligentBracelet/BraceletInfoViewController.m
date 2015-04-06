@@ -84,7 +84,11 @@
     NSDictionary *_userInfoDictionary;
     NSMutableArray *_stepLongMustableArray;
     BOOL _isMetricSystem;
+    
+    UILabel *_notConectLabel;
 }
+
+
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 
@@ -148,6 +152,8 @@
     _cellTitleArray = _cellTitleArrayFor240N;
     
     [self addTableView];
+    
+    [self addDidnotConectLabel];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -191,24 +197,27 @@
 //刷新整个页面
 - (void) reloadMainPage
 {
-        if ([BLTManager sharedInstance].connectState != BLTManagerConnected)
-        {
-            //没有连接设备
-            _haveConect = NO;
+    if ([BLTManager sharedInstance].connectState != BLTManagerConnected)
+    {
+        //没有连接设备
+        _haveConect = NO;
+        _is240N = YES;  //初始化显示最新的240n
+        [_notConectLabel setHidden:NO];
+//        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
+        [self reloadUserInfoTableView];  //刷新UI
+        return;
+    }
     
-            SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
-            [self reloadUserInfoTableView];  //刷新UI
-            return;
-        }
+    [_notConectLabel setHidden:YES];
     _haveConect = YES;
     
-        if (![BLTManager sharedInstance].model.isNewDevice)
-        {
-            _is240N = NO;  //不是最新的240n
-            _cellTitleArray = _cellTitleArrayFor240;
-            [self reloadUserInfoTableView];  //刷新UI
-            return;
-        }
+    if (![BLTManager sharedInstance].model.isNewDevice)
+    {
+        _is240N = NO;  //不是最新的240n
+        _cellTitleArray = _cellTitleArrayFor240;
+        [self reloadUserInfoTableView];  //刷新UI
+        return;
+    }
     
     _cellTitleArray = _cellTitleArrayFor240N;
     _is240N = YES;
@@ -242,11 +251,14 @@
     {
         //没有连接设备
         _haveConect = NO;
-        
-        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
+        _is240N = YES;  //初始化显示最新的240n
+        [_notConectLabel setHidden:NO];
+        //        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
         [self reloadUserInfoTableView];  //刷新UI
         return NO;
     }
+    [_notConectLabel setHidden:YES];
+    _haveConect = YES;
     return YES;
 }
 
@@ -305,7 +317,7 @@
 - (void) goToTarget
 {
     NSLog(@"设置每日目标");
-
+    
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
     long lastIndex;
@@ -338,7 +350,7 @@
                                 if ([object boolValue])
                                 {
                                     NSLog(@"更新步数成功");
-//                                    _thisBraceletInfoModel._stepNumber = targetSums;
+                                    //                                    _thisBraceletInfoModel._stepNumber = targetSums;
                                     
                                     //更新界面
                                     [self reloadUserInfoTableView];
@@ -454,7 +466,7 @@
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:lastLong];
                                 }
                             }];
-
+                            
                             
                             
                             
@@ -553,18 +565,18 @@
             }
         }];
         
-//        [BLTSendData sendSedentaryRemindDataWithOpen:_thisBraceletInfoModel._longTimeSetRemind withTimes:[NSArray arrayWithObjects:oneClockBeginModel, oneClockOverModel, nil] withUpdateBlock:^(id object, BLTAcceptDataType type) {
-//            if (type == BLTAcceptDataTypeSetSedentaryRemind)
-//            {
-//                NSLog(@"更新久坐提醒状态成功");
-//            }
-//            else
-//            {
-//                NSLog(@"更新久坐提醒状态失败");
-//                theSwitch.on = !_thisBraceletInfoModel._longTimeSetRemind;
-//                _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
-//            }
-//        }];
+        //        [BLTSendData sendSedentaryRemindDataWithOpen:_thisBraceletInfoModel._longTimeSetRemind withTimes:[NSArray arrayWithObjects:oneClockBeginModel, oneClockOverModel, nil] withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        //            if (type == BLTAcceptDataTypeSetSedentaryRemind)
+        //            {
+        //                NSLog(@"更新久坐提醒状态成功");
+        //            }
+        //            else
+        //            {
+        //                NSLog(@"更新久坐提醒状态失败");
+        //                theSwitch.on = !_thisBraceletInfoModel._longTimeSetRemind;
+        //                _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
+        //            }
+        //        }];
         
         return;
     }
@@ -745,7 +757,7 @@
                 {
                     NSLog(@"改成左手");
                     _thisBraceletInfoModel._isLeftHand = YES;
-                   
+                    
                     [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
                         if ([object boolValue])
                         {
@@ -756,10 +768,10 @@
                         {
                             NSLog(@"更新左手状态失败");
                             SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
-
+                            
                             _thisBraceletInfoModel._isLeftHand = NO;
                         }
-                         [self reloadUserInfoTableView];
+                        [self reloadUserInfoTableView];
                     }];
                 }
             }
@@ -784,7 +796,7 @@
                         {
                             NSLog(@"更新右手状态失败");
                             SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
-
+                            
                             _thisBraceletInfoModel._isLeftHand = YES;
                         }
                         [self reloadUserInfoTableView];
@@ -1057,13 +1069,16 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = YES;
+        oneCell.userInteractionEnabled = NO;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
+        slideSwitchH.userInteractionEnabled = NO;
+        slideSwitchH.on = NO;
     }
     else
     {
         oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kBackgroundColor];
+        slideSwitchH.userInteractionEnabled = YES;
     }
     
     //设置点选颜色
@@ -1084,7 +1099,7 @@
     
     if (![self readyForSet])
     {
-      //  return;
+        //  return;
     }
     
     if (_is240N)
@@ -1110,7 +1125,7 @@
             case 4:
                 [self goToTimeAndClock];
                 break;
-       
+                
             case 6:
                 [self goToUpdateSystem];
                 break;
@@ -1207,6 +1222,31 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+#pragma mark ---------------- 未连接相关 -----------------
+/**
+ *  添加未连接的按钮
+ */
+- (void) addDidnotConectLabel
+{
+    CGRect titleFrame = CGRectMake(0, 0, kButtonDefaultWidth, 35);
+    _notConectLabel = [[ObjectCTools shared] getACustomLableFrame:titleFrame
+                                                  backgroundColor:[UIColor blackColor]
+                                                             text:@"没有连接设备，无法进行相关设置"
+                                                        textColor:[UIColor whiteColor]
+                                                             font:[UIFont boldSystemFontOfSize:15]
+                                                    textAlignment:NSTextAlignmentCenter
+                                                    lineBreakMode:0
+                                                    numberOfLines:0];
+    [_notConectLabel.layer setBorderColor:[[UIColor redColor] CGColor] ];
+    [_notConectLabel.layer setCornerRadius:5.0];
+    [_notConectLabel.layer setMasksToBounds:YES];
+//    [_notConectLabel sizeToFit];
+    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight)];
+    [self.view addSubview:_notConectLabel];
+    
+    [_notConectLabel setHidden:YES];
 }
 
 

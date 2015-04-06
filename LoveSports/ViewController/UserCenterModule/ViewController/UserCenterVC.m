@@ -435,7 +435,15 @@
             [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:YES];
             [oneCell.contentView addSubview:batteryView];
             
-            [rightTitle setText:[NSString stringWithFormat:@"%.0ld%%", (long)_dumpEnergy]];
+            if (_dumpEnergy == 0)
+            {
+                [rightTitle setText:@"0%"];
+            }
+            else
+            {
+                [rightTitle setText:[NSString stringWithFormat:@"%.0ld%%", (long)_dumpEnergy]];
+            }
+            
             [rightTitle sizeToFit];
             [rightTitle setCenter:CGPointMake(batteryView.x - 2 - rightTitle.width / 2.0, vOneCellHeight / 2.0)];
             [oneCell.contentView addSubview:rightTitle];
