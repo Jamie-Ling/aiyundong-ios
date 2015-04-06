@@ -201,7 +201,7 @@
     if (indexPath.row >= _showArray.count)
     {
         NSLog(@"..4");
-        return nil;
+        return cell;
     }
     
     BLTModel *model = _showArray[indexPath.row];

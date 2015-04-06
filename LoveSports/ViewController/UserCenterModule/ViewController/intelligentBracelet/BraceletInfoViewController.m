@@ -87,6 +87,8 @@
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 
+@property (nonatomic, strong) UISwitch *realTimeSwitch;
+
 @end
 
 @implementation BraceletInfoViewController
@@ -166,6 +168,10 @@
     
     [self reloadMainPage];
     
+    DEF_WEAKSELF_(BraceletInfoViewController);
+    [BLTRealTime sharedInstance].realTimeBlock = ^(BOOL success) {
+        [weakSelf notifiRealTimeSwitchState:YES];
+    };
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -176,6 +182,8 @@
     [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisBraceletInfoModel];
     
     [[UserInfoHelp sharedInstance] updateUserInfo:_thisBraceletInfoModel];
+    
+    [BLTRealTime sharedInstance].realTimeBlock = nil;
 }
 
 
@@ -296,17 +304,7 @@
 - (void) goToTarget
 {
     NSLog(@"设置每日目标");
-    
-    //    if (!_targetVC)
-    //    {
-    //        _targetVC = [[TargetViewController alloc] init];
-    //    }
-    //    _targetVC._thisModel = _thisBraceletInfoModel;
-    //    [self.navigationController pushViewController:_targetVC animated:YES];
-    //
-    //
-    //    return;
-    //
+
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
     long lastIndex;
@@ -350,52 +348,6 @@
                                     _thisBraceletInfoModel._stepNumber = old;
                                 }
                             }];
-                            /*
-                            //生日
-                            NSDate *theDate = [NSDate date];
-                            NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
-                            if (![NSString isNilOrEmpty:birthdayString ])
-                            {
-                                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                                NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-                                [dateFormatter setTimeZone:timeZone];
-                                theDate = [dateFormatter dateFromString:birthdayString];
-                            }
-                            
-                            //体重
-                            NSString *weight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
-                            if ([NSString isNilOrEmpty:weight])
-                            {
-                                weight = @"50";
-                            }
-                            
-                            //步长
-                            NSString *height = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
-                            if ([NSString isNilOrEmpty:height])
-                            {
-                                height = @"50";
-                            }
-                            
-                            //步数
-                            NSString *longString = pickerView.selectedValue;
-                            NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
-                            NSInteger targetSums = [nowSelectedString integerValue];
-                            
-                            [BLTSendData sendUserInformationBodyDataWithBirthDay:theDate withWeight:[weight integerValue] * 100 withTarget:targetSums withStepAway:[height integerValue] withSleepTarget:8*60 withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                if (type == BLTAcceptDataTypeSetUserInfo)
-                                {
-                                    NSLog(@"更新步数成功");
-                                    _thisBraceletInfoModel._stepNumber = targetSums;
-                                    
-                                    //更新界面
-                                    [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"更新步数失败");
-                                }
-                            }];*/
                         }
                     }];
 }
@@ -641,7 +593,11 @@
                     //                    [UIView showAlertView:@"打开同步失败" andMessage:nil];
                     theSwitch.on = !_thisBraceletInfoModel._isSyn;
                     _thisBraceletInfoModel._isSyn = theSwitch.on;
-                    
+                    SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
+                }
+                else
+                {
+                    SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
                 }
             }];
         }
@@ -653,12 +609,25 @@
                     //                    [UIView showAlertView:@"关闭同步失败" andMessage:nil];
                     theSwitch.on = !_thisBraceletInfoModel._isSyn;
                     _thisBraceletInfoModel._isSyn = theSwitch.on;
-                    
+                    SHOWMBProgressHUD(@"实时传输关闭失败.", nil, nil, NO, 2.0);
+                }
+                else
+                {
+                    SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
                 }
             }];
         }
     }
     
+}
+
+- (void)notifiRealTimeSwitchState:(BOOL)isOn
+{
+    if (isOn)
+    {
+        //_switchLabel.text = @"运动数据实时传输开启中";
+        _realTimeSwitch.on = YES;
+    }
 }
 
 - (void) disConect
@@ -780,10 +749,13 @@
                         if ([object boolValue])
                         {
                             NSLog(@"更新左手状态成功");
+                            SHOWMBProgressHUD(@"设置左手成功.", nil, nil, NO, 2.0);
                         }
                         else
                         {
                             NSLog(@"更新左手状态失败");
+                            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
+
                             _thisBraceletInfoModel._isLeftHand = NO;
                         }
                          [self reloadUserInfoTableView];
@@ -805,10 +777,13 @@
                         if ([object boolValue])
                         {
                             NSLog(@"更新右手状态成功");
+                            SHOWMBProgressHUD(@"设置右手成功.", nil, nil, NO, 2.0);
                         }
                         else
                         {
                             NSLog(@"更新右手状态失败");
+                            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
+
                             _thisBraceletInfoModel._isLeftHand = YES;
                         }
                         [self reloadUserInfoTableView];
@@ -1031,12 +1006,14 @@
         {
             if (_is240N)
             {
-                slideSwitchH.on = _thisBraceletInfoModel._PreventLossRemind;
+                slideSwitchH.on = [BLTRealTime sharedInstance].isRealTime;
                 [oneCell.contentView addSubview:slideSwitchH];
                 
                 [rightImageView setHidden:YES];
                 
                 oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
+                
+                _realTimeSwitch = slideSwitchH;
             }
         }
             break;

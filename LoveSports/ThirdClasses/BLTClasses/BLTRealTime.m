@@ -25,7 +25,7 @@ DEF_SINGLETON(BLTRealTime)
         _currentDayModel = [PedometerHelper getModelFromDBWithDate:[NSDate date]];
         [_currentDayModel modelToDetailShowWithTimeOrder:288];
         
-       // self.isRealTime = [LS_RealTimeTransState getBOOLValue];
+        self.isRealTime = [LS_RealTimeTransState getBOOLValue];
         self.isAllownRealTime = NO;
     }
     
@@ -41,6 +41,8 @@ DEF_SINGLETON(BLTRealTime)
             {
                 // SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
                 _isRealTime = YES;
+                [LS_RealTimeTransState setBOOLValue:YES];
+                
                 if (block)
                 {
                     block(YES);
@@ -48,6 +50,8 @@ DEF_SINGLETON(BLTRealTime)
             }
             else
             {
+                [LS_RealTimeTransState setBOOLValue:NO];
+
                 if (block)
                 {
                     block(NO);
@@ -76,6 +80,8 @@ DEF_SINGLETON(BLTRealTime)
             {
                 // SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
                 _isRealTime = NO;
+                [LS_RealTimeTransState setBOOLValue:NO];
+                
                 if (block)
                 {
                     block(YES);
@@ -83,6 +89,8 @@ DEF_SINGLETON(BLTRealTime)
             }
             else
             {
+                [LS_RealTimeTransState setBOOLValue:YES];
+
                 if (block)
                 {
                     block(NO);

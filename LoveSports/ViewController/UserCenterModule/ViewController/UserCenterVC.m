@@ -29,6 +29,7 @@
 #import "BindIngDeviceViewController.h"
 #import "HomeVC.h"
 #import "AboutUSViewController.h"
+#import "AlarmClockModel.h"
 
 @interface UserCenterVC()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -82,6 +83,9 @@
     
     //给到这个model
     [[UserInfoHelp sharedInstance] updateUserInfo:_showModel];
+    
+    NSArray *alarmArray = [AlarmClockModel getAlarmClockFromDB];
+    _showModel.alarmArray = alarmArray;
     
     //刷新界面
     [self updateElecQuantity];

@@ -10,4 +10,6 @@
 
 @interface AlarmClockVC : ZKKViewController
 
+- (instancetype)initWithAlarmClock:(NSArray *)alarmArray;
+
 @end

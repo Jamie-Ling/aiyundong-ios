@@ -149,7 +149,7 @@
 #pragma mark --- 重写父类方法 ---
 - (void)leftSwipe
 {
-    // [self updateContentForBarShowViewWithDate:[_currentDate dateAfterDay:1]];
+    // [self updateContentForBarShowViewWithDate:[_currentDate dateAfterDay:1]]; 21 33 ＊ 5
 }
 
 - (void)rightSwipe

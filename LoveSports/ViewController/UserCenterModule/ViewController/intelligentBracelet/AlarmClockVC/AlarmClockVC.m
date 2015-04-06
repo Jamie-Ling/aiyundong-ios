@@ -19,13 +19,23 @@
 
 @implementation AlarmClockVC
 
+- (instancetype)initWithAlarmClock:(NSArray *)alarmArray
+{
+    self = [super init];
+    if (self)
+    {
+        _alarmArray = alarmArray;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.backgroundColor = UIColorRGB(214, 214, 212);
-    _alarmArray = [AlarmClockModel getAlarmClockFromDB];
     
     [self loadRightItem];
     [self loadTitleView];
@@ -50,6 +60,18 @@
     {
         [model convertToBLTNeed];
     }
+    
+    [[UserInfoHelp sharedInstance] sendSetAlarmClock:^(id object) {
+        if ([object boolValue])
+        {
+            SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
+        }
+        else
+        {
+            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
+            [[BLTManager sharedInstance] dismissLink];
+        }
+    }];
 }
 
 - (void)loadTitleView

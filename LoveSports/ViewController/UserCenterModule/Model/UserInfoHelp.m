@@ -62,12 +62,14 @@ DEF_SINGLETON(UserInfoHelp)
         if (userIngModel)
         {
             _userModel.braceletModel = userIngModel;
+            _braceModel = userIngModel;
         }
         else
         {
             BraceletInfoModel   *showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
             _userModel.braceletModel = showModel;
             
+            _braceModel = showModel;
         }
     }
     
@@ -83,62 +85,6 @@ DEF_SINGLETON(UserInfoHelp)
     return _userModel;
 }
 
-
-- (void)setTarget:(BOOL)target
-{
-    _target = target;
-    if (_target)
-    {
-        [self sendSetUserInfo:nil];
-    }
-}
-
-
-- (void)setStep:(BOOL)step
-{
-    _step = step;
-    if (_step)
-    {
-        [self sendSetUserInfo:nil];
-    }
-}
-
-- (void)setSedentariness:(BOOL)sedentariness
-{
-    _sedentariness = sedentariness;
-    if (_sedentariness)
-    {
-        
-    }
-}
-
-- (void)setAdorn:(BOOL)adorn
-{
-    _adorn = adorn;
-    if (_adorn)
-    {
-        
-    }
-}
-
-- (void)setAlarm:(BOOL)alarm
-{
-    _alarm = alarm;
-    if (_alarm)
-    {
-        
-    }
-}
-
-- (void)setUserInfo:(BOOL)userInfo
-{
-    _userInfo = userInfo;
-    if (_userInfo)
-    {
-        [self sendSetUserInfo:nil];
-    }
-}
-
 - (void)sendSetUserInfo:(NSObjectSimpleBlock)backBlock
 {
     NSDate *birthDay = [NSDate stringToDate:_userModel.birthDay];
@@ -150,17 +96,9 @@ DEF_SINGLETON(UserInfoHelp)
                                                 withStepAway:_userModel.step
                                              withSleepTarget:_userModel.targetSleep
                                              withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                                 if (type == BLTAcceptDataTypeSetUserInfo)
-                                                 {
-                                                     SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0)
-                                                 }
-                                                 else
-                                                 {
-                                                     SHOWMBProgressHUD(@"设置失败.", nil, nil, NO, 2.0);
-                                                     usleep(5000);
-                                                     [self sendSetUserInfo:^(id object) {
-                                                     }];
-                                                 }
+                                                 [self notifyViewWithBackBlock:backBlock
+                                                                   withSuccess:type == BLTAcceptDataTypeSetUserInfo];
+                                                 
                                              }];
         
     }
@@ -174,24 +112,30 @@ DEF_SINGLETON(UserInfoHelp)
                               withStep:_userModel.step
                               withType:0
                        withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                           if (type == BLTAcceptDataTypeOldSetUserInfo)
-                           {
-                               SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0)
-                           }
-                           else
-                           {
-                               SHOWMBProgressHUD(@"设置失败.", nil, nil, NO, 2.0);
-                               usleep(5000);
-                               [self sendSetUserInfo:^(id object) {
-                               }];
-                           }
+                           [self notifyViewWithBackBlock:backBlock
+                                             withSuccess:type == BLTAcceptDataTypeOldSetUserInfo];
                        }];
     }
 }
 
 - (void)sendSetAdornType:(NSObjectSimpleBlock)backBlock
 {
-    
+    if ([BLTManager sharedInstance].model.isNewDevice)
+    {
+        [BLTSendData sendSetWearingWayDataWithRightHand:!_braceModel._isLeftHand
+                                        withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                            [self notifyViewWithBackBlock:backBlock
+                                                              withSuccess:type == BLTAcceptDataTypeSetWearingWay];
+        }];
+    }
+    else
+    {
+        [BLTSendOld sendSetWearingWayDataWithRightHand:!_braceModel._isLeftHand
+                                       withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                           [self notifyViewWithBackBlock:backBlock
+                                                             withSuccess:type == BLTAcceptDataTypeOldSetWearingWay];
+                                       }];
+    }
 }
 
 - (void)sendSetSedentariness:(NSObjectSimpleBlock)backBlock
@@ -201,7 +145,36 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetAlarmClock:(NSObjectSimpleBlock)backBlock
 {
-    
+    if ([BLTManager sharedInstance].model.isNewDevice)
+    {
+        [BLTSendData sendAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [self notifyViewWithBackBlock:backBlock
+                              withSuccess:type == BLTAcceptDataTypeSetAlarmClock];
+        }];
+    }
+    else
+    {
+        [BLTSendOld sendOldSetAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [self notifyViewWithBackBlock:backBlock
+                              withSuccess:type == BLTAcceptDataTypeOldSetAlarmClock];
+        }];
+    }
+}
+
+- (void)notifyViewWithBackBlock:(NSObjectSimpleBlock)backBlock withSuccess:(BOOL)success
+{
+    if (success)
+    {
+        if (backBlock) {
+            backBlock(@(YES));
+        }
+    }
+    else
+    {
+        if (backBlock) {
+            backBlock(@(NO));
+        }
+    }
 }
 
 @end

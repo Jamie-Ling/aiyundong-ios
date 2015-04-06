@@ -66,6 +66,7 @@
 // 趋势表一次展示的个数
 // #define LS_TrendChartShowCount  (7)
 
+// 实时传输的状态。
 #define LS_RealTimeTransState  @"LS_RealTimeTransState"
 
 // 基准年

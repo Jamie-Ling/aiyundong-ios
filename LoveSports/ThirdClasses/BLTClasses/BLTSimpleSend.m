@@ -132,7 +132,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeSetLocTime)
         {
-            SHOWMBProgressHUD(@"设置时间成功", nil, nil, NO, 2);
+            // SHOWMBProgressHUD(@"设置时间成功", nil, nil, NO, 2);
         }
     }];
     

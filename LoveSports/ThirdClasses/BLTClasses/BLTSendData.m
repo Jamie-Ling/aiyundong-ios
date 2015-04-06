@@ -193,7 +193,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendAlarmClockDataWithAlarm:(NSArray *)alarms
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[20] = {0xBE, 0x01, 0x09, 0xFE};
+    UInt8 val[20] = {0xBE, 0x01, 0x09, 0xFE,};
     
     int count = 3;
     if (alarms)
@@ -324,7 +324,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendSetWearingWayDataWithRightHand:(BOOL)right
                            withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[5] = {0xBE, 0x01, 0x0B, 0xED, right};
+    UInt8 val[5] = {0xBE, 0x01, 0x0B, 0xFE, right};
     [self sendDataToWare:&val withLength:5 withUpdate:block];
 }
 
