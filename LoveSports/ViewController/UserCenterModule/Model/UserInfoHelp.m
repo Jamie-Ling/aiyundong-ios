@@ -140,7 +140,20 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetSedentariness:(NSObjectSimpleBlock)backBlock
 {
-    
+    if ([BLTManager sharedInstance].model.isNewDevice)
+    {
+        [BLTSendData sendSedentaryRemindDataWithRemind:_braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [self notifyViewWithBackBlock:backBlock
+                              withSuccess:type == BLTAcceptDataTypeSetSedentaryRemind];
+        }];
+    }
+    else
+    {
+        [BLTSendOld sendOldAboutEventWithRemind:_braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+            [self notifyViewWithBackBlock:backBlock
+                              withSuccess:type == BLTAcceptDataTypeOldEventInfo];
+        }];
+    }
 }
 
 - (void)sendSetAlarmClock:(NSObjectSimpleBlock)backBlock

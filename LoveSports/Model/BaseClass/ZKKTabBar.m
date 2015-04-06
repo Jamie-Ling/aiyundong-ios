@@ -86,13 +86,13 @@
 
 - (void)selectTabAtIndex:(NSInteger)index
 {
-    _lastButton.selected = NO;
-    UIButton *btn = [self.itemsArray objectAtIndex:index];
-    btn.selected = YES;
-    _lastButton = btn;
-    
-    if (index != 5)
+    if (index != _itemsArray.count - 1)
     {
+        _lastButton.selected = NO;
+        UIButton *btn = [self.itemsArray objectAtIndex:index];
+        btn.selected = YES;
+        _lastButton = btn;
+        
         _signView.center = CGPointMake(_lastButton.center.x, _signView.center.y);
     }
     

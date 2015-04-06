@@ -43,9 +43,8 @@ AS_SINGLETON(BLTSendOld)
                               withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 // 传输事件信息
-+ (void)sendOldAboutEventWithTimes:(NSArray *)alarms
-                          withOpen:(BOOL)open
-                   withUpdateBlock:(BLTAcceptDataUpdateValue)block;
++ (void)sendOldAboutEventWithRemind:(NSArray *)times
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 // 刚链接时设置用户信息并同步
 + (void)setUserInfoToOldDevice;

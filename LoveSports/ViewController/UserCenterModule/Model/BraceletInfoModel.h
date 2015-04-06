@@ -46,6 +46,7 @@
 @property (nonatomic, assign) BOOL _isSyn;  //是否实时同步
 
 @property (nonatomic, assign) BOOL _longTimeSetRemind;  //久坐提醒
+@property (nonatomic, strong) NSArray *remindArray;
 @property (nonatomic, assign) BOOL _PreventLossRemind;  //防止丢失的提醒
 
 @property (nonatomic, assign) NSInteger _orderID;  //排列顺序ID

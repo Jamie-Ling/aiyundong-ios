@@ -30,6 +30,7 @@
 #import "HomeVC.h"
 #import "AboutUSViewController.h"
 #import "AlarmClockModel.h"
+#import "RemindModel.h"
 
 @interface UserCenterVC()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -86,6 +87,9 @@
     
     NSArray *alarmArray = [AlarmClockModel getAlarmClockFromDB];
     _showModel.alarmArray = alarmArray;
+    
+    NSArray *remindArray = [RemindModel getRemindFromDB];
+    _showModel.remindArray = remindArray;
     
     //刷新界面
     [self updateElecQuantity];

@@ -225,28 +225,45 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
 
-+ (void)sendSedentaryRemindDataWithOpen:(BOOL)open
-                              withTimes:(NSArray *)times
-                        withUpdateBlock:(BLTAcceptDataUpdateValue)block
++ (void)sendSedentaryRemindDataWithRemind:(NSArray *)times
+                          withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 {
-    UInt8 val[19] = {0xBE, 0x01, 0x0C, 0xFE, open};
+    UInt8 val[19] = {0xBE, 0x01, 0x0C, 0xFE, 0x00};
     
     int count = 4;
+    int index = 0;
     if (times)
     {
-        for (AlarmClockModel *model in times)
+        for (RemindModel *model in times)
         {
             count++;
             if (count > 18)
             {
+                count--;
                 break;
             }
             
-            val[count] = model.hour;
+            val[3] = val[3] | (model.isOpen << index);
+            index++;
+            
+            NSArray *array = [model.startTime componentsSeparatedByString:@":"];
+            val[count] = [array[0] integerValue];
             count++;
-            val[count] = model.minutes;
+            val[count] = [array[1] integerValue];
+            
+            count++;
+            array = [model.endTime componentsSeparatedByString:@":"];
+            val[count] = [array[0] integerValue];
+            count++;
+            val[count] = [array[1] integerValue];
         }
     }
+    
+    RemindModel *model = [times lastObject];
+    NSInteger time = [model.interval integerValue];
+    
+    val[17] = time / 60;
+    val[18] = time % 60;
     
     [self sendDataToWare:&val withLength:19 withUpdate:block];
 }

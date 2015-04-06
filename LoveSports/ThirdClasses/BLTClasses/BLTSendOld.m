@@ -99,16 +99,17 @@ DEF_SINGLETON(BLTSendOld)
     [self sendDataToWare:&val withLength:3 withUpdate:block];
 }
 
-+ (void)sendOldAboutEventWithTimes:(NSArray *)alarms
-                          withOpen:(BOOL)open
-                   withUpdateBlock:(BLTAcceptDataUpdateValue)block
++ (void)sendOldAboutEventWithRemind:(NSArray *)times
+                    withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    AlarmClockModel *start = alarms[0];
-    AlarmClockModel *end = alarms[1];
+    RemindModel *model = [times lastObject];
+    NSArray *array1 = [model.startTime componentsSeparatedByString:@":"];
+    NSArray *array2 = [model.endTime componentsSeparatedByString:@":"];
+    NSInteger time = [model.interval integerValue];
 
     UInt8 val[10] = {0x0D, 0x01, 0x00,
-                    start.hour, start.minutes, start.seconds,
-                    end.hour, end.minutes, end.seconds, open};
+                    [array1[0] integerValue], [array1[1] integerValue], [array2[0] integerValue],
+                    [array2[1] integerValue], time / 60, time % 60, model.isOpen};
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 

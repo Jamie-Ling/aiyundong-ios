@@ -53,6 +53,7 @@
 #import "BSModalPickerView.h"
 #import "UserInfoViewController.h"
 #import "UserInfoHelp.h"
+#import "RemindVC.h"
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 {
@@ -859,8 +860,6 @@
             return;
         }
     }
-    
-    
 }
 
 #pragma mark ---------------- TableView delegate -----------------
@@ -1056,12 +1055,12 @@
     }
     
     
-        if (!_haveConect)
-        {
-            oneCell.userInteractionEnabled = NO;
-            [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
-        }
-        else
+    if (!_haveConect)
+    {
+        oneCell.userInteractionEnabled = YES;
+        [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
+    }
+    else
     {
         oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kBackgroundColor];
@@ -1085,7 +1084,7 @@
     
     if (![self readyForSet])
     {
-        return;
+      //  return;
     }
     
     if (_is240N)
@@ -1104,10 +1103,14 @@
                 [self choiceHand];
                 break;
                 
+            case 3:
+                [self goToSetRemindVC];
+                break;
+                
             case 4:
                 [self goToTimeAndClock];
                 break;
-                
+       
             case 6:
                 [self goToUpdateSystem];
                 break;
@@ -1141,6 +1144,10 @@
                 [self choiceHand];
                 break;
                 
+            case 3:
+                [self goToSetRemindVC];
+                break;
+                
             case 4:
                 [self goToTimeAndClock];
                 break;
@@ -1155,6 +1162,13 @@
         }
         
     }
+}
+
+- (void)goToSetRemindVC
+{
+    RemindVC *remindVC = [[RemindVC alloc] initWithRemind:[_thisBraceletInfoModel.remindArray lastObject]];
+    
+    [self.navigationController pushViewController:remindVC animated:YES];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

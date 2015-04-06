@@ -304,6 +304,9 @@
 		F4792FD61AAF2CF000B44A23 /* BLTAcceptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD51AAF2CF000B44A23 /* BLTAcceptOld.m */; };
 		F4792FD91AAF3C6000B44A23 /* PedometerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD81AAF3C6000B44A23 /* PedometerOld.m */; };
 		F47F35201A7E6D1400D6D220 /* PedometerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F351F1A7E6D1400D6D220 /* PedometerModel.m */; };
+		F486BE4E1AD2407900BA8A6B /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE4D1AD2407900BA8A6B /* RemindModel.m */; };
+		F486BE521AD2449F00BA8A6B /* RemindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE511AD2449F00BA8A6B /* RemindVC.m */; };
+		F486BE551AD2450100BA8A6B /* RemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE541AD2450100BA8A6B /* RemindView.m */; };
 		F49529C71A7662BF002A5382 /* UserModelEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529C61A7662BF002A5382 /* UserModelEntity.m */; };
 		F49529D11A766E03002A5382 /* BLTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CA1A766E03002A5382 /* BLTManager.m */; };
 		F49529D21A766E03002A5382 /* BLTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CC1A766E03002A5382 /* BLTModel.m */; };
@@ -315,6 +318,7 @@
 		F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56F61A8F777C00955BBC /* PedometerHelper.m */; };
 		F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */; };
 		F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */; };
+		F4B43C341AD26B980024142F /* RemindPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B43C331AD26B980024142F /* RemindPicker.m */; };
 		F4B692F41A6F3EBC00B42395 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F31A6F3EBC00B42395 /* main.m */; };
 		F4B692F71A6F3EBC00B42395 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F61A6F3EBC00B42395 /* AppDelegate.m */; };
 		F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B692F91A6F3EBC00B42395 /* ViewController.m */; };
@@ -844,6 +848,12 @@
 		F4792FD81AAF3C6000B44A23 /* PedometerOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerOld.m; sourceTree = "<group>"; };
 		F47F351E1A7E6D1400D6D220 /* PedometerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerModel.h; sourceTree = "<group>"; };
 		F47F351F1A7E6D1400D6D220 /* PedometerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerModel.m; sourceTree = "<group>"; };
+		F486BE4C1AD2407900BA8A6B /* RemindModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindModel.h; sourceTree = "<group>"; };
+		F486BE4D1AD2407900BA8A6B /* RemindModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindModel.m; sourceTree = "<group>"; };
+		F486BE501AD2449F00BA8A6B /* RemindVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindVC.h; sourceTree = "<group>"; };
+		F486BE511AD2449F00BA8A6B /* RemindVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindVC.m; sourceTree = "<group>"; };
+		F486BE531AD2450100BA8A6B /* RemindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindView.h; sourceTree = "<group>"; };
+		F486BE541AD2450100BA8A6B /* RemindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindView.m; sourceTree = "<group>"; };
 		F49529C51A7662BF002A5382 /* UserModelEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModelEntity.h; sourceTree = "<group>"; };
 		F49529C61A7662BF002A5382 /* UserModelEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModelEntity.m; sourceTree = "<group>"; };
 		F49529C91A766E03002A5382 /* BLTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTManager.h; sourceTree = "<group>"; };
@@ -865,6 +875,8 @@
 		F4AD56FC1A8F779B00955BBC /* BLTSimpleSend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTSimpleSend.h; sourceTree = "<group>"; };
 		F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTSimpleSend.m; sourceTree = "<group>"; };
 		F4AD57001A8F77C500955BBC /* PedometerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerHelper.h; sourceTree = "<group>"; };
+		F4B43C321AD26B980024142F /* RemindPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindPicker.h; sourceTree = "<group>"; };
+		F4B43C331AD26B980024142F /* RemindPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindPicker.m; sourceTree = "<group>"; };
 		F4B692EE1A6F3EBC00B42395 /* LoveSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoveSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B692F21A6F3EBC00B42395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4B692F31A6F3EBC00B42395 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1770,6 +1782,7 @@
 		69FD41E71A7FCC2C0023B74D /* intelligentBracelet */ = {
 			isa = PBXGroup;
 			children = (
+				F486BE4F1AD2448C00BA8A6B /* RemindVC */,
 				69FD41E81A7FCC2C0023B74D /* BraceletInfoViewController.h */,
 				69FD41E91A7FCC2C0023B74D /* BraceletInfoViewController.m */,
 				69FD41EA1A7FCC2C0023B74D /* CustomViewController.h */,
@@ -1916,6 +1929,8 @@
 				F4CB16571ABD3F44008C4374 /* DataShare.m */,
 				F4DB023A1ACF8B2B00892B16 /* AlarmClockModel.h */,
 				F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */,
+				F486BE4C1AD2407900BA8A6B /* RemindModel.h */,
+				F486BE4D1AD2407900BA8A6B /* RemindModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -2047,6 +2062,19 @@
 				F470E7EE1A7FB7660009E649 /* NSDate+WQCalendarLogic.m */,
 			);
 			path = ZFCalendar;
+			sourceTree = "<group>";
+		};
+		F486BE4F1AD2448C00BA8A6B /* RemindVC */ = {
+			isa = PBXGroup;
+			children = (
+				F486BE501AD2449F00BA8A6B /* RemindVC.h */,
+				F486BE511AD2449F00BA8A6B /* RemindVC.m */,
+				F486BE531AD2450100BA8A6B /* RemindView.h */,
+				F486BE541AD2450100BA8A6B /* RemindView.m */,
+				F4B43C321AD26B980024142F /* RemindPicker.h */,
+				F4B43C331AD26B980024142F /* RemindPicker.m */,
+			);
+			path = RemindVC;
 			sourceTree = "<group>";
 		};
 		F49529C81A766E03002A5382 /* BLTClasses */ = {
@@ -2917,6 +2945,7 @@
 				F4B692F41A6F3EBC00B42395 /* main.m in Sources */,
 				698A90BF1A6FEB54005BABE6 /* readme.md in Sources */,
 				F470E7F31A7FB7660009E649 /* CalendarMonthCollectionViewLayout.m in Sources */,
+				F486BE521AD2449F00BA8A6B /* RemindVC.m in Sources */,
 				69FD42161A7FCC2C0023B74D /* ProvinceViewController.m in Sources */,
 				F4CE027A1AAC0AAF005C29FC /* UIView+Simple.m in Sources */,
 				F43979F51AB550680033B7BB /* MJRefreshLegendHeader.m in Sources */,
@@ -2937,6 +2966,7 @@
 				69FD420C1A7FCC2C0023B74D /* TimeZoneView.m in Sources */,
 				F4B693AC1A6F403400B42395 /* MKNetworkEngine.m in Sources */,
 				F4C4C82F1AC6D551005D511A /* GraphicButton.m in Sources */,
+				F4B43C341AD26B980024142F /* RemindPicker.m in Sources */,
 				69FD421F1A7FCC2C0023B74D /* BraceletInfoViewController.m in Sources */,
 				F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */,
 				699242051A768BDF00EFF121 /* LKDBHelper.m in Sources */,
@@ -2970,6 +3000,7 @@
 				F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */,
 				F43F8EE31A8106ED008A431B /* DataModel.m in Sources */,
 				F4CE02801AAC4891005C29FC /* UserInfoModel.m in Sources */,
+				F486BE551AD2450100BA8A6B /* RemindView.m in Sources */,
 				F4B6934C1A6F401A00B42395 /* IQUIView+Hierarchy.m in Sources */,
 				69FD421E1A7FCC2C0023B74D /* HardWareVC.m in Sources */,
 				69FD42201A7FCC2C0023B74D /* CustomViewController.m in Sources */,
@@ -2996,6 +3027,7 @@
 				69EFC2DF1A760CD700B5BC53 /* SDWebImageManager.m in Sources */,
 				F430E44E1AC798F1004E7130 /* SleepTimeView.m in Sources */,
 				698A90C21A6FEB54005BABE6 /* README.md in Sources */,
+				F486BE4E1AD2407900BA8A6B /* RemindModel.m in Sources */,
 				69EFC2521A73A8EA00B5BC53 /* UITextField+_extra.m in Sources */,
 				F43979F01AB550680033B7BB /* MJRefreshFooter.m in Sources */,
 				F4B693E21A6F40D200B42395 /* NSObject+Property.m in Sources */,

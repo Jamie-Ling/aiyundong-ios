@@ -13,6 +13,7 @@
 #import "BLTAcceptData.h"
 #import "Header.h"
 #import "AlarmClockModel.h"
+#import "RemindModel.h"
 
 @interface BLTSendData : NSObject
 typedef void(^BLTSendDataBackUpdate)(NSDate *date);
@@ -147,13 +148,12 @@ AS_SINGLETON(BLTSendData)
  *  久坐提醒
  *
  *  @param open  是否开启
- *  @param times AlarmClockModel 数组 , 主要是时和分
+ *  @param times RemindModel 数组 , 主要是时和分
  *                  数据组成为开始1-结束1-开始2-结束2-开始3-结束3-静止
  *  @param block 回调
  */
-+ (void)sendSedentaryRemindDataWithOpen:(BOOL)open
-                              withTimes:(NSArray *)times
-                        withUpdateBlock:(BLTAcceptDataUpdateValue)block;
++ (void)sendSedentaryRemindDataWithRemind:(NSArray *)times
+                          withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
 /** // 只需点击
  *  设定出厂模式

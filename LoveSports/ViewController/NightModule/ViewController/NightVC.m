@@ -138,6 +138,7 @@
     _weekLabel.text = weekString;
     
     [_backButton rotationAccordingWithDate:date];
+    _backButton.hidden = [date isSameWithDate:[NSDate date]];
 }
 
 - (void)loadShareButton
