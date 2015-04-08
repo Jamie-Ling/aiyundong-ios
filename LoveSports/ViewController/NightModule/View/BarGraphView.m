@@ -76,25 +76,21 @@
 
 - (UIColor *)getColorWithIndex:(NSInteger)index
 {
-    if (index < 4)
+    if (index == 0)
     {
         return [UIColor lightGrayColor];
     }
-    else if (index < 8)
+    else if (index == 1)
     {
         return [UIColor greenColor];
     }
-    else if (index < 12)
+    else if (index == 2)
     {
         return [UIColor purpleColor];
     }
-    else if (index < 16)
+    else if (index == 3)
     {
         return [UIColor blueColor];
-    }
-    else if (index <= 18)
-    {
-        return [UIColor redColor];
     }
     
     return [UIColor lightGrayColor];
@@ -102,28 +98,24 @@
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index
 {
-    if (index < 4)
+    if (index == 0)
     {
         return 0.3;
     }
-    else if (index < 8)
+    else if (index == 1)
     {
         return 0.4;
     }
-    else if (index < 12)
+    else if (index == 2)
     {
         return 0.6;
     }
-    else if (index < 16)
+    else if (index == 3)
     {
         return 0.8;
     }
-    else if (index <= 18)
-    {
-        return 10;
-    }
     
-    return 5;
+    return 1.0;
 }
 
 @end

@@ -6,7 +6,7 @@
 //  Created by zorro on 15-1-16.
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
-//
+
 #import "BLTManager.h"
 #import "BLTUUID.h"
 #import "BLTAcceptData.h"
@@ -142,7 +142,7 @@ DEF_SINGLETON(BLTManager)
     NSString *name = peripheral.name;
     if (![_containNames containsObject:name])
     {
-       // return;
+        return;
     }
     
     if (!_isUpdateing)

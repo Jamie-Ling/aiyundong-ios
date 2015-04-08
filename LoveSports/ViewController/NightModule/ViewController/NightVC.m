@@ -122,7 +122,6 @@
     _scrollView = [[NightScrollView alloc] initWithFrame:self.view.bounds];
     
     [self addSubview:_scrollView];
-    [self loadShareButton];
     
     DEF_WEAKSELF_(NightVC);
     _scrollView.buttonRotationBlock = ^(UIView *view, id object) {

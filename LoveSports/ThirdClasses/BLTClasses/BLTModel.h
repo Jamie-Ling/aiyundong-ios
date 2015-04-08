@@ -14,7 +14,7 @@
 // 蓝牙硬件所涉及的数据
 @property (nonatomic, strong) NSString *bltName;        // 设备名字
 @property (nonatomic, strong) NSString *bltID;          // 设备UUID
-@property (nonatomic, strong) NSString *bltVersion;     // 硬件版本
+@property (nonatomic, strong) NSString *bltVersion;     // 固件版本
 @property (nonatomic, strong) NSString *bltElec;        // 电量
 @property (nonatomic, strong) NSString *bltRSSI;        // RSSI
 @property (nonatomic, strong) CBPeripheral *peripheral; // 外围设备对象

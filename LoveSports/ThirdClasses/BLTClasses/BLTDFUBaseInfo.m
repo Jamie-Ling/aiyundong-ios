@@ -10,6 +10,17 @@
 
 @implementation BLTDFUBaseInfo
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _zipVersion = 100;
+    }
+    
+    return self;
+}
+
 DEF_SINGLETON(BLTDFUBaseInfo)
 
 + (NSData *)getUpdateFirmWareData

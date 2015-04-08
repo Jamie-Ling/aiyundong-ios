@@ -109,13 +109,14 @@
 #define NightVC_TotalPercent 100
 - (void)updateChartView
 {
-    _percent += 5;
-    [_chartView reloadData];
-    
     if (_percent >= (int)(_totalPercent * 100))
     {
         [self stopTimer];
+        return;
     }
+    
+    _percent += 5;
+    [_chartView reloadData];
 }
 
 - (void)stopTimer
@@ -264,7 +265,7 @@
     
     DEF_WEAKSELF_(NightDetailView);
     [_chartView updateContentForViewWithModel:model withState:PieChartViewShowSleep withReloadBlock:^(CGFloat percent) {
-        weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
+        weakSelf.totalPercent = percent;
     }];
     
     /*

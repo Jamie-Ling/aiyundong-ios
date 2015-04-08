@@ -54,6 +54,7 @@
 #import "UserInfoViewController.h"
 #import "UserInfoHelp.h"
 #import "RemindVC.h"
+#import "BLTDFUBaseInfo.h"
 
 @interface BraceletInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 {
@@ -223,9 +224,9 @@
     _is240N = YES;
     NSLog(@"在此请求是否有新固件版本，请求完后再做标记 _newVersionInfoModel,并刷新list");
     //假设有
-    static BOOL have = YES;
-    _haveNewVersion = have;
+    _haveNewVersion = [BLTManager sharedInstance].model.hardVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
     _newVersionInfoModel = [[VersionInfoModel alloc] init];
+    /*
     if (_haveNewVersion)
     {
         _newVersionInfoModel._versionID = @"VB 2.1.3";
@@ -239,7 +240,7 @@
         _newVersionInfoModel._versionSize = @"";
         _newVersionInfoModel._versionUpdatInfo = @"已经是最新版本";
     }
-    have = !have;
+     */
     
     [self reloadUserInfoTableView];
 }
@@ -505,7 +506,7 @@
     }
     _timeAndClockVC._thisModel = _thisBraceletInfoModel;
     
-    AlarmClockVC *alarmVC = [[AlarmClockVC alloc] init];
+    AlarmClockVC *alarmVC = [[AlarmClockVC alloc] initWithAlarmClock:_thisBraceletInfoModel.alarmArray];
     
     [self.navigationController pushViewController:alarmVC animated:YES];
     
@@ -647,7 +648,7 @@
 {
     NSLog(@"解除绑定");
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定断开连接?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定解除绑定?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
     [alert setTag:100962];
     [alert show];
     
@@ -863,7 +864,8 @@
         }
         if (alertView.tag == 100962)
         {
-            
+            [BLTModel removeBindingDeviceWithUUID:[LS_LastWareUUID getObjectValue]];
+
             [[BLTManager sharedInstance] dismissLink];
             
             //刷新整个页面
@@ -1003,12 +1005,12 @@
             [rightTitle setNumberOfLines:1];
             
             [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
-            [oneCell.contentView addSubview:rightTitle];
+            //[oneCell.contentView addSubview:rightTitle];
             
             slideSwitchH.on = _thisBraceletInfoModel._longTimeSetRemind;
-            [oneCell.contentView addSubview:slideSwitchH];
+           // [oneCell.contentView addSubview:slideSwitchH];
             
-            [rightImageView setHidden:YES];
+          //  [rightImageView setHidden:YES];
             
             oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
         }
@@ -1051,14 +1053,15 @@
                 if (!_haveNewVersion)
                 {
                     _badgeView.hidden = YES;
+                    rightImageView.hidden = YES;
                 }
                 else
                 {
                     _badgeView.hidden = NO;
                     _badgeView.badgeText = @"1";
+                    rightImageView.hidden = NO;
                 }
             }
-            
         }
             break;
             
@@ -1079,8 +1082,17 @@
         oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kBackgroundColor];
         slideSwitchH.userInteractionEnabled = YES;
+        
+        if (indexPath.row == 6 && _is240N)
+        {
+            if (!_haveNewVersion)
+            {
+                oneCell.userInteractionEnabled = NO;
+            }
+            
+        }
     }
-    
+
     //设置点选颜色
     //    [oneCell setSelectedBackgroundView:[[UIView alloc] initWithFrame:oneCell.frame]];
     //    //kHexRGB(0x0e822f)

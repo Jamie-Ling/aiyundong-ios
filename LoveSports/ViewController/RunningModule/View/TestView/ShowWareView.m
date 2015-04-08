@@ -138,7 +138,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_tableView];
     
-    [self loadHeadImage];
+    //[self loadHeadImage];
     
     DEF_WEAKSELF_(ShowWareView);
     // 添加下拉刷新控件
@@ -197,7 +197,6 @@
         cell = [[WareInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
     }
     
-    NSLog(@"1..%d..%d", indexPath.row, _showArray.count);
     if (indexPath.row >= _showArray.count)
     {
         NSLog(@"..4");
@@ -213,7 +212,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"...3..%d", _showArray.count);
     return _showArray.count;
 }
 

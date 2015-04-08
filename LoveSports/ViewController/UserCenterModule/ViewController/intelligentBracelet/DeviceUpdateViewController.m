@@ -64,7 +64,7 @@
     [self.view removeAllSubviews];
     
     // left label
-    NSString *titleString = [NSString stringWithFormat:@"%@       %@\n%@。", _thisVersionInfoModel._versionID, _thisVersionInfoModel._versionSize, _thisVersionInfoModel._versionUpdatInfo];
+    NSString *titleString = @"建议更新.";//[NSString stringWithFormat:@"%@       %@\n%@。", _thisVersionInfoModel._versionID, _thisVersionInfoModel._versionSize, _thisVersionInfoModel._versionUpdatInfo];
     CGRect titleFrame = CGRectMake(26, kStatusBarHeight, kButtonDefaultWidth, 24);
     UILabel *title = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                  backgroundColor:[UIColor clearColor]

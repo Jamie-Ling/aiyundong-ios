@@ -96,7 +96,7 @@
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
     
     [self loadScrollView];
-    [self loadShareButton];
+    // [self loadShareButton];
     [self loadCalendarButton];
     [self loadDateLabel];
     [self loadBackButton];
@@ -199,16 +199,16 @@
 
 - (void)setTitleForConnect
 {
-    [self.tableView.header setTitle:@"Pull down to refresh" forState:MJRefreshHeaderStateIdle];
-    [self.tableView.header setTitle:@"Release to refresh" forState:MJRefreshHeaderStatePulling];
-    [self.tableView.header setTitle:@"Loading ..." forState:MJRefreshHeaderStateRefreshing];
+    [self.tableView.header setTitle:@"下拉进行刷新." forState:MJRefreshHeaderStateIdle];
+    [self.tableView.header setTitle:@"下拉进行刷新." forState:MJRefreshHeaderStatePulling];
+    [self.tableView.header setTitle:@"更新数据..." forState:MJRefreshHeaderStateRefreshing];
 }
 
 - (void)setTitleForNoConnect
 {
-    [self.tableView.header setTitle:@"Pull down to refresh" forState:MJRefreshHeaderStateIdle];
+    [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStateIdle];
     [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStatePulling];
-    [self.tableView.header setTitle:@"Loading ..." forState:MJRefreshHeaderStateRefreshing];
+    [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStateRefreshing];
 }
 
 - (void)headerRereshing

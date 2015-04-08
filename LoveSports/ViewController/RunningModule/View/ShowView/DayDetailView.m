@@ -112,13 +112,14 @@
 
 - (void)updateChartView
 {
-    _percent += 5;
-    [_chartView reloadData];
-
     if (_percent >= (int)(_totalPercent * 100))
     {
         [self stopTimer];
+        return;
     }
+    
+    _percent += 5;
+    [_chartView reloadData];
 }
 
 - (void)stopTimer
@@ -356,7 +357,7 @@
     [_chartView updateContentForViewWithModel:_model
                                     withState:(PieChartViewShowState)(_lastButton.tag - 2000)
                               withReloadBlock:^(CGFloat percent) {
-                                    weakSelf.totalPercent = arc4random() % 100 / 100.0; //percent;
+                                    weakSelf.totalPercent = percent;
                               }];
     
     [_chartData removeAllObjects];

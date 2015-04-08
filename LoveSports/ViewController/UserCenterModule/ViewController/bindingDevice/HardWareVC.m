@@ -218,7 +218,7 @@
      */
     
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
+                     simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
                      withTitle:@"解除绑定"
                      withSelectTitle:@"解除绑定"
                      withColor:UIColorRGB(253, 180, 30)];

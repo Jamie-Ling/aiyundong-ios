@@ -67,7 +67,7 @@
     // self.view.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
 
     [self loadLSTrendView];
-    [self loadShareButton];
+    // [self loadShareButton];
 }
 
 - (void)loadLSTrendView

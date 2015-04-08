@@ -46,7 +46,7 @@
      
      self.window.rootViewController = self._mainNavigationController;
      */
-    [self pushToLoginVC];
+    [self pushToContentVC];
     
     //导航条设置
 //    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];

@@ -107,10 +107,12 @@
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
         _dumpEnergy = [BLTManager sharedInstance].elecQuantity; //_showModel._deviceElectricity;
+        _showModel._deviceVersion = [NSString stringWithFormat:@"VB %ld", (long)[BLTManager sharedInstance].model.hardVersion];
     }
     else
     {
         _dumpEnergy = 0;
+        _showModel._deviceVersion = @"";
     }
     
     [self refreshMainPage];
@@ -163,6 +165,8 @@
 
 - (void) accountManage
 {
+    // 暂时取消用户登录这块。等服务器恢复。
+    return;
     NSLog(@"账号管理");
     if (!_AccountManageVC)
     {
@@ -468,6 +472,17 @@
             
         default:
             break;
+    }
+    
+    if (indexPath.row == 0)
+    {
+        rightImageView.hidden = YES;
+        oneCell.userInteractionEnabled = NO;
+    }
+    else
+    {
+        rightImageView.hidden = NO;
+        oneCell.userInteractionEnabled = YES;
     }
 
     //设置点选颜色

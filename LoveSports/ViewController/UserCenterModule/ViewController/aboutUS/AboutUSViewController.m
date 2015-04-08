@@ -86,11 +86,11 @@
     [title setCenterX:_logoImageView.right - title.width / 2.0 + 3];
     [self.view addSubview:title];
     
-    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", titleString];
+    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     NSString *hardVersion = @"硬件版本:  v0.13";
     NSString *firmVersion = @"固件版本:  v0.13";
 
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"版本更新", @"意见反馈", @"帮助", appVersion, hardVersion, firmVersion, nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects: @"意见反馈", @"帮助", appVersion, nil];
 
     [self addTableView];
 }
@@ -185,6 +185,15 @@
     
     [oneCell.contentView addSubview:rightImageView];
     
+    if (indexPath.row != 2)
+    {
+        rightImageView.hidden = NO;
+    }
+    else
+    {
+        rightImageView.hidden = YES;
+    }
+    
     //设置点选颜色
     //    [oneCell setSelectedBackgroundView:[[UIView alloc] initWithFrame:oneCell.frame]];
     //    //kHexRGB(0x0e822f)
@@ -202,12 +211,12 @@
     
     switch (indexPath.row )
     {
-        case 0:
+        case 2:
         {
-            [self updateVersion];
+           // [self updateVersion];
         }
             break;
-        case 1:
+        case 0:
         {
             NSLog(@"意见反馈");
             
@@ -220,7 +229,7 @@
             [self.navigationController pushViewController:oneWebVC animated:YES];
         }
             break;
-        case 2:
+        case 1:
         {
             NSLog(@"帮助");
             
@@ -231,6 +240,7 @@
             [oneWebVC loadURL:[NSURL URLWithString:kHelpUrl]];
             [oneWebVC.navigationController setNavigationBarHidden:NO];
             [self.navigationController pushViewController:oneWebVC animated:YES];
+            
         }
             break;
                 default:
