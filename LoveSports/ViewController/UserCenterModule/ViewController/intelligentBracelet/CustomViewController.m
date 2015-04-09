@@ -8,16 +8,6 @@
 #define vMetricSystemTag   10099
 #define vHandTag   10100
 
-#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
-#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
-
-#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里
-
-
-#define vBackToCM(A)  ((A - 1) * 30.48)   //英尺 - > cm
-#define vBackToKG(A)  (A / 2.2046226)  //磅 - > kg
-
-
 #define vTableViewLeaveTop   0   //tableView距离顶部的距离
 
 #define vTableViewMoveLeftX 0  //tableview向左移20
@@ -28,6 +18,7 @@
 
 #import "CustomViewController.h"
 #import "UpdateBraceletNameViewController.h"
+#import "UserInfoViewController.h"
 
 
 @interface CustomViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>

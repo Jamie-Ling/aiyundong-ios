@@ -13,6 +13,7 @@
 #import "BLTAcceptData.h"
 #import "DownloadEntity.h"
 #import "BLTDFUBaseInfo.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()<EAIntroDelegate>
 
@@ -37,8 +38,18 @@
 
     [self performSelector:@selector(getUpdateFirmWareData) withObject:nil afterDelay:10.0];
     
-    //添加测试数据
+    //添加默认数据
     [self addTestData];
+    //添加信息完善页，如果已添加，直接进入主页
+    if ((![[ObjectCTools shared] objectForKey:@"addVC"]))
+    {
+          [self addLoginView:YES];
+        [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addVC"];
+    }
+    else
+    {
+        [self pushToContentVC];
+    }
     
     /*
      _vc = [HomeVC custom];
@@ -46,7 +57,7 @@
      
      self.window.rootViewController = self._mainNavigationController;
      */
-    [self pushToContentVC];
+//    [self pushToContentVC];
     
     //导航条设置
 //    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"1_01"] forBarMetrics:UIBarMetricsDefault];
@@ -184,30 +195,40 @@
 }
 
 
-#pragma mark ---------------- 测试数据构造  -----------------
+#pragma mark ---------------- 测试数据构造---也作为默认本地用户数据构造  -----------------
 - (void) addTestData
 {
+    
+    //头像通过地址实时控制
+    
+    //     清除图片缓存：如果没有网络就用默认的
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeadPhotoKey withValue:@"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425"];
+    
+    
     if (![[ObjectCTools shared] objectForKey:@"addTestDataForTest"])
     {
         [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
         
         //测试--给一个本地现在登录的测试用户信息
         NSDictionary *testUserInfoNow = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         @"http://www.woyo.li/statics/users/avatar/59/thumbs/200_200_59.jpg?1419043871", kUserInfoOfHeadPhotoKey,
-                                         @"1987-01-01", kUserInfoOfAgeKey,
-                                         @"深圳 长沙", kUserInfoOfAreaKey,
-                                         @"天将降大任于斯人也，必先苦其心志...", kUserInfoOfDeclarationKey,
-                                         @"5.8", kUserInfoOfHeightKey,
-                                         @"1.6", kUserInfoOfStepLongKey,
-                                         @"上网、爬山、蹦极", kUserInfoOfInterestingKey,
-                                         @"一休哥", kUserInfoOfNickNameKey,
+                                         @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
+                                         @"1990-01-01", kUserInfoOfAgeKey,
+                                         @"+8:00 北京", kUserInfoOfAreaKey,
+                                         @"", kUserInfoOfDeclarationKey,
+                                         @"172", kUserInfoOfHeightKey,
+                                         @"75", kUserInfoOfStepLongKey,
+                                         @"", kUserInfoOfInterestingKey,
+                                         @"", kUserInfoOfNickNameKey,
                                          @"男", kUserInfoOfSexKey,
-                                         @"123", kUserInfoOfWeightKey,
-                                         @"0", kUserInfoOfIsMetricSystemKey,
+                                         @"62", kUserInfoOfWeightKey,
+                                         @"1", kUserInfoOfIsMetricSystemKey,
                                          nil
                                          ];
         [[ObjectCTools shared] userAddUserInfo:testUserInfoNow];
         
+       /*
         //测试--给另外2个曾经登录的测试用户信息
         NSDictionary *testUserInfo01 = [NSDictionary dictionaryWithObjectsAndKeys:
                                         @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
@@ -255,6 +276,8 @@
 //            [oneBraceletInfoModel setNameAndSaveToDB];
 //        }
         
+        */
+        
         //只设置一次测试数据
         [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addTestDataForTest"];
         
@@ -281,10 +304,17 @@
 
 - (void)pushToLoginVC
 {
-    LoginVC *login = [[LoginVC alloc] init];
-    ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: login];
+//    LoginVC *login = [[LoginVC alloc] init];
+//    ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: login];
+//    
+//    self.window.rootViewController = nav;
     
-    self.window.rootViewController = nav;
+    
+    ViewController *VC = [[ViewController alloc] init];
+        ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: VC];
+    //
+        self.window.rootViewController = nav;
+    
 }
 
 @end
