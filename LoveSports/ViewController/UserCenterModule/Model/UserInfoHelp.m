@@ -19,10 +19,35 @@ DEF_SINGLETON(UserInfoHelp)
     self = [super init];
     if (self)
     {
-        _userModel = [[UserInfoModel alloc] init];
+        _userModel = [UserInfoModel getUserInfoFromDB];
     }
     
     return self;
+}
+
+- (BLTModel *)braceModel
+{
+    BLTModel *model = [BLTManager sharedInstance].model;
+    if (model)
+    {
+        return model;
+    }
+    else
+    {
+        NSString *where = [NSString stringWithFormat:@"bltID = '%@'", [LS_LastWareUUID getObjectValue]];
+        model = [BLTModel searchSingleWithWhere:where orderBy:nil];
+        
+        if (model)
+        {
+            return model;
+        }
+        else
+        {
+            model = [[BLTModel alloc] init];
+            
+            return model;
+        }
+    }
 }
 
 /**
@@ -62,14 +87,12 @@ DEF_SINGLETON(UserInfoHelp)
         if (userIngModel)
         {
             _userModel.braceletModel = userIngModel;
-            _braceModel = userIngModel;
         }
         else
         {
             BraceletInfoModel   *showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
             _userModel.braceletModel = showModel;
             
-            _braceModel = showModel;
         }
     }
     
@@ -122,7 +145,7 @@ DEF_SINGLETON(UserInfoHelp)
 {
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
-        [BLTSendData sendSetWearingWayDataWithRightHand:!_braceModel._isLeftHand
+        [BLTSendData sendSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
                                         withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                             [self notifyViewWithBackBlock:backBlock
                                                               withSuccess:type == BLTAcceptDataTypeSetWearingWay];
@@ -130,7 +153,7 @@ DEF_SINGLETON(UserInfoHelp)
     }
     else
     {
-        [BLTSendOld sendSetWearingWayDataWithRightHand:!_braceModel._isLeftHand
+        [BLTSendOld sendSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
                                        withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                            [self notifyViewWithBackBlock:backBlock
                                                              withSuccess:type == BLTAcceptDataTypeOldSetWearingWay];

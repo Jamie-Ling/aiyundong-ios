@@ -9,15 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "UserInfoModel.h"
 #import "BraceletInfoModel.h"
+#import "BLTModel.h"
 
 @interface UserInfoHelp : NSObject
 
 
 // 把这2个更新。 我就可以直接发送鸟.
+
 // 当前用户信息
 @property (nonatomic, strong) UserInfoModel *userModel;
+
 // 当前手环信息
-@property (nonatomic, strong) BraceletInfoModel *braceModel;
+@property (nonatomic, strong) BLTModel *braceModel;
 
 // 哪个被修改了就设置为yes
 // 手环设置

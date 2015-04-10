@@ -287,6 +287,9 @@
     [totalModel setStartAndEndForSleepTime];
     [totalModel setLastSleepDataForCurrentModel];
     [totalModel setTargetDataForModel];
+    
+    // 从用户模型获取目标
+    [totalModel addTargetForModelFromUserInfo];
 
     // 将数据保存到周－月表
     [totalModel savePedometerModelToWeekModelAndMonthModel];

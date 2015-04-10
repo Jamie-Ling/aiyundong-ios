@@ -32,10 +32,11 @@
 @property (nonatomic, assign) NSInteger hardVersion;    // 硬件版本
 @property (nonatomic, assign) NSInteger firmVersion;    // 固件版本
 
-@property (nonatomic, assign) NSInteger stepSize;       // 步距
-@property (nonatomic, assign) NSInteger targetStep;     // 目标步数
-@property (nonatomic, assign) NSInteger weight;         // 体重
-@property (nonatomic, assign) NSInteger birthDay;       // 生日
+@property (nonatomic, assign) BOOL isLeftHand;  // 佩戴方式
+@property (nonatomic, strong) NSArray *alarmArray; //闹钟
+@property (nonatomic, strong) NSArray *remindArray; //久坐提醒.
+
+@property (nonatomic, assign) BOOL isRealTime; // 是否时时同步
 
 /**
  *  伪造固件信息

@@ -13,6 +13,7 @@
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
 #import "TimeZoneChoiceViewController.h"
+#import "ShowTimeZone.h"
 
 @interface TimeZoneChoiceViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -21,6 +22,7 @@
     NSMutableArray *_timeZoneArray;
 
 }
+
 @end
 
 
@@ -33,26 +35,30 @@
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
         //tableview
-    [self addTableView];
     
     //获取所有的时区名字
     NSArray *getTimeZoneArray = [NSTimeZone knownTimeZoneNames];
     _timeZoneArray  = [[NSMutableArray alloc] initWithCapacity:32];
     
-    //将上海转换成北京
-    [_timeZoneArray addObject:@"亚洲/北京 (GMT+8) "];
-    for (NSString *tempTimeZoneString in getTimeZoneArray)
+    NSString *string = [UserInfoHelp sharedInstance].userModel.activePlace;
+    _choiceIndex = 0;
+
+    for (int i = 0; i < getTimeZoneArray.count; i++)
     {
-        NSTimeZone *tempTimeZone = [NSTimeZone timeZoneWithName:tempTimeZoneString];
-        NSString *tempString = [[tempTimeZone.description componentsSeparatedByString:@"offset"]firstObject];
-        if (![tempString isEqualToString:@"Asia/Shanghai (GMT+8) offset 28800"])
+        NSString *tempTimeZoneString = getTimeZoneArray[i];
+        ShowTimeZone *model = [ShowTimeZone simpleWithString:tempTimeZoneString];
+        [_timeZoneArray addObject:model];
+        
+        if ([string isEqualToString:model.showPlace])
         {
-            //                tempString = @"亚洲/北京 (GMT+8) offset 28800";
-            [_timeZoneArray addObject:tempString];
+            _choiceIndex = i;
         }
     }
-    _choiceIndex = 0;
     
+    [_timeZoneArray insertObject:_timeZoneArray[_choiceIndex] atIndex:0];
+    _choiceIndex = 0;
+
+    [self addTableView];
 }
 
 
@@ -114,7 +120,9 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    [cell.textLabel setText:[_timeZoneArray objectAtIndex:indexPath.row]];
+    
+    ShowTimeZone *model = [_timeZoneArray objectAtIndex:indexPath.row];
+    [cell.textLabel setText:model.showString];
     
     if (indexPath.row == _choiceIndex)
     {
@@ -147,6 +155,8 @@
         self.choiceOverBlock(indexPath.row, cell.textLabel.text);
     }
     
+    [[UserInfoHelp sharedInstance].userModel updateTimeZone:_timeZoneArray[indexPath.row]];
+    
     [_listTableView reloadData];
 }
 
@@ -168,11 +178,7 @@
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *backGroundColor = kBackgroundColor;
-    if ([NSString isNilOrEmpty:[_timeZoneArray objectAtIndex:indexPath.row]])
-    {
-        backGroundColor = kRGB(243.0, 243.0, 243.0);
-    }
-    
+ 
     [cell setBackgroundColor:backGroundColor];
     
     //解决分割线左侧短-2

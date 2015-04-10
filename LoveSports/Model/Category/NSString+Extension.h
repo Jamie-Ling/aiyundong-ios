@@ -6,6 +6,9 @@
 //  Copyright (c) 2013年 Lei Yan. All rights reserved.
 //
 
+#define NSStringWithInt(a) [NSString stringWithFormat:@"%ld", (long)a]
+#define NSStringWithFloat(a) [NSString stringWithFormat:@"%.02f", a]
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -64,6 +67,5 @@
 - (void)setObjectValue:(id)value;
 - (void)setIntValue:(NSInteger)value;
 - (void)setBOOLValue:(BOOL)value;
-
 
 @end

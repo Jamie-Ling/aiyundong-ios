@@ -315,6 +315,8 @@
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
 		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
 		F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E71AC06C580075D99E /* NightScrollView.m */; };
+		F4AC15491AD81B2500994C9E /* TimeZoneChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */; };
+		F4AC154C1AD836FC00994C9E /* ShowTimeZone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC154B1AD836FC00994C9E /* ShowTimeZone.m */; };
 		F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56F61A8F777C00955BBC /* PedometerHelper.m */; };
 		F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */; };
 		F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56FD1A8F779B00955BBC /* BLTSimpleSend.m */; };
@@ -869,6 +871,10 @@
 		F4A536E41AC06A0B0075D99E /* NightDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightDetailView.m; sourceTree = "<group>"; };
 		F4A536E61AC06C580075D99E /* NightScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightScrollView.h; sourceTree = "<group>"; };
 		F4A536E71AC06C580075D99E /* NightScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightScrollView.m; sourceTree = "<group>"; };
+		F4AC15471AD81B2500994C9E /* TimeZoneChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeZoneChoiceViewController.h; sourceTree = "<group>"; };
+		F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeZoneChoiceViewController.m; sourceTree = "<group>"; };
+		F4AC154A1AD836FC00994C9E /* ShowTimeZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTimeZone.h; sourceTree = "<group>"; };
+		F4AC154B1AD836FC00994C9E /* ShowTimeZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowTimeZone.m; sourceTree = "<group>"; };
 		F4AD56F61A8F777C00955BBC /* PedometerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerHelper.m; sourceTree = "<group>"; };
 		F4AD56FA1A8F779B00955BBC /* BLTRealTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTRealTime.h; sourceTree = "<group>"; };
 		F4AD56FB1A8F779B00955BBC /* BLTRealTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTRealTime.m; sourceTree = "<group>"; };
@@ -1931,6 +1937,8 @@
 				F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */,
 				F486BE4C1AD2407900BA8A6B /* RemindModel.h */,
 				F486BE4D1AD2407900BA8A6B /* RemindModel.m */,
+				F4AC154A1AD836FC00994C9E /* ShowTimeZone.h */,
+				F4AC154B1AD836FC00994C9E /* ShowTimeZone.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -2139,6 +2147,8 @@
 				F4B692F61A6F3EBC00B42395 /* AppDelegate.m */,
 				F4B692F81A6F3EBC00B42395 /* ViewController.h */,
 				F4B692F91A6F3EBC00B42395 /* ViewController.m */,
+				F4AC15471AD81B2500994C9E /* TimeZoneChoiceViewController.h */,
+				F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */,
 				F4B692FB1A6F3EBC00B42395 /* Main.storyboard */,
 				F4B692FE1A6F3EBC00B42395 /* Images.xcassets */,
 				F4B693001A6F3EBC00B42395 /* LaunchScreen.xib */,
@@ -2915,6 +2925,7 @@
 				F4AD56FE1A8F779B00955BBC /* BLTRealTime.m in Sources */,
 				F4B6934D1A6F401A00B42395 /* IQUIWindow+Hierarchy.m in Sources */,
 				699242071A768BDF00EFF121 /* NSObject+LKDBHelper.m in Sources */,
+				F4AC154C1AD836FC00994C9E /* ShowTimeZone.m in Sources */,
 				F4BF5F691A6F529E004C433D /* XYSandbox.m in Sources */,
 				69E097261A873627003F2EB9 /* WeekModel.m in Sources */,
 				69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */,
@@ -2988,6 +2999,7 @@
 				F4AD56FF1A8F779B00955BBC /* BLTSimpleSend.m in Sources */,
 				F4BF5F6D1A6F529E004C433D /* ZKKNavigationController.m in Sources */,
 				6970ED271A83B152009572D5 /* TestBLTViewController.m in Sources */,
+				F4AC15491AD81B2500994C9E /* TimeZoneChoiceViewController.m in Sources */,
 				F43979F11AB550680033B7BB /* MJRefreshGifFooter.m in Sources */,
 				69FD42191A7FCC2C0023B74D /* MSCustomWebViewController.m in Sources */,
 				F4B693A41A6F403400B42395 /* NSAlert+MKNetworkKitAdditions.m in Sources */,

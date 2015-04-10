@@ -93,7 +93,7 @@
 }
 
 - (NSInteger)distanceConvertSteps:(CGFloat)distance
-                       withPace:(NSInteger)pace
+                         withPace:(NSInteger)pace
 {
     return distance / pace * 1000.0 + 0.5;
 }

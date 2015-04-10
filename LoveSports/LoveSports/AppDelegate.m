@@ -14,6 +14,7 @@
 #import "DownloadEntity.h"
 #import "BLTDFUBaseInfo.h"
 #import "ViewController.h"
+#import "UserInfoHelp.h"
 
 @interface AppDelegate ()<EAIntroDelegate>
 
@@ -34,10 +35,11 @@
     [BLTRealTime sharedInstance];
     [self createVideoFloders];
     
+    // 生成用户与最后使用过的手环
+    [UserInfoHelp sharedInstance];
+    
     [[DownloadEntity sharedInstance] downloadFileWithWebsite:DownLoadEntity_UpdateZip withRequestType:DownloadEntityRequestUpgradePatch];
 
-    [self performSelector:@selector(getUpdateFirmWareData) withObject:nil afterDelay:10.0];
-    
     //添加默认数据
     [self addTestData];
     //添加信息完善页，如果已添加，直接进入主页

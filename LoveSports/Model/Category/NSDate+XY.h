@@ -37,6 +37,9 @@
 // 返回day天后的日期(若day为负数,则为|day|天前的日期)
 - (NSDate *)dateAfterDay:(int)day;
 
+// 时间字符串转年龄
++ (NSString *)stringToAge:(NSString *)dateString;
+
 // 返回距离aDate有多少天
 - (NSInteger)distanceInDaysToDate:(NSDate *)aDate;
 

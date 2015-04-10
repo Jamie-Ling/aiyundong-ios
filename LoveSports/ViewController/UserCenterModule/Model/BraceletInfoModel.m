@@ -20,14 +20,6 @@
 
 @synthesize _isOpen, _setTime, _weekDayArray;
 
-#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
-#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
-
-
-#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
-#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
-
-
 /**
  *  得到显示时间（根据是否是24小时制）
  *
@@ -344,11 +336,6 @@
     {
         tempModel =  [BLTManager sharedInstance].model;
     }
-    
-    tempModel.stepSize = [[userInfoDictionary objectForKey:kUserInfoOfStepLongKey] integerValue];
-    tempModel.targetStep = newestModel._stepNumber;
-    tempModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] integerValue];
-    tempModel.birthDay = [[userInfoDictionary objectForKey:kUserInfoOfAgeKey] integerValue];
 }
 
 

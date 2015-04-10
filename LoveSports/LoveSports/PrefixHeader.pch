@@ -79,4 +79,11 @@
 #define LS_IpSixPDevice ([DataShare sharedInstance].isIp6P)
 
 
+#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
+#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
+
+
+#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
+#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
+
 

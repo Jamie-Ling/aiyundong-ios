@@ -310,6 +310,16 @@ DUMMY_CLASS(NSDate_XY);
     return tz.secondsFromGMT / 3600;
 }
 
++ (NSString *)stringToAge:(NSString *)dateString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSTimeInterval dateDiff = [[dateFormatter dateFromString:dateString] timeIntervalSinceNow];
+    
+    int age = trunc(dateDiff / (60 * 60 * 24)) / 365;
+    return [NSString stringWithFormat:@"%d岁", abs(age)];
+}
+
 - (NSInteger)compareOtherData:(NSDate *)date
 {
     NSTimeInterval time1 = [self timeIntervalSince1970];
