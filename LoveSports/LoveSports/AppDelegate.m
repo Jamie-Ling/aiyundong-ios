@@ -44,7 +44,7 @@
     if ((![[ObjectCTools shared] objectForKey:@"addVC"]))
     {
           [self addLoginView:YES];
-        [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addVC"];
+       
     }
     else
     {
@@ -215,7 +215,7 @@
         NSDictionary *testUserInfoNow = [NSDictionary dictionaryWithObjectsAndKeys:
                                          @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
                                          @"1990-01-01", kUserInfoOfAgeKey,
-                                         @"+8:00 北京", kUserInfoOfAreaKey,
+                                         @"亚洲/北京 (GMT+8) ", kUserInfoOfAreaKey,
                                          @"", kUserInfoOfDeclarationKey,
                                          @"172", kUserInfoOfHeightKey,
                                          @"75", kUserInfoOfStepLongKey,

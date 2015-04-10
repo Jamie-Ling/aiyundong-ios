@@ -30,6 +30,7 @@
 #import "UserInfoViewController.h"
 #import "BSModalDatePickerView.h"
 #import "BSModalPickerView.h"
+#import "TimeZoneChoiceViewController.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
@@ -46,13 +47,18 @@
     BOOL _isMetricSystem;
     FlatRoundedButton *_userImageButton;
     
+    NSMutableArray *_timeZoneArray;
+    
+    TimeZoneChoiceViewController *_timeZoneVC;
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, assign) NSInteger  _timeZoneNumber;
 
 @end
 
 @implementation ViewController
+@synthesize _timeZoneNumber;
 
 
 - (void)viewDidLoad {
@@ -71,6 +77,9 @@
     _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
     _stepLongMustableArray  = [[NSMutableArray alloc] initWithCapacity:32];
+    
+
+    
     //tableview
     [self addUserHead];
     [self addTableView];
@@ -600,6 +609,29 @@
 //    [self.navigationController pushViewController:_updatePasswordVC animated:YES];
 //}
 
+- (void) changeTimeZone
+{
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_timeZoneArray];
+    
+    pickerView.selectedIndex = _timeZoneNumber;
+    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    [pickerView presentInView:self.view
+                    withBlock:^(BOOL madeChoice) {
+                        if (madeChoice) {
+                            if (pickerView.selectedIndex == _timeZoneNumber)
+                            {
+                                NSLog(@"未做修改");
+                                return;
+                            }
+                            
+                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAreaKey withValue:pickerView.selectedValue];
+                            [self reloadUserInfoTableView];
+                            
+                        }
+                    }];
+}
+
+
 
 #pragma mark ---------------- UIAlertView delegate -----------------
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -607,6 +639,8 @@
     NSLog(@"check index = %ld", (long)buttonIndex);
     if (buttonIndex == 1)
     {
+        //不再进入此页面
+        [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addVC"];
         [self pushToHomeVC];
     }
 }
@@ -961,12 +995,31 @@
         case 4:
             [self changeWeight];
             break;
+        case 5:
+//            [self changeTimeZone];
+        {
+            if (!_timeZoneVC)
+            {
+                _timeZoneVC = [[TimeZoneChoiceViewController alloc] init];
+            }
+            _timeZoneVC._choiceIndex = _timeZoneNumber;
+            DEF_WEAKSELF_(ViewController);
+            _timeZoneVC.choiceOverBlock =  ^(long choiceNumber, NSString *choiceValue)
+            {
+                weakSelf._timeZoneNumber = choiceNumber;
+                
+                [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAreaKey withValue:choiceValue];
+                [weakSelf reloadUserInfoTableView];
+                
+            };
+            [self.navigationController pushViewController:_timeZoneVC animated:YES];
+
+        }
+            break;
         case 600:
             [self changeStepLong];
             break;
-        case 5:
-            //            [self changeInteresting];
-            break;
+
         default:
             break;
     }

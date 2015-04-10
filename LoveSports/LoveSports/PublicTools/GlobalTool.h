@@ -125,7 +125,7 @@
 #define kUserInfoOfWeightKey  @"userInfo006"  //体重
 #define kUserInfoOfStepLongKey  @"userInfo00111"  //步距  后来增加
 #define kUserInfoOfInterestingKey  @"userInfo007"  //兴趣点
-#define kUserInfoOfAreaKey  @"userInfo008"  //地区
+#define kUserInfoOfAreaKey  @"userInfo008"  //地区-->后改成时区  时区， 默认是北京
 #define kUserInfoOfDeclarationKey  @"userInfo009"  //宣言
 #define kUserInfoOfIsMetricSystemKey  @"userInfo010"  //是否是公制， 默认是公制
 
