@@ -126,6 +126,7 @@ DEF_SINGLETON(BLTManager)
     
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
+     
     // 延迟链接
    // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
    // [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
@@ -136,8 +137,9 @@ DEF_SINGLETON(BLTManager)
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    NSLog(@"advertisementData. ＝ .%@..", advertisementData);
     NSString *name = peripheral.name;
+    NSLog(@"advertisementData. ＝ ...%@", name);
+
     if (![_containNames containsObject:name])
     {
         return;
@@ -156,8 +158,9 @@ DEF_SINGLETON(BLTManager)
         }
         else
         {
-            model = [BLTModel getModelFromDBWtihUUID:idString];
+            model = [[BLTModel alloc] init];
             
+            model.bltID = idString;
             model.bltName = name;
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
             model.peripheral = peripheral;
@@ -169,13 +172,13 @@ DEF_SINGLETON(BLTManager)
             }
         }
        
-        BOOL binding = [model checkBindingState];
+        BOOL binding = YES;//[model checkBindingState];
         if (binding && _connectState != BLTManagerConnected)
         {
             // 如果该设备已经绑定并且没有连接设备时就直接连接.
             [self repareConnectedDevice:model];
         }
-                
+        
         if (_updateModelBlock)
         {
             _updateModelBlock(_model);
@@ -228,7 +231,11 @@ DEF_SINGLETON(BLTManager)
 - (void)repareConnectedDevice:(BLTModel *)model
 {
     NSLog(@".111model...%@", model.bltName);
-
+    // 有时间应写个copy协议。。。从数据库取出来的会被释放.
+    BLTModel *tmpModel = [model getCurrentModelFromDB];
+    tmpModel.peripheral = model.peripheral;
+    tmpModel.bltRSSI = model.bltRSSI;
+    
     if (self.discoverPeripheral != model.peripheral)
     {
         if (_discoverPeripheral)
@@ -238,12 +245,12 @@ DEF_SINGLETON(BLTManager)
         _connectState = BLTManagerConnecting;
         
         // model有实际更新时。全局的也跟着更新.
-        _model = model;
-        [UserInfoHelp sharedInstance].braceModel = _model;
+        _model = tmpModel;
+        _discoverPeripheral = _model.peripheral;
+        [self.centralManager connectPeripheral:_model.peripheral options:nil];
         
-        self.discoverPeripheral = model.peripheral;
-        [self.centralManager connectPeripheral:model.peripheral options:nil];
-        [self.centralManager stopScan];
+        [UserInfoHelp sharedInstance].braceModel = _model;
+        [_centralManager stopScan];
     }
 }
 

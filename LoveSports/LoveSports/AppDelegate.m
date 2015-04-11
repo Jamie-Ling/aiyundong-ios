@@ -31,14 +31,14 @@
     [self createVideoFloders];
 
     [[DataShare sharedInstance] checkDeviceModel];
-
-    // 启动蓝牙并自动接受数据
-    [BLTAcceptData sharedInstance];
-    [BLTRealTime sharedInstance];
-    
     // 生成用户与最后使用过的手环
     [UserInfoHelp sharedInstance];
     
+    [BLTRealTime sharedInstance];
+
+    // 启动蓝牙并自动接受数据
+    [BLTAcceptData sharedInstance];
+ 
     [[DownloadEntity sharedInstance] downloadFileWithWebsite:DownLoadEntity_UpdateZip withRequestType:DownloadEntityRequestUpgradePatch];
 
     //添加默认数据

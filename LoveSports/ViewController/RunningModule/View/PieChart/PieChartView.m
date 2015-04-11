@@ -128,31 +128,30 @@
 
 - (void)updateContentForViewWithModel:(PedometerModel *)model withState:(PieChartViewShowState)state  withReloadBlock:(PieChartViewReload)block;
 {
-    CGFloat percent = -1.0;
+    CGFloat percent = 0.0;
     switch (state)
     {
         case PieChartViewShowSteps:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000)];
-            percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000) * 100];
+            percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000);
         }
             break;
             
         case PieChartViewShowCalories:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : 1000)];
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : 1000) * 100];
             //percent = model.totalCalories / (model.targetCalories > 1 ? model.targetCalories : 1000);
             percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
-
         }
             break;
             
         case PieChartViewShowDistance:
         {
             _timeLabel.text = [NSString stringWithFormat:@"%.02f", (long)model.totalDistance * 0.01];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 1.0 / (model.targetDistance > 1 ? model.targetDistance : 1000)];
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 1.0 / (model.targetDistance > 1 ? model.targetDistance : 1000) * 100];
             //percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);
             percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
         }

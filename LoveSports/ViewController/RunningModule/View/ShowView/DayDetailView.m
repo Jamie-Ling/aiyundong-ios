@@ -379,7 +379,7 @@
         [_chartData addObjectsFromArray:_model.detailCalories];
         
     }
-    else if (_lastButton.tag == 2001)
+    else if (_lastButton.tag == 2002)
     {
         [_chartData addObjectsFromArray:_model.detailDistans];
     }

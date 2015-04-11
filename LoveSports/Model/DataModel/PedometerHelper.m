@@ -131,14 +131,14 @@ DEF_SINGLETON(PedometerHelper)
     NSInteger tmpSteps      = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
     NSInteger tmpCalories   = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
     NSInteger tmpDistans    = (val[16] << 8)  | val[17];
-    
+
     if (tmpSteps < model.totalSteps
         || tmpCalories < model.totalCalories
         || tmpDistans < model.totalDistance)
     {
         return;
     }
-    
+
     NSDate *date = [NSDate date];
     NSInteger order = (date.hour * 60 + date.minute) / 5;
 
@@ -162,10 +162,8 @@ DEF_SINGLETON(PedometerHelper)
     distansArray[order / 6] = @(distans);
     model.detailDistans = distansArray;
     model.totalDistance = tmpDistans;
-    
-    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
-                       model.dateString, [LS_LastWareUUID getObjectValue]];
-    [PedometerModel updateToDB:model where:where];
+
+    [PedometerModel updateToDB:model where:nil];
     [model savePedometerModelToWeekModelAndMonthModel];
 
     if (endBlock)

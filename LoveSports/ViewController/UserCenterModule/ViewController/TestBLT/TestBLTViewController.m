@@ -167,19 +167,6 @@
             {
                 return;
             }
-            NSDate *nowDate = [NSDate date];
-            [BLTSendData sendLocalTimeInformationData:nowDate withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                if (type == BLTAcceptDataTypeSetLocTime)
-                {
-                    NSLog(@"修改时区成功");
-                }
-                else
-                {
-                    NSLog(@"修改时区失败");
-                    _thisModel._timeZone = !_thisModel._timeZone;
-                }
-            }];
-        
         }
             break;
             
@@ -363,21 +350,6 @@
                                         NSLog(@"未做修改");
                                         return;
                                     }
-                                    
-                                    NSString *heightString = pickerView.selectedValue;
-                                    NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
-                                    
-                                    _thisModel._timeAbsoluteValue = [nowSelectedString integerValue];
-                                    [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withActivityTimeZone:8         withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                        if (type == BLTAcceptDataTypeSetBaseInfo) {
-                                            NSLog(@"设置时差绝对值成功");
-                                        }
-                                        else
-                                        {
-                                            NSLog(@"设置时差绝对值失败");
-                                            _thisModel._timeAbsoluteValue = lastValue;
-                                        }
-                                    }];
                                 }
                             }];
         }

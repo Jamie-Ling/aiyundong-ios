@@ -51,7 +51,7 @@
     //取到这一周的模型，没有就创建，更新至年模型中
     
     NSInteger thisWeekNumber = oneDate.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisWeekNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisWeekNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
     WeekModel *thisWeekModel = [WeekModel searchSingleWithWhere:where orderBy:nil];
     if (!thisWeekModel)
     {
@@ -90,7 +90,7 @@
     //月=-----------------------------------------------
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
-    where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisMonthNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
+    where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisMonthNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
     MonthModel *thisMonthModel = [MonthModel searchSingleWithWhere:where orderBy:nil];
     if (!thisMonthModel)
     {
@@ -290,7 +290,7 @@
 {
     NSInteger year = date.year;
     NSInteger order = date.weekOfYear;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)year, (long)order, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _weekNumber = %ld AND userName = '%@' AND wareUUID = '%@'", (long)year, (long)order, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
     WeekModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)
@@ -351,7 +351,7 @@
     
     NSInteger currentYear = [self getYearWithMonthIndex:index];
     NSInteger month = index - (currentYear - LS_Baseyear) * 12;
-    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND _userName = '%@' AND wareUUID = '%@'", (long)currentYear, (long)month, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
+    NSString *where = [NSString stringWithFormat:@"_yearNumber = %ld AND _monthNumber = %ld AND userName = '%@' AND wareUUID = '%@'", (long)currentYear, (long)month, [LS_LastWareUUID getObjectValue], [UserInfoHelp sharedInstance].userModel.userName];
     MonthModel *model = [WeekModel searchSingleWithWhere:where orderBy:nil];
     
     if (model)

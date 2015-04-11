@@ -137,6 +137,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
   
     // 设置当前时间.
     [self performSelector:@selector(sendCurrentTime) withObject:nil afterDelay:0.3];
+    
     // 请求硬件信息.
     [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.6];
     // 发送用户个人信息。 体重 目标

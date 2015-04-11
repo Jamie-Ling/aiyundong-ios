@@ -109,8 +109,6 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.controlPointCharacteristicUUID, BLTUUID.packetCharacteristicUUID] forService:service];
         }
-        
-        NSLog(@"service.UUID. = .%@.", service.UUID);
     }
 }
 
@@ -153,8 +151,6 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [BLTDFUHelper sharedInstance].packetChar = charac;
         }
-
-        NSLog(@"charac. = .%@..", charac);
     }
 }
 

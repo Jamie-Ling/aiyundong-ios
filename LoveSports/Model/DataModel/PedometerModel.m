@@ -12,46 +12,6 @@
 #import "PedometerHelper.h"
 #import "UserInfoHelp.h"
 
-@implementation StepsModel
-
-+ (StepsModel *)simpleInit
-{
-    StepsModel *model = [[StepsModel alloc] init];
-    
-    return model;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        _dateDay = @"";
-    }
-    
-    return self;
-}
-
-// 表名
-+ (NSString *)getTableName
-{
-    return @"StepsTable";
-}
-
-// 复合主键
-+ (NSArray *)getPrimaryKeyUnionArray
-{
-    return @[@"userName", @"dateDay", @"timeOrder", @"wareUUID"];
-}
-
-// 表版本
-+ (int)getTableVersion
-{
-    return 1;
-}
-
-@end
-
 @implementation SportsModel
 
 // 表名
@@ -149,7 +109,7 @@
     [BLTManager sharedInstance].elecQuantity = val[38];
     
     // 第三个包
-    self.stepSize     = (val[40] << 8)  | (val[41]);
+    self.stepSize     = (val[40] << 8)  | (val[41]) / 100;
     self.weight       = ((val[42] << 8) + (val[43])) / 100;
     self.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
     self.targetSleep  = (val[47] << 8)  | (val[48]);
@@ -604,6 +564,16 @@
 + (int)getTableVersion
 {
     return 1;
+}
+
+
++ (void)initialize
+{
+    //remove unwant property
+    //比如 getTableMapping 返回nil 的时候   会取全部属性  这时候 就可以 用这个方法  移除掉 不要的属性
+    [self removePropertyWithColumnName:@"sportsArray"];
+    //[self removePropertyWithColumnName:@"detailDistans"];
+    //[self removePropertyWithColumnName:@"detailCalories"];
 }
 
 @end

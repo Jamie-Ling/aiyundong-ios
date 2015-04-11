@@ -118,6 +118,7 @@ static char LKModelBase_Key_Inserting;
 -(id)modelGetValue:(LKDBProperty *)property
 {
     id value = [self valueForKey:property.propertyName];
+
     id returnValue = value;
     if(value == nil)
     {

@@ -57,7 +57,17 @@
 {
     NSString *where = [NSString stringWithFormat:@"bltID = '%@'", self.bltID];
     BLTModel *model = [BLTModel searchSingleWithWhere:where orderBy:nil];
-    [model setAlarmArrayAndRemindArrayWithUUID:self.bltID];
+    
+    if (!model)
+    {
+        model = [BLTModel initWithUUID:self.bltID];
+        
+        [model saveToDB];
+    }
+    else
+    {
+        [model setAlarmArrayAndRemindArrayWithUUID:self.bltID];
+    }
 
     return model;
 }
@@ -164,7 +174,9 @@
 - (void)setIsRealTime:(BOOL)isRealTime
 {
     _isRealTime = isRealTime;
-    [BLTModel updateToDB:self where:nil];
+    // 保存这个到数据库容易引发崩溃。 原因未知
+    NSString *where = [NSString stringWithFormat:@"bltID = '%@'", self.bltID];
+    [BLTModel updateToDB:self where:where];
 }
 
 - (void)setIsLeftHand:(BOOL)isLeftHand
@@ -203,6 +215,13 @@
 + (int) getTableVersion
 {
     return 1;
+}
+
++ (void)initialize
+{
+    //remove unwant property
+    //比如 getTableMapping 返回nil 的时候   会取全部属性  这时候 就可以 用这个方法  移除掉 不要的属性
+    [self removePropertyWithColumnName:@"peripheral"];
 }
 
 @end

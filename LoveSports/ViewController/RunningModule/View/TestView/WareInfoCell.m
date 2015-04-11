@@ -83,6 +83,15 @@
         _lockView.backgroundColor = [UIColor redColor];
     }
     
+    if ([BLTManager sharedInstance].model == model)
+    {
+        _bltView.backgroundColor = [UIColor greenColor];
+    }
+    else
+    {
+        _bltView.backgroundColor = [UIColor redColor];
+    }
+    
     _nameLabel.text = model.bltName;
     _rssiLabel.text = [NSString stringWithFormat:@"信号强度RSSI: %@", model.bltRSSI];
 }

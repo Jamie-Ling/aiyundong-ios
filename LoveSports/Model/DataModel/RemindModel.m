@@ -81,7 +81,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"wareUUID"];
+    return @[@"userName", @"wareUUID", @"orderIndex"];
 }
 
 // 表版本

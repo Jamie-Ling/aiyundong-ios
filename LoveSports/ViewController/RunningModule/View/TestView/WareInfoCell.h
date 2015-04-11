@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *rssiLabel;
 
-@property (nonatomic, strong) UIView *lockView;
+@property (nonatomic, strong) UIView *lockView; // 是否绑定。
 @property (nonatomic, strong) UIView *bltView;
 @property (nonatomic, strong) UIView *infoView;
 

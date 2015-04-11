@@ -8,20 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface StepsModel : NSObject
-
-// 这个模型暂时没发现在哪里使用....
-@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
-@property (nonatomic, strong) NSString *userName;
-
-@property (nonatomic, strong) NSString *dateDay;
-@property (nonatomic, assign) NSInteger timeOrder;
-@property (nonatomic, assign) NSInteger stepSize;
-
-+ (StepsModel *)simpleInit;
-
-@end
-
 typedef enum {
     SportsModelSteps = 0,
     SportsModelCalories = 1,
@@ -35,7 +21,6 @@ typedef enum {
 @property (nonatomic, strong) NSString *userName;
 
 @property (nonatomic, strong) NSString *dateDay;
-@property (nonatomic, strong) NSString *dateHour;
 @property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
 @property (nonatomic, assign) NSInteger currentOrder;   // 当前时间序号
 @property (nonatomic, assign) NSInteger steps;
@@ -50,7 +35,6 @@ typedef enum {
 @property (nonatomic, strong) NSString *userName;
 
 @property (nonatomic, strong) NSString *dateDay;
-@property (nonatomic, strong) NSString *dateHour;
 @property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
 @property (nonatomic, assign) NSInteger currentOrder;   // 当前时间序号
 @property (nonatomic, assign) NSInteger sleepState;     // 睡眠状态

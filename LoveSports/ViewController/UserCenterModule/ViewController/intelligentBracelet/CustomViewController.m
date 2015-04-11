@@ -244,41 +244,6 @@
             default:
                 break;
         }
-        [BLTSendData sendBasicSetOfInformationData:_thisModel._isShowMetricSystem withActivityTimeZone:8
-                                   withUpdateBlock:^(id object, BLTAcceptDataType type) {
-            if (type == BLTAcceptDataTypeSetBaseInfo)
-            {
-                NSLog(@"设置公英制成功");
-                [self reloadUserInfoTableView];
-                if (_thisModel._isShowMetricSystem)
-                {
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue:@"1"];
-                    tempHeight = [NSString stringWithFormat:@"%.0f", vBackToCM([tempHeight floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
-                    tempStepLong = [NSString stringWithFormat:@"%.0f", vBackToCM([tempStepLong floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
-                    tempWeight= [NSString stringWithFormat:@"%.0f", vBackToKG([tempWeight integerValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
-                }
-                else
-                {
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue: @"0"];
-                    
-                    tempHeight = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempHeight floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
-                    tempStepLong = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempStepLong floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
-                    tempWeight= [NSString stringWithFormat:@"%.0f", vChangeToLB([tempWeight integerValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
-                }
-            }
-            else
-            {
-                NSLog(@"设置公英制失败");
-                _thisModel._isShowMetricSystem = !_thisModel._isShowMetricSystem;
-            }
-        }];
-       
         return;
     }
     if (actionSheet.tag == vHandTag)

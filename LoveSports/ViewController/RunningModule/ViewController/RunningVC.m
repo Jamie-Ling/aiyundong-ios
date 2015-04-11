@@ -227,7 +227,7 @@
         }
         else
         {
-            // SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
             [self.tableView.header performSelectorOnMainThread:@selector(endRefreshing) withObject:nil waitUntilDone:NO];
         }
     }
