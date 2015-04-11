@@ -778,7 +778,7 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = YES;
+        oneCell.userInteractionEnabled = NO;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
         slideSwitchH.userInteractionEnabled = NO;
         slideSwitchH.on = NO;
