@@ -78,11 +78,11 @@
 {
     if (index == 0)
     {
-        return [UIColor lightGrayColor];
+        return [UIColor greenColor];
     }
     else if (index == 1)
     {
-        return [UIColor greenColor];
+        return [UIColor blueColor];
     }
     else if (index == 2)
     {
@@ -90,7 +90,7 @@
     }
     else if (index == 3)
     {
-        return [UIColor blueColor];
+        return [UIColor lightGrayColor];
     }
     
     return [UIColor lightGrayColor];
@@ -100,22 +100,22 @@
 {
     if (index == 0)
     {
-        return 0.3;
+        return 1.0;
     }
     else if (index == 1)
     {
-        return 0.4;
+        return 0.8;
     }
     else if (index == 2)
     {
-        return 0.6;
+        return 0.5;
     }
     else if (index == 3)
     {
-        return 0.8;
+        return 0.3;
     }
     
-    return 1.0;
+    return 0.3;
 }
 
 @end

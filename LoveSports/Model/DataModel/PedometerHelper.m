@@ -98,7 +98,7 @@ DEF_SINGLETON(PedometerHelper)
     array = [[NSMutableArray alloc] init];
     for (int i = 0; i < 288; i++)
     {
-        [array addObject:@(0)];
+        [array addObject:@(3)];
     }
     model.detailSleeps = [NSArray arrayWithArray:array];
 }
