@@ -8,8 +8,8 @@
 
 typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeUnKnown = 0,               // 无状态
-    BLTAcceptDataTypeSetBaseInfo = 1,           // 设置基本信息
-    BLTAcceptDataTypeSetLocTime = 2,            // 为固件设置时间, 时区
+    BLTAcceptDataTypeSetActiveTimeZone = 1,           // 设置基本信息
+    BLTAcceptDataTypeSetCurrentTime = 2,            // 为固件设置时间, 时区
     BLTAcceptDataTypeSetUserInfo = 3,           // 为固件设置用户信息
     BLTAcceptDataTypeCheckWareTime = 4,         // 查看当前固件时间
     BLTAcceptDataTypeCheckWareUserInfo = 5,     // 查看当前固件的用户信息

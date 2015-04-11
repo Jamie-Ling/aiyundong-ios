@@ -315,7 +315,6 @@
     
     if (!newestModel)
     {
-        [UIView showAlertView:@"读取当前手环数据模型出错" andMessage:nil];
         return;
     }
     
@@ -323,7 +322,6 @@
     
     if (!userInfoDictionary)
     {
-        [UIView showAlertView:@"读取用户信息出错" andMessage:nil];
         return;
     }
     

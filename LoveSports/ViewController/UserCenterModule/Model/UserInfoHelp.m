@@ -132,20 +132,50 @@ DEF_SINGLETON(UserInfoHelp)
     }
     else
     {
-        // type 0代表公制, 1代表英制
-        [BLTSendOld sendOldSetUserInfo:[NSDate date]
-                          withBirthDay:birthDay
-                            withWeight:_userModel.weight
-                       withTargetSteps:_userModel.targetSteps
-                              withStep:_userModel.step
-                              withType:0
-                       withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                           [self notifyViewWithBackBlock:backBlock
-                                             withSuccess:type == BLTAcceptDataTypeOldSetUserInfo];
-                       }];
+        [self sendOldDeviceUserInfo:backBlock];
     }
 }
 
+- (void)sendSetUserInfoAndActiveTimeZone:(NSObjectSimpleBlock)backBlock
+{
+    if (![self checkDeviceIsConnect])
+    {
+        return;
+    }
+    
+    if ([BLTManager sharedInstance].model.isNewDevice)
+    {
+        [BLTSendData sendBasicSetOfInformationData:!_userModel.isMetricSystem
+                              withActivityTimeZone:_userModel.activeTimeZone
+                                   withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                       [self notifyViewWithBackBlock:backBlock
+                                                         withSuccess:type == BLTAcceptDataTypeSetActiveTimeZone];
+                                   }];
+    }
+    else
+    {
+        [self sendOldDeviceUserInfo:backBlock];
+    }
+}
+
+- (void)sendOldDeviceUserInfo:(NSObjectSimpleBlock)backBlock
+{
+    NSDate *birthDay = [NSDate stringToDate:_userModel.birthDay];
+
+    // type 0代表公制, 1代表英制
+    [BLTSendOld sendOldSetUserInfo:[NSDate date]
+                      withBirthDay:birthDay
+                        withWeight:_userModel.weight
+                   withTargetSteps:_userModel.targetSteps
+                          withStep:_userModel.step
+                          withType:!_userModel.isMetricSystem
+                   withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                       [self notifyViewWithBackBlock:backBlock
+                                         withSuccess:type == BLTAcceptDataTypeOldSetUserInfo];
+                   }];
+}
+
+// 设置佩戴方式
 - (void)sendSetAdornType:(NSObjectSimpleBlock)backBlock
 {
     if (![self checkDeviceIsConnect])

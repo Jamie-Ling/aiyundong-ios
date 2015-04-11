@@ -128,22 +128,32 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 // 新设备命令通道. 刚连接时
 - (void)newDeviceChannel
 {
-    NSLog(@"[NSDate date]...%@",[NSDate date] );
+    if (![LS_SettingBaseTimeZoneInfo getBOOLValue])
+    {
+        // 优先发送时区命令
+        [[UserInfoHelp sharedInstance] sendSetUserInfoAndActiveTimeZone:^(id object) {
+        }];
+    }
+  
+    // 设置当前时间.
+    [self performSelector:@selector(sendCurrentTime) withObject:nil afterDelay:0.3];
+    // 请求硬件信息.
+    [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.6];
+    // 发送用户个人信息。 体重 目标
+    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.9];
+    // 请求历史数据.
+    [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:1.2];
+}
+
+// 设置当前时间
+- (void)sendCurrentTime
+{
     [BLTSendData sendLocalTimeInformationData:[NSDate date] withUpdateBlock:^(id object, BLTAcceptDataType type) {
-        if (type == BLTAcceptDataTypeSetLocTime)
+        if (type == BLTAcceptDataTypeSetCurrentTime )
         {
             // SHOWMBProgressHUD(@"设置时间成功", nil, nil, NO, 2);
         }
     }];
-    
-    [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.3];
-    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.6];
-    
-    // 如果已经设定过时区信息才获取历史纪录。测试demo版
-    if ([LS_SettingBaseTimeZoneInfo getBOOLValue])
-    {
-        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.9];
-    }
 }
 
 // 请求硬件信息
@@ -170,9 +180,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 
 - (void)sendRequestWeight
 {
-    [BraceletInfoModel updateToBLTModel:[BLTManager sharedInstance].model];
-    [BraceletInfoModel updateUserInfoToBLTWithUserInfo:nil withnewestModel:nil WithSuccess:^(bool success) {
-    }];
+    [[UserInfoHelp sharedInstance] sendSetUserInfo:nil];
 }
 
 - (void)sendRequestHistoryDataSaveDate

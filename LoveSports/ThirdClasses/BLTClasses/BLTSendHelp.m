@@ -10,29 +10,4 @@
 
 @implementation BLTSendHelp
 
-+ (void)sendSetUserInfo:(BLTSendHelpSimpleBlock)block
-{
-    if ([BLTManager sharedInstance].model.isNewDevice)
-    {
-        // 设置用户信息.
-        //[[BLTSimpleSend sharedInstance]
-    }
-    else
-    {
-    
-    }
-}
-
-+ (void)sendSetPedInfo:(BLTSendHelpSimpleBlock)block
-{
-    if ([BLTManager sharedInstance].model.isNewDevice)
-    {
-       // 设置手环信息.
-    }
-    else
-    {
-        
-    }
-}
-
 @end

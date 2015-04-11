@@ -34,13 +34,13 @@ typedef void(^BLTSendDataBackUpdate)(NSDate *date);
 AS_SINGLETON(BLTSendData)
 
 /** // 不用写
-*  设置用户基本信息
+*  设置用户基本信息  仅第一次发送后不得更改
 *
-*  @param scale  公/英制
+*  @param metric  公/英制
 *  @param timeZone 经常活动时区
 *  @param lag    时差的绝对值
 */
-+ (void)sendBasicSetOfInformationData:(NSInteger)scale
++ (void)sendBasicSetOfInformationData:(BOOL)metric
                  withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 

@@ -41,4 +41,9 @@ AS_SINGLETON(UserInfoHelp)
 //  闹钟数组为实际闹钟个数。一次性的。
 - (void)sendSetAlarmClock:(NSObjectSimpleBlock)backBlock;
 
+
+// 设置时区的.. 仅第一次。
+- (void)sendSetUserInfoAndActiveTimeZone:(NSObjectSimpleBlock)backBlock;
+- (void)sendOldDeviceUserInfo:(NSObjectSimpleBlock)backBlock;
+
 @end

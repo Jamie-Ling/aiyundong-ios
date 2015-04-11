@@ -198,13 +198,16 @@ DEF_SINGLETON(BLTSendOld)
 // 设置用户信息.
 + (void)setUserInfoToOldDevice
 {
+    UserInfoModel *userInfo = [UserInfoHelp sharedInstance].userModel;
+    NSDate *birthDay = [NSDate stringToDate:userInfo.birthDay];
+
     // type 0代表公制, 1代表英制
     [BLTSendOld sendOldSetUserInfo:[NSDate date]
-                      withBirthDay:[NSDate dateWithString:@"1985-03-21"]
-                        withWeight:60
-                   withTargetSteps:10000
-                          withStep:50
-                          withType:0
+                      withBirthDay:birthDay
+                        withWeight:userInfo.weight
+                   withTargetSteps:userInfo.targetSteps
+                          withStep:userInfo.step
+                          withType:!userInfo.isMetricSystem
                    withUpdateBlock:^(id object, BLTAcceptDataType type) {
                        if (type == BLTAcceptDataTypeOldSetUserInfo)
                        {

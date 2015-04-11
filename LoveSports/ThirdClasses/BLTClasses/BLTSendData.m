@@ -48,15 +48,15 @@ DEF_SINGLETON(BLTSendData)
 + (UInt8)activityTimeZone:(NSInteger)timeZone
 {
     UInt8 sign = timeZone > 0 ? 0 : (0x01 << 7);
-    return (UInt8)(sign | (abs([NSDate timeZone] * 2)));
+    return (UInt8)(sign | (abs(timeZone)));
 }
 
-+ (void)sendBasicSetOfInformationData:(NSInteger)scale
++ (void)sendBasicSetOfInformationData:(BOOL)metric
                            withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     NSDate *date = [NSDate date];
-    UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, scale, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
+    UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
                     [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday, date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:16 withUpdate:block];
@@ -66,13 +66,13 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSLog(@".[self timeZone]...%d..%d..%d", [self timeZone], date.hour, date.minute);
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday, [self timeZone], date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:13 withUpdate:block];
 }
 
+// 步距和体重需要乘上100.
 + (void)sendUserInformationBodyDataWithBirthDay:(NSDate *)date
                                      withWeight:(NSInteger)weight
                                      withTarget:(NSInteger)target
@@ -82,8 +82,8 @@ DEF_SINGLETON(BLTSendData)
 {
     UInt8 val[17] = {0xBE, 0x01, 0x03, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
-        (UInt8)(weight >> 8), (UInt8)weight, (UInt8)(target >> 16), (UInt8)(target >> 8),
-        (UInt8)target, (UInt8)(step >> 8) ,(UInt8)step,
+        (UInt8)(weight * 100 >> 8), (UInt8)weight * 100, (UInt8)(target >> 16), (UInt8)(target >> 8),
+        (UInt8)target, (UInt8)(step * 100 >> 8) ,(UInt8)step * 100,
         time/60, time%60};
     [self sendDataToWare:&val withLength:17 withUpdate:block];
 }

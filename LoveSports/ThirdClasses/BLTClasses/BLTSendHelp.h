@@ -15,9 +15,4 @@ typedef void(^BLTSendHelpSimpleBlock)(BOOL success);
 @property (nonatomic, strong) BLTSendHelpSimpleBlock userInfoBlock;
 @property (nonatomic, strong) BLTSendHelpSimpleBlock PedInfoBlock;
 
-// 设置用户信息
-+ (void)sendSetUserInfo:(BLTSendHelpSimpleBlock)block;
-// 设置手环信息
-+ (void)sendSetPedInfo:(BLTSendHelpSimpleBlock)block;
-
 @end

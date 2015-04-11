@@ -47,7 +47,6 @@
                   withFullWeekDay: (BOOL) isFullWeekDay;
 
 + (NSArray *)getAlarmClockFromDBWithUUID:(NSString *)uuid;
-- (NSString *)weekArrayToString;
 - (NSArray *)sortByNumberWithArray:(NSArray *)array withSEC:(BOOL)sec;
 - (NSString *)showStringForWeekDay;
 - (void)convertToBLTNeed;

@@ -84,19 +84,18 @@ DEF_SINGLETON(BLTAcceptData)
         {
             if (order == 0x01)
             {
-                SHOWMBProgressHUD(@"设置成功...", nil, nil, NO, 2);
+                // SHOWMBProgressHUD(@"设置成功...", nil, nil, NO, 2);
                 [LS_SettingBaseTimeZoneInfo setBOOLValue:YES];
-                NSLog(@"设置成功.%d",  [LS_SettingBaseTimeZoneInfo getBOOLValue]);
 
                 // 设定时区英制基本信息成功.
-                _type = BLTAcceptDataTypeSetBaseInfo;
+                _type = BLTAcceptDataTypeSetActiveTimeZone;
             }
             else if (order == 0x02)
             {
                 if (val[3] == 0xED)
                 {
                     // 设定本地时间，时区成功
-                    _type = BLTAcceptDataTypeSetLocTime;
+                    _type = BLTAcceptDataTypeSetCurrentTime;
                 }
                 else if (val[3] == 0xFB)
                 {
