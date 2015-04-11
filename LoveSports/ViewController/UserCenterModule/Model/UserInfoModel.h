@@ -45,7 +45,7 @@
 @property (nonatomic, strong) NSString *showTimeZone;
 @property (nonatomic, strong) NSString *showHeight;
 @property (nonatomic, strong) NSString *showWeight;
-
+@property (nonatomic, strong) NSString *showStep;
 
 @property (nonatomic, strong) BraceletInfoModel *braceletModel;
 

@@ -9,6 +9,7 @@
 #import "UserInfoModel.h"
 
 @implementation UserInfoModel
+
 /*
  @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
  @"1990-01-01", kUserInfoOfAgeKey,
@@ -22,6 +23,7 @@
  @"62", kUserInfoOfWeightKey,
  @"1", kUserInfoOfIsMetricSystemKey,
  */
+
 - (instancetype)init
 {
     self = [super init];
@@ -55,87 +57,85 @@
 - (void)setManifesto:(NSString *)manifesto
 {
     _manifesto = manifesto;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setInterest:(NSString *)interest
 {
     _interest = interest;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setNickName:(NSString *)nickName
 {
     _nickName = nickName;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setStep:(CGFloat)step
 {
     _step = step;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setTargetSleep:(NSInteger)targetSleep
 {
     _targetSleep = targetSleep;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setTargetSteps:(NSInteger)targetSteps
 {
     _targetSteps = targetSteps;
-    
     _targetCalories = [self stepsConvertCalories:_targetSteps
                                       withWeight:_weight
                                        withModel:_isMetricSystem];
     _targetDistance = [self StepsConvertDistance:_targetSteps
                                         withPace:_step];
     
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setGender:(NSString *)gender
 {
     _gender = gender;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setWeight:(CGFloat)weight
 {
     _weight = weight;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
-
 
 - (void)setHeight:(CGFloat)height
 {
     _height = height;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setActivePlace:(NSString *)activePlace
 {
     _activePlace = activePlace;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setActiveTimeZone:(NSInteger)activeTimeZone
 {
     _activeTimeZone = activeTimeZone;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setIsMetricSystem:(BOOL)isMetricSystem
 {
     _isMetricSystem = isMetricSystem;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 - (void)setBirthDay:(NSString *)birthDay
 {
     _birthDay = birthDay;
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 + (UserInfoModel *)getUserInfoFromDB
@@ -146,6 +146,8 @@
     if (!model)
     {
         model = [[UserInfoModel alloc] init];
+        
+        [model saveToDB];
     }
     
     return model;
@@ -160,11 +162,11 @@
 {
     if (_isMetricSystem)
     {
-        return [NSString stringWithFormat:@"%.fcm", _height];
+        return [NSString stringWithFormat:@"%.f cm", _height];
     }
     else
     {
-        return [NSString stringWithFormat:@"%.1fft", vChangeToFT(_height)];
+        return [NSString stringWithFormat:@"%.1f ft", vChangeToFT(_height)];
     }
 }
         
@@ -172,11 +174,23 @@
 {
     if (_isMetricSystem)
     {
-        return [NSString stringWithFormat:@"%.fkg", _weight];
+        return [NSString stringWithFormat:@"%.f kg", _weight];
     }
     else
     {
-        return [NSString stringWithFormat:@"%.1fft", vChangeToLB(_height)];
+        return [NSString stringWithFormat:@"%.1f lb", vChangeToLB(_weight)];
+    }
+}
+
+- (NSString *)showStep
+{
+    if (_isMetricSystem)
+    {
+        return [NSString stringWithFormat:@"%.fcm", _step];
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%.1f ft", vChangeToFT(_step)];
     }
 }
 
@@ -197,7 +211,7 @@
     _activePlace = timeZone.showPlace;
     _activeTimeZone = timeZone.timeZone;
     
-    [self updateToDB];
+    [UserInfoModel updateToDB:self where:nil];
 }
 
 // 表名

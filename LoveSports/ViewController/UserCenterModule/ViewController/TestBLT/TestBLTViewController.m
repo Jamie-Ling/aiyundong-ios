@@ -62,7 +62,7 @@
     
     //初始化
     
-    NSString *realText = [BLTRealTime sharedInstance].isRealTime ? @"运动数据实时传输开启中" : @"运动数据实时传输关闭中";
+    NSString *realText = @"实时传输";
     _cellTitleArray = [NSArray arrayWithObjects:@"时差的绝对值-设置", @"本地时间和时区-设置", @"", realText, nil];
     
     //tableview
@@ -256,7 +256,6 @@
         _realTimeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, oneCell.width * 0.3, 44)];
         
         _realTimeSwitch.center = CGPointMake(oneCell.width * 0.75, vOneCellHeight/2.0);
-        _realTimeSwitch.on = [BLTRealTime sharedInstance].isRealTime;
         [oneCell.contentView addSubview:_realTimeSwitch];
         [_realTimeSwitch addTarget:self action:@selector(changeSwitchLabel:) forControlEvents:UIControlEventValueChanged];
         

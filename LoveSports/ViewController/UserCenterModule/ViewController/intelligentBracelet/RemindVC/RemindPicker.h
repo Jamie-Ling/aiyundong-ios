@@ -16,9 +16,11 @@
 @property (nonatomic, strong) UIButton *confirmButton;
 @property (nonatomic, strong) UIButton *cancelButton;
 
+@property (nonatomic, strong) UILabel *titleLabel;
+
 @property (nonatomic, strong) UIViewSimpleBlock cancelBlock;
 @property (nonatomic, strong) UIViewSimpleBlock confirmBlock;
 
-- (void)updateContentForDatePicker:(NSString *)time;
+- (void)updateContentForDatePicker:(NSString *)time withIndex:(NSInteger)index;
 
 @end

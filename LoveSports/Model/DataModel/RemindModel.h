@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *wareInfo;
+@property (nonatomic, strong) NSString *wareUUID;
 
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSString *interval;
@@ -19,6 +20,6 @@
 @property (nonatomic, strong) NSString *endTime;
 @property (nonatomic, assign) NSInteger orderIndex;
 
-+ (NSArray *)getRemindFromDB;
++ (NSArray *)getRemindFromDBWithUUID:(NSString *)uuid;
 
 @end

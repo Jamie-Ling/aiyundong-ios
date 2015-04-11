@@ -93,7 +93,7 @@
     self.repeat = repeatChar;
 }
 
-+ (NSArray *)getAlarmClockFromDB
++ (NSArray *)getAlarmClockFromDBWithUUID:(NSString *)uuid
 {
     NSArray *array = [AlarmClockModel searchWithWhere:nil orderBy:@"orderIndex" offset:0 count:5];
     
@@ -102,7 +102,7 @@
         NSMutableArray *alarmArray = [[NSMutableArray alloc] initWithCapacity:0];
         for (int i = 0; i < 5; i++)
         {
-            AlarmClockModel *model = [AlarmClockModel simpleInitWith:i];
+            AlarmClockModel *model = [AlarmClockModel simpleInitWith:i withUUID:uuid];
             
             [model saveToDB];
             [alarmArray addObject:model];
@@ -114,11 +114,12 @@
     return array;
 }
 
-+ (AlarmClockModel *)simpleInitWith:(NSInteger)index
++ (AlarmClockModel *)simpleInitWith:(NSInteger)index withUUID:(NSString *)uuid
 {
     AlarmClockModel *model = [[AlarmClockModel alloc] init];
     
     model.orderIndex = index;
+    model.wareUUID = uuid;
     
     return model;
 }
@@ -192,6 +193,43 @@
     _minutes = [array[1] integerValue];
 }
 
+// 数据库存储
+- (void)setIsOpen:(BOOL)isOpen
+{
+    _isOpen = isOpen;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
+- (void)setAlarmTime:(NSString *)alarmTime
+{
+    _alarmTime = alarmTime;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
+- (void)setWeekArray:(NSArray *)weekArray
+{
+    _weekArray = weekArray;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
+- (void)setRepeat:(UInt8)repeat
+{
+    _repeat = repeat;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
+- (void)setHour:(NSInteger)hour
+{
+    _hour = hour;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
+- (void)setMinutes:(NSInteger)minutes
+{
+    _minutes = minutes;
+    [AlarmClockModel updateToDB:self where:nil];
+}
+
 // 表名
 + (NSString *)getTableName
 {
@@ -201,7 +239,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"orderIndex"];
+    return @[@"userName", @"orderIndex", @"wareUUID"];
 }
 
 // 表版本

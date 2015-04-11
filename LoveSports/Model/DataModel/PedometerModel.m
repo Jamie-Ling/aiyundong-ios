@@ -177,7 +177,7 @@
     PedometerModel *totalModel = [[PedometerModel alloc] init];
     
     totalModel.userName = [UserInfoHelp sharedInstance].userModel.userName;
-    totalModel.wareUUID = [BLTManager sharedInstance].model.bltID;
+    totalModel.wareUUID = [UserInfoHelp sharedInstance].braceModel.bltID;
     
     // 第一个包
     totalModel.dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];

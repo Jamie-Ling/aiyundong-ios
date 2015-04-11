@@ -74,7 +74,8 @@
 {
     _currentIndex = [number integerValue];
 
-    [_remindPicker updateContentForDatePicker: _currentIndex ? _remindModel.endTime : _remindModel.startTime];
+    [_remindPicker updateContentForDatePicker: _currentIndex ? _remindModel.endTime : _remindModel.startTime
+                                    withIndex:_currentIndex];
     
     [self controlRemindPickerHidden:NO];
 }
@@ -140,6 +141,17 @@
     {
         NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)date.hour, (long)date.minute];
         [_remindView updateContentForLabelWithTime:string withIndex:_currentIndex];
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch  =[touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    
+    if (!CGRectContainsPoint(_remindView.textField.frame, point))
+    {
+        [self.view endEditing:YES];
     }
 }
 

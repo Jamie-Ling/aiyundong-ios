@@ -118,10 +118,10 @@
     _endTimeLabel.userInteractionEnabled = YES;
 }
 
+// 是否开启就做提醒.
 - (void)clickOpenSwitch:(UISwitch *)sender
 {
     _model.isOpen = sender.on;
-    [_model updateToDB];
 }
 
 - (void)clickStartTimeLabel:(UITapGestureRecognizer *)tap
@@ -162,8 +162,6 @@
         _endTimeLabel.text = time;
         _model.endTime = time;
     }
-    
-    [_model updateToDB];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -175,9 +173,13 @@
     }
     
     _model.interval = textField.text;
-    [_model updateToDB];
     
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    _model.interval = textField.text;
 }
 
 /*

@@ -100,16 +100,26 @@
     }
     if ([_nickNameTextField.text isEqualToString:_lastNickName])
     {
-        [UIView showAlertView:@"昵称无修改哦~" andMessage:@""];
+        SHOWMBProgressHUD(@"昵称无修改哦~", nil, nil, NO, 2.0);
 
         [_nickNameTextField becomeFirstResponder];
         return;
     }
-    
+
+    if ([_nickNameTextField.text isContainQuotationMark])
+    {
+        SHOWMBProgressHUD(@"不能带有'或者\"符号", nil, nil, NO, 2);
+        [_nickNameTextField becomeFirstResponder];
+
+        return;
+    }
+
     [self.view endEditing:YES];
     NSLog(@"发送新的昵称请求吧，同时成功后存储至NSUserDefaults");
     
-    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfNickNameKey withValue:_nickNameTextField.text];
+    //[[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfNickNameKey withValue:_nickNameTextField.text];
+    
+    [UserInfoHelp sharedInstance].userModel.nickName = _nickNameTextField.text;
     [self goBackPrePage];
     
     

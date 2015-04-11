@@ -25,7 +25,6 @@ DEF_SINGLETON(BLTRealTime)
         _currentDayModel = [PedometerHelper getModelFromDBWithDate:[NSDate date]];
         [_currentDayModel modelToDetailShowWithTimeOrder:288];
         
-        self.isRealTime = [LS_RealTimeTransState getBOOLValue];
         self.isAllownRealTime = NO;
     }
     
@@ -39,9 +38,7 @@ DEF_SINGLETON(BLTRealTime)
         [BLTSendData sendRealtimeTransmissionSportDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
             if (type == BLTAcceptDataTypeRealTimeTransSportsData)
             {
-                // SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
-                _isRealTime = YES;
-                [LS_RealTimeTransState setBOOLValue:YES];
+                [UserInfoHelp sharedInstance].braceModel.isRealTime = YES;
                 
                 if (block)
                 {
@@ -50,7 +47,7 @@ DEF_SINGLETON(BLTRealTime)
             }
             else
             {
-                [LS_RealTimeTransState setBOOLValue:NO];
+                [UserInfoHelp sharedInstance].braceModel.isRealTime = NO;
 
                 if (block)
                 {
@@ -79,8 +76,7 @@ DEF_SINGLETON(BLTRealTime)
             if (type == BLTAcceptDataTypeCloseTransSportsData)
             {
                 // SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
-                _isRealTime = NO;
-                [LS_RealTimeTransState setBOOLValue:NO];
+                [UserInfoHelp sharedInstance].braceModel.isRealTime = NO;
                 
                 if (block)
                 {
@@ -89,7 +85,7 @@ DEF_SINGLETON(BLTRealTime)
             }
             else
             {
-                [LS_RealTimeTransState setBOOLValue:YES];
+                [UserInfoHelp sharedInstance].braceModel.isRealTime = YES;
 
                 if (block)
                 {
@@ -113,7 +109,8 @@ DEF_SINGLETON(BLTRealTime)
 // 保存数据到数据库
 - (void)saveRealTimeDataToDBAndUpdateUI:(NSData *)data
 {
-    _isRealTime = YES;
+    [UserInfoHelp sharedInstance].braceModel.isRealTime = YES;
+    
     if (_realTimeBlock)
     {
         _realTimeBlock(YES);

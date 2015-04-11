@@ -95,10 +95,19 @@
 {
     if ([txtView.text length] > vMaxLenth)
     {
-        [UIView showAlertView:@"输入内容长度过长，请重新设置" andMessage:nil];
+        SHOWMBProgressHUD(@"输入内容长度过长，请重新设置", nil, nil, NO, 2.0);
         return;
     }
-    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfInterestingKey withValue:txtView.text];
+    
+    if ([txtView.text isContainQuotationMark])
+    {
+        SHOWMBProgressHUD(@"不能包含'或者\"", nil, nil, NO, 2.0);
+
+        return;
+    }
+    
+    [UserInfoHelp sharedInstance].userModel.interest = txtView.text;
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

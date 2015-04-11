@@ -43,7 +43,7 @@ DEF_SINGLETON(UserInfoHelp)
         }
         else
         {
-            model = [[BLTModel alloc] init];
+            model = [BLTModel initWithUUID:@""];
             
             return model;
         }
@@ -110,6 +110,11 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetUserInfo:(NSObjectSimpleBlock)backBlock
 {
+    if (![self checkDeviceIsConnect])
+    {
+        return;
+    }
+    
     NSDate *birthDay = [NSDate stringToDate:_userModel.birthDay];
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
@@ -143,6 +148,11 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetAdornType:(NSObjectSimpleBlock)backBlock
 {
+    if (![self checkDeviceIsConnect])
+    {
+        return;
+    }
+    
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
         [BLTSendData sendSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
@@ -163,6 +173,11 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetSedentariness:(NSObjectSimpleBlock)backBlock
 {
+    if (![self checkDeviceIsConnect])
+    {
+        return;
+    }
+    
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
         [BLTSendData sendSedentaryRemindDataWithRemind:_braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
@@ -181,6 +196,11 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (void)sendSetAlarmClock:(NSObjectSimpleBlock)backBlock
 {
+    if (![self checkDeviceIsConnect])
+    {
+        return;
+    }
+    
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
         [BLTSendData sendAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
@@ -211,6 +231,17 @@ DEF_SINGLETON(UserInfoHelp)
             backBlock(@(NO));
         }
     }
+}
+
+- (BOOL)checkDeviceIsConnect
+{
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        return YES;
+    }
+    
+    SHOWMBProgressHUD(@"设备没有连接.", nil, nil, NO, 2.0);
+    return NO;
 }
 
 @end

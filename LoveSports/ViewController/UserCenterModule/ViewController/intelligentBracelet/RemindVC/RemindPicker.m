@@ -44,6 +44,13 @@
     [_confirmButton addTouchUpTarget:self action:@selector(clickConfirmButton:)];
     [self addSubview:_confirmButton];
     
+    _titleLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, 44)
+                                 withAlignment:NSTextAlignmentCenter
+                                  withFontSize:15 withText:@""
+                                 withTextColor:[UIColor blackColor]
+                                       withTag:0];
+    [self addSubview:_titleLabel];
+    
     [self addSubViewWithRect:CGRectMake(0, 43.5, self.width, 1)
                    withColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]
                    withImage:nil];
@@ -76,12 +83,13 @@
     }
 }
 
-- (void)updateContentForDatePicker:(NSString *)time
+- (void)updateContentForDatePicker:(NSString *)time withIndex:(NSInteger)index
 {
     NSString *string = [NSString stringWithFormat:@"2000-01-01 %@:00", time];
     NSDate *date = [NSDate dateWithString:string];
     
     [_datePicker setDate:date animated:NO];
+    _titleLabel.text = index ? @"结束时间" : @"开始时间";
 }
 
 /*

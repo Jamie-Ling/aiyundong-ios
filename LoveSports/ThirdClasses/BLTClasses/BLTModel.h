@@ -38,11 +38,16 @@
 
 @property (nonatomic, assign) BOOL isRealTime; // 是否时时同步
 
+
++ (instancetype)initWithUUID:(NSString *)uuid;
+
 /**
  *  伪造固件信息
  */
 - (void)forgeFirmwareInformation;
 - (BLTModel *)getCurrentModelFromDB;
+//根据uuid创造模型.
++ (BLTModel *)getModelFromDBWtihUUID:(NSString *)uuid;
 
 + (void)addBindingDeviceWithUUID:(NSString *)string;
 + (void)removeBindingDeviceWithUUID:(NSString *)string;

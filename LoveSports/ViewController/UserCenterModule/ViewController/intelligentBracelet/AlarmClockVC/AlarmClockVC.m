@@ -163,7 +163,6 @@
                                        model.alarmTime = choiceString;
 
                                        [weakSelf.tableView reloadData];
-                                       [model updateToDB];
                                    }
                                }];
 }

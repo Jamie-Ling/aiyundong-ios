@@ -68,4 +68,7 @@
 - (void)setIntValue:(NSInteger)value;
 - (void)setBOOLValue:(BOOL)value;
 
+// 是否包含引号
+- (BOOL)isContainQuotationMark;
+
 @end

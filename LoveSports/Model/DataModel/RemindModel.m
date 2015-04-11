@@ -24,7 +24,7 @@
     return self;
 }
 
-+ (NSArray *)getRemindFromDB
++ (NSArray *)getRemindFromDBWithUUID:(NSString *)uuid
 {
     NSArray *array = [RemindModel searchWithWhere:nil orderBy:@"orderIndex" offset:0 count:3];
     
@@ -35,6 +35,7 @@
         {
             RemindModel *model = [[RemindModel alloc] init];
             model.orderIndex = i;
+            model.wareUUID = uuid;
             
             [model saveToDB];
             [alarmArray addObject:model];
@@ -46,6 +47,31 @@
     return array;
 }
 
+// 数据库存储.
+- (void)setIsOpen:(BOOL)isOpen
+{
+    _isOpen = isOpen;
+    [RemindModel updateToDB:self where:nil];
+}
+
+- (void)setInterval:(NSString *)interval
+{
+    _interval = interval;
+    [RemindModel updateToDB:self where:nil];
+}
+
+- (void)setStartTime:(NSString *)startTime
+{
+    _startTime = startTime;
+    [RemindModel updateToDB:self where:nil];
+}
+
+- (void)setEndTime:(NSString *)endTime
+{
+    _endTime = endTime;
+    [RemindModel updateToDB:self where:nil];
+}
+
 // 表名
 + (NSString *)getTableName
 {
@@ -55,7 +81,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName"];
+    return @[@"userName", @"wareUUID"];
 }
 
 // 表版本

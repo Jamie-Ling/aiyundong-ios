@@ -60,7 +60,7 @@
 
 - (void)updateContentForLabelsWithPercent:(CGFloat)percent withTime:(NSInteger)time
 {
-    _qualityText.text = [NSString stringWithFormat:@"%02f%%", percent * 100];
+    _qualityText.text = [NSString stringWithFormat:@"%.f%%", percent * 100];
     if (percent > 0.9999)
     {
         _qualityText.text = @"100%";

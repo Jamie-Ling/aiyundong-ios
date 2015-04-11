@@ -28,12 +28,13 @@
     // Override point for customization after application launch.
    // 80770100 008d0200 00130000 009a0100 00000000
 
+    [self createVideoFloders];
+
     [[DataShare sharedInstance] checkDeviceModel];
 
     // 启动蓝牙并自动接受数据
     [BLTAcceptData sharedInstance];
     [BLTRealTime sharedInstance];
-    [self createVideoFloders];
     
     // 生成用户与最后使用过的手环
     [UserInfoHelp sharedInstance];
@@ -76,11 +77,6 @@
     
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-- (void)getUpdateFirmWareData
-{
-    [BLTDFUBaseInfo getUpdateFirmWareData];
 }
 
 - (void)createVideoFloders
@@ -200,100 +196,6 @@
 #pragma mark ---------------- 测试数据构造---也作为默认本地用户数据构造  -----------------
 - (void) addTestData
 {
-    
-    //头像通过地址实时控制
-    
-    //     清除图片缓存：如果没有网络就用默认的
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
-    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeadPhotoKey withValue:@"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425"];
-    
-    
-    if (![[ObjectCTools shared] objectForKey:@"addTestDataForTest"])
-    {
-        [MSIntroView initWithType: showIntroWithCrossDissolve rootView: self.window.rootViewController.view delegate: self];
-        
-        //测试--给一个本地现在登录的测试用户信息
-        NSDictionary *testUserInfoNow = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
-                                         @"1990-01-01", kUserInfoOfAgeKey,
-                                         @"亚洲/北京 (GMT+8) ", kUserInfoOfAreaKey,
-                                         @"", kUserInfoOfDeclarationKey,
-                                         @"172", kUserInfoOfHeightKey,
-                                         @"75", kUserInfoOfStepLongKey,
-                                         @"", kUserInfoOfInterestingKey,
-                                         @"", kUserInfoOfNickNameKey,
-                                         @"男", kUserInfoOfSexKey,
-                                         @"62", kUserInfoOfWeightKey,
-                                         @"1", kUserInfoOfIsMetricSystemKey,
-                                         nil
-                                         ];
-        [[ObjectCTools shared] userAddUserInfo:testUserInfoNow];
-        
-       /*
-        //测试--给另外2个曾经登录的测试用户信息
-        NSDictionary *testUserInfo01 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425", kUserInfoOfHeadPhotoKey,
-                                        @"1989-06-06", kUserInfoOfAgeKey,
-                                        @"广州 佛山", kUserInfoOfAreaKey,
-                                        @"红雨漂泊泛起了回忆怎么浅...", kUserInfoOfDeclarationKey,
-                                        @"168", kUserInfoOfHeightKey,
-                                         @"42", kUserInfoOfStepLongKey,
-                                        @"KTV", kUserInfoOfInterestingKey,
-                                        @"关淑南", kUserInfoOfNickNameKey,
-                                        @"女", kUserInfoOfSexKey,
-                                        @"47", kUserInfoOfWeightKey,
-                                         @"1", kUserInfoOfIsMetricSystemKey,
-                                        nil
-                                        ];
-        
-        
-        NSDictionary *testUserInfo02 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @"http://www.woyo.li/statics/users/avatar/62/thumbs/200_200_62.jpg?1418642044", kUserInfoOfHeadPhotoKey,
-                                        @"1977-01-01", kUserInfoOfAgeKey,
-                                        @"少林寺", kUserInfoOfAreaKey,
-                                        @"花开堪折直须折，莫待无花空折枝", kUserInfoOfDeclarationKey,
-                                        @"172", kUserInfoOfHeightKey,
-                                        @"48", kUserInfoOfStepLongKey,
-                                        @"男", kUserInfoOfInterestingKey,
-                                        @"大叔", kUserInfoOfNickNameKey,
-                                        @"男", kUserInfoOfSexKey,
-                                        @"66", kUserInfoOfWeightKey,
-                                        @"1", kUserInfoOfIsMetricSystemKey,
-                                        nil
-                                        ];
-        [[ObjectCTools shared] userAddUserInfo:testUserInfo02];
-        [[ObjectCTools shared] userAddUserInfo:testUserInfo01];
-        
-//        //测试 添加 搜索到的设备 3 个
-//        for (int i = 0; i < 3; i++)
-//        {
-//            BraceletInfoModel *oneBraceletInfoModel = [[BraceletInfoModel alloc] init];
-//            //,版本号以及电量，设备id
-//            oneBraceletInfoModel._deviceVersion = @"VB 1.01";
-//            oneBraceletInfoModel._deviceElectricity = 0.85 / (i + 1.0);
-//            oneBraceletInfoModel._deviceID = [NSString stringWithFormat:@"test000000000%d", i];
-//            
-//            //初始化后需要设置默认名等,并存入DB
-//            [oneBraceletInfoModel setNameAndSaveToDB];
-//        }
-        
-        */
-        
-        //只设置一次测试数据
-        [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addTestDataForTest"];
-        
-    }
-    
-    BraceletInfoModel *oneBraceletInfoModel = [[BraceletInfoModel alloc] init];
-    //,版本号以及电量，设备id
-    oneBraceletInfoModel._deviceVersion = @"VB 1.01";
-    oneBraceletInfoModel._deviceElectricity = 0.85 / (1 + 1.0);
-    oneBraceletInfoModel._deviceID = @"test0000000001324";
-    
-    //初始化后需要设置默认名等,并存入DB
-    [oneBraceletInfoModel setNameAndSaveToDB];
-    
 }
 
 - (void)pushToContentVC

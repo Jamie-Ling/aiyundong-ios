@@ -2,7 +2,7 @@
 //  LKDBProperty+KeyMapping.h
 //  LKDBHelper
 //
-//  Created by upin on 13-6-17.
+//  Created by LJH on 13-6-17.
 //  Copyright (c) 2013年 ljh. All rights reserved.
 //
 
@@ -36,23 +36,31 @@
 +(void)removePropertyWithColumnNameArray:(NSArray*)columnNameArray;
 @end
 
-@interface LKDBProperty:NSObject
+@interface LKDBProperty : NSObject
 
-@property(readonly,nonatomic)NSString* type;
+///保存的方式
+@property(readonly,copy,nonatomic)NSString* type;
 
-@property(readonly,nonatomic)NSString* sqlColumnName;
-@property(readonly,nonatomic)NSString* sqlColumnType;
+///保存到数据的  列名
+@property(readonly,copy,nonatomic)NSString* sqlColumnName;
+///保存到数据的类型
+@property(readonly,copy,nonatomic)NSString* sqlColumnType;
 
-@property(readonly,nonatomic)NSString* propertyName;
-@property(readonly,nonatomic)NSString* propertyType;
+///属性名
+@property(readonly,copy,nonatomic)NSString* propertyName;
+///属性的类型
+@property(readonly,copy,nonatomic)NSString* propertyType;
+
+///属性的Protocol
+//@property(readonly,copy,nonatomic)NSString* propertyProtocol;
+
 
 ///creating table's column
 @property BOOL isUnique;
 @property BOOL isNotNull;
-@property(strong,nonatomic) NSString* defaultValue;
-@property(strong,nonatomic) NSString* checkValue;
+@property(copy,nonatomic) NSString* defaultValue;
+@property(copy,nonatomic) NSString* checkValue;
 @property NSInteger length;
-
 
 -(BOOL)isUserCalculate;
 @end

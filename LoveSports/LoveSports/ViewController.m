@@ -54,6 +54,8 @@
     TimeZoneChoiceViewController *_timeZoneVC;
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) UITableView *listTableView;
+
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, assign) NSInteger  _timeZoneNumber;
 
@@ -105,10 +107,9 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
-    
-    [self reloadUserInfoTableView];
 }
 
+/*
 - (void) reloadUserInfoTableView
 {
     _userInfoDictionary = nil;
@@ -165,6 +166,7 @@
     [self addUserHead];
     [_listTableView reloadData];
 }
+ */
 
 
 - (void)didReceiveMemoryWarning {
@@ -266,7 +268,7 @@
 - (void) changeBirth
 {
     NSDate *theDate = [NSDate date];
-    NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
+    NSString *birthdayString = _userInfo.birthDay;
     if (![NSString isNilOrEmpty:birthdayString ])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -276,6 +278,7 @@
         theDate = [dateFormatter dateFromString:birthdayString];
     }
     
+    DEF_WEAKSELF_(ViewController);
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
     datePicker.showTodayButton = NO;
     [datePicker presentInView:self.view
@@ -294,11 +297,8 @@
                                 return;
                             }
                             
-                            _userInfo.birthDay = getDateString;
-                      
-                            NSLog(@"开始进行 生日  修改的请求吧,请求成功后请写入NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
-                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAgeKey withValue:getDateString];
-                            [self reloadUserInfoTableView];
+                            weakSelf.userInfo.birthDay = getDateString;
+                            [weakSelf.listTableView reloadData];
                         }
                     }];
     
@@ -376,7 +376,6 @@
                             
                             
                             [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
-                            [self reloadUserInfoTableView];
                             //                                }
                             //                                else
                             //                                {
@@ -434,6 +433,8 @@
     NSInteger lastIndex = _userInfo.height - 60;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    
+    DEF_WEAKSELF_(ViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -446,11 +447,11 @@
                             NSString *heightString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
              
-                            _userInfo.height = _userInfo.isMetricSystem ?
+                            weakSelf.userInfo.height = weakSelf.userInfo.isMetricSystem ?
                             [nowSelectedString integerValue] :
                             vBackToCM([nowSelectedString floatValue]);
                             
-                            [_listTableView reloadData];
+                            [weakSelf.listTableView reloadData];
                         }
                     }];
 }
@@ -477,6 +478,8 @@
     long lastIndex = _userInfo.weight - 20;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ kg", lastWeight];
+    
+    DEF_WEAKSELF_(ViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -490,35 +493,18 @@
                             NSString *heightString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                             
-                            _userInfo.weight = _userInfo.isMetricSystem ?
+                            weakSelf.userInfo.weight = weakSelf.userInfo.isMetricSystem ?
                             [nowSelectedString integerValue] :
                             vBackToKG([nowSelectedString floatValue]);
                             
-                            [_listTableView reloadData];
+                            [weakSelf.listTableView reloadData];
                         }
                     }];
 }
 
 - (void) changeTimeZone
 {
-    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_timeZoneArray];
-    
-    pickerView.selectedIndex = _timeZoneNumber;
-    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
-    [pickerView presentInView:self.view
-                    withBlock:^(BOOL madeChoice) {
-                        if (madeChoice) {
-                            if (pickerView.selectedIndex == _timeZoneNumber)
-                            {
-                                NSLog(@"未做修改");
-                                return;
-                            }
-                            
-                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAreaKey withValue:pickerView.selectedValue];
-                            [self reloadUserInfoTableView];
-                            
-                        }
-                    }];
+
 }
 
 
@@ -540,13 +526,20 @@
 {
     if (actionSheet.tag == vMetricSystemTag)
     {
-        _userInfo.isMetricSystem = !buttonIndex;
-        
-        
+        if (buttonIndex != 2)
+        {
+            _userInfo.isMetricSystem = !buttonIndex;
+
+        }
     }
     else if (actionSheet.tag == vGenderChoiceAciotnSheetTag)
     {
-        _userInfo.gender = buttonIndex ? @"女" : @"男";
+        if (buttonIndex != 2)
+        {
+            _userInfo.gender = buttonIndex ? @"女" : @"男";
+            
+            [_listTableView reloadData];
+        }
     }
     
     [_listTableView reloadData];
@@ -783,7 +776,6 @@
 
 - (void) refreshTheHeadImage
 {
-    [self reloadUserInfoTableView];
     
     //通知首页等也刷新头像吧
     NSLog(@"通知首页等地方刷新头像");
@@ -809,7 +801,6 @@
     NSLog(@"开始进行性别修改的请求吧,请求成功后请写拉NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
     
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
-    [self reloadUserInfoTableView];
 }
 
 @end

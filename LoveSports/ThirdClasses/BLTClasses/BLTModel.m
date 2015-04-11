@@ -7,6 +7,8 @@
 //
 
 #import "BLTModel.h"
+#import "AlarmClockModel.h"
+#import "RemindModel.h"
 
 @implementation BLTModel
 
@@ -26,6 +28,22 @@
     return self;
 }
 
++ (instancetype)initWithUUID:(NSString *)uuid
+{
+    BLTModel *model = [[BLTModel alloc] init];
+    
+    model.bltID = uuid;
+    [model setAlarmArrayAndRemindArrayWithUUID:uuid];
+    
+    return model;
+}
+
+- (void)setAlarmArrayAndRemindArrayWithUUID:(NSString *)uuid
+{
+    _alarmArray = [AlarmClockModel getAlarmClockFromDBWithUUID:uuid];
+    _remindArray = [RemindModel getRemindFromDBWithUUID:uuid];
+}
+
 - (void)forgeFirmwareInformation
 {
     _bltName = [NSString stringWithFormat:@"Device %d", arc4random() % 100];
@@ -39,6 +57,26 @@
 {
     NSString *where = [NSString stringWithFormat:@"bltID = '%@'", self.bltID];
     BLTModel *model = [BLTModel searchSingleWithWhere:where orderBy:nil];
+    [model setAlarmArrayAndRemindArrayWithUUID:self.bltID];
+
+    return model;
+}
+
++ (BLTModel *)getModelFromDBWtihUUID:(NSString *)uuid
+{
+    NSString *where = [NSString stringWithFormat:@"bltID = '%@'", uuid];
+    BLTModel *model = [BLTModel searchSingleWithWhere:where orderBy:nil];
+
+    if (!model)
+    {
+        model = [BLTModel initWithUUID:uuid];
+        
+        [model saveToDB];
+    }
+    else
+    {
+        [model setAlarmArrayAndRemindArrayWithUUID:uuid];
+    }
     
     return model;
 }
@@ -122,11 +160,38 @@
     }
 }
 
+// 数据库存储
+- (void)setIsRealTime:(BOOL)isRealTime
+{
+    _isRealTime = isRealTime;
+    [BLTModel updateToDB:self where:nil];
+}
+
+- (void)setIsLeftHand:(BOOL)isLeftHand
+{
+    _isLeftHand = isLeftHand;
+    [BLTModel updateToDB:self where:nil];
+}
+
+- (void)setIsBinding:(BOOL)isBinding
+{
+    _isBinding = isBinding;
+    [BLTModel updateToDB:self where:nil];
+}
+
 // 主键
 + (NSString *) getPrimaryKey
 {
     return @"bltID";
 }
+
+/*
+// 复合主键
++ (NSArray *)getPrimaryKeyUnionArray
+{
+    return @[@"userName", @"dateString", @"wareUUID"];
+}
+ */
 
 // 表名
 + (NSString *) getTableName

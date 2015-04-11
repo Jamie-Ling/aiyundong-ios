@@ -22,17 +22,6 @@
 // 当前手环信息
 @property (nonatomic, strong) BLTModel *braceModel;
 
-// 哪个被修改了就设置为yes
-// 手环设置
-@property (nonatomic, assign) BOOL target;          // 目标
-@property (nonatomic, assign) BOOL step;            // 步距
-@property (nonatomic, assign) BOOL sedentariness;   // 久坐
-@property (nonatomic, assign) BOOL adorn;           // 佩戴方式
-@property (nonatomic, assign) BOOL alarm;           // 闹钟
-
-// 用户信息
-@property (nonatomic, assign) BOOL userInfo;
-
 /**
  *  更新用户信息（实时获取最新的用户信息给到--》这个类的userModel）
  *

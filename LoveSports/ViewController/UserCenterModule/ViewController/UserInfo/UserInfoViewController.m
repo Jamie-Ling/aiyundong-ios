@@ -73,6 +73,9 @@
 }
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UITableView *listTableView;
+
+@property (nonatomic, strong) UserInfoModel *userInfo;
 
 @end
 
@@ -85,12 +88,14 @@
     self.title = @"用户信息";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    
+    _userInfo = [UserInfoHelp sharedInstance].userModel;
+
     //初始化
 //    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
     
     _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
-//    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, kUserInfoOfStepLongKey, kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
-    _cellTitleKeyArray = [NSArray arrayWithObjects:kUserInfoOfHeadPhotoKey, kUserInfoOfNickNameKey, @"",kUserInfoOfAgeKey, kUserInfoOfSexKey, kUserInfoOfHeightKey, kUserInfoOfWeightKey, @"", kUserInfoOfInterestingKey, kUserInfoOfAreaKey, kUserInfoOfDeclarationKey, nil];
+
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
   
@@ -108,10 +113,9 @@
     [self.navigationController setNavigationBarHidden:NO];
     
     [self readyForSet];
-    
-    [self reloadUserInfoTableView];
 }
 
+/*
 - (void) reloadUserInfoTableView
 {
     _userInfoDictionary = nil;
@@ -169,10 +173,8 @@
     
     [_listTableView reloadData];
     
-    
-    
 }
-
+*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -190,7 +192,7 @@
         _haveConect = NO;
         [_notConectLabel setHidden:NO];
         //        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
-        [self reloadUserInfoTableView];  //刷新UI
+        [_listTableView reloadData];  //刷新UI
         return NO;
     }
     [_notConectLabel setHidden:YES];
@@ -262,7 +264,7 @@
     {
         _updateNickNameVC = [[UpdateNickNameViewController alloc] init];
     }
-    _updateNickNameVC._lastNickName = [_userInfoDictionary objectForKey:kUserInfoOfNickNameKey];
+    _updateNickNameVC._lastNickName = _userInfo.nickName;
     [self.navigationController pushViewController:_updateNickNameVC animated:YES];
 }
 
@@ -280,7 +282,7 @@
 - (void) changeBirth
 {
     NSDate *theDate = [NSDate date];
-    NSString *birthdayString = [_userInfoDictionary objectForKey:kUserInfoOfAgeKey];
+    NSString *birthdayString = _userInfo.birthDay;
     if (![NSString isNilOrEmpty:birthdayString ])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -290,6 +292,8 @@
         theDate = [dateFormatter dateFromString:birthdayString];
     }
     
+    DEF_WEAKSELF_(UserInfoViewController);
+
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
     datePicker.showTodayButton = NO;
     [datePicker presentInView:self.view
@@ -307,20 +311,8 @@
                                 //相同，没有修改
                                 return;
                             }
-//                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
-//                                if (success)
-//                                {
-//                                    NSLog(@"修改蓝牙设备生日信息成功");
-                                    NSLog(@"开始进行 生日  修改的请求吧,请求成功后请写入NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
-                                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfAgeKey withValue:getDateString];
-                                    [self reloadUserInfoTableView];
-//                                }
-//                                else
-//                                {
-//                                    NSLog(@"修改生日失败");
-//                                }
-//                            }];
-
+                            weakSelf.userInfo.birthDay = getDateString;
+                            [weakSelf.listTableView reloadData];
                     }
                     }];
     
@@ -398,7 +390,6 @@
                             
                             
                                     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
-                                    [self reloadUserInfoTableView];
 //                                }
 //                                else
 //                                {
@@ -423,49 +414,29 @@
 
 - (void) changeHeight
 {
-    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_heightMutableArray];
-    
-    long lastIndex;
-    NSString *lastHeight = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
-    if ([NSString isNilOrEmpty:lastHeight])
+    [_heightMutableArray removeAllObjects];
+    for (float i = 60; i <= 220; i++)
     {
-        lastIndex = 178 - vHeightMin(YES);
-        if (!_isMetricSystem)
+        NSString *heightString;
+        if (_userInfo.isMetricSystem)
         {
-            lastIndex = (int) ((vChangeToFT(178) - vHeightMin(NO)) * 10);
-        }
-    }
-    else
-    {
-        lastIndex= [lastHeight floatValue] - vHeightMin(YES);
-       
-        if (!_isMetricSystem)
-        {
-            lastIndex = (int) (([lastHeight floatValue] - vHeightMin(NO)) * 10);
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > (vHeightMax(NO) - vHeightMin(NO) + 1) * 10)
-            {
-                lastIndex = (vHeightMax(NO) - vHeightMin(NO) + 1) * 10;
-            }
+            heightString = [NSString stringWithFormat:@"%.f cm", i];
         }
         else
         {
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > (vHeightMax(YES) - vHeightMin(YES) + 1) * 10)
-            {
-                lastIndex = (vHeightMax(YES) - vHeightMin(YES) + 1) * 10;
-            }
+            heightString = [NSString stringWithFormat:@"%0.2f ft", vChangeToFT(i)];
         }
+        
+        [_heightMutableArray addObject:heightString];
     }
     
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_heightMutableArray];
+    
+    NSInteger lastIndex = _userInfo.height - 60;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    
+    DEF_WEAKSELF_(UserInfoViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -475,18 +446,14 @@
                                 return;
                             }
                             
-                            NSLog(@"发送身高修改的请求吧");
                             NSString *heightString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
-//                            
-//                            if (!_isMetricSystem)
-//                            {
-//                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToCM([nowSelectedString integerValue])];
-//                            }
                             
+                            weakSelf.userInfo.height = weakSelf.userInfo.isMetricSystem ?
+                            [nowSelectedString integerValue] :
+                            vBackToCM([nowSelectedString floatValue]);
                             
-                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:nowSelectedString];
-                            [self reloadUserInfoTableView];
+                            [weakSelf.listTableView reloadData];
                             
                         }
                     }];
@@ -495,49 +462,28 @@
 
 - (void) changeWeight
 {
-    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_weightMutableArray];
-    
-    long lastIndex;
-    NSString *lastWeight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
-    if ([NSString isNilOrEmpty:lastWeight])
+    [_weightMutableArray removeAllObjects];
+    for (float i = 20; i <= 300; i++)
     {
-        lastIndex = 50 - vWeightMin(YES);
-        if (!_isMetricSystem)
+        NSString *weightString;
+        if (_userInfo.isMetricSystem)
         {
-            lastIndex = (int) (vChangeToLB(50) - vWeightMin(NO));
-        }
-    }
-    else
-    {
-        lastIndex= [lastWeight integerValue] - vWeightMin(YES);
-        
-        if (!_isMetricSystem)
-        {
-            lastIndex = (int) (([lastWeight integerValue]) - vWeightMin(NO));
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > vWeightMax(NO) - vWeightMin(NO) + 1)
-            {
-                lastIndex = vWeightMax(NO) - vWeightMin(NO) + 1;
-            }
+            weightString = [NSString stringWithFormat:@"%.f kg", i];
         }
         else
         {
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > vWeightMax(YES) - vWeightMin(YES) + 1)
-            {
-                lastIndex = vWeightMax(YES) - vWeightMin(YES) + 1;
-            }
+            weightString = [NSString stringWithFormat:@"%0.2f lb", vChangeToLB(i)];
         }
+        [_weightMutableArray addObject:weightString];
     }
     
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_weightMutableArray];
+    
+    long lastIndex = _userInfo.weight - 20;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ kg", lastWeight];
+    
+    DEF_WEAKSELF_(UserInfoViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -547,31 +493,16 @@
                                 return;
                             }
                             
-//                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
-//                                if (success)
-//                                {
-//                                    NSLog(@"修改蓝牙设备体重 信息成功");
-                                    NSLog(@"发送体重修改的请求吧");
-                                    NSString *heightString = pickerView.selectedValue;
-                                    NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
+                            NSLog(@"发送体重修改的请求吧");
+                            NSString *heightString = pickerView.selectedValue;
+                            NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                             
-//                            if (!_isMetricSystem)
-//                            {
-//                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToKG([nowSelectedString integerValue])];
-//                            }
+                            weakSelf.userInfo.weight = weakSelf.userInfo.isMetricSystem ?
+                            [nowSelectedString integerValue] :
+                            vBackToKG([nowSelectedString floatValue]);
                             
-                            
-                        
-                                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:nowSelectedString];
-                                    [self reloadUserInfoTableView];
-//                                }
-//                                else
-//                                {
-//                                    NSLog(@"修改体重失败");
-//                                }
-//                            }];
+                            [weakSelf.listTableView reloadData];
 
-                            
                         }
                     }];
 }
@@ -680,38 +611,32 @@
     }
     else
     {
-        NSString *nameString = [_userInfoDictionary objectForKey: [_cellTitleKeyArray objectAtIndex:indexPath.row]];
-        if (![NSString isNilOrEmpty:nameString ])
-        {
+        NSString *nameString;
             switch (indexPath.row)
             {
+                case 1:
+                {
+                    nameString = _userInfo.nickName;
+                }
+                    break;
                 case 3:
                 {
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                    
-                    NSTimeInterval dateDiff = [[dateFormatter dateFromString:nameString] timeIntervalSinceNow];
-                    
-                    int age = trunc(dateDiff / (60 * 60 * 24)) / 365;
-                    nameString = [NSString stringWithFormat:@"%.0f岁", fabs(age)];
+                    nameString = [NSDate stringToAge:_userInfo.birthDay];
+                }
+                    break;
+                case 4:
+                {
+                    nameString = _userInfo.gender;
                 }
                     break;
                 case 5:
                 {
-                    nameString = [NSString stringWithFormat:@"%@cm", nameString];
-                    if (!_isMetricSystem)
-                    {
-                        nameString = [NSString stringWithFormat:@"%.1fft", ([nameString floatValue])];
-                    }
+                    nameString = _userInfo.showHeight;
                 }
                     break;
                 case 6:
                 {
-                    nameString = [NSString stringWithFormat:@"%@kg", nameString];
-                    if (!_isMetricSystem)
-                    {
-                        nameString = [NSString stringWithFormat:@"%.0flb", ([nameString floatValue])];
-                    }
+                    nameString = _userInfo.showWeight;
                 }
                     break;
                 case 600:
@@ -726,19 +651,9 @@
                 default:
                     break;
             }
-            
-            if (nameString.length >= 15)
-            {
-                nameString = [NSString stringWithFormat:@"%@...", [nameString substringToIndex:12]];
-                //                NSLog(@"name = %@", nameString);
-            }
+
             [rightTitle setText:nameString];
-        }
-        else
-        {
-            [rightTitle setText:@"(未设置)"];
-        }
-        
+   
         //        NSLog(@"lenth---- = %lu", (unsigned long)rightTitle.text.length);
     }
     
@@ -748,7 +663,7 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = NO;
+        oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
 
     }
@@ -863,26 +778,13 @@
 {
     if (actionSheet.tag == vGenderChoiceAciotnSheetTag)
     {
-        NSString *gender = @"";
-        switch (buttonIndex)
+        if (buttonIndex != 2)
         {
-            case  0:
-            {
-                gender = @"男";
-            }
-                break;
-            case 1:
-            {
-                gender = @"女";
-            }
-                break;
-            case 2:
-                return;
-                break;
-            default:
-                break;
+            _userInfo.gender = buttonIndex ? @"女" : @"男";
+            
+            [_listTableView reloadData];
         }
-        [self changeGenderRequeset:gender];
+        
         return;
     }
     
@@ -946,7 +848,6 @@
 
 - (void) refreshTheHeadImage
 {
-    [self reloadUserInfoTableView];
     
     //通知首页等也刷新头像吧
     NSLog(@"通知首页等地方刷新头像");
@@ -972,7 +873,6 @@
     NSLog(@"开始进行性别修改的请求吧,请求成功后请写拉NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
     
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
-    [self reloadUserInfoTableView];
 }
 
 #pragma mark ---------------- 未连接相关 -----------------

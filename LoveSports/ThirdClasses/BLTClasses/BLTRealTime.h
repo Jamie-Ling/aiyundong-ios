@@ -13,7 +13,6 @@
 @interface BLTRealTime : BLTSendData
 typedef void(^BLTRealTimeBackBlock)(BOOL success);
 
-@property (nonatomic, assign) BOOL isRealTime;              // 硬件是否实时状态
 @property (nonatomic, assign) BOOL isAllownRealTime;        // 软件是否允许进入实时状态进行数据传输
 
 @property (nonatomic, strong) PedometerModel *currentDayModel;  // 当天的数据模型，为实时传输准备.

@@ -194,4 +194,16 @@
     [UD synchronize];
 }
 
+- (BOOL)isContainQuotationMark
+{
+    NSRange range1 = [self rangeOfString:@"'"];
+    NSRange range2 = [self rangeOfString:@"\""];
+    if (range1.location != NSNotFound || range2.location != NSNotFound)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end

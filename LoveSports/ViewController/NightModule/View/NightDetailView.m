@@ -268,6 +268,8 @@
         weakSelf.totalPercent = percent;
     }];
     
+    [_sleepView updateContentForLabelsWithPercent:self.totalPercent withTime:model.totalSleepTime];
+    
     /*
      NSMutableArray *array = [[NSMutableArray alloc] init];
      if (model.detailSleeps && model.detailSleeps.count > 0)

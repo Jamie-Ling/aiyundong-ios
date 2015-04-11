@@ -2,7 +2,7 @@
 //  NSObject+LKDBHelper.m
 //  LKDBHelper
 //
-//  Created by upin on 13-6-8.
+//  Created by LJH on 13-6-8.
 //  Copyright (c) 2013年 ljh. All rights reserved.
 //
 
@@ -167,4 +167,37 @@
 {
     return [self.class isExistsWithModel:self];
 }
+
++(void)insertArrayByAsyncToDB:(NSArray *)models
+{
+    if(models.count > 0)
+    {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self insertToDBWithArray:models filter:nil];
+        });
+    }
+}
+
++(void)insertToDBWithArray:(NSArray *)models filter:(void (^)(id model, BOOL inseted, BOOL * rollback))filter
+{
+    [[self getUsingLKDBHelper] executeForTransaction:^BOOL(LKDBHelper *helper) {
+        
+        BOOL isRollback = NO;
+        for (int i=0; i<models.count; i++)
+        {
+            id obj = [models objectAtIndex:i];
+            BOOL inseted = [helper insertToDB:obj];
+            if(filter)
+            {
+                filter(obj,inseted,&isRollback);
+            }
+            if(isRollback)
+            {
+                break;
+            }
+        }
+        return (isRollback == NO);
+    }];
+}
+
 @end

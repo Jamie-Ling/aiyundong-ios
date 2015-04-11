@@ -46,6 +46,8 @@
 }
 @property (nonatomic, assign) NSInteger _dumpEnergy;  //剩余电量
 
+@property (nonatomic, strong) UserInfoModel *userInfo;
+@property (nonatomic, strong) BLTModel *braceModel;
 @end
 
 
@@ -57,6 +59,9 @@
     self.title = @"设置";
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    
+    _userInfo = [UserInfoHelp sharedInstance].userModel;
+    _braceModel = [UserInfoHelp sharedInstance].braceModel;
     
     //初始化
     _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理", @"用户信息",@"", @"爱动运手环", @"梆定硬件", @"", @"消息", @"朋友", @"",@"爱运动商城",  @"", @"求点赞", @"关于爱运动商城", nil];
@@ -72,25 +77,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    //头像
-    _userHeadPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey];
-    
-    //得到现在的手环,先删除旧手环信息
-    NSLog(@"手环名字切换，由于名字暂时不能更改。不再切换");
-//    [_cellTitleArray removeObjectAtIndex:3];
-    _showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
-//    [_cellTitleArray insertObject:_showModel._name atIndex:3];
-    
-    //给到这个model
-    [[UserInfoHelp sharedInstance] updateUserInfo:_showModel];
-    
-    NSArray *alarmArray = [AlarmClockModel getAlarmClockFromDB];
-    _showModel.alarmArray = alarmArray;
-    
-    NSArray *remindArray = [RemindModel getRemindFromDB];
-    _showModel.remindArray = remindArray;
-    
+ 
     //刷新界面
     [self updateElecQuantity];
     
@@ -216,7 +203,7 @@
     [self.navigationController pushViewController:oneWebVC animated:YES];
 }
 
-- (void) userInfo
+- (void) userInfoVC
 {
     NSLog(@"用户信息");
     if (!_userInfoVC)
@@ -415,7 +402,7 @@
     {
         case 0:
         {
-            FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:_userHeadPhoto];
+            FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:_userInfo.avatar];
             [userImageButton setCenter:CGPointMake(rightImageView.x - userImageButton.width / 2.0 - 12.0, vOneCellHeight / 2.0)];
             
             userImageButton.userInteractionEnabled = NO;
@@ -534,7 +521,7 @@
             break;
         case 1:
         {
-            [self userInfo];
+            [self userInfoVC];
         }
             break;
         case 11:

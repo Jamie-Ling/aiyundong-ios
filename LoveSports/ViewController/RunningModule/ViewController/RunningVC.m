@@ -215,7 +215,7 @@
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        if (![BLTRealTime sharedInstance].isRealTime ||
+        if (![UserInfoHelp sharedInstance].braceModel.isRealTime ||
             ![BLTManager sharedInstance].model.isNewDevice)
         {
             DEF_WEAKSELF_(RunningVC);

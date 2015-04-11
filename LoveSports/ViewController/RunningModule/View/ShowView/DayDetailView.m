@@ -235,7 +235,14 @@
         else
         {
             NSInteger distance = [array[i] integerValue];
-            button.subTitle = [NSString stringWithFormat:@"%0.2fkm", distance / 100.0];
+            if ([UserInfoHelp sharedInstance].userModel.isMetricSystem)
+            {
+                button.subTitle = [NSString stringWithFormat:@"%0.2fkm", distance / 100.0];
+            }
+            else
+            {
+                button.subTitle = [NSString stringWithFormat:@"%0.2fmi", vChangeToMI(distance / 100.0)];
+            }
         }
     }
 }

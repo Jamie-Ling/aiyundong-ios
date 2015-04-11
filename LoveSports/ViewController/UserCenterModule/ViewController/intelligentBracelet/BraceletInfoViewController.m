@@ -92,8 +92,12 @@
 
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UITableView *listTableView;
 
 @property (nonatomic, strong) UISwitch *realTimeSwitch;
+
+@property (nonatomic, strong) UserInfoModel *userInfo;
+@property (nonatomic, strong) BLTModel *braceModel;
 
 @end
 
@@ -111,6 +115,9 @@
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
+    _userInfo = [UserInfoHelp sharedInstance].userModel;
+    _braceModel = [UserInfoHelp sharedInstance].braceModel;
+    
     //初始化
     //    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久坐提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", @"蓝牙手环信息设置", nil];
     
@@ -119,35 +126,7 @@
     _cellTitleArrayFor240N = [NSArray arrayWithObjects:@"每日目标", @"步距", @"佩戴方式", @"久座提醒", @"振动闹钟", @"实时同步", @"固件升级", @"", @"恢复到默认设置", @"解除绑定", nil];
     
     _stepNumbersArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (int i = vStepNumberMin; i <= vStepNumberMax; i++)
-    {
-        NSString *stepLongString = [NSString stringWithFormat:@"%d000 步", i];
-        [_stepNumbersArray addObject:stepLongString];
-    }
-    
-    
-    NSString *longBack = @"cm";
-    NSString *weightBack = @"kg";
-    
-    _isMetricSystem = YES;
-    
-    if ([[_userInfoDictionary objectForKey:kUserInfoOfIsMetricSystemKey] isEqualToString:@"0"])
-    {
-        longBack = @"ft";   //英寸
-        weightBack = @"lb";  //磅
-        _isMetricSystem = NO;
-    }
-    
     _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
-    for (float i = vStepLongMin(_isMetricSystem); i <= vStepLongMax(_isMetricSystem); i = i + (_isMetricSystem ? 1 : 0.1))
-    {
-        NSString *stepLongString = [NSString stringWithFormat:@"%.0f %@", i, longBack];
-        if (!_isMetricSystem)
-        {
-            stepLongString = [NSString stringWithFormat:@"%.1f %@", i, longBack];
-        }
-        [_stepLongMustableArray addObject:stepLongString];
-    }
     
     //初始化为240N
     _cellTitleArray = _cellTitleArrayFor240N;
@@ -164,16 +143,6 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
     
-    
-    //用户信息
-    _userInfoDictionary = nil;
-    _userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
-    
-    if (!_userInfoDictionary)
-    {
-        NSLog(@"用户信息出错");
-    }
-    
     [self reloadMainPage];
     
     DEF_WEAKSELF_(BraceletInfoViewController);
@@ -186,14 +155,8 @@
 {
     [super viewWillDisappear:animated];
     
-    //将要消失时更新存储
-    [[BraceletInfoModel getUsingLKDBHelper] insertToDB:_thisBraceletInfoModel];
-    
-    [[UserInfoHelp sharedInstance] updateUserInfo:_thisBraceletInfoModel];
-    
     [BLTRealTime sharedInstance].realTimeBlock = nil;
 }
-
 
 //刷新整个页面
 - (void) reloadMainPage
@@ -226,21 +189,6 @@
     //假设有
     _haveNewVersion = [BLTManager sharedInstance].model.hardVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
     _newVersionInfoModel = [[VersionInfoModel alloc] init];
-    /*
-    if (_haveNewVersion)
-    {
-        _newVersionInfoModel._versionID = @"VB 2.1.3";
-        _newVersionInfoModel._versionSize = @"80KB";
-        _newVersionInfoModel._versionUpdatInfo = @"本更新改进了算法，提升了精确度";
-        
-    }
-    else
-    {
-        _newVersionInfoModel._versionID = _thisBraceletInfoModel._deviceVersion;
-        _newVersionInfoModel._versionSize = @"";
-        _newVersionInfoModel._versionUpdatInfo = @"已经是最新版本";
-    }
-     */
     
     [self reloadUserInfoTableView];
 }
@@ -268,14 +216,6 @@
     //    self.title = _thisBraceletInfoModel._name;
     
     //用户信息
-    _userInfoDictionary = nil;
-    _userInfoDictionary = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey];
-    
-    if (!_userInfoDictionary)
-    {
-        NSLog(@"用户信息出错");
-    }
-    
     
     [_listTableView reloadData];
 }
@@ -312,23 +252,26 @@
 #pragma mark ---------------- User-choice -----------------
 //返回上一页
 - (void) goBackPrePage{
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) goToTarget
 {
-    NSLog(@"设置每日目标");
+    [_stepNumbersArray removeAllObjects];
+    for (int i = 5; i <= 30; i++)
+    {
+        NSString *stepLongString = [NSString stringWithFormat:@"%d 步", i * 1000];
+        [_stepNumbersArray addObject:stepLongString];
+    }
     
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
-    long lastIndex;
-    NSInteger lastLong = _thisBraceletInfoModel._stepNumber / 1000;
-    
-    lastIndex = lastLong - vStepNumberMin;
-    
-    
+    NSInteger  lastIndex = _userInfo.targetSteps - 5000;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    
+    DEF_WEAKSELF_(BraceletInfoViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -343,25 +286,18 @@
                             NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
                             NSInteger targetSums = [nowSelectedString integerValue];
                             
-                            //先要改过来。。。
-                            NSInteger old = _thisBraceletInfoModel._stepNumber;
-                            _thisBraceletInfoModel._stepNumber = targetSums;
+                            weakSelf.userInfo.targetSteps = targetSums;
                             
+                            
+                           // [_userInfo updateToDB];
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 if ([object boolValue])
                                 {
-                                    NSLog(@"更新步数成功");
-                                    //                                    _thisBraceletInfoModel._stepNumber = targetSums;
-                                    
-                                    //更新界面
-                                    [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"更新步数失败");
-                                    _thisBraceletInfoModel._stepNumber = old;
+                                    SHOWMBProgressHUD(@"更新成功.", nil, nil, NO, 2.0);
                                 }
                             }];
+                            
+                            [weakSelf.listTableView reloadData];
                         }
                     }];
 }
@@ -376,58 +312,34 @@
                                                      otherButtonTitles:@"右手", nil];
     aciotnSheet.tag = vHandTag;
     [aciotnSheet showInView:self.view];
-    
 }
 
 - (void) changeStepLong
 {
-    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepLongMustableArray];
+    [_stepLongMustableArray removeAllObjects];
     
-    long lastIndex;
-    NSString *lastLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
-    if ([NSString isNilOrEmpty:lastLong])
+    for (float i = 30; i <= 120; i++)
     {
-        lastIndex = 50 - vStepLongMin(YES);
-        if (!_isMetricSystem)
+        NSString *stepLongString;
+        if (_userInfo.isMetricSystem)
         {
-            lastIndex = (int) (((int)vChangeToFT(50) - vStepLongMin(NO)) * 10);
-        }
-    }
-    else
-    {
-        lastIndex= [lastLong integerValue] - vStepLongMin(YES);
-        
-        
-        if (!_isMetricSystem)
-        {
-            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)) * 10);
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > vHeightMax(NO) - vHeightMin(NO) + 1)
-            {
-                lastIndex = vHeightMax(NO) - vHeightMin(NO) + 1;
-            }
-            
+            stepLongString = [NSString stringWithFormat:@"%.f cm", i];
         }
         else
         {
-            if (lastIndex < 0)
-            {
-                lastIndex = 0;
-            }
-            if (lastIndex > vHeightMax(YES) - vHeightMin(YES) + 1)
-            {
-                lastIndex = vHeightMax(YES) - vHeightMin(YES) + 1;
-            }
-            
+            stepLongString = [NSString stringWithFormat:@"%0.2f ft", vChangeToFT(i)];
         }
+        [_stepLongMustableArray addObject:stepLongString];
     }
     
+    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepLongMustableArray];
+    
+    NSInteger lastIndex  = _userInfo.step - 30;
     
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
+    
+    DEF_WEAKSELF_(BraceletInfoViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
@@ -444,41 +356,21 @@
                             NSString *longString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
                             
-                            //                            if (!_isMetricSystem)
-                            //                            {
-                            //                                nowSelectedString = [NSString stringWithFormat:@"%d", vBackToCM([nowSelectedString integerValue])];
-                            //                            }
+                            _userInfo.step = weakSelf.userInfo.isMetricSystem ?
+                            [nowSelectedString integerValue] :
+                            vBackToCM([nowSelectedString floatValue]);
                             
-                            //先要改过来。。。
-                            [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:nowSelectedString];
-                            
+                            //[BLTModel updateToDB];
+                            /*
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 if ([object boolValue])
                                 {
-                                    NSLog(@"更新步长成功");
-                                    //                                    _thisBraceletInfoModel._stepNumber = targetSums;
-                                    
-                                    //更新界面
-                                    [self reloadUserInfoTableView];
-                                }
-                                else
-                                {
-                                    NSLog(@"更新步长失败");
-                                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:lastLong];
+                                    SHOWMBProgressHUD(@"修改成功.", nil, nil, NO, 2.0);
                                 }
                             }];
+                             */
                             
-                            
-                            
-                            
-                            [self reloadUserInfoTableView];
-                            //                                }
-                            //                                else
-                            //                                {
-                            //                                    NSLog(@"修改步长失败");
-                            //                                }
-                            //                            }];
-                            
+                            [weakSelf.listTableView reloadData];
                         }
                     }];
 }
@@ -500,13 +392,7 @@
 {
     NSLog(@"设置时间和闹钟");
     
-    if (!_timeAndClockVC)
-    {
-        _timeAndClockVC = [[TimeAndClockViewController alloc] init];
-    }
-    _timeAndClockVC._thisModel = _thisBraceletInfoModel;
-    
-    AlarmClockVC *alarmVC = [[AlarmClockVC alloc] initWithAlarmClock:_thisBraceletInfoModel.alarmArray];
+    AlarmClockVC *alarmVC = [[AlarmClockVC alloc] initWithAlarmClock:_braceModel.alarmArray];
     
     [self.navigationController pushViewController:alarmVC animated:YES];
     
@@ -581,53 +467,36 @@
         
         return;
     }
-    //    if (theSwitch.tag == 5)
-    //    {
-    //        NSLog(@"更改防丢提醒的状态：%d", theSwitch.on);
-    //        _thisBraceletInfoModel._PreventLossRemind = theSwitch.on;
-    //
-    //
-    //        //。。。传输情况省略，暂无此交互
-    //        return;
-    //    }
-    
+
     if (theSwitch.tag == 5)
     {
         
-        NSLog(@"更改同步的状态：%d", theSwitch.on);
-        
-        
-        _thisBraceletInfoModel._isSyn = theSwitch.on;
-        
+        DEF_WEAKSELF_(BraceletInfoViewController);
         if (theSwitch.on)
         {
             [[BLTRealTime sharedInstance] startRealTimeTransWithBackBlock:^(BOOL success) {
-                if (!success)
+                if (success)
                 {
-                    //                    [UIView showAlertView:@"打开同步失败" andMessage:nil];
-                    theSwitch.on = !_thisBraceletInfoModel._isSyn;
-                    _thisBraceletInfoModel._isSyn = theSwitch.on;
                     SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
                 }
                 else
                 {
-                    SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(@"实时传输开启失败.", nil, nil, NO, 2.0);
+                    weakSelf.realTimeSwitch.on = NO;
                 }
             }];
         }
         else
         {
             [[BLTRealTime sharedInstance] closeRealTimeTransWithBackBlock:^(BOOL success) {
-                if (!success)
+                if (success)
                 {
-                    //                    [UIView showAlertView:@"关闭同步失败" andMessage:nil];
-                    theSwitch.on = !_thisBraceletInfoModel._isSyn;
-                    _thisBraceletInfoModel._isSyn = theSwitch.on;
-                    SHOWMBProgressHUD(@"实时传输关闭失败.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
                 }
                 else
                 {
-                    SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(@"实时传输关闭失败.", nil, nil, NO, 2.0);
+                    weakSelf.realTimeSwitch.on = YES;
                 }
             }];
         }
@@ -639,7 +508,6 @@
 {
     if (isOn)
     {
-        //_switchLabel.text = @"运动数据实时传输开启中";
         _realTimeSwitch.on = YES;
     }
 }
@@ -664,160 +532,26 @@
 }
 
 
-#pragma mark ---------------- actionSheet delegate -----------------
+#pragma mark --------------- actionSheet delegate -----------------
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (actionSheet.tag == vMetricSystemTag)
-    {
-        NSString __block *tempHeight = [_userInfoDictionary objectForKey:kUserInfoOfHeightKey];
-        NSString __block *tempStepLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
-        NSString __block *tempWeight = [_userInfoDictionary objectForKey:kUserInfoOfWeightKey];
-        
-        switch (buttonIndex)
-        {
-            case  0:
-            {
-                if (_thisBraceletInfoModel._isShowMetricSystem)
-                {
-                    return;
-                }
-                else
-                {
-                    NSLog(@"改成公制");
-                    _thisBraceletInfoModel._isShowMetricSystem = YES;
-                }
-            }
-                break;
-            case 1:
-            {
-                if (!_thisBraceletInfoModel._isShowMetricSystem)
-                {
-                    return;
-                }
-                else
-                {
-                    NSLog(@"改成英制");
-                    _thisBraceletInfoModel._isShowMetricSystem = NO;
-                    
-                }
-            }
-                break;
-            case 2:
-                return;
-                break;
-            default:
-                break;
-        }
-        [BLTSendData sendBasicSetOfInformationData:_thisBraceletInfoModel._isShowMetricSystem withActivityTimeZone:8 withUpdateBlock:^(id object, BLTAcceptDataType type) {
-            if (type == BLTAcceptDataTypeSetBaseInfo)
-            {
-                NSLog(@"设置公英制成功");
-                [self reloadUserInfoTableView];
-                if (_thisBraceletInfoModel._isShowMetricSystem)
-                {
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue:@"1"];
-                    tempHeight = [NSString stringWithFormat:@"%.0f", vBackToCM([tempHeight floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
-                    tempStepLong = [NSString stringWithFormat:@"%.0f", vBackToCM([tempStepLong floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
-                    tempWeight= [NSString stringWithFormat:@"%.0f", vBackToKG([tempWeight integerValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
-                }
-                else
-                {
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfIsMetricSystemKey withValue: @"0"];
-                    
-                    tempHeight = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempHeight floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfHeightKey withValue:tempHeight];
-                    tempStepLong = [NSString stringWithFormat:@"%.1f", vChangeToFT([tempStepLong floatValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfStepLongKey withValue:tempStepLong];
-                    tempWeight= [NSString stringWithFormat:@"%.0f", vChangeToLB([tempWeight integerValue])];
-                    [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfWeightKey withValue:tempWeight];
-                }
-            }
-            else
-            {
-                NSLog(@"设置公英制失败");
-                _thisBraceletInfoModel._isShowMetricSystem = !_thisBraceletInfoModel._isShowMetricSystem;
-            }
-        }];
-        
-        return;
-    }
     if (actionSheet.tag == vHandTag)
     {
-        switch (buttonIndex)
+        if (buttonIndex != 2)
         {
-            case  0:
-            {
-                if (_thisBraceletInfoModel._isLeftHand)
+            _braceModel.isLeftHand = !buttonIndex;
+            DEF_WEAKSELF_(BraceletInfoViewController);
+            [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
+                if ([object boolValue])
                 {
-                    return;
+                    SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
                 }
-                else
-                {
-                    NSLog(@"改成左手");
-                    _thisBraceletInfoModel._isLeftHand = YES;
-                    
-                    [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
-                        if ([object boolValue])
-                        {
-                            NSLog(@"更新左手状态成功");
-                            SHOWMBProgressHUD(@"设置左手成功.", nil, nil, NO, 2.0);
-                        }
-                        else
-                        {
-                            NSLog(@"更新左手状态失败");
-                            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
-                            
-                            _thisBraceletInfoModel._isLeftHand = NO;
-                        }
-                        [self reloadUserInfoTableView];
-                    }];
-                }
-            }
-                break;
-            case 1:
-            {
-                if (!_thisBraceletInfoModel._isLeftHand)
-                {
-                    return;
-                }
-                else
-                {
-                    NSLog(@"改成右手");
-                    _thisBraceletInfoModel._isLeftHand = NO;
-                    [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
-                        if ([object boolValue])
-                        {
-                            NSLog(@"更新右手状态成功");
-                            SHOWMBProgressHUD(@"设置右手成功.", nil, nil, NO, 2.0);
-                        }
-                        else
-                        {
-                            NSLog(@"更新右手状态失败");
-                            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
-                            
-                            _thisBraceletInfoModel._isLeftHand = YES;
-                        }
-                        [self reloadUserInfoTableView];
-                    }];
-                }
-            }
-                break;
-            case 2:
-                return;
-                break;
-            default:
-                break;
+              
+                [weakSelf.listTableView reloadData];
+            }];
         }
-        return;
     }
-    
-    
-    
 }
-
 
 #pragma mark ---------------- UIAlertView delegate -----------------
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -856,9 +590,7 @@
                 {
                     [UIView showAlertView:@"恢复到默认设置失败" andMessage:nil];
                 }
-                
             }];
-            
             
             return;
         }
@@ -945,7 +677,7 @@
         {
             //目标
             
-            NSString *stepLongString = [NSString stringWithFormat:@"%ld 步/天", (long)_thisBraceletInfoModel._stepNumber];
+            NSString *stepLongString = [NSString stringWithFormat:@"%ld 步/天", (long)_userInfo.targetSteps];
             [rightTitle setText:stepLongString];
             
             [rightTitle sizeToFit];
@@ -959,10 +691,7 @@
         case 1:
         {
             //步子
-            NSString *stepLong = [_userInfoDictionary objectForKey:kUserInfoOfStepLongKey];
-            
-            NSString *stepLongString = [NSString stringWithFormat:@"%@ cm", stepLong];
-            [rightTitle setText:stepLongString];
+            [rightTitle setText:_userInfo.showStep];
             
             [rightTitle sizeToFit];
             [rightTitle setCenterY:vOneCellHeight / 2.0];
@@ -975,13 +704,8 @@
         case 2:
         {
             //左右手
-            NSString *show = @"左手";
-            if (!_thisBraceletInfoModel._isLeftHand)
-            {
-                show = @"右手";
-            }
-            
-            
+            NSString *show =  _braceModel.isLeftHand ? @"左手" : @"右手";
+    
             [rightTitle setText:show];
             
             [rightTitle sizeToFit];
@@ -994,24 +718,6 @@
             
         case 3:
         {
-            if (_thisBraceletInfoModel._is24HoursTime)
-            {
-                [rightTitle setText:kBraceletLongSetRemind24];
-            }
-            else
-            {
-                [rightTitle setText:kBraceletLongSetRemind];
-            }
-            [rightTitle setNumberOfLines:1];
-            
-            [rightTitle setCenter:CGPointMake(vOneCellWidth / 2.0, vOneCellHeight / 2.0)];
-            //[oneCell.contentView addSubview:rightTitle];
-            
-            slideSwitchH.on = _thisBraceletInfoModel._longTimeSetRemind;
-           // [oneCell.contentView addSubview:slideSwitchH];
-            
-          //  [rightImageView setHidden:YES];
-            
             oneCell.selectionStyle =  UITableViewCellSelectionStyleNone;
         }
             break;
@@ -1019,7 +725,7 @@
         {
             if (_is240N)
             {
-                slideSwitchH.on = [BLTRealTime sharedInstance].isRealTime;
+                slideSwitchH.on = _braceModel.isRealTime;
                 [oneCell.contentView addSubview:slideSwitchH];
                 
                 [rightImageView setHidden:YES];
@@ -1072,7 +778,7 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = NO;
+        oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
         slideSwitchH.userInteractionEnabled = NO;
         slideSwitchH.on = NO;
@@ -1089,15 +795,9 @@
             {
                 oneCell.userInteractionEnabled = NO;
             }
-            
         }
     }
 
-    //设置点选颜色
-    //    [oneCell setSelectedBackgroundView:[[UIView alloc] initWithFrame:oneCell.frame]];
-    //    //kHexRGB(0x0e822f)
-    //    oneCell.selectedBackgroundView.backgroundColor = kHexRGBAlpha(0x0e822f, 0.6);
-    //
     return oneCell;
 }
 
@@ -1107,7 +807,6 @@
     NSLog(@"点击第%ld行",  (long)indexPath.row);
     //去除点击的选中色
     [tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
-    
     
     if (![self readyForSet])
     {
@@ -1191,9 +890,10 @@
     }
 }
 
+#pragma --- 久坐提醒. ---
 - (void)goToSetRemindVC
 {
-    RemindVC *remindVC = [[RemindVC alloc] initWithRemind:[_thisBraceletInfoModel.remindArray lastObject]];
+    RemindVC *remindVC = [[RemindVC alloc] initWithRemind:[_braceModel.remindArray lastObject]];
     
     [self.navigationController pushViewController:remindVC animated:YES];
 }

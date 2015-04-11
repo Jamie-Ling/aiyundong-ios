@@ -57,8 +57,6 @@ DEF_SINGLETON(BLTManager)
             [self updateRSSI:RSSI];
         };
         
-        _model = [[BLTModel alloc] init];
-        
         _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer", @"W285", @"P118S"];
     }
     
@@ -158,25 +156,16 @@ DEF_SINGLETON(BLTManager)
         }
         else
         {
-            model = [[BLTModel alloc] init];
+            model = [BLTModel getModelFromDBWtihUUID:idString];
             
-            model.bltID = idString ? idString : @"";
             model.bltName = name;
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
             model.peripheral = peripheral;
             
-            BLTModel *DBModel = [model getCurrentModelFromDB];
-            if (!DBModel)
+            // 没有被忽略就加入到设备组。
+            if (!model.isIgnore)
             {
                 [_allWareArray addObject:model];
-            }
-            else
-            {
-                // 没有被忽略就加入到设备组。
-                if (!DBModel.isIgnore)
-                {
-                    [_allWareArray addObject:model];
-                }
             }
         }
        
@@ -247,7 +236,11 @@ DEF_SINGLETON(BLTManager)
             [self dismissLink];
         }
         _connectState = BLTManagerConnecting;
+        
+        // model有实际更新时。全局的也跟着更新.
         _model = model;
+        [UserInfoHelp sharedInstance].braceModel = _model;
+        
         self.discoverPeripheral = model.peripheral;
         [self.centralManager connectPeripheral:model.peripheral options:nil];
         [self.centralManager stopScan];

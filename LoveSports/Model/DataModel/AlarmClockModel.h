@@ -12,6 +12,7 @@
 @interface AlarmClockModel : NSObject
 
 @property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *wareUUID;
 
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSString *alarmTime;
@@ -45,7 +46,7 @@
          withRepeatUntStringArray: (NSArray *) repeatUntStringArray
                   withFullWeekDay: (BOOL) isFullWeekDay;
 
-+ (NSArray *)getAlarmClockFromDB;
++ (NSArray *)getAlarmClockFromDBWithUUID:(NSString *)uuid;
 - (NSString *)weekArrayToString;
 - (NSArray *)sortByNumberWithArray:(NSArray *)array withSEC:(BOOL)sec;
 - (NSString *)showStringForWeekDay;
