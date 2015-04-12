@@ -101,7 +101,7 @@
     return NO;
 }
 
-- (void)updateContentForDayDetailViews
+- (void)updateContentForDayDetailViews:(BOOL)isAnimaiton
 {
     DayDetailView *detailView = _viewsArray[1];
     NSDate *date = detailView.currentDate;
@@ -109,7 +109,7 @@
     if ([date isSameWithDate:[NSDate date]])
     {
         detailView.currentDate = detailView.currentDate;
-        detailView.allowAnimation = YES;
+        detailView.allowAnimation = isAnimaiton;
     }
 }
 

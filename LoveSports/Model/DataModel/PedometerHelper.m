@@ -168,7 +168,8 @@ DEF_SINGLETON(PedometerHelper)
 
     if (endBlock)
     {
-        endBlock([NSDate date], YES);
+        NSLog(@"..实时");
+        endBlock(nil, YES);
     }
 }
 

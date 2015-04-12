@@ -89,6 +89,8 @@ DEF_SINGLETON(DownloadEntity)
         }
         
         [zip UnzipCloseFile];
+        
+        [BLTDFUBaseInfo getUpdateFirmWareData];
     }
 }
 

@@ -149,6 +149,20 @@
     [BLTRealTime sharedInstance].realTimeBlock = ^(BOOL success) {
         [weakSelf notifiRealTimeSwitchState:YES];
     };
+    [BLTManager sharedInstance].connectBlock = ^() {
+        [weakSelf refreshTableView:YES];
+    };
+    [BLTManager sharedInstance].disConnectBlock = ^() {
+        [weakSelf refreshTableView:NO];
+    };
+}
+
+- (void)refreshTableView:(BOOL)isAllow
+{
+    [self reloadMainPage];
+
+    [_listTableView reloadData];
+    [_notConectLabel setHidden:isAllow];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -156,6 +170,8 @@
     [super viewWillDisappear:animated];
     
     [BLTRealTime sharedInstance].realTimeBlock = nil;
+    [BLTManager sharedInstance].connectBlock = nil;
+    [BLTManager sharedInstance].disConnectBlock = nil;
 }
 
 //刷新整个页面
@@ -267,7 +283,7 @@
     
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
-    NSInteger  lastIndex = _userInfo.targetSteps - 5000;
+    NSInteger lastIndex = (_userInfo.targetSteps - 5000) / 1000;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
     
@@ -288,13 +304,9 @@
                             
                             weakSelf.userInfo.targetSteps = targetSums;
                             
-                            
                            // [_userInfo updateToDB];
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
-                                if ([object boolValue])
-                                {
-                                    SHOWMBProgressHUD(@"更新成功.", nil, nil, NO, 2.0);
-                                }
+                                [NSObject showMessageOnMain:object];
                             }];
                             
                             [weakSelf.listTableView reloadData];
@@ -533,7 +545,7 @@
 
 
 #pragma mark --------------- actionSheet delegate -----------------
--(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == vHandTag)
     {
@@ -542,13 +554,10 @@
             _braceModel.isLeftHand = !buttonIndex;
             DEF_WEAKSELF_(BraceletInfoViewController);
             [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
-                if ([object boolValue])
-                {
-                    SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
-                }
-              
-                [weakSelf.listTableView reloadData];
+                [NSObject showMessageOnMain:object];
             }];
+            
+            [_listTableView reloadData];
         }
     }
 }
@@ -596,7 +605,12 @@
         }
         if (alertView.tag == 100962)
         {
-            [BLTModel removeBindingDeviceWithUUID:[LS_LastWareUUID getObjectValue]];
+            BLTModel *model = [BLTManager sharedInstance].model;
+            if (model)
+            {
+                model.isBinding = NO;
+                [BLTModel removeBindingDeviceWithUUID:model.bltID];
+            }
 
             [[BLTManager sharedInstance] dismissLink];
             

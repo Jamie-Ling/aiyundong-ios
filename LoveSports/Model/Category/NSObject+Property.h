@@ -49,6 +49,8 @@ typedef void(^NSObjectSimpleBlock)(id object);
                             withPace:(NSInteger)pace
                            withModel:(BOOL)metric;
 
++ (void)showMessageOnMain:(id)object;
+
 @end
 
 @interface NSMutableArray (Order)

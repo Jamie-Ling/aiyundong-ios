@@ -199,13 +199,11 @@
     
     if (indexPath.row >= _showArray.count)
     {
-        NSLog(@"..4");
         return cell;
     }
     
     BLTModel *model = _showArray[indexPath.row];
-    NSLog(@"2");
-    [cell updateContentForWareInfoCell:model withHeight:100.0];
+    [cell updateContentForWareInfoCell:model withHeight:64];
     
     return cell;
 }
@@ -217,7 +215,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100.0;
+    return 64;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

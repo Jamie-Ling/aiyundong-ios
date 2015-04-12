@@ -48,6 +48,9 @@
     [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
         [weakSelf.trendView reloadTrendChartView];
     };
+    [BLTSendOld sharedInstance].backBlock = ^(NSDate *date) {
+        [weakSelf.trendView reloadTrendChartView];
+    };
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -55,6 +58,7 @@
     [super viewWillDisappear:animated];
     
     [BLTSimpleSend sharedInstance].backBlock = nil;
+    [BLTSendOld sharedInstance].backBlock = nil;
     [DataShare sharedInstance].showCount = 8;
 }
 

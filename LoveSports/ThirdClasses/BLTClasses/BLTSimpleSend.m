@@ -41,7 +41,7 @@ DEF_SINGLETON(BLTSimpleSend)
     if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
     {
         self.startDate = [NSDate date];
-        
+
         return;
     }
     
@@ -64,6 +64,7 @@ DEF_SINGLETON(BLTSimpleSend)
                                          {
                                              NSLog(@"...失败。。。");
                                              SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+                                             [self endSyncFail];
                                          }
                                          else if (type == BLTAcceptDataTypeRequestHistoryNoData)
                                          {
@@ -112,8 +113,18 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         else
         {
             // 此处删除错误数据
+            [self endSyncFail];
         }
     }];
+}
+
+//同步失败
+- (void)endSyncFail
+{
+    if (self.backBlock)
+    {
+        self.backBlock(nil);
+    }
 }
 
 // 同步数据结束
@@ -128,13 +139,17 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 // 新设备命令通道. 刚连接时
 - (void)newDeviceChannel
 {
-    if (![LS_SettingBaseTimeZoneInfo getBOOLValue])
+    if (![BLTManager sharedInstance].model.isHaveActivePlace)
     {
         // 优先发送时区命令
         [[UserInfoHelp sharedInstance] sendSetUserInfoAndActiveTimeZone:^(id object) {
+            if ([object boolValue])
+            {
+                [BLTManager sharedInstance].model.isHaveActivePlace = YES;
+            }
         }];
     }
-  
+     
     // 设置当前时间.
     [self performSelector:@selector(sendCurrentTime) withObject:nil afterDelay:0.3];
     
@@ -144,6 +159,15 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.9];
     // 请求历史数据.
     [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:1.2];
+}
+
+- (void)testFirm
+{
+    [BLTSendData sendSetWearingWayDataWithRightHand:arc4random() % 2
+                                    withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                        NSLog(@"手环设置...");
+                                        
+                                    }];
 }
 
 // 设置当前时间
@@ -174,7 +198,8 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             [BLTManager sharedInstance].model.firmVersion = val[11];
             
             NSLog(@"..%@..%ld..%ld", [BLTManager sharedInstance].model.hardType,
-                  (long)[BLTManager sharedInstance].model.hardVersion, (long)[BLTManager sharedInstance].model.firmVersion);
+                  (long)[BLTManager sharedInstance].model.hardVersion,
+                  (long)[BLTManager sharedInstance].model.firmVersion);
         }
     }];
 }
@@ -284,7 +309,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     
     // MillionPedometer==P118 W240=ActivityTracker
     NSString *name = [BLTManager sharedInstance].model.bltName;
-    if ([name isEqualToString:@"ActivityTracker"]  || [name isEqualToString:@"W285"] ||
+    if ([name isEqualToString:@"ActivityTracker"]  || [name isEqualToString:@"W286"] ||
         [name isEqualToString:@"MillionPedometer"] || [name isEqualToString:@"P118S"])
     {
         [BLTManager sharedInstance].model.isNewDevice = NO;

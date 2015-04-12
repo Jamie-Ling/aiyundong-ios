@@ -64,31 +64,17 @@
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addAllControl
 {
-    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  64.0) withImageName:@"logo_test" withImageZoomSize:1.0];
+    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  64.0) withImageName:@"isport_5@2x.png" withImageZoomSize:1.0];
     [self.view addSubview:_logoImageView];
     
+    [self.view addSubViewWithRect:CGRectMake(0, _logoImageView.totalHeight + 20, self.width, 0.5)
+                        withColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]
+                        withImage:nil];
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-
-    NSString *titleString = [NSString stringWithFormat:@"v%@", app_Version];
-    CGRect titleFrame = CGRectMake(_logoImageView.centerX + 26, _logoImageView.bottom + 2, kButtonDefaultWidth, 24);
-    UILabel *title = [[ObjectCTools shared] getACustomLableFrame:titleFrame
-                                                 backgroundColor:[UIColor clearColor]
-                                                            text:titleString
-                                                       textColor:kLabelTitleDefaultColor
-                                                            font:[UIFont systemFontOfSize:14]
-                                                   textAlignment:NSTextAlignmentLeft
-                                                   lineBreakMode:0
-                                                   numberOfLines:0];
-    [title sizeToFit];
-    [title setCenterX:_logoImageView.right - title.width / 2.0 + 3];
-    [self.view addSubview:title];
-    
-    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    NSString *hardVersion = @"硬件版本:  v0.13";
-    NSString *firmVersion = @"固件版本:  v0.13";
+    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", [infoDictionary objectForKey:@"CFBundleVersion"]];
 
     _cellTitleArray = [NSMutableArray arrayWithObjects: @"意见反馈", @"帮助", appVersion, nil];
 
@@ -98,7 +84,7 @@
 
 - (void) addTableView
 {
-    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _logoImageView.bottom + kNavigationBarHeight, vOneCellWidth, kScreenHeight - _logoImageView.bottom - kIOS7OffHeight) style:UITableViewStylePlain];
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _logoImageView.totalHeight + 24, vOneCellWidth, kScreenHeight - _logoImageView.bottom - kIOS7OffHeight) style:UITableViewStylePlain];
     
     [_listTableView setBackgroundColor:kBackgroundColor];
     

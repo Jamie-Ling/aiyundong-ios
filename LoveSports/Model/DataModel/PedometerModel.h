@@ -42,6 +42,7 @@ typedef enum {
 @end
 
 @interface PedometerModel : NSObject
+
 typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 @property (nonatomic, strong) NSString *wareUUID;           // 设备uuid

@@ -25,11 +25,11 @@
     
     self.title = @"昵称";
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+      self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:@"保存" target:self selector:@selector(overChangeNickName) ImageName:@""];
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     
     [self addAllControl];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -68,20 +68,6 @@
                                                               withPaddingViewText:@""
                                                                 withReturnKeyType:UIReturnKeyDone];
     [_upView addSubview:_nickNameTextField];
-    
-    //完成按钮
-    CGRect overButtonFrame = CGRectMake(_nickNameTextField.x, _nickNameTextField.bottom + 32, kButtonDefaultWidth, kButtonDefaultHeight);
-    UIButton *overButton = [[ObjectCTools shared] getACustomButtonWithBackgroundImage:overButtonFrame
-                                                                     titleNormalColor:kPageTitleColor
-                                                                titleHighlightedColor:nil
-                                                                                title:@"保 存"
-                                                                                 font:kButtonFontSize
-                                                            normalBackgroundImageName:kButtonBackGroundImage
-                                                       highlightedBackgroundImageName:nil
-                                                                   accessibilityLabel:@"overButton"];
-    kCenterTheView(overButton);
-    [overButton addTarget:self action:@selector(overChangeNickName) forControlEvents:UIControlEventTouchUpInside];
-    [_upView addSubview:overButton];
 }
 
 #pragma mark ---------------- User-choice -----------------

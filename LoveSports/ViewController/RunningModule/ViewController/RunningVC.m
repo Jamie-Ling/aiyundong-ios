@@ -49,7 +49,6 @@
     if (self)
     {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         self.tableView.showsVerticalScrollIndicator = NO;
     }
     
@@ -62,15 +61,33 @@
     
     DEF_WEAKSELF_(RunningVC);
 
-    [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
-        [weakSelf updateConnectForView];
+    [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date) {
+        [weakSelf updateConnectForView:date ? YES : NO];
+    };
+    [BLTSendOld sharedInstance].backBlock = ^(NSDate *date) {
+        [weakSelf updateConnectForView:YES];
+    };
+    [BLTManager sharedInstance].connectBlock = ^ {
+        [weakSelf refreshTableViewTitle];
+    };
+    [BLTManager sharedInstance].disConnectBlock = ^ {
+        [weakSelf refreshTableViewTitle];
     };
     
-    [BLTSendOld sharedInstance].backBlock = ^(NSDate *date){
-        [weakSelf updateConnectForView];
-    };
-    
-    [self updateConnectForView];
+    [self refreshTableViewTitle];
+    [self updateConnectForView:YES];
+}
+
+- (void)refreshTableViewTitle
+{
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        [self setTitleForConnect];
+    }
+    else
+    {
+        [self setTitleForNoConnect];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -86,6 +103,8 @@
     
     [BLTSimpleSend sharedInstance].backBlock = nil;
     [BLTSendOld sharedInstance].backBlock = nil;
+    [BLTManager sharedInstance].connectBlock = nil;
+    [BLTManager sharedInstance].disConnectBlock = nil;
 }
 
 - (void)viewDidLoad
@@ -181,20 +200,11 @@
 - (void)setupRefresh
 {
     DEF_WEAKSELF_(RunningVC);
-    [self.tableView addLegendHeaderWithRefreshingBlock:^{
+    [self.tableView addLegendHeaderWithRefreshingBlock:^ {
         [weakSelf headerRereshing];
     }];
     
-    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
-    {
-        [self setTitleForConnect];
-    }
-    else
-    {
-        [self setTitleForNoConnect];
-    }
-    
-    // [self.tableView.legendHeader beginRefreshing];
+    [self refreshTableViewTitle];
 }
 
 - (void)setTitleForConnect
@@ -215,26 +225,47 @@
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        if (![UserInfoHelp sharedInstance].braceModel.isRealTime ||
-            ![BLTManager sharedInstance].model.isNewDevice)
+        if (![UserInfoHelp sharedInstance].braceModel.isRealTime)
         {
             DEF_WEAKSELF_(RunningVC);
-            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date){
-                [weakSelf updateConnectForView];
+            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date) {
+                
+                if (date)
+                {
+                    [weakSelf updateConnectForView:YES];
+                }
 
-                [weakSelf.tableView.header performSelectorOnMainThread:@selector(endRefreshing) withObject:nil waitUntilDone:NO];
+                [weakSelf.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
+                                                            withObject:nil
+                                                         waitUntilDone:NO];
             }];
         }
         else
         {
-            SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
-            [self.tableView.header performSelectorOnMainThread:@selector(endRefreshing) withObject:nil waitUntilDone:NO];
+            if (![BLTManager sharedInstance].model.isNewDevice)
+            {
+                DEF_WEAKSELF_(RunningVC);
+                [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date) {
+                    [weakSelf updateConnectForView:YES];
+                    
+                    [weakSelf.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
+                                                                withObject:nil
+                                                             waitUntilDone:NO];
+                }];
+            }
+            else
+            {
+                SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
+                [self.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
+                                                        withObject:nil
+                                                     waitUntilDone:NO];
+            }
         }
     }
     else
     {
         // SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
-        //[_srcollView headerEndRefreshing];
+        // [_srcollView headerEndRefreshing];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
@@ -243,12 +274,13 @@
         });
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.tableView.header.state == MJRefreshHeaderStateRefreshing)
         {
             [self.tableView.header endRefreshing];
         }
-    });}
+    });
+}
 
 - (void)loadDayDetailView
 {
@@ -298,9 +330,10 @@
 }
 
 // 下拉刷新主界面.
-- (void)updateConnectForView
+- (void)updateConnectForView:(BOOL)isAnimation
 {
-    [_dayScroll updateContentForDayDetailViews];
+    [_dayScroll updateContentForDayDetailViews:isAnimation];
+    [_trendView reloadTrendChartView];
 }
 
 #pragma mark --- UIScrollViewDelegate ---

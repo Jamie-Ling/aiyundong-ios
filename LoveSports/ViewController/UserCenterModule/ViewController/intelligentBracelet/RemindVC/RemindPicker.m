@@ -34,6 +34,7 @@
                                    withTitle:@"取消"
                              withSelectTitle:@"取消"
                                    withColor:[UIColor clearColor]];
+    _cancelButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_cancelButton addTouchUpTarget:self action:@selector(clickCancelButton:)];
     [self addSubview:_cancelButton];
     
@@ -41,6 +42,7 @@
                                     withTitle:@"确定"
                               withSelectTitle:@"确定"
                                     withColor:[UIColor clearColor]];
+    _confirmButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_confirmButton addTouchUpTarget:self action:@selector(clickConfirmButton:)];
     [self addSubview:_confirmButton];
     
@@ -51,9 +53,9 @@
                                        withTag:0];
     [self addSubview:_titleLabel];
     
-    [self addSubViewWithRect:CGRectMake(0, 43.5, self.width, 1)
-                   withColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]
-                   withImage:nil];
+    UIView *downLine = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5 - 0.5, self.width, 0.5)];
+    downLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [self addSubview:downLine];
 }
 
 - (void)loadDatePicker

@@ -57,7 +57,7 @@ DEF_SINGLETON(BLTManager)
             [self updateRSSI:RSSI];
         };
         
-        _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer", @"W285", @"P118S"];
+        _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer", @"W286", @"P118S"];
     }
     
     return self;
@@ -166,13 +166,13 @@ DEF_SINGLETON(BLTManager)
             model.peripheral = peripheral;
             
             // 没有被忽略就加入到设备组。
-            if (!model.isIgnore)
+            // if (!model.isIgnore)
             {
                 [_allWareArray addObject:model];
             }
         }
        
-        BOOL binding = YES;//[model checkBindingState];
+        BOOL binding = [model checkBindingState];
         if (binding && _connectState != BLTManagerConnected)
         {
             // 如果该设备已经绑定并且没有连接设备时就直接连接.
@@ -231,11 +231,14 @@ DEF_SINGLETON(BLTManager)
 - (void)repareConnectedDevice:(BLTModel *)model
 {
     NSLog(@".111model...%@", model.bltName);
-    // 有时间应写个copy协议。。。从数据库取出来的会被释放.
+    // 有时间应写个copy协议。。。从数据库取出来的会被释放. 找时间测试下。看究竟是否会被释放... 疑问
     BLTModel *tmpModel = [model getCurrentModelFromDB];
+    tmpModel.bltName = model.bltName;
     tmpModel.peripheral = model.peripheral;
     tmpModel.bltRSSI = model.bltRSSI;
-    
+    [_allWareArray addObject:tmpModel];
+    [self removeModelFromAllWare:model];
+
     if (self.discoverPeripheral != model.peripheral)
     {
         if (_discoverPeripheral)
@@ -252,6 +255,17 @@ DEF_SINGLETON(BLTManager)
         [UserInfoHelp sharedInstance].braceModel = _model;
         [_centralManager stopScan];
     }
+}
+
+- (void)removeModelFromAllWare:(BLTModel *)model
+{
+    [_allWareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BLTModel *tmpModel = obj;
+        if (tmpModel == model)
+        {
+            [_allWareArray removeObject:model];
+        }
+    }];
 }
 
 - (BLTModel *)checkIsAddInAllWareWithID:(NSString *)idString

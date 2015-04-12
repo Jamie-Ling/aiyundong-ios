@@ -64,7 +64,7 @@ DEF_SINGLETON(BLTAcceptData)
     if (_type == BLTAcceptDataTypeUnKnown)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
-        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:0.2];
+        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:1.0];
     }
 }
 
@@ -174,7 +174,7 @@ DEF_SINGLETON(BLTAcceptData)
             else if (order == 0x0C)
             {
                 // 久坐提醒设定
-                _type = BLTAcceptDataTypeCheckWareTime;
+                _type = BLTAcceptDataTypeSetSedentaryRemind;
             }
             else if (order == 0x0D)
             {
@@ -250,7 +250,7 @@ DEF_SINGLETON(BLTAcceptData)
             }
             else if (order == 0x03)
             {
-                if (val[3] == 0xED)
+                if (val[3] == 0xED || val[3] == 0xFE)
                 {
                     //  计步器收到开始实时传输数据的命令
                     _type = BLTAcceptDataTypeRealTimeTransSportsData;

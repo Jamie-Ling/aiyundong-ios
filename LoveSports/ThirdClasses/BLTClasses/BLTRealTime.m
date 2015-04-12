@@ -127,7 +127,7 @@ DEF_SINGLETON(BLTRealTime)
 {
     // 保存数据后的回调
     [PedometerHelper updateContentForPedometerModel:data withEnd:^(NSDate *date, BOOL success) {
-        [self performSelectorOnMainThread:@selector(endSyncData:) withObject:[NSDate date] waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(endSyncData:) withObject:date waitUntilDone:NO];
     }];
 }
 

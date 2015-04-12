@@ -15,7 +15,7 @@
     self = [super init];
     if (self)
     {
-        _zipVersion = 100;
+        _zipVersion = 0;
     }
     
     return self;
@@ -58,6 +58,8 @@ DEF_SINGLETON(BLTDFUBaseInfo)
         {
             [zips addObject:[path stringByAppendingPathComponent:file]];
             [BLTDFUBaseInfo sharedInstance].zipVersion = [[[[file stringByDeletingPathExtension] componentsSeparatedByString:@"_"] lastObject] integerValue];
+            
+            NSLog(@".zipVersion.%ld", (long)[BLTDFUBaseInfo sharedInstance].zipVersion);
         }
     }
     

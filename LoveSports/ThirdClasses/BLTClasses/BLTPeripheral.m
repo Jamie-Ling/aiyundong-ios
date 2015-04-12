@@ -37,7 +37,8 @@ DEF_SINGLETON(BLTPeripheral)
     
     if (peripheral)
     {
-        [self startUpdateRSSI];
+        // 不刷新rssi
+        // [self startUpdateRSSI];
     }
     else
     {
@@ -151,6 +152,8 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [BLTDFUHelper sharedInstance].packetChar = charac;
         }
+        
+        NSLog(@"..%@", charac.UUID);
     }
 }
 
@@ -213,7 +216,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
+        // NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
            // [self cleanMutableData:_receiveData];

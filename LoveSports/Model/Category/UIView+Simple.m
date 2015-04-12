@@ -274,6 +274,17 @@ CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad)
     }
 }
 
+- (void)addUpAndDownLine
+{
+    UIView *upLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 0.5)];
+    upLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [self addSubview:upLine];
+    
+    UIView *downLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, self.width, 0.5)];
+    downLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [self addSubview:downLine];
+}
+
 - (UIButton *)addSubButtonWithRect:(CGRect)rect
                    withImage:(NSString *)image
              withSelectImage:(NSString *)selImage
@@ -493,8 +504,8 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
     }
     
     button.selected = NO;
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
 
     return button;
 }
@@ -672,6 +683,12 @@ sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 + (UIColor *)colorFromHex:(int)hex
 {
     return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0];
+}
+
+
++ (UIColor *)colorFromHex:(int)hex withAlpha:(CGFloat)alpha
+{
+    return [[UIColor colorFromHex:hex] colorWithAlphaComponent:alpha];
 }
 
 @end

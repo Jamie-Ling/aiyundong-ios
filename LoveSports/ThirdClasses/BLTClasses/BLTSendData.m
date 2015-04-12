@@ -55,6 +55,9 @@ DEF_SINGLETON(BLTSendData)
                            withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    
+    
+    NSLog(@"活动时区..%d..本地时区..%d",[self activityTimeZone:timeZone], [self timeZone]);
     NSDate *date = [NSDate date];
     UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
                     [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
@@ -66,6 +69,8 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    NSLog(@"..本地时区..%d", [self timeZone]);
+
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday, [self timeZone], date.hour, date.minute, date.second};
@@ -231,7 +236,6 @@ DEF_SINGLETON(BLTSendData)
     UInt8 val[19] = {0xBE, 0x01, 0x0C, 0xFE, 0x00};
     
     int count = 4;
-    int index = 0;
     if (times)
     {
         for (RemindModel *model in times)
@@ -242,9 +246,6 @@ DEF_SINGLETON(BLTSendData)
                 count--;
                 break;
             }
-            
-            val[3] = val[3] | (model.isOpen << index);
-            index++;
             
             NSArray *array = [model.startTime componentsSeparatedByString:@":"];
             val[count] = [array[0] integerValue];
@@ -262,8 +263,11 @@ DEF_SINGLETON(BLTSendData)
     RemindModel *model = [times lastObject];
     NSInteger time = [model.interval integerValue];
     
+    val[4] = model.isOpen;
     val[17] = time / 60;
     val[18] = time % 60;
+    
+    NSLog(@"..%d", val[2]);
     
     [self sendDataToWare:&val withLength:19 withUpdate:block];
 }

@@ -48,9 +48,25 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
+    
+    __weak HardWareVC *safeSelf = self;
+    [BLTManager sharedInstance].connectBlock = ^() {
+        [safeSelf bltIsConnect];
+    };
+    [BLTManager sharedInstance].disConnectBlock = ^() {
+        [safeSelf dismissLink];
+    };
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTManager sharedInstance].connectBlock = nil;
+    [BLTManager sharedInstance].disConnectBlock = nil;
 }
 
 - (void)viewDidLoad
@@ -59,7 +75,7 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = _model.bltName;
-    self.view.layer.contents = (id)[UIImage image:@"login_background@2x.jpg"].CGImage;
+    self.backgroundColor = UIColorFromHEX(0xf0f0f0);
     
     [self loadLabels];
     NSString *curUUID = [BLTManager sharedInstance].model.bltID;
@@ -78,15 +94,6 @@
     {
         [self loadNoBindingAndNoConnectSetting];
     }
-    
-    __weak HardWareVC *safeSelf = self;
-    [BLTManager sharedInstance].connectBlock = ^() {
-        [safeSelf bltIsConnect];
-    };
-    
-    [BLTManager sharedInstance].disConnectBlock = ^() {
-        [safeSelf dismissLink];
-    };
 }
 
 - (void)dismissLink
@@ -112,31 +119,33 @@
 
 - (void)loadLabels
 {
-    NSArray *leftText = @[@"设备ID", @"设备名称"];
+    NSArray *leftText = @[@"  设备ID", @"  设备名称"];
     NSArray *rightText = @[_model.bltID, _model.bltName];
     for (int i = 0; i < 2; i++)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 15 + i * (80), self.view.width, 75)];
-        view.backgroundColor = UIColorRGB(253, 180, 30);
+        CGFloat height = i ? 50 : 64;
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 12 + i * (68), self.view.width, height)];
+        view.backgroundColor = [UIColor whiteColor];
+        [view addUpAndDownLine];
         [self.view addSubview:view];
         
-        UILabel *label = [UILabel customLabelWithRect:CGRectMake(10, 15 + i * (80), 80, 75)
+        UILabel *label = [UILabel customLabelWithRect:view.bounds
                                             withColor:[UIColor clearColor]
                                         withAlignment:NSTextAlignmentLeft
                                          withFontSize:18.0
                                              withText:leftText[i]
                                         withTextColor:[UIColor blackColor]];
-        [self.view addSubview:label];
+        [view addSubview:label];
         CGFloat width = i ? 150 : self.view.width - 100;
 
-        label = [UILabel customLabelWithRect:CGRectMake(100, 15 + i * (80), width, 75)
+        label = [UILabel customLabelWithRect:CGRectMake(100, 0, width, view.height)
                                    withColor:[UIColor clearColor]
                                withAlignment:NSTextAlignmentLeft
                                 withFontSize:18.0
                                     withText:rightText[i]
                                withTextColor:[UIColor blackColor]];
-        label.numberOfLines = 3;
-        [self.view addSubview:label];
+        label.numberOfLines = 2;
+        [view addSubview:label];
         
         if (i == 1)
         {
@@ -218,10 +227,12 @@
      */
     
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                     simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
                      withTitle:@"解除绑定"
                      withSelectTitle:@"解除绑定"
-                     withColor:UIColorRGB(253, 180, 30)];
+                     withColor:[UIColor whiteColor]];
+    [_removeButton addUpAndDownLine];
+    _removeButton.titleColorNormal = UIColorFromHEX(0xfc7d18);
     [_removeButton addTarget:self action:@selector(removeHardWare) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_removeButton];
 }
@@ -229,18 +240,22 @@
 - (void)loaoNoConnectAndBindingSetting
 {
     _connectButton = [UIButton
-                               simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
-                               withTitle:@"连接该设备"
-                               withSelectTitle:@"连接该设备"
-                               withColor:UIColorRGB(253, 180, 30)];
+                               simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
+                               withTitle:@"连接"
+                               withSelectTitle:@"连接"
+                               withColor:[UIColor whiteColor]];
+    [_connectButton addUpAndDownLine];
+    _connectButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_connectButton addTarget:self action:@selector(connectDeviceButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_connectButton];
-    
+
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(20, 264, self.view.width - 40, 44)
+                     simpleWithRect:CGRectMake(0, 196, self.view.width, 44)
                      withTitle:@"解除绑定"
                      withSelectTitle:@"解除绑定"
-                     withColor:UIColorRGB(253, 180, 30)];
+                     withColor:[UIColor whiteColor]];
+    [_removeButton addUpAndDownLine];
+    _removeButton.titleColorNormal = UIColorFromHEX(0xfc7d18);
     [_removeButton addTarget:self action:@selector(removeHardWare) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_removeButton];
 }
@@ -266,10 +281,12 @@
      */
     
     _bindingButton = [UIButton
-                      simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
-                      withTitle:@"绑定"
-                      withSelectTitle:@"绑定"
-                      withColor:UIColorRGB(253, 180, 30)];
+                      simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
+                      withTitle:@"绑定设备"
+                      withSelectTitle:@"绑定设备"
+                      withColor:[UIColor whiteColor]];
+    [_bindingButton addUpAndDownLine];
+    _bindingButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_bindingButton addTarget:self action:@selector(bindingHardWare) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_bindingButton];
 }
@@ -359,6 +376,7 @@
     [self loadLabels];
     [self loadBindingAndConnectSetting];
     
+    /*
     if (![LS_SettingBaseTimeZoneInfo getBOOLValue] && [BLTManager sharedInstance].model.isNewDevice)
     {
         _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
@@ -367,6 +385,7 @@
         _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
         [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
     }
+     */
 }
 
 #pragma mark --- UITextField Delegate ---
@@ -471,11 +490,6 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -484,8 +498,7 @@
 
 - (void)dealloc
 {
-    [BLTManager sharedInstance].connectBlock = nil;
-    [BLTManager sharedInstance].disConnectBlock = nil;
+
 }
 
 /*

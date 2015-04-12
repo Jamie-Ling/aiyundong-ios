@@ -34,7 +34,7 @@
         for (int i = 0; i < 3; i++)
         {
             RemindModel *model = [[RemindModel alloc] init];
-            model.orderIndex = i;
+            model.orderIndex = i + 1;
             model.wareUUID = uuid;
             
             [model saveToDB];

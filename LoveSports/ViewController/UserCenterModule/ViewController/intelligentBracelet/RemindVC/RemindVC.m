@@ -43,16 +43,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = UIColorFromHEX(0xf0f0f0);
     
+    [self loadRightItem];
     [self loadTitleView];
     [self loadRemindView];
     [self loadRemindPicker];
 }
 
+- (void)loadRightItem
+{
+    UIButton *button = [UIButton simpleWithRect:CGRectMake(0, 0, 44, 44)
+                                      withTitle:@"保存"
+                                withSelectTitle:@"保存"
+                                      withColor:[UIColor clearColor]];
+    button.titleColorNormal = UIColorFromHEX(0x169ad8);
+    [button addTouchUpTarget:self action:@selector(clickConfirmButton:)];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+    item.tintColor = [UIColor clearColor];
+    self.navigationItem.rightBarButtonItem = item;
+}
+
 - (void)loadRemindView
 {
-    _remindView = [[RemindView alloc] initWithFrame:CGRectMake(6, 20, self.width - 12, 44 * 4)];
+    _remindView = [[RemindView alloc] initWithFrame:CGRectMake(0, 10, self.width, 54 * 4)];
     [self addSubview:_remindView];
     DEF_WEAKSELF_(RemindVC);
     _remindView.tapBlock = ^(UIView *view, id object) {
@@ -60,14 +74,14 @@
     };
     [_remindView updateContentWithModel:_remindModel];
     
-    _confirmButton = [UIButton simpleWithRect:CGRectMake((self.width - 80) / 2, _remindView.totalHeight + 30, 80, 44)
+    _confirmButton = [UIButton simpleWithRect:CGRectMake(0, _remindView.totalHeight + 30, self.width, 44)
                                     withTitle:@"确定"
                               withSelectTitle:@"确定"
-                                    withColor:[UIColor yellowColor]];
+                                    withColor:[UIColor whiteColor]];
+    [_confirmButton addUpAndDownLine];
+    _confirmButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_confirmButton addTouchUpTarget:self action:@selector(clickConfirmButton:)];
-    [self addSubview:_confirmButton];
-    _confirmButton.backgroundColor = [UIColor greenColor];
-    _confirmButton.layer.cornerRadius = 6.0;
+    // [self addSubview:_confirmButton];
 }
 
 - (void)appearRemindPicker:(NSNumber *)number

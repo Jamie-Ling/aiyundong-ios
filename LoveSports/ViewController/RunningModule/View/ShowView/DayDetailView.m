@@ -76,6 +76,8 @@
     // 将内存之前的图标清除...
     _allowAnimation = NO;
     _percent = 0;
+    
+    NSLog(@"..1");
     [_chartView reloadData];
     
     [self updateContentForChartViewWithDirection:0];
@@ -88,6 +90,11 @@
     if (_allowAnimation)
     {
         [self startTimer];
+    }
+    else
+    {
+        _percent = _totalPercent * 100;
+        [_chartView reloadData];
     }
 }
 

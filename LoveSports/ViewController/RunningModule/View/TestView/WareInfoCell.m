@@ -31,9 +31,15 @@
 {
     _baseView = [[UIView alloc] init];
     _baseView.backgroundColor = [UIColor clearColor];
-    _baseView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _baseView.layer.borderWidth = 2.0;
     [self addSubview:_baseView];
+    
+    _upLine = [[UIView alloc] init];
+    _upLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [_baseView addSubview:_upLine];
+    
+    _downLine = [[UIView alloc] init];
+    _downLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [_baseView addSubview:_downLine];
     
     _nameLabel = [UILabel customLabelWithRect:CGRectZero
                                         withColor:[UIColor clearColor]
@@ -49,51 +55,69 @@
                                  withFontSize:16.0
                                      withText:@""
                                 withTextColor:[UIColor blackColor]];
-    [_baseView addSubview:_rssiLabel];
+    // [_baseView addSubview:_rssiLabel];
+    
+    _connectLabel = [UILabel customLabelWithRect:CGRectZero
+                                       withColor:[UIColor clearColor]
+                                   withAlignment:NSTextAlignmentRight
+                                    withFontSize:16.0
+                                        withText:@""
+                                   withTextColor:[UIColor greenColor]];
+    [_baseView addSubview:_connectLabel];
     
     _lockView = [[UIView alloc] init];
     _lockView.backgroundColor = [UIColor redColor];
-    [_baseView addSubview:_lockView];
+   // [_baseView addSubview:_lockView];
     
     _bltView = [[UIView alloc] init];
     _bltView.backgroundColor = [UIColor redColor];
-    [_baseView addSubview:_bltView];
+   // [_baseView addSubview:_bltView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = [UIColor redColor];
+    _infoView.backgroundColor = [UIColor clearColor];
     [_baseView addSubview:_infoView];
 }
 
 - (void)updateContentForWareInfoCell:(BLTModel *)model withHeight:(CGFloat)height
 {
-    _baseView.frame = CGRectMake(0, (height - 88.0)/2, self.width, 88.0);
-    _nameLabel.frame = CGRectMake(10, 0, self.width * 0.6, 44);
-    _rssiLabel.frame = CGRectMake(10, 44, self.width * 0.6, 44);
+    _baseView.frame = CGRectMake(0, (height - 50)/2, self.width, 50);
+    _upLine.frame = CGRectMake(0, 0, _baseView.width, 0.5);
+    _downLine.frame = CGRectMake(0, _baseView.height - 0.5, _baseView.width, 0.5);
+    
+    _nameLabel.frame = CGRectMake(10, 0, self.width * 0.6, 50);
+    
+    // _rssiLabel.frame = CGRectMake(100, 0, self.width * 0.6, 44);
+    // _rssiLabel.text = [NSString stringWithFormat:@"信号强度RSSI: %@", model.bltRSSI];
 
-    _lockView.frame = CGRectMake(self.width * 0.75, (_baseView.height - 15)/2, 15, 15);
-    _bltView.frame = CGRectMake(self.width * 0.75 + 20 , (_baseView.height - 15)/2, 15, 15);
-    _infoView.frame = CGRectMake(self.width * 0.75 + 40, (_baseView.height - 15)/2, 15, 15);
+    _connectLabel.frame = CGRectMake(self.width - 150, 0, 100, 50);
+
+    // _lockView.frame = CGRectMake(self.width * 0.75, (_baseView.height - 15)/2, 15, 15);
+    // _bltView.frame = CGRectMake(self.width * 0.75 + 20 , (_baseView.height - 15)/2, 15, 15);
+    
+    _infoView.frame = CGRectMake(self.width - 30, (_baseView.height - 39)/2, 15, 39);
+    _infoView.imageNamed = [model imageForsignalStrength];
     
     if (model.isBinding)
     {
-        _lockView.backgroundColor = [UIColor greenColor];
+        // _lockView.backgroundColor = [UIColor greenColor];
     }
     else
     {
-        _lockView.backgroundColor = [UIColor redColor];
+        // _lockView.backgroundColor = [UIColor redColor];
     }
     
     if ([BLTManager sharedInstance].model == model)
     {
-        _bltView.backgroundColor = [UIColor greenColor];
+        // _bltView.backgroundColor = [UIColor greenColor];
+        _connectLabel.text = @"已连接";
     }
     else
     {
-        _bltView.backgroundColor = [UIColor redColor];
+        // _bltView.backgroundColor = [UIColor redColor];
+        _connectLabel.text = @"";
     }
     
     _nameLabel.text = model.bltName;
-    _rssiLabel.text = [NSString stringWithFormat:@"信号强度RSSI: %@", model.bltRSSI];
 }
 
 - (void)awakeFromNib

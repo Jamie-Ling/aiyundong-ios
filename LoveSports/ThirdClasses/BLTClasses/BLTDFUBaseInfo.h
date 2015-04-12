@@ -78,5 +78,6 @@ typedef struct __attribute__((packed))
 AS_SINGLETON(BLTDFUBaseInfo)
 
 + (NSData *)getUpdateFirmWareData;
++ (NSArray *)getLibCacheFirmUpdateZip:(NSString *)folderName;
 
 @end

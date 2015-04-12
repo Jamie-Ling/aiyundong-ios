@@ -152,21 +152,21 @@
 {
     NSInteger rssi = [_bltRSSI integerValue];
     
-    if (rssi < 55)
+    if (rssi > -75)
     {
-        return @"signal_4_5.png";
+        return @"2_bluetooth_list1_5@2x.png";
     }
-    else if (rssi < 80)
+    else if (rssi > -95)
     {
-        return @"signal_3_5.png";
+        return @"2_bluetooth_list2_5@2x.png";
     }
-    else if (rssi < 110)
+    else if (rssi > -120)
     {
-        return @"signal_2_5.png";
+        return @"2_bluetooth_list3_5@2x.png";
     }
     else
     {
-        return @"signal_1_5.png";
+        return @"2_bluetooth_list3_5@2x.png";
     }
 }
 
@@ -191,6 +191,12 @@
     [BLTModel updateToDB:self where:nil];
 }
 
+- (void)setIsHaveActivePlace:(BOOL)isHaveActivePlace
+{
+    _isHaveActivePlace = isHaveActivePlace;
+    [BLTModel updateToDB:self where:nil];
+}
+
 // 主键
 + (NSString *) getPrimaryKey
 {
@@ -208,7 +214,7 @@
 // 表名
 + (NSString *) getTableName
 {
-    return @"HardwareInfo";
+    return @"BLTModel";
 }
 
 // 表版本

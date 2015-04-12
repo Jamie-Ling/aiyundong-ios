@@ -118,6 +118,19 @@
     return [self stepsConvertCalories:steps withWeight:weight withModel:metric];
 }
 
++ (void)showMessageOnMain:(id)object
+{
+    if ([object boolValue])
+    {
+        SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
+    }
+    else
+    {
+        SHOWMBProgressHUD(@"设置失败.", nil, nil, NO, 2.0);
+    }
+}
+
+
 @end
 
 @implementation NSMutableArray (Order)

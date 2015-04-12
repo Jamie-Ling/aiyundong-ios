@@ -78,22 +78,22 @@
 {
     if (index == 0)
     {
-        return [UIColor greenColor];
+        return UIColorHEXA(0x61bf1a, 0.5);
     }
     else if (index == 1)
     {
-        return [UIColor blueColor];
+        return UIColorHEXA(0x61bf1a, 0.6);
     }
     else if (index == 2)
     {
-        return [UIColor purpleColor];
+        return UIColorHEXA(0x61bf1a, 0.8);
     }
     else if (index == 3)
     {
-        return [UIColor lightGrayColor];
+        return UIColorHEXA(0x61bf1a, 0.2);
     }
     
-    return [UIColor lightGrayColor];
+    return UIColorHEXA(0x61bf1a, 0.2);
 }
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index

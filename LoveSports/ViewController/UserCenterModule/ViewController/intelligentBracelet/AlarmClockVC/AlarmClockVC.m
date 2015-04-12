@@ -35,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.backgroundColor = UIColorRGB(214, 214, 212);
+    self.backgroundColor = UIColorFromHEX(0xf0f0f0);
     
     [self loadRightItem];
     [self loadTitleView];
@@ -48,6 +48,7 @@
                                       withTitle:@"保存"
                                 withSelectTitle:@"保存"
                                       withColor:[UIColor clearColor]];
+    button.titleColorNormal = UIColorFromHEX(0x169ad8);
     [button addTouchUpTarget:self action:@selector(clickSaveButton:)];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
     item.tintColor = [UIColor clearColor];
@@ -92,7 +93,7 @@
 {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 4, self.width, self.height - 64)];
     
-    _tableView.backgroundColor = UIColorRGB(214, 214, 212);
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.scrollEnabled = NO;

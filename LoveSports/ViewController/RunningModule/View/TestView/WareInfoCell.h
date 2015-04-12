@@ -12,9 +12,12 @@
 @interface WareInfoCell : UITableViewCell
 
 @property (nonatomic, strong) UIView *baseView;
+@property (nonatomic, strong) UIView *upLine;
+@property (nonatomic, strong) UIView *downLine;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *rssiLabel;
 
+@property (nonatomic, strong) UILabel *connectLabel;
 @property (nonatomic, strong) UIView *lockView; // 是否绑定。
 @property (nonatomic, strong) UIView *bltView;
 @property (nonatomic, strong) UIView *infoView;

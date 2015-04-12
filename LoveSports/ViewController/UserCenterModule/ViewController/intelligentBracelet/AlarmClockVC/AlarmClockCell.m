@@ -31,6 +31,14 @@
     _baseView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_baseView];
     
+    _upLine = [[UIView alloc] init];
+    _upLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [_baseView addSubview:_upLine];
+    
+    _downLine = [[UIView alloc] init];
+    _downLine.backgroundColor = UIColorFromHEX(0xcfcdce);
+    [_baseView addSubview:_downLine];
+    
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.backgroundColor = [UIColor clearColor];
     _timeLabel.font = [UIFont systemFontOfSize:18.0];
@@ -62,6 +70,9 @@
     _model = model;
     
     _baseView.frame = CGRectMake(0, 4, self.width, height - 8);
+    _upLine.frame = CGRectMake(0, 0, _baseView.width, 0.5);
+    _downLine.frame = CGRectMake(0, _baseView.height - 0.5, _baseView.width, 0.5);
+    
     _timeLabel.text = model.alarmTime;
     CGSize size = [_timeLabel.text sizeWithFont:_timeLabel.font maxSize:CGSizeMake(120, 99999)];
     _timeLabel.frame = CGRectMake(15, 4, size.width, _baseView.height);

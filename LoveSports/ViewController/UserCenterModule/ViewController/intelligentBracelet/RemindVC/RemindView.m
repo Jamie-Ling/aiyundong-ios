@@ -21,88 +21,79 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.layer.cornerRadius = 6.0;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         
-        _offset = 44.0;
-        
-        [self loadLines];
+        _offset = 50;
         [self loadLabelsAndViews];
     }
     
     return self;
 }
 
-- (void)loadLines
-{
-    for (int i = 0; i < 3; i++)
-    {
-        [self addSubViewWithRect:CGRectMake(0, 44 * (i + 1), self.width, 1)
-                       withColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]
-                       withImage:nil];
-    }
-}
-
 - (void)loadLabelsAndViews
 {
-    _openLabel = [UILabel simpleLabelWithRect:CGRectMake(10, 0, self.width / 2 - 10, _offset)
+    _openLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                 withAlignment:NSTextAlignmentLeft
                                  withFontSize:16
-                                     withText:@"开关"
+                                     withText:@"  开关"
                                 withTextColor:[UIColor blackColor]
                                       withTag:1000];
+    [_openLabel addUpAndDownLine];
     [self addSubview:_openLabel];
     
-    _openSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.width / 3 * 2, 7, 60, 30)];
+    _openSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.width - 90, 10, 60, 30)];
     [_openSwitch addTarget:self action:@selector(clickOpenSwitch:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:_openSwitch];
+    [_openLabel addSubview:_openSwitch];
     
-    _intervalLabel = [UILabel simpleLabelWithRect:CGRectMake(10, _offset, self.width / 2 - 10, _offset)
+    _intervalLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _openLabel.totalHeight + 4, self.width, _offset)
                                     withAlignment:NSTextAlignmentLeft
                                      withFontSize:16
-                                         withText:@"时间间隔"
+                                         withText:@"  时间间隔"
                                     withTextColor:[UIColor blackColor]
                                           withTag:1000];
+    [_intervalLabel addUpAndDownLine];
     [self addSubview:_intervalLabel];
     
-    _textField = [UITextField simpleInit:CGRectMake(self.width / 2, _offset, self.width / 2, _offset)
+    _textField = [UITextField simpleInit:CGRectMake(self.width / 2, 0, self.width / 2, _offset)
                                withImage:nil
                          withPlaceholder:@"0"
                                 withFont:16];
     _textField.keyboardType = UIKeyboardTypeNumberPad;
-    [self addSubview:_textField];
+    [_intervalLabel addSubview:_textField];
     
-    _startLabel = [UILabel simpleLabelWithRect:CGRectMake(10, _offset * 2, self.width / 2, _offset)
+    _startLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _intervalLabel.totalHeight + 4, self.width, _offset)
                                  withAlignment:NSTextAlignmentLeft
                                   withFontSize:16
-                                      withText:@"开始时间"
+                                      withText:@"  开始时间"
                                  withTextColor:[UIColor blackColor]
                                        withTag:1000];
     [self addSubview:_startLabel];
     
-    _startTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _offset * 2, self.width, _offset)
+    _startTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                      withAlignment:NSTextAlignmentCenter
                                       withFontSize:16
                                           withText:@"00:00"
                                      withTextColor:[UIColor blackColor]
                                            withTag:1000];
-    [self addSubview:_startTimeLabel];
+    [_startTimeLabel addUpAndDownLine];
+    [_startLabel addSubview:_startTimeLabel];
     
-    _endLabel = [UILabel simpleLabelWithRect:CGRectMake(10, _offset * 3, self.width / 2, _offset)
+    _endLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _startLabel.totalHeight + 4, self.width, _offset)
                                withAlignment:NSTextAlignmentLeft
                                 withFontSize:16
-                                    withText:@"结束时间"
+                                    withText:@"  结束时间"
                                withTextColor:[UIColor blackColor]
                                      withTag:1000];
     [self addSubview:_endLabel];
     
-    _endTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _offset * 3, self.width, _offset)
+    _endTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                    withAlignment:NSTextAlignmentCenter
                                     withFontSize:16
                                         withText:@"00:00"
                                    withTextColor:[UIColor blackColor]
                                          withTag:1000];
-    [self addSubview:_endTimeLabel];
+    [_endTimeLabel addUpAndDownLine];
+    [_endLabel addSubview:_endTimeLabel];
     
     [self addTapsForLabels];
 }
@@ -111,10 +102,12 @@
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickStartTimeLabel:)];
     [_startTimeLabel addGestureRecognizer:tap];
+    _startLabel.userInteractionEnabled = YES;
     _startTimeLabel.userInteractionEnabled = YES;
     
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickEndTimeLabel:)];
     [_endTimeLabel addGestureRecognizer:tap];
+    _endLabel.userInteractionEnabled = YES;
     _endTimeLabel.userInteractionEnabled = YES;
 }
 

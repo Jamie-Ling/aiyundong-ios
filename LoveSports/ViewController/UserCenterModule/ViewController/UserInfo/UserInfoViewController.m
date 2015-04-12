@@ -98,6 +98,7 @@
 
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
+    _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:0];
   
     
     //tableview
@@ -113,6 +114,30 @@
     [self.navigationController setNavigationBarHidden:NO];
     
     [self readyForSet];
+    
+    DEF_WEAKSELF_(UserInfoViewController);
+    [BLTManager sharedInstance].connectBlock = ^() {
+        [weakSelf refreshTableView:YES];
+    };
+    [BLTManager sharedInstance].disConnectBlock = ^() {
+        [weakSelf refreshTableView:NO];
+    };
+}
+
+- (void)refreshTableView:(BOOL)isAllow
+{
+    [self readyForSet];
+
+    [_listTableView reloadData];
+    [_notConectLabel setHidden:isAllow];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTManager sharedInstance].connectBlock = nil;
+    [BLTManager sharedInstance].disConnectBlock = nil;
 }
 
 /*
@@ -274,7 +299,7 @@
     {
         _updateInterestingVC = [[UpdateInterestingViewController alloc] init];
     }
-    _updateInterestingVC._lastInteresting = [_userInfoDictionary objectForKey:kUserInfoOfInterestingKey];
+    _updateInterestingVC._lastInteresting = _userInfo.interest;
     [self.navigationController pushViewController:_updateInterestingVC animated:YES];
     
 }
@@ -521,7 +546,7 @@
     {
         _signatureVC = [[UpSignatureViewController alloc] init];
     }
-    _signatureVC._signatureString = [_userInfoDictionary objectForKey:kUserInfoOfDeclarationKey];
+    _signatureVC._signatureString = _userInfo.manifesto;
     [self.navigationController pushViewController:_signatureVC animated:YES];
     
 }
@@ -646,6 +671,21 @@
                     {
                         nameString = [NSString stringWithFormat:@"%.1fft", [nameString floatValue]];
                     }
+                }
+                    break;
+                case 8:
+                {
+                    nameString = _userInfo.interest;
+                }
+                    break;
+                case 9:
+                {
+                    nameString = _userInfo.showTimeZone;
+                }
+                    break;
+                case 10:
+                {
+                    nameString = _userInfo.manifesto;
                 }
                     break;
                 default:

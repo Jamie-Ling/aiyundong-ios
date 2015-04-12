@@ -28,15 +28,15 @@
 
 - (void)loadButtonsAndLabel
 {
-    _leftButton = [UIButton simpleWithRect:CGRectMake(0, 0, self.width / 3, self.height)
+    _leftButton = [UIButton simpleWithRect:CGRectMake(0, 0, 50, self.height)
                                  withImage:@""
                            withSelectImage:@""];
     _leftButton.backgroundColor = [UIColor clearColor];
     [_leftButton addTouchUpTarget:self action:@selector(clickLeftButton:)];
     [self addSubview:_leftButton];
-    _leftButton.backgroundColor = [UIColor redColor];
+    [self addLabelForButton:@"－" withButton:_leftButton];
     
-    _middleLabel = [UILabel simpleLabelWithRect:CGRectMake(self.width / 3, 0, self.width / 3, self.height)
+    _middleLabel = [UILabel simpleLabelWithRect:CGRectMake((self.width - 50) / 2, 0, 50, self.height)
                                   withAlignment:NSTextAlignmentCenter
                                    withFontSize:20
                                        withText:@"日"
@@ -48,13 +48,13 @@
     _middleLabel.layer.cornerRadius = _middleLabel.width / 2;
     _middleLabel.layer.borderWidth = 1.0;
     
-    _rightButton = [UIButton simpleWithRect:CGRectMake(self.width / 3 * 2, 0, self.width / 3, self.height)
+    _rightButton = [UIButton simpleWithRect:CGRectMake(self.width - 50, 0, 50, self.height)
                                   withImage:@""
                             withSelectImage:@""];
     _rightButton.backgroundColor = [UIColor clearColor];
     [_rightButton addTouchUpTarget:self action:@selector(clickRightButton:)];
     [self addSubview:_rightButton];
-    _rightButton.backgroundColor = [UIColor redColor];
+    [self addLabelForButton:@"＋" withButton:_rightButton];
 }
 
 - (void)clickLeftButton:(UIButton *)button
@@ -88,6 +88,22 @@
     {
         _backBlock(self, @(_selectIndex));
     }
+}
+
+- (void)addLabelForButton:(NSString *)text withButton:(UIButton *)button
+{
+    UILabel *label = [UILabel simpleLabelWithRect:CGRectMake(button.width * 0.2 / 2, button.height * 0.2 / 2,
+                                                             button.width * 0.8, button.width * 0.8)];
+    label.text = text;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:30];
+    label.layer.masksToBounds = YES;
+    label.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    label.layer.cornerRadius = label.width / 2;
+    label.layer.borderWidth = 1.0;
+    label.userInteractionEnabled = NO;
+    [button addSubview:label];
 }
 
 /*

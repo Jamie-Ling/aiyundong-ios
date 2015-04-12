@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
-#define UIColorFromHEX(hexValue) [UIColor colorFromHex:hexValue];
+#define UIColorHEXA(hexValue, a) [UIColor colorFromHex:hexValue withAlpha:a]
 #define UIColorRGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 #define UIColorRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
@@ -42,6 +42,8 @@ CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad);
 
 - (void)removeAllSubviews;
 - (void)removeAllGestureRecognizers;
+
+- (void)addUpAndDownLine;
 
 // UIButton
 - (UIButton *)addSubButtonWithRect:(CGRect)rect
@@ -179,6 +181,7 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector);
 
 // 返回一个十六进制表示的颜色: 0xFF0000
 + (UIColor *)colorFromHex:(int)hex;
++ (UIColor *)colorFromHex:(int)hex withAlpha:(CGFloat)alpha;
 
 @end
 

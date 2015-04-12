@@ -73,7 +73,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     //添加介绍页
-    [self addIntroView];
+    //[self addIntroView];
     
     [self.window makeKeyAndVisible];
     return YES;
