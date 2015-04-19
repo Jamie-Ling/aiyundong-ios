@@ -86,6 +86,7 @@
     {
         NSLog(@"用户信息出错");
     }
+    
     [self reloadMainPage];
 }
 

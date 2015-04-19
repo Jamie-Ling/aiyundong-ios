@@ -66,12 +66,12 @@
     if (button.selected)
     {
         button.selected = NO;
-        [_selArray removeObject:[NSString stringWithFormat:@"%ld",(button.tag - WeekView_Button_Tag)]];
+        [_selArray removeObject:[NSString stringWithFormat:@"%d",(button.tag - WeekView_Button_Tag)]];
     }
     else
     {
         button.selected = YES;
-        [_selArray addObject:[NSString stringWithFormat:@"%ld",(button.tag - WeekView_Button_Tag)]];
+        [_selArray addObject:[NSString stringWithFormat:@"%d",(button.tag - WeekView_Button_Tag)]];
     }
     
     if (_weekBlock)
@@ -88,7 +88,7 @@
     {
         UIButton *button = (UIButton *)[self viewWithTag:WeekView_Button_Tag + i];
         
-        if ([array containsObject:[NSString stringWithFormat:@"%ld",(button.tag - WeekView_Button_Tag)]])
+        if ([array containsObject:[NSString stringWithFormat:@"%d",(button.tag - WeekView_Button_Tag)]])
         {
             button.selected = YES;
         }

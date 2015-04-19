@@ -154,6 +154,7 @@
     }];
     
     [self.panel addSubview:_weekView];
+    _dayArray = weedDayArray;
     [_weekView updateSelButtonForWeekView:weedDayArray];
     
     [self addSubview:self.panel];

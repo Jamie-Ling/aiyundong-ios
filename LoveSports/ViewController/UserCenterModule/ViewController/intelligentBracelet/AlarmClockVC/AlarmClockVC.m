@@ -62,6 +62,8 @@
         [model convertToBLTNeed];
     }
     
+    NSLog(@"._alarmArray.%@", _alarmArray);
+
     [[UserInfoHelp sharedInstance] sendSetAlarmClock:^(id object) {
         if ([object boolValue])
         {

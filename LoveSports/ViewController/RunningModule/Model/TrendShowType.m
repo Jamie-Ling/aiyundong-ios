@@ -106,15 +106,15 @@
         WeekModel *model = array[i];
         if (showType == TrendChartViewShowWeekSteps)
         {
-            chartDataArray[i] = @(model._weekTotalSteps + model.todaySteps);
+            chartDataArray[i] = @(model.weekTotalSteps + model.todaySteps);
         }
         else if (showType == TrendChartViewShowWeekCalories)
         {
-            chartDataArray[i] = @(model._weekTotalCalories + model.toadyCalories);
+            chartDataArray[i] = @(model.weekTotalCalories + model.toadyCalories);
         }
         else
         {
-            chartDataArray[i] = @(model._weekTotalDistance + model.todayDistance);
+            chartDataArray[i] = @(model.weekTotalDistance + model.todayDistance);
         }
         
         daysArray[i] = model.showDate;
@@ -135,15 +135,15 @@
         MonthModel *model = array[i];
         if (showType == TrendChartViewShowMonthSteps)
         {
-            chartDataArray[i] = @(model._monthTotalSteps + model.todaySteps);
+            chartDataArray[i] = @(model.monthTotalSteps + model.todaySteps);
         }
         else if (showType == TrendChartViewShowMonthCalories)
         {
-            chartDataArray[i] = @(model._monthTotalCalories + model.toadyCalories);
+            chartDataArray[i] = @(model.monthTotalCalories + model.toadyCalories);
         }
         else
         {
-            chartDataArray[i] = @(model._monthTotalDistance + model.todayDistance);
+            chartDataArray[i] = @(model.monthTotalDistance + model.todayDistance);
         }
         
         daysArray[i] = model.showDate;

@@ -77,7 +77,6 @@
     _allowAnimation = NO;
     _percent = 0;
     
-    NSLog(@"..1");
     [_chartView reloadData];
     
     [self updateContentForChartViewWithDirection:0];

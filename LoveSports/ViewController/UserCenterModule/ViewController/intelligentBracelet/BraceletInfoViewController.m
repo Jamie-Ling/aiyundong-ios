@@ -177,7 +177,7 @@
 //刷新整个页面
 - (void) reloadMainPage
 {
-    if ([BLTManager sharedInstance].connectState != BLTManagerConnected)
+    if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
     {
         //没有连接设备
         _haveConect = NO;
@@ -195,7 +195,9 @@
     {
         _is240N = NO;  //不是最新的240n
         _cellTitleArray = _cellTitleArrayFor240;
+        
         [self reloadUserInfoTableView];  //刷新UI
+        
         return;
     }
     
@@ -212,7 +214,7 @@
 //设置前的准备---防止中间断开了
 - (BOOL) readyForSet
 {
-    if ([BLTManager sharedInstance].connectState != BLTManagerConnected)
+    if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
     {
         //没有连接设备
         _haveConect = NO;
@@ -222,6 +224,7 @@
         [self reloadUserInfoTableView];  //刷新UI
         return NO;
     }
+    
     [_notConectLabel setHidden:YES];
     _haveConect = YES;
     return YES;
@@ -482,7 +485,6 @@
 
     if (theSwitch.tag == 5)
     {
-        
         DEF_WEAKSELF_(BraceletInfoViewController);
         if (theSwitch.on)
         {
@@ -789,7 +791,6 @@
             break;
     }
     
-    
     if (!_haveConect)
     {
         oneCell.userInteractionEnabled = NO;
@@ -814,7 +815,6 @@
 
     return oneCell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

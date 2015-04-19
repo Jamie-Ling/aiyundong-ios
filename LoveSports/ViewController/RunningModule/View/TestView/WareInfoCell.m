@@ -66,8 +66,8 @@
     [_baseView addSubview:_connectLabel];
     
     _lockView = [[UIView alloc] init];
-    _lockView.backgroundColor = [UIColor redColor];
-   // [_baseView addSubview:_lockView];
+    _lockView.imageNamed = @"2_bluetooth_lock1.png";
+    [_baseView addSubview:_lockView];
     
     _bltView = [[UIView alloc] init];
     _bltView.backgroundColor = [UIColor redColor];
@@ -80,6 +80,8 @@
 
 - (void)updateContentForWareInfoCell:(BLTModel *)model withHeight:(CGFloat)height
 {
+    _model = model;
+    
     _baseView.frame = CGRectMake(0, (height - 50)/2, self.width, 50);
     _upLine.frame = CGRectMake(0, 0, _baseView.width, 0.5);
     _downLine.frame = CGRectMake(0, _baseView.height - 0.5, _baseView.width, 0.5);
@@ -89,9 +91,9 @@
     // _rssiLabel.frame = CGRectMake(100, 0, self.width * 0.6, 44);
     // _rssiLabel.text = [NSString stringWithFormat:@"信号强度RSSI: %@", model.bltRSSI];
 
-    _connectLabel.frame = CGRectMake(self.width - 150, 0, 100, 50);
+    _connectLabel.frame = CGRectMake(self.width - 160, 0, 100, 50);
 
-    // _lockView.frame = CGRectMake(self.width * 0.75, (_baseView.height - 15)/2, 15, 15);
+    _lockView.frame = CGRectMake(self.width - 50, (_baseView.height - 39)/2, 15, 39);
     // _bltView.frame = CGRectMake(self.width * 0.75 + 20 , (_baseView.height - 15)/2, 15, 15);
     
     _infoView.frame = CGRectMake(self.width - 30, (_baseView.height - 39)/2, 15, 39);
@@ -99,14 +101,14 @@
     
     if (model.isBinding)
     {
-        // _lockView.backgroundColor = [UIColor greenColor];
+        _lockView.hidden = NO;
     }
     else
     {
-        // _lockView.backgroundColor = [UIColor redColor];
+        _lockView.hidden = YES;
     }
     
-    if ([BLTManager sharedInstance].model == model)
+    if (model.peripheral.state == CBPeripheralStateConnected)
     {
         // _bltView.backgroundColor = [UIColor greenColor];
         _connectLabel.text = @"已连接";

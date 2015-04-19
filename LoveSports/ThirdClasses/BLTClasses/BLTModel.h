@@ -32,6 +32,8 @@
 @property (nonatomic, assign) NSInteger hardVersion;    // 硬件版本
 @property (nonatomic, assign) NSInteger firmVersion;    // 固件版本
 
+@property (nonatomic, assign) BOOL isInitiative;        // 是否主动断开的.
+
 @property (nonatomic, assign) BOOL isLeftHand;  // 佩戴方式
 
 @property (nonatomic, strong) NSArray *alarmArray; //闹钟

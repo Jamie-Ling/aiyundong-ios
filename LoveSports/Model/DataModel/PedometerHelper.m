@@ -108,9 +108,10 @@ DEF_SINGLETON(PedometerHelper)
 {
     PedometerModel *model = [PedometerModel simpleInitWithDate:date];
     
+    [PedometerHelper creatEmptyDataArrayWithModel:model];
+
     if (![date isSameWithDate:[NSDate date]])
     {
-        [PedometerHelper creatEmptyDataArrayWithModel:model];
         model.isSaveAllDay = YES;
     }
     
@@ -139,11 +140,15 @@ DEF_SINGLETON(PedometerHelper)
         return;
     }
 
+    // 当前时间
     NSDate *date = [NSDate date];
+    // 取序号
     NSInteger order = (date.hour * 60 + date.minute) / 5;
 
     NSMutableArray *stepsArray = [NSMutableArray arrayWithArray:model.detailSteps];
+    // 上一次保存的当前时序的.
     NSInteger steps = [stepsArray[order / 6] integerValue];
+    // 加上当前的步数.
     steps += tmpSteps - model.totalSteps;
     stepsArray[order / 6] = @(steps);
     model.detailSteps = stepsArray;
@@ -163,12 +168,13 @@ DEF_SINGLETON(PedometerHelper)
     model.detailDistans = distansArray;
     model.totalDistance = tmpDistans;
 
+    // 时时更新数据库.
     [PedometerModel updateToDB:model where:nil];
     [model savePedometerModelToWeekModelAndMonthModel];
 
+    // 更新界面.
     if (endBlock)
     {
-        NSLog(@"..实时");
         endBlock(nil, YES);
     }
 }

@@ -34,4 +34,11 @@ AS_SINGLETON(BLTPeripheral)
 - (void)startUpdateRSSI;
 - (void)stopUpdateRSSI;
 
+/**
+ *  发送数据给固件
+ *
+ *  @param data 二进制数据
+ */
+- (void)senderDataToPeripheral:(NSData *)data;
+
 @end

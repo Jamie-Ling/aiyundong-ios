@@ -79,7 +79,7 @@
     
     _weekLabel.text = [model showStringForWeekDay];
     // size = [_weekLabel.text sizeWithFont:_weekLabel.font maxSize:CGSizeMake(180, 99999)];
-    _weekLabel.frame = CGRectMake(_timeLabel.totalWidth + 18, 4, size.width, _baseView.height);
+    _weekLabel.frame = CGRectMake(_timeLabel.totalWidth + 18, 4, 200, _baseView.height);
     
     _cellSwitch.frame = CGRectMake(self.width - (_baseView.height + 10), 4, _baseView.height, _baseView.height);
     _cellSwitch.center = CGPointMake(_cellSwitch.center.x, _baseView.center.y);

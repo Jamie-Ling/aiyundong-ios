@@ -11,6 +11,10 @@
 
 @interface PedometerOld : NSObject
 
+@property (nonatomic, strong) NSMutableArray *modelArray;
+
+AS_SINGLETON(PedometerOld)
+
 + (void)saveDataToModelFromOld:(NSArray *)array withEnd:(PedometerModelSyncEnd)endBlock;
 
 @end

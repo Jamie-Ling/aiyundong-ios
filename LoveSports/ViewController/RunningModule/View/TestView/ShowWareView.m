@@ -32,15 +32,6 @@
         [self loadShowModels];
         [self loadTableView];
         // [self loadButton];
-        
-        __weak ShowWareView *safeSelf = self;
-        [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
-        {
-            if (safeSelf.tableView)
-            {
-                [safeSelf reFreshDevice];
-            }
-        };
     }
     
     return self;
@@ -59,15 +50,6 @@
         [self loadShowModels];
         [self loadTableView];
         // [self loadButton];
-        
-        __weak ShowWareView *safeSelf = self;
-        [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
-        {
-            if (safeSelf.tableView)
-            {
-                [safeSelf reFreshDevice];
-            }
-        };
     }
     
     return self;
@@ -230,7 +212,7 @@
 
 - (void)dealloc
 {
-    [BLTManager sharedInstance].updateModelBlock = nil;
+    
 }
 
 /*

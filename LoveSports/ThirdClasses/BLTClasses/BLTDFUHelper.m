@@ -235,7 +235,7 @@ DEF_SINGLETON(BLTDFUHelper)
         NSRange currentRange = NSMakeRange(_firmDataSend, length);
         NSData *currentData = [_firmData subdataWithRange:currentRange];
         
-        usleep(5000);
+        usleep(8000);
         [_updatePeripheral writeValue:currentData forCharacteristic:_packetChar type:CBCharacteristicWriteWithoutResponse];
         _firmDataSend += length;
         currentDataSent += length;

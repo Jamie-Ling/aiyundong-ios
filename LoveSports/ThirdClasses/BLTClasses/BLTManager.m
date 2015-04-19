@@ -44,6 +44,7 @@ DEF_SINGLETON(BLTManager)
         }
         
         _connectState = BLTManagerNoConnect;
+
         _allWareArray = [[NSMutableArray alloc] initWithCapacity:0];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
      
@@ -57,7 +58,8 @@ DEF_SINGLETON(BLTManager)
             [self updateRSSI:RSSI];
         };
         
-        _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer", @"W286", @"P118S"];
+        _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer",
+                          @"W286", @"P118S", @"W194"];
     }
     
     return self;
@@ -118,18 +120,20 @@ DEF_SINGLETON(BLTManager)
     
     [_allWareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         BLTModel *model = obj;
-        if (_model != model)
+        if (model.peripheral.state != CBPeripheralStateConnected)
         {
             [_allWareArray removeObject:model];
         }
     }];
     
+    [self notifyViewUpdateModelState];
+    
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
      
     // 延迟链接
-   // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
-   // [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
+    // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanedAllWareDevice) object:nil];
+    // [self performSelector:@selector(checkScanedAllWareDevice) withObject:nil afterDelay:4.0];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -138,17 +142,17 @@ DEF_SINGLETON(BLTManager)
                   RSSI:(NSNumber *)RSSI
 {
     NSString *name = peripheral.name;
-    NSLog(@"advertisementData. ＝ ...%@", name);
 
     if (![_containNames containsObject:name])
     {
         return;
     }
     
+    NSString *idString = [peripheral.identifier UUIDString];
+    NSLog(@"advertisementData. ＝ ...%@..idString = %@", name, idString);
+
     if (!_isUpdateing)
     {
-        NSString *idString = [peripheral.identifier UUIDString];
-        
         // 检查是否已经添加到设备数组了.
         BLTModel *model = [self checkIsAddInAllWareWithID:idString];
         
@@ -158,9 +162,9 @@ DEF_SINGLETON(BLTManager)
         }
         else
         {
-            model = [[BLTModel alloc] init];
+            NSLog(@"...-1 ==%@", idString);
+            model = [BLTModel getModelFromDBWtihUUID:idString];
             
-            model.bltID = idString;
             model.bltName = name;
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
             model.peripheral = peripheral;
@@ -172,21 +176,17 @@ DEF_SINGLETON(BLTManager)
             }
         }
        
-        BOOL binding = [model checkBindingState];
-        if (binding && _connectState != BLTManagerConnected)
+        model.isInitiative = NO;
+        if (model.isBinding && !_model)
         {
             // 如果该设备已经绑定并且没有连接设备时就直接连接.
             [self repareConnectedDevice:model];
         }
         
-        if (_updateModelBlock)
-        {
-            _updateModelBlock(_model);
-        }
+        [self notifyViewUpdateModelState];
     }
     else if (_isUpdateing)
     {
-        NSString *idString = [peripheral.identifier UUIDString];
         if ([idString isEqualToString:_updateModel.bltID])
         {
             [self repareConnectedDevice:_updateModel];
@@ -230,25 +230,19 @@ DEF_SINGLETON(BLTManager)
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
-    NSLog(@".111model...%@", model.bltName);
-    // 有时间应写个copy协议。。。从数据库取出来的会被释放. 找时间测试下。看究竟是否会被释放... 疑问
-    BLTModel *tmpModel = [model getCurrentModelFromDB];
-    tmpModel.bltName = model.bltName;
-    tmpModel.peripheral = model.peripheral;
-    tmpModel.bltRSSI = model.bltRSSI;
-    [_allWareArray addObject:tmpModel];
-    [self removeModelFromAllWare:model];
-
-    if (self.discoverPeripheral != model.peripheral)
+    // 扫描时自动连接或者是切换设备.
+    if (model.peripheral.state != CBPeripheralStateConnected)
     {
-        if (_discoverPeripheral)
+        if (_model)
         {
-            [self dismissLink];
+            // 将当前连接的模型干掉...
+            [self initiativeDismissCurrentModel:_model];
         }
+        
         _connectState = BLTManagerConnecting;
         
         // model有实际更新时。全局的也跟着更新.
-        _model = tmpModel;
+        _model = model;
         _discoverPeripheral = _model.peripheral;
         [self.centralManager connectPeripheral:_model.peripheral options:nil];
         
@@ -285,12 +279,13 @@ DEF_SINGLETON(BLTManager)
   didConnectPeripheral:(CBPeripheral *)peripheral
 {
     NSLog(@"...正在连接...");
-    _isConnectNext = NO;
     _connectState = BLTManagerConnected;
     _discoverPeripheral = peripheral;
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
     [BLTPeripheral sharedInstance].peripheral = _discoverPeripheral;
     
+    [self notifyViewUpdateModelState];
+
     if (!_isUpdateing)
     {
         [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
@@ -313,7 +308,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _isConnectNext = NO;
     _connectState = BLTManagerConnectFail;
     NSLog(@"链接失败");
-    [self startCan];
+    [_centralManager connectPeripheral:peripheral options:nil];
+    
+    [self notifyViewUpdateModelState];
 }
 
 - (void)centralManager:(CBCentralManager *)central
@@ -330,73 +327,78 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     
     [[BLTPeripheral sharedInstance] errorMessage];
     
-    if (!_isConnectNext)
+    // 主动解除断开的就不需要扫描连接.
+    BLTModel *model = [self findModelWithPeripheral:peripheral];
+    if (model)
+    {
+        if (!model.isInitiative)
+        {
+            [self startCan];
+        }
+        
+        model.isInitiative = NO;
+    }
+    else
     {
         [self startCan];
     }
-}
-
-#pragma mark --- 向外围设备发送数据 ---
-- (void)senderDataToPeripheral:(NSData *)data
-{
-    if (self.discoverPeripheral.state == CBPeripheralStateConnected)
-    {
-        CBUUID *serviceUUID = BLTUUID.uartServiceUUID;
-        CBUUID *charaUUID = BLTUUID.txCharacteristicUUID;
-        
-        CBService *service = [self searchServiceFromUUID:serviceUUID withPeripheral:self.discoverPeripheral];
-        
-        if (!service)
-        {
-            NSLog(@"service有错误...");
-            return;
-        }
-        
-        CBCharacteristic *chara = [self searchCharacteristcFromUUID:charaUUID withService:service];
-        if (!chara)
-        {
-            NSLog(@"chara有错误...");
-            return;
-        }
-        
-        NSLog(@"..发送数据.....");
-        [self.discoverPeripheral writeValue:data forCharacteristic:chara type:CBCharacteristicWriteWithResponse];
-    }
-}
-
-// 匹配相应的服务
-- (CBService *)searchServiceFromUUID:(CBUUID *)uuid withPeripheral:(CBPeripheral *)peripheral
-{
-    for (int i = 0; i < peripheral.services.count; i++)
-    {
-        CBService *service = peripheral.services[i];
-        if ([service.UUID isEqual:uuid])
-        {
-            return service;
-        }
-    }
     
-    return  nil;
+    [self notifyViewUpdateModelState];
 }
 
-// 匹配相应的具体特征
-- (CBCharacteristic *)searchCharacteristcFromUUID:(CBUUID *)uuid withService:(CBService *)service
+// 只要外围设备发生变化了就通知刷新
+- (void)notifyViewUpdateModelState
 {
-    for (int i = 0; i < service.characteristics.count; i++)
+    if (_updateModelBlock)
     {
-        CBCharacteristic *chara = service.characteristics[i];
-        if ([chara.UUID isEqual:uuid])
-        {
-            return chara;
-        }
+        _updateModelBlock(nil);
     }
-    
-    return nil;
 }
 
 - (void)dismissLink
 {
     [self resetDiscoverPeripheral];
+}
+
+- (void)dismissLinkWithModel:(BLTModel *)model
+{
+    if (model == _model)
+    {
+        [self dismissLink];
+    }
+}
+
+- (void)initiativeDismissCurrentModel:(BLTModel *)model
+{
+    model.isInitiative = YES;
+    [_centralManager cancelPeripheralConnection:model.peripheral];
+}
+
+// 从连接的设备组里面移除掉某个设备.
+- (void)removeModelWithPeripheral:(CBPeripheral *)peripheral withArray:(NSMutableArray *)array
+{
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BLTModel *model = obj;
+        if (model.peripheral == peripheral)
+        {
+            [array removeObject:model];
+            *stop = YES;
+        }
+    }];
+}
+
+// 在所有准备连接的数组中 根据设备寻找模型.
+- (BLTModel *)findModelWithPeripheral:(CBPeripheral *)peripheral
+{
+    for (BLTModel *model in _allWareArray)
+    {
+        if (model.peripheral == peripheral)
+        {
+            return model;
+        }
+    }
+    
+    return nil;
 }
 
 // 重置外围设备.
@@ -439,7 +441,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         [self firmWareUpdateEnd:success];
     };
     
-    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 80);
+    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 90);
 }
 
 - (void)firmWareUpdateEnd:(BOOL)success

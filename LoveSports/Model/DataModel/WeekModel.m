@@ -28,8 +28,6 @@
 
 @implementation WeekModel
 
-@synthesize _weekNumber, _weekTotalCalories, _weekTotalSteps, _weekTotalDistance, _yearNumber, _allSubPedModelArray;
-
 /**
  *  初始化一个星期模型
  *
@@ -43,7 +41,6 @@
 {
     self = [super init];
     if (self) {
-        _allSubPedModelArray = [[NSMutableDictionary alloc] init];
         _weekNumber = weekNumber;
         _yearNumber = yearNumber;
         
@@ -61,20 +58,6 @@
     _weekTotalCalories = 0;
     _weekTotalDistance = 0;
     _weekTotalSteps = 0;
-    
-    if (self._allSubPedModelArray.count == 0)
-    {
-        return;
-    }
-    for (NSString *keyString in self._allSubPedModelArray)
-    {
-        // NSLog(@"_allSubPedModelArray = ..%@...%@", self._allSubPedModelArray, tempSubPedModel);
-        SubOfPedometerModel *tempSubPedModel = [self._allSubPedModelArray objectForKey:keyString];
-        
-        _weekTotalCalories += tempSubPedModel._thisDayTotalCalories;
-        _weekTotalDistance += tempSubPedModel._thisDayTotalDistance;
-        _weekTotalSteps += tempSubPedModel._thisDayTotalSteps;
-    }
 }
 
 - (void)updateTotalWithModel:(PedometerModel *)model
@@ -103,7 +86,7 @@
 
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"_weekNumber", @"_yearNumber", @"userName", @"wareUUID"];
+    return @[@"weekNumber", @"yearNumber", @"userName", @"wareUUID"];
 }
 
 // 表版本

@@ -233,6 +233,7 @@ DEF_SINGLETON(UserInfoHelp)
     
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
+        NSLog(@"._braceModel.alarmArray.%@", _braceModel.alarmArray);
         [BLTSendData sendAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
             [self notifyViewWithBackBlock:backBlock
                               withSuccess:type == BLTAcceptDataTypeSetAlarmClock];

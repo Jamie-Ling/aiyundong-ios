@@ -23,15 +23,23 @@
 {
     [super viewDidAppear:animated];
     
-    if (_wareView)
+    [[BLTManager sharedInstance] checkOtherDevices];
+    
+    __weak BindIngDeviceViewController *safeSelf = self;
+    [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
     {
-        [_wareView.tableView reloadData];
-    }
+        if (safeSelf.wareView)
+        {
+            [safeSelf.wareView reFreshDevice];
+        }
+    };
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [BLTManager sharedInstance].updateModelBlock = nil;
 }
 
 - (void)viewDidLoad
@@ -44,7 +52,6 @@
     self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     [self loadShowWareView];
-    [[BLTManager sharedInstance] checkOtherDevices];
 }
 
 - (void)loadShowWareView

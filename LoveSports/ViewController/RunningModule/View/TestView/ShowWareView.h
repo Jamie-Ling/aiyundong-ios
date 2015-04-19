@@ -22,6 +22,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame withOpenHead:(BOOL)open;
 
+- (void)reFreshDevice;
+
 @end
 
 @protocol ShowWareViewDelegate <NSObject>

@@ -309,9 +309,8 @@
 - (void)removeHardWare
 {
     _model.isBinding = NO;
-    [BLTModel removeBindingDeviceWithUUID:_model.bltID];
+    [[BLTManager sharedInstance] dismissLinkWithModel:_model];
     
-    [[BLTManager sharedInstance] dismissLink];
     [self.view removeAllSubviews];
     [self loadLabels];
     [self loadNoBindingAndNoConnectSetting];

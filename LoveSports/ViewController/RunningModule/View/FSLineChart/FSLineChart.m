@@ -70,7 +70,10 @@
     // 画图
     [self strokeChart];
     // 画点
-    // [self strokeDataPoints];
+    if (_showType != FSLineChartShowNoType)
+    {
+        [self strokeDataPoints];
+    }
     
     if(_labelForIndex)
     {
@@ -289,17 +292,26 @@
     {
         CGPoint p = [self getPointForIndex:i withScale:scale];
         
-        /*
-        UILabel *label  = [UILabel customLabelWithRect:CGRectMake(0, 0, 40, 20)
-                                              withColor:[UIColor clearColor]
-                                          withAlignment:NSTextAlignmentCenter
-                                           withFontSize:12.0
-                                               withText:@""
-                                         withTextColor:[UIColor clearColor]];
-        [self addSubview:label];
-        label.center = CGPointMake(p.x, p.y);
-        label.text = [NSString stringWithFormat:@"%ld", (long)[_data[i] integerValue]];
-         */
+        // if (_showType != FSLineChartShowNoType)
+        {
+            UILabel *label  = (UILabel *)[self viewWithTag:55555 + i];
+            if (!label)
+            {
+                label  = [UILabel customLabelWithRect:CGRectMake(0, 0, 40, 20)
+                                            withColor:[UIColor clearColor]
+                                        withAlignment:NSTextAlignmentCenter
+                                         withFontSize:12.0
+                                             withText:@""
+                                        withTextColor:[UIColor lightGrayColor]];
+                label.tag = 55555 + i;
+                [self addSubview:label];
+            }
+            
+            label.center = CGPointMake(p.x, p.y);
+            NSInteger number = [_data[i] integerValue];
+            label.text = [NSString stringWithFormat:@"%ld", (long)number];
+            label.hidden = (number == 0);
+        }
         
         p.y +=  minBound * scale;
 

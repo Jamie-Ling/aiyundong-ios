@@ -10,7 +10,6 @@
 
 @implementation MonthModel
 
-@synthesize _allSubPedModelArray, _monthNumber, _monthTotalCalories, _monthTotalDistance, _monthTotalSteps, _yearNumber;
 
 /**
  *  初始化一个月模型
@@ -25,7 +24,6 @@
 {
     self = [super init];
     if (self) {
-        _allSubPedModelArray = [[NSMutableDictionary alloc] init];
         _monthNumber = monthNumber;
         _yearNumber = yearNumber;
         
@@ -42,19 +40,6 @@
     _monthTotalCalories = 0;
     _monthTotalDistance = 0;
     _monthTotalSteps = 0;
-    
-    if (self._allSubPedModelArray.count == 0)
-    {
-        return;
-    }
-    for (NSString *keyString in self._allSubPedModelArray)
-    {
-        SubOfPedometerModel *tempSubPedModel = [self._allSubPedModelArray objectForKey:keyString];
-        
-        _monthTotalCalories += tempSubPedModel._thisDayTotalCalories;
-        _monthTotalDistance += tempSubPedModel._thisDayTotalDistance;
-        _monthTotalSteps += tempSubPedModel._thisDayTotalSteps;
-    }
 }
 
 - (void)updateTotalWithModel:(PedometerModel *)model
@@ -83,7 +68,7 @@
 
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"_monthNumber", @"_yearNumber", @"userName", @"wareUUID"];
+    return @[@"monthNumber", @"yearNumber", @"userName", @"wareUUID"];
 }
 
 // 表版本

@@ -82,7 +82,7 @@
         return NO;
     };
     [_baseView addSubview:_lineChart];
-    
+
     [self refreshTrendChartViewWithDayDate:_dayDate];
 }
 

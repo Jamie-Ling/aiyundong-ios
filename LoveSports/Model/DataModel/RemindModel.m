@@ -26,7 +26,8 @@
 
 + (NSArray *)getRemindFromDBWithUUID:(NSString *)uuid
 {
-    NSArray *array = [RemindModel searchWithWhere:nil orderBy:@"orderIndex" offset:0 count:3];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@'", uuid];
+    NSArray *array = [RemindModel searchWithWhere:where orderBy:@"orderIndex" offset:0 count:3];
     
     if (!array || array.count == 0)
     {
@@ -51,25 +52,26 @@
 - (void)setIsOpen:(BOOL)isOpen
 {
     _isOpen = isOpen;
-    [RemindModel updateToDB:self where:nil];
-}
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [RemindModel updateToDB:self where:where];}
 
 - (void)setInterval:(NSString *)interval
 {
     _interval = interval;
-    [RemindModel updateToDB:self where:nil];
-}
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [RemindModel updateToDB:self where:where];}
 
 - (void)setStartTime:(NSString *)startTime
 {
     _startTime = startTime;
-    [RemindModel updateToDB:self where:nil];
-}
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [RemindModel updateToDB:self where:where];}
 
 - (void)setEndTime:(NSString *)endTime
 {
     _endTime = endTime;
-    [RemindModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [RemindModel updateToDB:self where:where];
 }
 
 // 表名

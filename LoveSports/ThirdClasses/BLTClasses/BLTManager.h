@@ -62,18 +62,16 @@ AS_SINGLETON(BLTManager)
  */
 - (void)repareConnectedDevice:(BLTModel *)model;
 
-/**
- *  发送数据给固件
- *
- *  @param data 二进制数据
- */
-- (void)senderDataToPeripheral:(NSData *)data;
-
 // 主动断开链接
 - (void)dismissLink;
 
 // 准备更新固件
 - (void)prepareUpdateFirmWare;
 
+// 解除绑定时触发的.
+- (void)dismissLinkWithModel:(BLTModel *)model;
+
+// 主动断开设备. 要连下一个设备触发
+- (void)initiativeDismissCurrentModel:(BLTModel *)model;
 
 @end

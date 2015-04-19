@@ -50,7 +50,9 @@ DEF_SINGLETON(UserModelEntity)
     }
     
     HttpRequest *hr = [self.requestHelper post:_baseLink[requestType] params:dict];
+    hr.postDataEncoding = MKNKPostDataEncodingTypeJSON;
     NSLog(@".hr = .%@", hr);
+    
     [hr succeed:^(MKNetworkOperation *op) {
         NSString *str = [op responseString];
         NSLog(@".op = .%@",str);

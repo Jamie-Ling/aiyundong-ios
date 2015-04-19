@@ -95,7 +95,8 @@
     kCenterTheView(_updateButton);
     [_updateButton addTarget:self action:@selector(updateVersion) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_updateButton];
-
+    [_updateButton addUpAndDownLine];
+    _updateButton.titleColorNormal = UIColorFromHEX(0x169ad8);
 }
 
 - (void) updateVersion

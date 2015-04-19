@@ -95,7 +95,8 @@
 
 + (NSArray *)getAlarmClockFromDBWithUUID:(NSString *)uuid
 {
-    NSArray *array = [AlarmClockModel searchWithWhere:nil orderBy:@"orderIndex" offset:0 count:5];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@'", uuid];
+    NSArray *array = [AlarmClockModel searchWithWhere:where orderBy:@"orderIndex" offset:0 count:5];
     
     if (!array || array.count == 0)
     {
@@ -197,37 +198,43 @@
 - (void)setIsOpen:(BOOL)isOpen
 {
     _isOpen = isOpen;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setAlarmTime:(NSString *)alarmTime
 {
     _alarmTime = alarmTime;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setWeekArray:(NSArray *)weekArray
 {
     _weekArray = weekArray;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setRepeat:(UInt8)repeat
 {
     _repeat = repeat;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setHour:(NSInteger)hour
 {
     _hour = hour;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setMinutes:(NSInteger)minutes
 {
     _minutes = minutes;
-    [AlarmClockModel updateToDB:self where:nil];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    [AlarmClockModel updateToDB:self where:where];
 }
 
 // 表名
@@ -239,7 +246,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"orderIndex", @"wareUUID"];
+    return @[@"wareUUID", @"orderIndex"];
 }
 
 // 表版本

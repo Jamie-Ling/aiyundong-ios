@@ -55,8 +55,6 @@ DEF_SINGLETON(BLTSendData)
                            withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    
-    
     NSLog(@"活动时区..%d..本地时区..%d",[self activityTimeZone:timeZone], [self timeZone]);
     NSDate *date = [NSDate date];
     UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
@@ -223,9 +221,11 @@ DEF_SINGLETON(BLTSendData)
     {
         for (int i = count + 1; i < 20; i++)
         {
-            val[count] = 0x00;
+            val[i] = 0x00;
         }
     }
+    
+    NSLog(@"设置结束.");
     
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
@@ -266,8 +266,6 @@ DEF_SINGLETON(BLTSendData)
     val[4] = model.isOpen;
     val[17] = time / 60;
     val[18] = time % 60;
-    
-    NSLog(@"..%d", val[2]);
     
     [self sendDataToWare:&val withLength:19 withUpdate:block];
 }
@@ -464,7 +462,7 @@ DEF_SINGLETON(BLTSendData)
     [BLTAcceptData sharedInstance].type = BLTAcceptDataTypeUnKnown;
     
     NSData *sData = [[NSData alloc] initWithBytes:val length:length];
-    [[BLTManager sharedInstance] senderDataToPeripheral:sData];
+    [[BLTPeripheral sharedInstance] senderDataToPeripheral:sData];
 }
 
 // 逻辑方面的数据发送全部转移.

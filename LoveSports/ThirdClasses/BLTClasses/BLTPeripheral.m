@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSMutableData *receiveData;
 
+@property (nonatomic, assign) CBCharacteristicWriteType writeType;
+
 @end
 
 @implementation BLTPeripheral
@@ -25,6 +27,8 @@ DEF_SINGLETON(BLTPeripheral)
     self = [super init];
     if (self)
     {
+        _writeType = CBCharacteristicWriteWithResponse;
+
         _receiveData = [[NSMutableData alloc] init];
     }
     
@@ -96,7 +100,7 @@ DEF_SINGLETON(BLTPeripheral)
         if ([service.UUID isEqual:BLTUUID.uartServiceUUID])
         {
             // self.blService = service;
-            //[_peripheral discoverCharacteristics:nil forService:service];
+            // [_peripheral discoverCharacteristics:nil forService:service];
             [_peripheral discoverCharacteristics:@[BLTUUID.txCharacteristicUUID,
                                                    BLTUUID.rxCharacteristicUUID,
                                                    BLTUUID.realTimeCharacteristicUUID]
@@ -132,6 +136,9 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
+            // 读取属性.
+            [self readBluetoothWrittenWay:charac.properties];
+            
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
             
             if (_connectBlock)
@@ -221,6 +228,7 @@ DEF_SINGLETON(BLTPeripheral)
         {
            // [self cleanMutableData:_receiveData];
            // [_receiveData appendData:characteristic.value];
+            
             if (_updateBlock)
             {
                 _updateBlock(characteristic.value);
@@ -249,6 +257,107 @@ DEF_SINGLETON(BLTPeripheral)
         }
     }
 }
+
+#pragma mark --- 向外围设备发送数据 ---
+- (void)senderDataToPeripheral:(NSData *)data
+{
+    if (_peripheral.state == CBPeripheralStateConnected)
+    {
+        CBUUID *serviceUUID = BLTUUID.uartServiceUUID;
+        CBUUID *charaUUID = BLTUUID.txCharacteristicUUID;
+        
+        CBService *service = [self searchServiceFromUUID:serviceUUID withPeripheral:_peripheral];
+        
+        if (!service)
+        {
+            NSLog(@"service有错误...");
+            return;
+        }
+        
+        CBCharacteristic *chara = [self searchCharacteristcFromUUID:charaUUID withService:service];
+        if (!chara)
+        {
+            NSLog(@"chara有错误...");
+            return;
+        }
+        
+        NSLog(@"..发送数据.....");
+        [_peripheral writeValue:data forCharacteristic:chara type:_writeType];
+    }
+}
+
+// 匹配相应的服务
+- (CBService *)searchServiceFromUUID:(CBUUID *)uuid withPeripheral:(CBPeripheral *)peripheral
+{
+    for (int i = 0; i < peripheral.services.count; i++)
+    {
+        CBService *service = peripheral.services[i];
+        if ([service.UUID isEqual:uuid])
+        {
+            return service;
+        }
+    }
+    
+    return  nil;
+}
+
+// 匹配相应的具体特征
+- (CBCharacteristic *)searchCharacteristcFromUUID:(CBUUID *)uuid withService:(CBService *)service
+{
+    for (int i = 0; i < service.characteristics.count; i++)
+    {
+        CBCharacteristic *chara = service.characteristics[i];
+        if ([chara.UUID isEqual:uuid])
+        {
+            return chara;
+        }
+    }
+    
+    return nil;
+}
+
+- (void)readBluetoothWrittenWay:(NSInteger)properties
+{
+    NSInteger val[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+    for (int i = 7; i >= 0; i--)
+    {
+        if (properties >= val[i])
+        {
+            if (val[i] >= 0x04)
+            {
+                if (val[i] == 0x08)
+                {
+                    _writeType = CBCharacteristicWriteWithResponse;
+                    break;
+                }
+                else if (val[i] == 0x04)
+                {
+                    NSLog(@"...非响应式回复.");
+                    _writeType = CBCharacteristicWriteWithoutResponse;
+                    break;
+                }
+                else
+                {
+                    NSInteger tmp = properties - val[i];
+                    if (tmp > 0x08)
+                    {
+                        [self readBluetoothWrittenWay:val[i]];
+                    }
+                    else
+                    {
+                        [self readBluetoothWrittenWay:tmp];
+                    }
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
 
 #pragma mark --- receiveData 数据清空 ---
 - (void)cleanMutableData:(NSMutableData *)data

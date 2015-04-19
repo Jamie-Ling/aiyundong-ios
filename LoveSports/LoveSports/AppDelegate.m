@@ -15,6 +15,7 @@
 #import "BLTDFUBaseInfo.h"
 #import "ViewController.h"
 #import "UserInfoHelp.h"
+#import "UserModelEntity.h"
 
 @interface AppDelegate ()<EAIntroDelegate>
 

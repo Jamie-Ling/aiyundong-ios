@@ -12,8 +12,23 @@
 
 @implementation PedometerOld
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _modelArray = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
+DEF_SINGLETON(PedometerOld)
+
 + (void)saveDataToModelFromOld:(NSArray *)array withEnd:(PedometerModelSyncEnd)endBlock
 {
+    [[PedometerOld sharedInstance].modelArray removeAllObjects];
+    
     NSInteger length = [array[1] integerValue];
     NSData *originalData = array[0];
     UInt8 val[1024 * 64] = {0};
@@ -33,28 +48,24 @@
     
     int currentDay = 0;
     NSDate *date = [NSDate date];
-    NSString *dateString = [[[date dateAfterDay:currentDay] dateToString] componentsSeparatedByString:@" "][0];
     NSInteger timeIndex = (date.hour * 60 + date.minute) / 5; //当前5分钟内。数据时前5分钟开始的。
     
     // 去除2个校验码。i是数据包的第一个数据时不计数.
+    /*
     NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
                        dateString, [LS_LastWareUUID getObjectValue]];
+     */
 
-    PedometerModel *currentModel = [PedometerModel searchSingleWithWhere:where orderBy:nil];
-    if (!currentModel)
-    {
-        currentModel = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
-    }
+    PedometerModel *currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:date
+                                                                                 withUUID:[LS_LastWareUUID getObjectValue]];
     
     // 第一个包
     currentModel.totalSteps    = val[0] | (val[1]  << 8) | (val[2]  << 16) | (val[3]  << 24);
     currentModel.totalCalories = val[4] | (val[5]  << 8) | (val[6]  << 16) | (val[7]  << 24);
     currentModel.totalDistance = val[8] | (val[9]  << 8) | (val[10] << 16) | (val[11] << 24);
     
-    [currentModel addTargetForModelFromUserInfo];
-    
     NSLog(@"..%d..%d..%d", currentModel.totalSteps, currentModel.totalCalories, currentModel.totalDistance);
-    [PedometerModel updateToDB:currentModel where:where];
+    // [PedometerModel updateToDB:currentModel where:where];
 
     NSLog(@"...%@", [NSDate date]);
     BOOL today = YES;
@@ -84,6 +95,7 @@
             {
                 sleepState = 3;
             }
+            
             [self updateDataForSleep:currentModel withNumber:sleepState withTimeIndex:timeIndex];
         }
         else
@@ -91,16 +103,22 @@
             NSInteger step =        val[i]   | (val[i+1] << 8);
             NSInteger cal =         val[i+2] | (val[i+3] << 8);
             NSInteger distance =    val[i+4] | (val[i+5] << 8);
+            
             [self updateDataForArray:currentModel
                                 with:@[@(step), @(cal), @(distance)]
                        withTimeIndex:timeIndex
-             withToday:today];
+                           withToday:today];
+            
         }
         
-        [currentModel savePedometerModelToWeekModelAndMonthModel];
+        /*
+        // 将当前模型保存到周表和月表.
+        // [currentModel savePedometerModelToWeekModelAndMonthModel];
         NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
                            currentModel.dateString, [LS_LastWareUUID getObjectValue]];
-        PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+        
+        // PedometerModel *model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+
         if (model)
         {
             [PedometerModel updateToDB:currentModel where:where];
@@ -109,26 +127,25 @@
         {
             [currentModel saveToDB];
         }
-        
+         */
+
         if (timeIndex == 0)
         {
             // 到了下一天。创建新的模型.
             timeIndex = 288;
             currentDay--;
-            today= NO;
+            today = NO;
             NSDate *nextDate = [date dateAfterDay:currentDay];
-            NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
-                              [[nextDate dateToString] componentsSeparatedByString:@" "][0], [LS_LastWareUUID getObjectValue]];
-            currentModel = [PedometerModel searchSingleWithWhere:where orderBy:nil];
-            if (!currentModel)
-            {
-                currentModel = [PedometerModel simpleInitWithDate:nextDate];
-                [PedometerHelper creatEmptyDataArrayWithModel:currentModel];
-            }
+            currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:nextDate
+                                                                         withUUID:[LS_LastWareUUID getObjectValue]];
         }
         
         timeIndex--;
     }
+    
+    // 将数据存储
+    [[PedometerOld sharedInstance] saveModelDataOfPedometerOldToDB];
+    
     NSLog(@"...%@", [NSDate date]);
 
     [currentModel showMessage];
@@ -191,6 +208,64 @@
     {
         [array addObject:@(0)];
     }
+}
+
+// 实例方法，先从内存取。 不在就在数据库取，数据库没有就返回空。 不然就进行第一次保存.
+- (PedometerModel *)getCurrentModelWithDate:(NSDate *)date withUUID:(NSString *)idString
+{
+    
+    NSString *dateString = [[date dateToString] componentsSeparatedByString:@" "][0];
+    NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
+                       dateString, idString];
+    PedometerModel *model;
+    
+    for (int i = 0; i < _modelArray.count; i++)
+    {
+        PedometerModel *tmpModel = _modelArray[i];
+        
+        if ([tmpModel.wareUUID isEqualToString:idString] &&
+            [tmpModel.dateString isEqualToString:dateString])
+        {
+            model = tmpModel;
+            
+            break;
+        }
+    }
+    
+    if (!model)
+    {
+        model = [PedometerModel searchSingleWithWhere:where orderBy:nil];
+        
+        if (!model)
+        {
+            model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
+            
+            [model addTargetForModelFromUserInfo];
+        }
+        else
+        {
+            if (![_modelArray containsObject:model])
+            {
+                [[PedometerOld sharedInstance].modelArray addObject:model];
+            }
+        }
+    }
+    
+    return model;
+}
+
+// 将数据一次性的存入表里面.
+- (void)saveModelDataOfPedometerOldToDB
+{
+    for (int i = 0; i < _modelArray.count; i++)
+    {
+        PedometerModel *tmpModel = _modelArray[i];
+        [PedometerModel updateToDB:tmpModel where:nil];
+        [tmpModel savePedometerModelToWeekModelAndMonthModel];
+    }
+    
+    // 保存完毕后将内存清除...
+    [_modelArray removeAllObjects];
 }
 
 @end

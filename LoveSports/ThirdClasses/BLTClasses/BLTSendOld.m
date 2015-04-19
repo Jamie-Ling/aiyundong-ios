@@ -23,11 +23,12 @@ DEF_SINGLETON(BLTSendOld)
 {
     UInt8 val[20] = {01, 01, 00,
         (UInt8)date.year, date.month, date.day,
-        (UInt8)(birthDay.year >> 8), (UInt8)birthDay.year, birthDay.month,
-        (UInt8)(weight >> 8), (UInt8)weight,
-        (UInt8)(steps >> 24), (UInt8)(steps >> 16), (UInt8)(steps >> 8), (UInt8)steps,
+        (UInt8)birthDay.year, (UInt8)(birthDay.year >> 8), birthDay.month,
+        (UInt8)weight * 10, (UInt8)(weight * 10>> 8),
+        (UInt8)(steps), (UInt8)(steps >> 8), (UInt8)(steps >> 16), (UInt8)(steps >> 24),
         (UInt8)step, type,
          date.hour, date.minute, date.second};
+    
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
 
@@ -149,7 +150,6 @@ DEF_SINGLETON(BLTSendOld)
     [[BLTAcceptData sharedInstance] cleanMutableData];
     [BLTSendOld sendOldRequestSportDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         [self stopTimer];
-        
         if (type == BLTAcceptDataTypeOldRequestSportEnd)
         {
             if (object)
