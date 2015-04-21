@@ -13,14 +13,14 @@
 @interface UserInfoModel : NSObject
 
 // 所有的东西在set前都必须转成公制.
+// 添加了2个,其它有些就暂未存储,如地区,签名等
 
-//添加了2个，其它有些就暂未存储,如地区，签名等
+@property (nonatomic, assign) BOOL isMetricSystem;      // 是否是公制
+@property (nonatomic, strong) NSString *activePlace;    // 活动地方
+@property (nonatomic, assign) NSInteger activeTimeZone; // 活动时区 //时区小时＊2 与蓝牙保持一致.
 
-@property (nonatomic, assign) BOOL isMetricSystem;  //是否是公制
-@property (nonatomic, strong) NSString *activePlace; // 活动地方
-@property (nonatomic, assign) NSInteger activeTimeZone; //活动时区 //时区小时＊2 与蓝牙保持一致.
-
-@property (nonatomic, strong) NSString *avatar;  //头像
+@property (nonatomic, strong) NSString *avatar;     // 头像
+@property (nonatomic, strong) NSString *headImage;  // 头像 目前为本地的
 
 @property (nonatomic, strong) NSString *userName;   // 用户名
 @property (nonatomic, strong) NSString *nickName;   // 昵称
@@ -34,8 +34,8 @@
 @property (nonatomic, assign) CGFloat weight;       // 体重
 @property (nonatomic, assign) CGFloat step;         // 步距
 
-@property (nonatomic, strong) NSString *interest; //兴趣
-@property (nonatomic, strong) NSString *manifesto; //宣言
+@property (nonatomic, strong) NSString *interest;   // 兴趣
+@property (nonatomic, strong) NSString *manifesto;  // 宣言
 
 @property (nonatomic, assign) NSInteger targetSteps;      // 目标步数
 @property (nonatomic, assign) CGFloat targetCalories;     // 目标卡路里

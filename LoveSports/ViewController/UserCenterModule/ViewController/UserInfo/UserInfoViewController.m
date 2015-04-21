@@ -628,11 +628,20 @@
     
     if (indexPath.row == 0)
     {
+        /*
         FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:[_userInfoDictionary objectForKey:kUserInfoOfHeadPhotoKey]];  //实际应该是一个url从服务器获取图片显示
         [userImageButton setCenter:CGPointMake(rightImageView.x - userImageButton.width / 2.0 - 12.0, vOneCellHeight / 2.0)];
         
         userImageButton.userInteractionEnabled = NO;
-        [oneCell.contentView addSubview:userImageButton];
+         */
+        
+        UIView *headImage = [[UIView alloc] initWithFrame:CGRectMake(self.width - 80, (vOneCellHeight - 36) / 2.0, 36, 36)];
+        headImage.backgroundColor = [UIColor clearColor];
+        headImage.userInteractionEnabled = NO;
+        headImage.layer.masksToBounds = YES;
+        headImage.layer.cornerRadius = 18;
+        headImage.image = [[DataShare sharedInstance] getHeadImage];
+        [oneCell.contentView addSubview:headImage];
     }
     else
     {
@@ -703,7 +712,7 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = NO;
+        oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
 
     }
@@ -876,14 +885,23 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSLog(@"上传图像....，开始网络请求吧,请求成功后请URL写入NSUserDefaults,再调用刷新方法refreshTheHeadImage");
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *scaleImage = [image scaleToSize:CGSizeMake(100.0, 100.0)];
     
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+    }
+    
+    NSString *headFold = [[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_HeadImage];
+    NSString *filePath = [headFold stringByAppendingPathComponent:DS_HeadImage];
+    NSData *data = UIImageJPEGRepresentation(scaleImage, 1.0);
+    [[NSFileManager defaultManager] createFileAtPath:filePath contents:data attributes:nil];
+
+    [_listTableView reloadData];
+
     [picker dismissViewControllerAnimated:YES completion:^{
-        
     }];
-    
-    
 }
 
 - (void) refreshTheHeadImage

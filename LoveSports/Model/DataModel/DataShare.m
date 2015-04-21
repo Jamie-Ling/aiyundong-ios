@@ -81,4 +81,29 @@ DEF_SINGLETON(DataShare)
     return [DataShare sharedInstance].isIp6P;
 }
 
+- (UIImage *)getHeadImage
+{
+    NSString *headFold = [[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_HeadImage];
+    NSString *filePath = [headFold stringByAppendingPathComponent:DS_HeadImage];
+    
+    if ([self completePathDetermineIsThere:filePath])
+    {
+        return [UIImage imageWithFile:filePath];
+    }
+    else
+    {
+        return UIImageNamed(@"头像@2x.png");
+    }
+}
+
+// 对完整的文件路径进行判断,isDirectory 如果是文件夹返回YES, 如果不是返回NO.
+- (BOOL)completePathDetermineIsThere:(NSString *)path
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    BOOL existed = [fileManager fileExistsAtPath:path];
+    
+    return existed;
+}
+
 @end

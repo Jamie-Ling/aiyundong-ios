@@ -37,6 +37,15 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    [self updateImageForTabBar];
+}
+
+- (void)updateImageForTabBar
+{
+    UIButton *button = [self.tabBar.itemsArray lastObject];
+    UIView *view = [button viewWithTag:5555];
+    view.image = [[DataShare sharedInstance] getHeadImage];
 }
 
 + (id)custom
@@ -56,7 +65,7 @@
 
     for (int i = 0; i < vcArray.count; i++)
     {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, vc2.width / 6, 40)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, vc2.width / 6, 44)];
         
         button.backgroundColor = [UIColor clearColor];
         button.exclusiveTouch = YES;
@@ -67,7 +76,18 @@
         //注意，头像按钮是用户设置的（来自服务器或本地设置）  --- jamie
         if (i == 5)
         {
+            /*
             button = [[ObjectCTools shared] getARoundedButtonWithSize:40 withImageUrl:[[[NSUserDefaults standardUserDefaults] objectForKey:kLastLoginUserInfoDictionaryKey] objectForKey:kUserInfoOfHeadPhotoKey]];
+             */
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(button.halfWidth - 20, 2, 40, 40)];
+            view.backgroundColor = [UIColor clearColor];
+            view.layer.masksToBounds = YES;
+            view.layer.cornerRadius = 44.0 / 2;
+            view.tag = 5555;
+            view.userInteractionEnabled = NO;
+            view.image = [[DataShare sharedInstance] getHeadImage];
+            [button addSubview:view];
         }
         //--------------------------------------------------------
         
@@ -110,6 +130,7 @@
 //动画显示用户中心
 - (void) pushTheUserCenterVCByAnimation
 {
+    /*
         CATransition *animation = [CATransition animation];
         [animation setDuration:0.35];
         [animation setType:kCATransitionFade]; //淡入淡出
@@ -118,6 +139,14 @@
         [self.navigationController.view.layer addAnimation:animation forKey:nil];
 
         [self.navigationController pushViewController:[self.viewControllers lastObject] animated:NO];
+     */
+    
+    [UIView transitionWithView:self.navigationController.view
+                      duration:0.75
+                       options:UIViewAnimationOptionTransitionCurlUp
+                    animations:^{
+                        [self.navigationController pushViewController:[self.viewControllers lastObject] animated:NO];
+                    } completion:nil];
 }
 
 //重用父类方法，实现用户中心的导航条推出方式-2

@@ -402,11 +402,20 @@
     {
         case 0:
         {
+            /*
             FlatRoundedButton *userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:vOneCellHeight - 13 withImageUrl:_userInfo.avatar];
             [userImageButton setCenter:CGPointMake(rightImageView.x - userImageButton.width / 2.0 - 12.0, vOneCellHeight / 2.0)];
             
             userImageButton.userInteractionEnabled = NO;
-            [oneCell.contentView addSubview:userImageButton];
+             */
+            
+            UIView *headImage = [[UIView alloc] initWithFrame:CGRectMake(self.width - 88, (vOneCellHeight - 36) / 2.0, 36, 36)];
+            headImage.backgroundColor = [UIColor clearColor];
+            headImage.userInteractionEnabled = NO;
+            headImage.layer.masksToBounds = YES;
+            headImage.layer.cornerRadius = 18;
+            headImage.image = [[DataShare sharedInstance] getHeadImage];
+            [oneCell.contentView addSubview:headImage];
         }
             break;
         case 3:
@@ -423,7 +432,7 @@
                 _dumpEnergy = 10;
             }
             
-            [batteryView setBatteryLevelWithAnimation:YES forValue:_dumpEnergy inPercent:YES];
+            [batteryView setBatteryLevelWithAnimation:NO forValue:_dumpEnergy inPercent:YES];
             [oneCell.contentView addSubview:batteryView];
             
             if (_dumpEnergy == 0)
@@ -581,7 +590,5 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
-
 
 @end

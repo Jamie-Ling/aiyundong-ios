@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DS_HeadImage @"headImage.jpg"
+
 @interface DataShare : NSObject
 
 @property (nonatomic, assign) NSInteger showCount;
@@ -26,5 +28,7 @@ AS_SINGLETON(DataShare)
 + (BOOL)isIpFive;
 + (BOOL)isIpSix;
 + (BOOL)isIpSixP;
+
+- (UIImage *)getHeadImage;
 
 @end

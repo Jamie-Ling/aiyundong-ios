@@ -57,6 +57,7 @@
 
 #define LS_FileCache_Others @"Others"
 #define LS_FileCache_UpgradePatch @"UpdatePatch"
+#define LS_FileCache_HeadImage @"HeadImage"
 
 // 最后同步的时间
 #define LS_LastSyncDate     @"LS_LastSyncDate"

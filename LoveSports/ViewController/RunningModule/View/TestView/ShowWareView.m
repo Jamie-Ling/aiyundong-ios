@@ -59,6 +59,22 @@
 {
     if (_isShowAll)
     {
+        // 按连接排序.
+        [[BLTManager sharedInstance].allWareArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+         {
+             BLTModel *model1 = obj1[1];
+             BLTModel *model2 = obj2[1];
+             
+             if (model1.peripheral.state > model2.peripheral.state)
+             {
+                 return NSOrderedAscending;
+             }
+             else
+             {
+                 return NSOrderedDescending;
+             }
+         }];
+        
         _showArray = [BLTManager sharedInstance].allWareArray;
     }
     else

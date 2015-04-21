@@ -17,17 +17,16 @@
 #import "UserInfoHelp.h"
 #import "UserModelEntity.h"
 
-@interface AppDelegate ()<EAIntroDelegate>
+@interface AppDelegate () <EAIntroDelegate>
 
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-   // 80770100 008d0200 00130000 009a0100 00000000
+    // 80770100 008d0200 00130000 009a0100 00000000
 
     [self createVideoFloders];
 
@@ -42,9 +41,9 @@
  
     [[DownloadEntity sharedInstance] downloadFileWithWebsite:DownLoadEntity_UpdateZip withRequestType:DownloadEntityRequestUpgradePatch];
 
-    //添加默认数据
+    // 添加默认数据
     [self addTestData];
-    //添加信息完善页，如果已添加，直接进入主页
+    // 添加信息完善页，如果已添加，直接进入主页
     if ((![[ObjectCTools shared] objectForKey:@"addVC"]))
     {
           [self addLoginView:YES];
@@ -85,11 +84,13 @@
     NSLog(@"..%@", [XYSandbox libCachePath]);
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_UpgradePatch] error:nil];
+    [fileManager removeItemAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_UpgradePatch]
+                            error:nil];
     
     [XYSandbox createDirectoryAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_Others]];
     [XYSandbox createDirectoryAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_UpgradePatch]];
-    
+    [XYSandbox createDirectoryAtPath:[[XYSandbox libCachePath] stringByAppendingPathComponent:LS_FileCache_HeadImage]];
+
     [XYSandbox createDirectoryAtPath:[[XYSandbox docPath] stringByAppendingPathComponent:@"/db/"]];
     [XYSandbox createDirectoryAtPath:[[XYSandbox docPath] stringByAppendingPathComponent:@"/dbimg/"]];
     
@@ -183,16 +184,13 @@
 {
     //先确保服务器退出，再本地退出
     [self localSignOut];
-    
 }
-
 
 //本地退出
 - (void) localSignOut
 {
     [self addLoginView:YES];
 }
-
 
 #pragma mark ---------------- 测试数据构造---也作为默认本地用户数据构造  -----------------
 - (void) addTestData
@@ -216,10 +214,9 @@
     
     
     ViewController *VC = [[ViewController alloc] init];
-        ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: VC];
+    ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: VC];
     //
-        self.window.rootViewController = nav;
-    
+    self.window.rootViewController = nav;
 }
 
 @end
