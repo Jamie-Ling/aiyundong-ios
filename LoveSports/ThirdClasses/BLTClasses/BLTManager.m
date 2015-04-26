@@ -58,6 +58,7 @@ DEF_SINGLETON(BLTManager)
             [self updateRSSI:RSSI];
         };
         
+        // MillionPedometer==P118 W240=ActivityTracker
         _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer",
                           @"W286", @"P118S", @"W194"];
     }
@@ -142,13 +143,13 @@ DEF_SINGLETON(BLTManager)
                   RSSI:(NSNumber *)RSSI
 {
     NSString *name = peripheral.name;
+    NSString *idString = [peripheral.identifier UUIDString];
 
-    if (![_containNames containsObject:name])
+    if (!name || !idString || ![_containNames containsObject:name])
     {
         return;
     }
     
-    NSString *idString = [peripheral.identifier UUIDString];
     NSLog(@"advertisementData. ＝ ...%@..idString = %@", name, idString);
 
     if (!_isUpdateing)
@@ -162,7 +163,6 @@ DEF_SINGLETON(BLTManager)
         }
         else
         {
-            NSLog(@"...-1 ==%@", idString);
             model = [BLTModel getModelFromDBWtihUUID:idString];
             
             model.bltName = name;
@@ -230,6 +230,7 @@ DEF_SINGLETON(BLTManager)
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
+    NSLog(@"..%@..%d..%@..", model.peripheral.RSSI, model.peripheral.state, model.peripheral.services);
     // 扫描时自动连接或者是切换设备.
     if (model.peripheral.state != CBPeripheralStateConnected)
     {

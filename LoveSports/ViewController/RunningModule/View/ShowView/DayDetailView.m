@@ -288,19 +288,21 @@
         [bottomTitles addObject:string];
     }
     
+    NSLog(@".bottomTitles.count. = %d",  bottomTitles.count);
+    
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _fsLineView.width - 20, _fsLineView.height)];
+    _lineChart.increase = 6;
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = (int)bottomTitles.count; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
     _lineChart.fillColor = [_lineChart.color colorWithAlphaComponent:0.3];
-    _lineChart.increase = 6;
     _lineChart.labelForIndex = ^(NSUInteger item) {
         return bottomTitles[item];
     };
     
     _lineChart.hiddenBlock = ^(NSInteger index) {
         BOOL hidden = ((index % 6) != 0);
-        return hidden;
+        return NO;
     };
 
     [_fsLineView addSubview:_lineChart];

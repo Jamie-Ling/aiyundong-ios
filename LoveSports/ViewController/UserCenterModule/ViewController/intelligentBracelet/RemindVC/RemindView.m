@@ -40,6 +40,7 @@
                                       withTag:1000];
     [_openLabel addUpAndDownLine];
     [self addSubview:_openLabel];
+    _openLabel.userInteractionEnabled = YES;
     
     _openSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.width - 90, 10, 60, 30)];
     [_openSwitch addTarget:self action:@selector(clickOpenSwitch:) forControlEvents:UIControlEventValueChanged];
@@ -53,13 +54,16 @@
                                           withTag:1000];
     [_intervalLabel addUpAndDownLine];
     [self addSubview:_intervalLabel];
+    _intervalLabel.userInteractionEnabled = YES;
     
     _textField = [UITextField simpleInit:CGRectMake(self.width / 2, 0, self.width / 2, _offset)
                                withImage:nil
                          withPlaceholder:@"0"
                                 withFont:16];
     _textField.keyboardType = UIKeyboardTypeNumberPad;
+    _textField.delegate = self;
     [_intervalLabel addSubview:_textField];
+    [_textField becomeFirstResponder];
     
     _startLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _intervalLabel.totalHeight + 4, self.width, _offset)
                                  withAlignment:NSTextAlignmentLeft
@@ -173,6 +177,13 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     _model.interval = textField.text;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    _model.interval = textField.text;
+
+    return YES;
 }
 
 /*

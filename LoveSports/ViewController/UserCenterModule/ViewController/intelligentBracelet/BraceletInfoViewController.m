@@ -467,19 +467,6 @@
             }
         }];
         
-        //        [BLTSendData sendSedentaryRemindDataWithOpen:_thisBraceletInfoModel._longTimeSetRemind withTimes:[NSArray arrayWithObjects:oneClockBeginModel, oneClockOverModel, nil] withUpdateBlock:^(id object, BLTAcceptDataType type) {
-        //            if (type == BLTAcceptDataTypeSetSedentaryRemind)
-        //            {
-        //                NSLog(@"更新久坐提醒状态成功");
-        //            }
-        //            else
-        //            {
-        //                NSLog(@"更新久坐提醒状态失败");
-        //                theSwitch.on = !_thisBraceletInfoModel._longTimeSetRemind;
-        //                _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
-        //            }
-        //        }];
-        
         return;
     }
 
@@ -611,7 +598,6 @@
             if (model)
             {
                 model.isBinding = NO;
-                [BLTModel removeBindingDeviceWithUUID:model.bltID];
             }
 
             [[BLTManager sharedInstance] dismissLink];

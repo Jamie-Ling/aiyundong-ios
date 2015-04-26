@@ -22,6 +22,7 @@ DEF_SINGLETON(PedometerHelper)
     
     if (!model)
     {
+        // 没有就进行完全创建.
         model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
     }
     
@@ -98,9 +99,12 @@ DEF_SINGLETON(PedometerHelper)
     array = [[NSMutableArray alloc] init];
     for (int i = 0; i < 288; i++)
     {
-        [array addObject:@(3)];
+        // 4代表不是睡眠.而是运动
+        [array addObject:@(4)];
     }
     model.detailSleeps = [NSArray arrayWithArray:array];
+    model.nextDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];
+    model.lastDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];
 }
 
 // 保存空模型到数据库.

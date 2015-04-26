@@ -133,6 +133,7 @@
     {
         case PieChartViewShowSteps:
         {
+            self.signView.image = [UIImage image:@"脚印1.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
             _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000) * 100];
             percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000);
@@ -141,6 +142,7 @@
             
         case PieChartViewShowCalories:
         {
+            self.signView.image = [UIImage image:@"能量sign@2x.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
             _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : 1000) * 100];
             //percent = model.totalCalories / (model.targetCalories > 1 ? model.targetCalories : 1000);
@@ -150,6 +152,7 @@
             
         case PieChartViewShowDistance:
         {
+            self.signView.image = [UIImage image:@"路程sign@2x.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%.02f", (long)model.totalDistance * 0.01];
             _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 1.0 / (model.targetDistance > 1 ? model.targetDistance : 1000) * 100];
             //percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);

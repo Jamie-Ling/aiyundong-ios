@@ -43,7 +43,7 @@
                 _lastButton = button;
                 button.selected = YES;
             }
-            else if (i == 2 || i == 3 || i == 4)
+            else if (i == 2 || i == 3)
             {
                 button.userInteractionEnabled = NO;
             }
@@ -86,7 +86,7 @@
 
 - (void)selectTabAtIndex:(NSInteger)index
 {
-    if (index != _itemsArray.count - 1)
+    if (index == 0 || index == 1)
     {
         _lastButton.selected = NO;
         UIButton *btn = [self.itemsArray objectAtIndex:index];

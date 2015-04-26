@@ -240,6 +240,7 @@ DEF_SINGLETON(PedometerOld)
         {
             model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
             
+            // 添加目标
             [model addTargetForModelFromUserInfo];
         }
         else
@@ -257,9 +258,23 @@ DEF_SINGLETON(PedometerOld)
 // 将数据一次性的存入表里面.
 - (void)saveModelDataOfPedometerOldToDB
 {
-    for (int i = 0; i < _modelArray.count; i++)
+    for (NSInteger i = _modelArray.count - 1; i >= 0; i--)
     {
         PedometerModel *tmpModel = _modelArray[i];
+        
+        // 最后设置睡眠的数据。昨天半天加上今天半天的.
+        [tmpModel setLastSleepDataForCurrentModel];
+        tmpModel.nextDetailSleeps = [tmpModel.detailSleeps subarrayWithRange:NSMakeRange(144, 144)];
+        
+        // 昨天半天的加上今天半天的.
+        NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
+        [sleepArray addObjectsFromArray:tmpModel.lastDetailSleeps];
+        [sleepArray addObjectsFromArray:[tmpModel.detailSleeps subarrayWithRange:NSMakeRange(0, 144)]];
+        tmpModel.detailSleeps = sleepArray;
+        
+        // 加上开始睡眠和结束睡眠的时间.
+        [tmpModel addSleepStartTimeAndEndTime];
+        
         [PedometerModel updateToDB:tmpModel where:nil];
         [tmpModel savePedometerModelToWeekModelAndMonthModel];
     }
@@ -267,5 +282,7 @@ DEF_SINGLETON(PedometerOld)
     // 保存完毕后将内存清除...
     [_modelArray removeAllObjects];
 }
+
+
 
 @end

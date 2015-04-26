@@ -88,7 +88,7 @@
     {
         return UIColorHEXA(0x61bf1a, 0.8);
     }
-    else if (index == 3)
+    else if (index == 3 || index == 4)
     {
         return UIColorHEXA(0x61bf1a, 0.2);
     }
@@ -110,7 +110,7 @@
     {
         return 0.5;
     }
-    else if (index == 3)
+    else if (index == 3 || index == 4)
     {
         return 0.3;
     }

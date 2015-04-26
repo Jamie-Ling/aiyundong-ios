@@ -72,7 +72,7 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 @property (nonatomic, assign) NSInteger targetSleep;        // 目标睡眠
 
 @property (nonatomic, assign) NSInteger sleepTodayStartTime;// 今天开始的睡眠时间
-@property (nonatomic, assign) NSInteger sleepTodayEndTime;  // 今天结束的睡眠时间
+@property (nonatomic, assign) NSInteger sleepTodayEndTime;  // 今天结束的睡眠时间  // 都是时序.
 @property (nonatomic, assign) NSInteger sleepNextStartTime; // 明天开始睡眠的时间
 
 @property (nonatomic, assign) NSInteger stepSize;           // 步距
@@ -86,8 +86,11 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 // @property (nonatomic, strong) NSArray *stepSizes;
 
+@property (nonatomic, strong) NSArray *nextDetailSleeps;    // 今天拉下来的的详细睡眠。用数组替换掉模型.模型开销太大. 也是今天拉下来的睡眠数据.
+@property (nonatomic, strong) NSArray *lastDetailSleeps;     // 昨天拉下来的的详细睡眠。用数组替换掉模型.模型开销太大. 也是今天拉下来的睡眠数据.
+
 @property (nonatomic, strong) NSArray *detailSteps;
-@property (nonatomic, strong) NSArray *detailSleeps;
+@property (nonatomic, strong) NSArray *detailSleeps;         // 这个是昨天半天加今天半天的.
 @property (nonatomic, strong) NSArray *detailCalories;
 @property (nonatomic, strong) NSArray *detailDistans;
 
@@ -103,8 +106,14 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 - (void)showMessage;
 
+// 为当前的模型附加上昨天的睡眠模型, 数据
+- (void)setLastSleepDataForCurrentModel;
+
 // 从用户信息为模型添加各种目标.
 - (void)addTargetForModelFromUserInfo;
+
+// 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
+- (void)addSleepStartTimeAndEndTime;
 
 @end
 

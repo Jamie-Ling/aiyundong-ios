@@ -230,6 +230,7 @@ DEF_SINGLETON(BLTSendData)
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
 
+// 久坐提醒
 + (void)sendSedentaryRemindDataWithRemind:(NSArray *)times
                           withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 {
@@ -266,7 +267,7 @@ DEF_SINGLETON(BLTSendData)
     val[4] = model.isOpen;
     val[17] = time / 60;
     val[18] = time % 60;
-    
+
     [self sendDataToWare:&val withLength:19 withUpdate:block];
 }
 

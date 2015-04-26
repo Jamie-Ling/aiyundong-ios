@@ -123,6 +123,7 @@
     
     if ([self.navigationController.viewControllers.lastObject isKindOfClass:self.class])
     {
+        /*
         //动画方式消失
         CATransition *animation = [CATransition animation];
         [animation setDuration:1.0];
@@ -136,7 +137,14 @@
         HomeVC *temoHomeVC = [ObjectCTools shared].getAppDelegate._mainNavigationController.viewControllers.firstObject;
         [temoHomeVC.tabBar setUserInteractionEnabled:NO];
         
-        [self performSelector:@selector(setNavigationBarUserEnabled) withObject:nil afterDelay:0.8];
+        [self performSelector:@selector(setNavigationBarUserEnabled) withObject:nil afterDelay:0.8];*/
+        
+        [UIView transitionWithView:self.navigationController.view
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionCurlDown
+                        animations:^{
+                            [self.navigationController popViewControllerAnimated:NO];
+                        } completion:nil];
         return;
     }
     

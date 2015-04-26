@@ -28,9 +28,13 @@
     // Override point for customization after application launch.
     // 80770100 008d0200 00130000 009a0100 00000000
 
+    NSLog(@"..%@", [[NSDate date] dateToString]);
+    
     [self createVideoFloders];
 
     [[DataShare sharedInstance] checkDeviceModel];
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+
     // 生成用户与最后使用过的手环
     [UserInfoHelp sharedInstance];
     
@@ -146,7 +150,6 @@
     NSLog(@"介绍页加载完毕");
     [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"introViewShow"];
 }
-
 
 #pragma mark ---------------- 登录  &  退出-----------------
 //准备去登录（包括持续登录校验）

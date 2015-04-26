@@ -47,8 +47,6 @@
 @property (nonatomic, strong) NSString *showWeight;
 @property (nonatomic, strong) NSString *showStep;
 
-@property (nonatomic, strong) BraceletInfoModel *braceletModel;
-
 // showTimeZone 替代.
 - (NSString *)activeConvertToString;
 // 传入时区地更新时区

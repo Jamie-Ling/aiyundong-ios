@@ -133,6 +133,11 @@ DEF_SINGLETON(BLTPeripheral)
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
             
             [[BLTSimpleSend sharedInstance] sendContinuousInstruction];
+            
+            if (_connectBlock)
+            {
+                _connectBlock();
+            }
         }
         else if ([charac.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
@@ -140,11 +145,6 @@ DEF_SINGLETON(BLTPeripheral)
             [self readBluetoothWrittenWay:charac.properties];
             
             [_peripheral setNotifyValue:YES forCharacteristic:charac];
-            
-            if (_connectBlock)
-            {
-                _connectBlock();
-            }
         }
         else if ([charac.UUID isEqual:BLTUUID.realTimeCharacteristicUUID])
         {
@@ -223,7 +223,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        // NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
+        NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
            // [self cleanMutableData:_receiveData];
@@ -327,6 +327,7 @@ DEF_SINGLETON(BLTPeripheral)
             {
                 if (val[i] == 0x08)
                 {
+                    NSLog(@"...响应式回复.");
                     _writeType = CBCharacteristicWriteWithResponse;
                     break;
                 }

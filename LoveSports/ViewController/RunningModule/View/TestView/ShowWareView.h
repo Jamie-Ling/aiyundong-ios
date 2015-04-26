@@ -21,6 +21,7 @@
 @property (nonatomic, assign) id <ShowWareViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame withOpenHead:(BOOL)open;
+- (instancetype)initWithFrame:(CGRect)frame withPop:(BOOL)isPop;
 
 - (void)reFreshDevice;
 

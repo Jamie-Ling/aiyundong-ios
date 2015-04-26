@@ -23,12 +23,21 @@ DEF_SINGLETON(BLTRealTime)
     if (self)
     {
         _currentDayModel = [PedometerHelper getModelFromDBWithDate:[NSDate date]];
-        [_currentDayModel modelToDetailShowWithTimeOrder:288];
         
         self.isAllownRealTime = NO;
     }
     
     return self;
+}
+
+- (PedometerModel *)currentDayModel
+{
+    if ([[NSDate date] isSameWithDate:[NSDate dateWithString:_currentDayModel.dateString]])
+    {
+        return _currentDayModel;
+    }
+    
+    return [PedometerHelper getModelFromDBWithDate:[NSDate date]];
 }
 
 - (void)startRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block

@@ -33,6 +33,8 @@
             [safeSelf.wareView reFreshDevice];
         }
     };
+    
+    [_wareView reFreshDevice];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

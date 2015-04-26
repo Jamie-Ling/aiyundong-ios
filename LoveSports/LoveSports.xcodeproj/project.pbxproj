@@ -158,6 +158,9 @@
 		F430E46D1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F430E46C1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf */; };
 		F430E4701AC80A42004E7130 /* LoginBindingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E46F1AC80A42004E7130 /* LoginBindingVC.m */; };
 		F432BE521A80F8BE0058F87D /* LandscapeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F432BE511A80F8BE0058F87D /* LandscapeVC.m */; };
+		F43390641AE7D382000D3A0B /* link_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F43390631AE7D382000D3A0B /* link_5@2x.png */; };
+		F43390671AE7D51C000D3A0B /* shelf_book_update.png in Resources */ = {isa = PBXBuildFile; fileRef = F43390651AE7D51C000D3A0B /* shelf_book_update.png */; };
+		F43390681AE7D51C000D3A0B /* shelf_book_update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F43390661AE7D51C000D3A0B /* shelf_book_update@2x.png */; };
 		F43979ED1AB550680033B7BB /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F43979D51AB550670033B7BB /* MJRefresh.bundle */; };
 		F43979EE1AB550680033B7BB /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F43979D81AB550670033B7BB /* MJRefreshComponent.m */; };
 		F43979EF1AB550680033B7BB /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F43979DA1AB550670033B7BB /* MJRefreshConst.m */; };
@@ -332,6 +335,8 @@
 		F4DB02391ACF8A4B00892B16 /* AlarmClockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB02381ACF8A4B00892B16 /* AlarmClockCell.m */; };
 		F4DB023C1ACF8B2B00892B16 /* AlarmClockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */; };
 		F4DB02401ACF916F00892B16 /* LeftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DB023F1ACF916F00892B16 /* LeftItem.m */; };
+		F4ED0B151AEC9BEF00F08C06 /* 路程sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4ED0B131AEC9BEF00F08C06 /* 路程sign@2x.png */; };
+		F4ED0B161AEC9BEF00F08C06 /* 能量sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4ED0B141AEC9BEF00F08C06 /* 能量sign@2x.png */; };
 		F4FFD8511AB455CE00A387A4 /* DayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8501AB455CE00A387A4 /* DayScrollView.m */; };
 		F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */; };
 /* End PBXBuildFile section */
@@ -581,6 +586,9 @@
 		F430E46F1AC80A42004E7130 /* LoginBindingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginBindingVC.m; sourceTree = "<group>"; };
 		F432BE501A80F8BE0058F87D /* LandscapeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeVC.h; sourceTree = "<group>"; };
 		F432BE511A80F8BE0058F87D /* LandscapeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeVC.m; sourceTree = "<group>"; };
+		F43390631AE7D382000D3A0B /* link_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link_5@2x.png"; sourceTree = "<group>"; };
+		F43390651AE7D51C000D3A0B /* shelf_book_update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_book_update.png; sourceTree = "<group>"; };
+		F43390661AE7D51C000D3A0B /* shelf_book_update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf_book_update@2x.png"; sourceTree = "<group>"; };
 		F43979D51AB550670033B7BB /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		F43979D61AB550670033B7BB /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		F43979D71AB550670033B7BB /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
@@ -896,6 +904,8 @@
 		F4DB023B1ACF8B2B00892B16 /* AlarmClockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmClockModel.m; sourceTree = "<group>"; };
 		F4DB023E1ACF916F00892B16 /* LeftItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftItem.h; sourceTree = "<group>"; };
 		F4DB023F1ACF916F00892B16 /* LeftItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftItem.m; sourceTree = "<group>"; };
+		F4ED0B131AEC9BEF00F08C06 /* 路程sign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "路程sign@2x.png"; sourceTree = "<group>"; };
+		F4ED0B141AEC9BEF00F08C06 /* 能量sign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量sign@2x.png"; sourceTree = "<group>"; };
 		F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayScrollView.h; sourceTree = "<group>"; };
 		F4FFD8501AB455CE00A387A4 /* DayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayScrollView.m; sourceTree = "<group>"; };
 		F4FFD8541AB456D500A387A4 /* UnlimitScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlimitScroll.h; sourceTree = "<group>"; };
@@ -1071,12 +1081,17 @@
 			children = (
 				F496931A1A872952008D81CA /* home_sports@2x.png */,
 				69EFC1A01A737ABD00B5BC53 /* nav@2x.png */,
+				F43390631AE7D382000D3A0B /* link_5@2x.png */,
+				F43390651AE7D51C000D3A0B /* shelf_book_update.png */,
+				F43390661AE7D51C000D3A0B /* shelf_book_update@2x.png */,
 				69EFC1A21A737ABD00B5BC53 /* 卡路里.png */,
 				69EFC1A31A737ABD00B5BC53 /* 头像@2x.png */,
 				69EFC1A61A737ABD00B5BC53 /* 步数按钮.png */,
 				69EFC1A51A737ABD00B5BC53 /* 更多@2x.png */,
 				69EFC1A71A737ABD00B5BC53 /* 距离.png */,
 				F45870551AB2914F005A72CA /* 脚印1@2x.png */,
+				F4ED0B131AEC9BEF00F08C06 /* 路程sign@2x.png */,
+				F4ED0B141AEC9BEF00F08C06 /* 能量sign@2x.png */,
 				F45870511AB289C2005A72CA /* 日历@2x.png */,
 			);
 			path = Home;
@@ -2382,9 +2397,11 @@
 				F430E46A1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png in Resources */,
 				6955493D1A8CF4D900423EA9 /* 背景@2x.png in Resources */,
 				69FD42171A7FCC2C0023B74D /* region.json in Resources */,
+				F43390681AE7D51C000D3A0B /* shelf_book_update@2x.png in Resources */,
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
 				699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */,
 				6955493B1A8CF4D900423EA9 /* 电池电量-满@2x.png in Resources */,
+				F43390671AE7D51C000D3A0B /* shelf_book_update.png in Resources */,
 				F4C4C8281AC6D426005D511A /* 路程@2x.png in Resources */,
 				F430E4661AC7C9E0004E7130 /* 顶部四格-3@2x.png in Resources */,
 				F47398E41ADA1D7B004825F9 /* Images-2.xcassets in Resources */,
@@ -2412,8 +2429,10 @@
 				F4C4C83B1AC6E345005D511A /* 旋转屏幕@2x.png in Resources */,
 				6955493A1A8CF4D900423EA9 /* 电池电量-低@2x.png in Resources */,
 				69EFC21C1A738E4A00B5BC53 /* testImage.jpg in Resources */,
+				F43390641AE7D382000D3A0B /* link_5@2x.png in Resources */,
 				F430E46D1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf in Resources */,
 				F4C4C82A1AC6D426005D511A /* 能量@2x.png in Resources */,
+				F4ED0B161AEC9BEF00F08C06 /* 能量sign@2x.png in Resources */,
 				F48C58DA1AE37DE10053559C /* 2_bluetooth_lock1.png in Resources */,
 				F470E7C71A7FAD680009E649 /* 足迹-选中@2x.png in Resources */,
 				F470E7F61A7FB7660009E649 /* chack.png in Resources */,
@@ -2461,6 +2480,7 @@
 				6955493C1A8CF4D900423EA9 /* 电池电量@2x.png in Resources */,
 				69EFC2BA1A75EB0A00B5BC53 /* 选择按钮@2x.png in Resources */,
 				695549321A8CF4D900423EA9 /* 标题下边线@2x.png in Resources */,
+				F4ED0B151AEC9BEF00F08C06 /* 路程sign@2x.png in Resources */,
 				F43979ED1AB550680033B7BB /* MJRefresh.bundle in Resources */,
 				695549371A8CF4D900423EA9 /* 爱动运手环@2x.png in Resources */,
 			);
@@ -2735,8 +2755,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2756,7 +2776,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2779,8 +2799,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2793,7 +2813,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2805,8 +2825,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2817,7 +2837,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Debug;
 		};
@@ -2826,8 +2846,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2838,7 +2858,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
+				PROVISIONING_PROFILE = "e4d06922-d0a7-47f5-b5e5-1c302a3eddc2";
 			};
 			name = Release;
 		};

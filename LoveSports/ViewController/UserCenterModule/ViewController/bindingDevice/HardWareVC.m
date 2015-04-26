@@ -75,18 +75,16 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title = _model.bltName;
-    self.backgroundColor = UIColorFromHEX(0xf0f0f0);
+    self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
     [self loadLabels];
-    NSString *curUUID = [BLTManager sharedInstance].model.bltID;
-    BOOL isConnect = [_model.bltID isEqualToString:curUUID];
-    BOOL binding = [_model checkBindingState];
-    if (binding && isConnect)
+    if (_model.isBinding && _model.peripheral.state == CBPeripheralStateConnected)
     {
         [self loadBindingAndConnectSetting];
        // [self bltIsConnect];
     }
-    else if (binding && !isConnect)
+    else if (_model.isBinding && _model.peripheral.state != CBPeripheralStateConnected)
     {
         [self loaoNoConnectAndBindingSetting];
     }
@@ -101,8 +99,7 @@
     // SHOWMBProgressHUD(@"该设备连接突然断开", nil, nil, NO, 2.0);
     // [self performSelector:@selector(popCurrentVC) withObject:nil afterDelay:2.0];
     
-    BOOL binding = [_model checkBindingState];
-    if (binding)
+    if (_model.isBinding)
     {
         [self loaoNoConnectAndBindingSetting];
     }
@@ -216,16 +213,6 @@
 
 - (void)loadBindingAndConnectSetting
 {
-    /*
-    _brokenButton = [UIButton
-                      simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
-                      withTitle:@"断开该设备"
-                      withSelectTitle:@"连接该设备"
-                      withColor:UIColorRGB(253, 180, 30)];
-    [_brokenButton addTarget:self action:@selector(brokenLinkButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_brokenButton];
-     */
-    
     _removeButton = [UIButton
                      simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
                      withTitle:@"解除绑定"
@@ -270,16 +257,6 @@
     [ignoreButton addTarget:self action:@selector(clickIgnoreButton) forControlEvents:UIControlEventTouchUpInside];
     // [self.view addSubview:ignoreButton];
     
-    /*
-    UIButton *connectButton = [UIButton
-                              simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
-                              withTitle:@"连接"
-                              withSelectTitle:@"连接"
-                              withColor:UIColorRGB(253, 180, 30)];
-    [connectButton addTarget:self action:@selector(connectButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:connectButton];
-     */
-    
     _bindingButton = [UIButton
                       simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
                       withTitle:@"绑定设备"
@@ -294,7 +271,6 @@
 - (void)bindingHardWare
 {
     _model.isBinding = YES;
-    [BLTModel addBindingDeviceWithUUID:_model.bltID];
     
     [[BLTManager sharedInstance] repareConnectedDevice:_model];
     SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 5);
@@ -316,17 +292,13 @@
     [self loadNoBindingAndNoConnectSetting];
 }
 
-// 连接设备但是无法绑定
+// 连接设备
 - (void)connectDeviceButton:(UIButton *)button
 {
     button.selected = !button.selected;
-    // [[BLTManager sharedInstance] dismissLink];
-    // [[BLTManager sharedInstance] repareConnectedDevice:_model];
-    [BLTManager sharedInstance].isConnectNext = YES;
     [[BLTManager sharedInstance] repareConnectedDevice:_model];
     
-    NSLog(@"..%@", _model.bltName);
-    SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 5);
+    SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 2);
 }
 
 // 忽略该设备
@@ -487,6 +459,12 @@
         
         textField.text = newString;
     }
+}
+
+//返回上一页
+- (void) goBackPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

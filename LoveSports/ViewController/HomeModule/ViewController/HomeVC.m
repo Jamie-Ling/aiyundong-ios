@@ -14,11 +14,14 @@
 #import "MapVC.h"
 #import "CoffeeVC.h"
 #import "MoreVC.h"
+#import "ShowWareView.h"
 
 @interface HomeVC()
 {
     BOOL _firstComeUserCenterVC;  //第一次进入用户中心
 }
+
+@property (nonatomic, strong) ShowWareView *deviceView;
 
 @end
 
@@ -39,6 +42,22 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     [self updateImageForTabBar];
+    
+    __weak HomeVC *safeSelf = self;
+    [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
+    {
+        if (safeSelf.deviceView)
+        {
+            [safeSelf.deviceView reFreshDevice];
+        }
+    };
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [BLTManager sharedInstance].updateModelBlock = nil;
 }
 
 - (void)updateImageForTabBar
@@ -60,8 +79,8 @@
     NSArray *vcArray = @[vc2, vc3, vc4, vc5, vc6, vc1];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    NSArray *imagesArray = @[@"顶部四格-1@2x.png", @"顶部四格-2@2x.png", @"", @"", @"", @"默认头像@2x.png"];
-    NSArray *selImagesArray = @[@"顶部四格-1选中@2x.png", @"顶部四格-2-选中@2x.png", @"", @"", @"", @"默认头像@2x.png"];
+    NSArray *imagesArray = @[@"顶部四格-1@2x.png", @"顶部四格-2@2x.png", @"", @"", @"shelf_book_update.png", @"默认头像@2x.png"];
+    NSArray *selImagesArray = @[@"顶部四格-1选中@2x.png", @"顶部四格-2-选中@2x.png", @"", @"", @"shelf_book_update.png", @"默认头像@2x.png"];
 
     for (int i = 0; i < vcArray.count; i++)
     {
@@ -113,8 +132,14 @@
         
         return;
     }
+    
     if (index == 2 || index == 3 || index == 4)
     {
+     
+        if (index == 4)
+        {
+            [self popDeviceView];
+        }
         
         return;
     }
@@ -125,6 +150,22 @@
     }
     
     [super tabBar:tabBar didSelectIndex:index];
+}
+
+- (void)popDeviceView
+{
+    if (!_deviceView)
+    {
+        _deviceView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.width * 0.8, self.height * 0.6) withPop:YES];
+        _deviceView.center = CGPointMake(self.width / 2, self.height / 2);
+    }
+    
+    _deviceView.backgroundColor = [UIColor whiteColor];
+    [_deviceView popupWithtype:PopupViewOption_colorLump succeedBlock:^(UIView *view) {
+    } dismissBlock:^(UIView *view) {
+        [_deviceView removeFromSuperview];
+        _deviceView = nil;
+    }];
 }
 
 //动画显示用户中心

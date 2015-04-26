@@ -84,7 +84,7 @@
         }
         else
         {
-            chartDataArray[i] = @(model.totalDistance);
+            chartDataArray[i] = @(model.totalDistance / 100.0);
         }
         
         daysArray[i] = model.dateString;
@@ -114,7 +114,7 @@
         }
         else
         {
-            chartDataArray[i] = @(model.weekTotalDistance + model.todayDistance);
+            chartDataArray[i] = @((model.weekTotalDistance + model.todayDistance) / 100.0);
         }
         
         daysArray[i] = model.showDate;
@@ -143,7 +143,7 @@
         }
         else
         {
-            chartDataArray[i] = @(model.monthTotalDistance + model.todayDistance);
+            chartDataArray[i] = @((model.monthTotalDistance + model.todayDistance) / 100.0);
         }
         
         daysArray[i] = model.showDate;

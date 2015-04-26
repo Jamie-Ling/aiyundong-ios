@@ -126,6 +126,9 @@
     });
 }
 
+
+// 这里准备大修大改....  降低解析难度.
+
 // 保存数据。
 + (void)saveDataToModel:(NSArray *)array
           withTimeOrder:(NSInteger)timeOrder
@@ -134,15 +137,16 @@
     NSData *data = array[0];
     UInt8 val[288 * 25] = {0};
     [data getBytes:&val length:data.length];
-    PedometerModel *totalModel = [[PedometerModel alloc] init];
+    
+    // 取模型     // 从第一个包
+    NSString *dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
+    NSDate *tmpDate = [NSDate dateWithString:dateString];
+
+    PedometerModel *totalModel = [PedometerHelper getModelFromDBWithDate:tmpDate];
     
     totalModel.userName = [UserInfoHelp sharedInstance].userModel.userName;
-    totalModel.wareUUID = [UserInfoHelp sharedInstance].braceModel.bltID;
+    totalModel.dateString = dateString;
     
-    // 第一个包
-    totalModel.dateString = [NSString stringWithFormat:@"%04d-%02d-%02d", (val[4] << 8) | (val[5]), val[6], val[7]];
-    
-    NSDate *tmpDate = [NSDate dateWithString:totalModel.dateString];
     if (!tmpDate || [tmpDate timeIntervalSince1970] < 0
         || ([tmpDate timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970]) > 3600 * 24)
     {
@@ -230,6 +234,7 @@
         }
     }
     
+    /*
     // 保存最后的同步日期和时序
     [BLTSimpleSend sharedInstance].lastSyncDate = totalModel.dateString;
     [LS_LastSyncDate setObjectValue:[BLTSimpleSend sharedInstance].lastSyncDate];
@@ -240,12 +245,11 @@
         [BLTRealTime sharedInstance].lastSyncOrder = lastOrder;
         [LS_LastSyncOrder setIntValue:[BLTRealTime sharedInstance].lastSyncOrder];
     }
+     */
 
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
-    [totalModel setStartAndEndForSleepTime];
-    [totalModel setLastSleepDataForCurrentModel];
     [totalModel setTargetDataForModel];
     
     // 从用户模型获取目标
@@ -299,6 +303,7 @@
     [YearModel initOrUpdateTheWeekAndMonthModelFromAPedometerModel:self];
 }
 
+// 整个睡眠的数据有问题。因为换了数据库。重写.
 // 为今天的模型附上今天睡觉结束的时间和明天开始睡觉的时间.
 - (void)setStartAndEndForSleepTime
 {
@@ -348,7 +353,29 @@
     }
 }
 
-// 为当前的模型附加上昨天的睡眠模型
+// 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
+- (void)addSleepStartTimeAndEndTime
+{
+    for (int i = 143; i >= 0; i--)
+    {
+        NSInteger state = [_detailSleeps[i] integerValue];
+        if (state == 4)
+        {
+            _sleepTodayStartTime = i;
+        }
+    }
+    
+    for (int i = 287; i >= 144; i--)
+    {
+        NSInteger state = [_detailSleeps[i] integerValue];
+        if (state != 4)
+        {
+            _sleepTodayEndTime = i;
+        }
+    }
+}
+
+// 为当前的模型附加上昨天的睡眠模型, 数据
 - (void)setLastSleepDataForCurrentModel
 {
     NSDate *date = [NSDate dateWithString:self.dateString];
@@ -356,17 +383,20 @@
     
     if (model)
     {
-        _lastSleepArray = model.sleepArray;
+        _lastDetailSleeps = model.nextDetailSleeps;
     }
 }
 
 // 将一天的数据分为48个阶段详细展示。
 - (void)modelToDetailShowWithTimeOrder:(int)lastOrder
 {
-    NSMutableArray *detailSteps    = [NSMutableArray arrayWithArray:self.detailSteps];
-    NSMutableArray *detailSleeps   = [NSMutableArray arrayWithArray:self.detailSleeps];
-    NSMutableArray *detailDistans  = [NSMutableArray arrayWithArray:self.detailDistans];
-    NSMutableArray *detailCalories = [NSMutableArray arrayWithArray:self.detailCalories];
+    // 为当前的模型附加上昨天的睡眠模型, 数据
+    [self setLastSleepDataForCurrentModel];
+    
+    NSMutableArray *detailSteps    = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *detailSleeps   = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *detailDistans  = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *detailCalories = [[NSMutableArray alloc] initWithCapacity:0];
 
     /*
     // 差就补，多就移除
@@ -404,6 +434,18 @@
         [detailSleeps addObject:@(total)];
     }
     
+    
+    // 昨天半天的加上今天半天的.
+    NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
+    [sleepArray addObjectsFromArray:self.lastDetailSleeps];
+    [sleepArray addObjectsFromArray:[detailSleeps subarrayWithRange:NSMakeRange(0, 144)]];
+    
+    self.detailSleeps = sleepArray;
+    self.nextDetailSleeps = [detailSleeps subarrayWithRange:NSMakeRange(144, 144)];
+
+    // 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
+    [self addSleepStartTimeAndEndTime];
+    
     /*
     if (timeOrder > 282)
     {
@@ -415,9 +457,6 @@
     {
         NSInteger total = [self halfHourData:i withType:SportsModelSteps];
         [detailSteps addObject:@(total)];
-
-        //total = [self halfHourData:i withType:SportsModelSleep];
-        //[detailSleeps addObject:@(total)];
         
         total = [self halfHourData:i withType:SportsModelDistance];
         [detailDistans addObject:@(total)];
@@ -427,7 +466,6 @@
     }
     
     self.detailSteps = detailSteps;
-    self.detailSleeps = detailSleeps;
     self.detailDistans = detailDistans;
     self.detailCalories = detailCalories;
 }
@@ -479,16 +517,28 @@
                     }
                 }
             }
-            
-            return 0;
         }
-        else
-        {
-            return 0;
-        }
+        
+        return 0;
     }
     else
     {
+        if (self.sleepArray && self.sleepArray.count > 0)
+        {
+            for (int i = 0; i < self.sportsArray.count; i++)
+            {
+                SleepModel *model = self.sleepArray[i];
+                if (index <= model.currentOrder)
+                {
+                    return model.sleepState;
+                }
+            }
+        }
+        
+        return 4;
+    }
+}
+        /*
         if (index < 144)
         {
             if (self.lastSleepArray && self.lastSleepArray.count)
@@ -529,8 +579,7 @@
                 return 3;
             }
         }
-    }
-}
+         */
 
 // 设置当前模型的各种目标.
 - (void)setTargetDataForModel
@@ -566,12 +615,14 @@
     return 1;
 }
 
-
 + (void)initialize
 {
     //remove unwant property
     //比如 getTableMapping 返回nil 的时候   会取全部属性  这时候 就可以 用这个方法  移除掉 不要的属性
     [self removePropertyWithColumnName:@"sportsArray"];
+    [self removePropertyWithColumnName:@"sleepArray"];
+    [self removePropertyWithColumnName:@"lastSleepArray"];
+
     //[self removePropertyWithColumnName:@"detailDistans"];
     //[self removePropertyWithColumnName:@"detailCalories"];
 }

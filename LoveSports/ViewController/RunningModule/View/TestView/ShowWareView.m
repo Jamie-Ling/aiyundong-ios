@@ -14,6 +14,7 @@
 @interface ShowWareView ()
 
 @property (nonatomic, assign) BOOL isOpenHead;
+@property (nonatomic, assign) BOOL isPop;
 @property (nonatomic, strong) UIImageView *headImage;
 
 @end
@@ -37,6 +38,25 @@
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame withPop:(BOOL)isPop
+{
+    
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor clearColor];
+        
+        _isShowAll = YES;
+        _isPop = isPop;
+        
+        [self loadLabel];
+        [self loadShowModels];
+        [self loadTableView];
+        // [self loadButton];
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -55,6 +75,8 @@
     return self;
 }
 
+
+
 - (void)reFreshDevice
 {
     if (_isShowAll)
@@ -62,8 +84,8 @@
         // 按连接排序.
         [[BLTManager sharedInstance].allWareArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
          {
-             BLTModel *model1 = obj1[1];
-             BLTModel *model2 = obj2[1];
+             BLTModel *model1 = obj1;
+             BLTModel *model2 = obj2;
              
              if (model1.peripheral.state > model2.peripheral.state)
              {
@@ -121,9 +143,12 @@
 {
     _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 20)];
     
-    _label.backgroundColor = [UIColor redColor];
-    _label.text = @"扫描到的设备选中连接测试版";
+    _label.backgroundColor = [UIColor clearColor];
+    _label.text = @"没有发现设备.";
+    _label.textColor = [UIColor blackColor];
     [self addSubview:_label];
+    _label.hidden = YES;
+    _label.center = CGPointMake(self.width / 2, self.height / 2);
 }
 
 - (void)loadTableView
@@ -143,8 +168,8 @@
     [_tableView addLegendHeaderWithRefreshingBlock:^{
         [[BLTManager sharedInstance] checkOtherDevices];
 
-        // 模仿5秒后刷新成功
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 模仿3秒后刷新成功
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             // 结束刷新
             [weakSelf.tableView.header endRefreshing];
             [weakSelf reFreshDevice];
@@ -193,6 +218,7 @@
     if (!cell)
     {
         cell = [[WareInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
+        cell.frame = CGRectMake(0, 0, self.width, 64);
     }
     
     if (indexPath.row >= _showArray.count)
@@ -208,6 +234,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (_showArray.count == 0)
+    {
+        _label.hidden = NO;
+    }
+    else
+    {
+        _label.hidden = YES;
+    }
+    
     return _showArray.count;
 }
 
@@ -219,10 +254,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BLTModel *model = _showArray[indexPath.row];
-    
-    if ([_delegate respondsToSelector:@selector(showWareViewSelectHardware:withModel:)])
+
+    if (_isPop)
     {
-        [_delegate showWareViewSelectHardware:self withModel:model];
+        SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 2);
+
+        model.isBinding = YES;
+        [[BLTManager sharedInstance] repareConnectedDevice:model];
+    }
+    else
+    {
+        if ([_delegate respondsToSelector:@selector(showWareViewSelectHardware:withModel:)])
+        {
+            [_delegate showWareViewSelectHardware:self withModel:model];
+        }
     }
 }
 

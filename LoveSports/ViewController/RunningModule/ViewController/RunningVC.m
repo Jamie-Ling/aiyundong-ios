@@ -88,6 +88,9 @@
     {
         [self setTitleForNoConnect];
     }
+    
+    // 每次重新连接都预先更新今天的数据.
+    [_dayScroll updateContentWithDate:[NSDate date]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -234,10 +237,8 @@
                 {
                     [weakSelf updateConnectForView:YES];
                 }
-
-                [weakSelf.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
-                                                            withObject:nil
-                                                         waitUntilDone:NO];
+                
+                [weakSelf endRefreshing];
             }];
         }
         else
@@ -248,17 +249,13 @@
                 [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:^(NSDate *date) {
                     [weakSelf updateConnectForView:YES];
                     
-                    [weakSelf.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
-                                                                withObject:nil
-                                                             waitUntilDone:NO];
+                    [weakSelf endRefreshing];
                 }];
             }
             else
             {
                 SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
-                [self.tableView.header performSelectorOnMainThread:@selector(endRefreshing)
-                                                        withObject:nil
-                                                     waitUntilDone:NO];
+                [self endRefreshing];
             }
         }
     }
@@ -267,18 +264,23 @@
         // SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
         // [_srcollView headerEndRefreshing];
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            // 拿到当前的下拉刷新控件，结束刷新状态
-            [self.tableView.header endRefreshing];
-        });
+        [self endRefreshing];
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.tableView.header.state == MJRefreshHeaderStateRefreshing)
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.tableView.header.state != MJRefreshHeaderStateIdle)
         {
             [self.tableView.header endRefreshing];
         }
+    });
+}
+
+- (void)endRefreshing
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        // 拿到当前的下拉刷新控件，结束刷新状态
+        [self.tableView.header endRefreshing];
     });
 }
 

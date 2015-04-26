@@ -37,14 +37,16 @@
         _activePlace = @"亚洲/北京";
         _activeTimeZone = 8 * 2;
         _height = 172;
-        _weight = 62;
-        
         _gender = @"男";
+
+        _weight = 62;
+        _step = 50;
         
         _targetSteps= 10000;
+        _targetCalories = [self stepsConvertCalories:_targetSteps withWeight:_weight withModel:YES];
+        _targetDistance = [self StepsConvertDistance:_targetSteps withPace:_step];
         _targetSleep = 60 * 8;
  
-        _step = 50;
  
         _nickName = @"我是运动达人";
         _interest = @"爱运动";

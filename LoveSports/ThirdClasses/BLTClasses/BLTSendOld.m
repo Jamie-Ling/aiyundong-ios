@@ -93,6 +93,7 @@ DEF_SINGLETON(BLTSendOld)
     [self sendDataToWare:&val withLength:3 withUpdate:block];
 }
 
+// 左右手
 + (void)sendOldSetWearingWayDataWithRightHand:(BOOL)right
                               withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
@@ -127,12 +128,16 @@ DEF_SINGLETON(BLTSendOld)
             self.backBlock = block;
         }
         
-        [self requestSportDataLength];
+        if (!_isSyncing)
+        {
+            [self requestSportDataLength];
+        }
     }
 }
 
 - (void)requestSportDataLength
 {
+    _isSyncing = YES;
     [BLTSendOld sendOldRequestDataInfoLengthWithUpdateBlock:^(id object, BLTAcceptDataType type) {
         if (type == BLTAcceptDataTypeOldRequestDataLength)
         {
@@ -160,10 +165,12 @@ DEF_SINGLETON(BLTSendOld)
         else if (type == BLTAcceptDataTypeError)
         {
             SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+            _isSyncing = NO;
         }
         else if (type == BLTAcceptDataTypeRequestHistoryNoData)
         {
             SHOWMBProgressHUD(@"没有数据.", nil, nil, NO, 2.0);
+            _isSyncing = NO;
         }
     }];
     
@@ -183,6 +190,8 @@ DEF_SINGLETON(BLTSendOld)
         {
             // 此处删除错误数据
         }
+        
+        _isSyncing = NO;
     }];
 }
 

@@ -81,6 +81,7 @@
         int q = (int)_data.count / _horizontalGridStep;
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
         
+        // NSLog(@"增加系数...%d..%d..%f..%d", _horizontalGridStep, _increase, scale, _data.count);
         for(int i = 0;i < _horizontalGridStep; i = i + _increase)
         {
             NSInteger itemIndex = q * i;
@@ -93,12 +94,13 @@
             NSString *showText = _showType ? [text substringFromIndex:5] : text;
             
             CGPoint p = CGPointMake(_margin + i * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
-            CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
+            CGRect rect = CGRectMake(_margin, p.y + 2, self.width - _margin * 2 - 4.0f, 14);
             
             float width =[showText boundingRectWithSize:rect.size
                                             options:NSStringDrawingUsesLineFragmentOrigin
                                          attributes:@{NSFontAttributeName:_indexLabelFont}
                                             context:nil].size.width;
+            
             
             UILabel *label = (UILabel *)[self viewWithTag:66666 + i];
             if (!label)
@@ -308,8 +310,16 @@
             }
             
             label.center = CGPointMake(p.x, p.y);
-            NSInteger number = [_data[i] integerValue];
-            label.text = [NSString stringWithFormat:@"%ld", (long)number];
+            CGFloat number = [_data[i] floatValue];
+            BOOL tail = (NSInteger)(number * 100) % 100;
+            if (tail)
+            {
+                label.text = [NSString stringWithFormat:@"%.2f", number];
+            }
+            else
+            {
+                label.text = [NSString stringWithFormat:@"%ld", (long)number];
+            }
             label.hidden = (number == 0);
         }
         

@@ -82,29 +82,6 @@ DEF_SINGLETON(UserInfoHelp)
     _userModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] floatValue];
     _userModel.step = [[userInfoDictionary objectForKey:kUserInfoOfStepLongKey] integerValue];
     
-    if (!_userModel.braceletModel)
-    {
-        if (userIngModel)
-        {
-            _userModel.braceletModel = userIngModel;
-        }
-        else
-        {
-            BraceletInfoModel   *showModel = [[BraceletInfoModel getUsingLKDBHelper] searchSingle:[BraceletInfoModel class] where:nil orderBy:@"_orderID"];
-            _userModel.braceletModel = showModel;
-            
-        }
-    }
-    
-    _userModel.targetSteps = _userModel.braceletModel._stepNumber;
-    //    _userModel.targetCalories = 1; //@"没有设置这一项了，得去算";
-    //    _userModel.targetDistance = 1; //@"没有设置这一项了，得去算";
-    //    _userModel.targetSleep = 1; //@"没有设置这一项了，得去算";
-    
-    //***注意是否是公制这个参数，存储时未做转换（多次切换时会有误差，所以直接存的是设置单位对应的数值）
-    //   参数在这里： _userModel.braceletModel._isShowMetricSystem
-    _userModel.isMetricSystem = _userModel.braceletModel._isShowMetricSystem;
-    
     return _userModel;
 }
 
@@ -193,11 +170,11 @@ DEF_SINGLETON(UserInfoHelp)
     }
     else
     {
-        [BLTSendOld sendSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
-                                       withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                           [self notifyViewWithBackBlock:backBlock
-                                                             withSuccess:type == BLTAcceptDataTypeOldSetWearingWay];
-                                       }];
+        [BLTSendOld sendOldSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
+                                          withUpdateBlock:^(id object, BLTAcceptDataType type) {
+                                              [self notifyViewWithBackBlock:backBlock
+                                                                withSuccess:type == BLTAcceptDataTypeOldSetWearingWay];
+                                          }];
     }
 }
 

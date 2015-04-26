@@ -13,6 +13,7 @@
 @interface BLTSendOld : BLTSimpleSend
 
 @property (nonatomic, strong) NSNumber *dataBytes;
+@property (nonatomic, assign) BOOL isSyncing;
 
 AS_SINGLETON(BLTSendOld)
 
