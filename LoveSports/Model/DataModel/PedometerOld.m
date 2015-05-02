@@ -18,6 +18,12 @@
     if (self)
     {
         _modelArray = [[NSMutableArray alloc] init];
+        
+        if (![LS_PedometerOld_Date getObjectValue])
+        {
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
+            [LS_PedometerOld_Date setObjectValue:date];
+        }
     }
     
     return self;
@@ -47,8 +53,8 @@ DEF_SINGLETON(PedometerOld)
     [data getBytes:&val length:data.length];
     
     int currentDay = 0;
-    NSDate *date = [NSDate date];
-    NSInteger timeIndex = (date.hour * 60 + date.minute) / 5; //当前5分钟内。数据时前5分钟开始的。
+    NSDate *currentDate = [NSDate date];
+    NSInteger timeIndex = (currentDate.hour * 60 + currentDate.minute) / 5; //当前5分钟内。数据时前5分钟开始的。
     
     // 去除2个校验码。i是数据包的第一个数据时不计数.
     /*
@@ -56,7 +62,7 @@ DEF_SINGLETON(PedometerOld)
                        dateString, [LS_LastWareUUID getObjectValue]];
      */
 
-    PedometerModel *currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:date
+    PedometerModel *currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:currentDate
                                                                                  withUUID:[LS_LastWareUUID getObjectValue]];
     
     // 第一个包
@@ -71,6 +77,12 @@ DEF_SINGLETON(PedometerOld)
     BOOL today = YES;
     for (int i = 12; i < length - 2; i += 6)
     {
+        if ([currentDate isSameWithDate:[LS_PedometerOld_Date getObjectValue]] &&
+            timeIndex == [LS_PedometerOld_TimeIndex getIntValue])
+        {
+            break;
+        }
+        
         NSInteger state = (UInt8)(val[i + 1] >> 4);
         if (state == 8)
         {
@@ -108,7 +120,6 @@ DEF_SINGLETON(PedometerOld)
                                 with:@[@(step), @(cal), @(distance)]
                        withTimeIndex:timeIndex
                            withToday:today];
-            
         }
         
         /*
@@ -135,13 +146,19 @@ DEF_SINGLETON(PedometerOld)
             timeIndex = 288;
             currentDay--;
             today = NO;
-            NSDate *nextDate = [date dateAfterDay:currentDay];
-            currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:nextDate
+            currentDate = [[NSDate date] dateAfterDay:currentDay];
+            NSLog(@"...currentDate..%@", currentDate);
+            currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:currentDate
                                                                          withUUID:[LS_LastWareUUID getObjectValue]];
         }
         
         timeIndex--;
+   
     }
+    
+    // 存储最后同步的日期和时间避免重复同步.
+    [LS_PedometerOld_Date setObjectValue:[NSDate date]];
+    [LS_PedometerOld_TimeIndex setIntValue:(currentDate.hour * 60 + currentDate.minute) / 5];
     
     // 将数据存储
     [[PedometerOld sharedInstance] saveModelDataOfPedometerOldToDB];
@@ -155,7 +172,6 @@ DEF_SINGLETON(PedometerOld)
         endBlock([NSDate date], YES);
     }
 }
-
 
 // 将所有的值放入数组中.
 + (void)updateDataForArray:(PedometerModel *)model
@@ -213,7 +229,6 @@ DEF_SINGLETON(PedometerOld)
 // 实例方法，先从内存取。 不在就在数据库取，数据库没有就返回空。 不然就进行第一次保存.
 - (PedometerModel *)getCurrentModelWithDate:(NSDate *)date withUUID:(NSString *)idString
 {
-    
     NSString *dateString = [[date dateToString] componentsSeparatedByString:@" "][0];
     NSString *where = [NSString stringWithFormat:@"dateString = '%@' and wareUUID = '%@'",
                        dateString, idString];
@@ -227,7 +242,7 @@ DEF_SINGLETON(PedometerOld)
             [tmpModel.dateString isEqualToString:dateString])
         {
             model = tmpModel;
-            
+
             break;
         }
     }
@@ -239,16 +254,11 @@ DEF_SINGLETON(PedometerOld)
         if (!model)
         {
             model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
-            
-            // 添加目标
-            [model addTargetForModelFromUserInfo];
         }
-        else
+     
+        if (![_modelArray containsObject:model])
         {
-            if (![_modelArray containsObject:model])
-            {
-                [[PedometerOld sharedInstance].modelArray addObject:model];
-            }
+            [[PedometerOld sharedInstance].modelArray addObject:model];
         }
     }
     
@@ -274,15 +284,19 @@ DEF_SINGLETON(PedometerOld)
         
         // 加上开始睡眠和结束睡眠的时间.
         [tmpModel addSleepStartTimeAndEndTime];
-        
+ 
         [PedometerModel updateToDB:tmpModel where:nil];
         [tmpModel savePedometerModelToWeekModelAndMonthModel];
+        
+        // 如果有数据就保存到record
+        if (tmpModel.totalSteps > 0)
+        {
+            [StepDataRecord addDateToStepDataRecord:tmpModel.dateString];
+        }
     }
     
     // 保存完毕后将内存清除...
     [_modelArray removeAllObjects];
 }
-
-
 
 @end

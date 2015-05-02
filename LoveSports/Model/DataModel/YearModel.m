@@ -29,11 +29,12 @@
 + (void) initOrUpdateTheWeekAndMonthModelFromAPedometerModel: (PedometerModel *) onePedoMeterModel
 {
     NSDate *oneDate = [NSDate dateWithString:onePedoMeterModel.dateString];
+    
     //取得这一年的模型，没有就创建，有就更新数据
     NSInteger thisYearNumber = oneDate.year;
-    
     //取到这一周的模型，没有就创建，更新至年模型中
     NSInteger thisWeekNumber = oneDate.weekOfYear;
+    
     NSString *where = [NSString stringWithFormat:@"yearNumber = %ld AND weekNumber = %ld AND userName = '%@' AND wareUUID = '%@'", (long)thisYearNumber, (long)thisWeekNumber, onePedoMeterModel.userName, onePedoMeterModel.wareUUID];
     WeekModel *thisWeekModel = [WeekModel searchSingleWithWhere:where orderBy:nil];
     if (!thisWeekModel)
@@ -43,9 +44,9 @@
         thisWeekModel.wareUUID = onePedoMeterModel.wareUUID;
         [thisWeekModel saveToDB];
     }
-    
+
     [thisWeekModel updateTotalWithModel:onePedoMeterModel];
-    [WeekModel updateToDB:thisWeekModel where:where];
+    [WeekModel updateToDB:thisWeekModel where:nil];
 
     //取到这一月的模型，没有就创建，更新至年模型中
     NSInteger thisMonthNumber = oneDate.month;
@@ -60,7 +61,7 @@
     }
     
     [thisMonthModel updateTotalWithModel:onePedoMeterModel];
-    [MonthModel updateToDB:thisMonthModel where:where];
+    [MonthModel updateToDB:thisMonthModel where:nil];
 }
 
 #pragma mark ---------------- 周相关 -----------------

@@ -30,9 +30,8 @@
         
         _isShowAll = YES;
         _isOpenHead = open;
-        [self loadShowModels];
         [self loadTableView];
-        // [self loadButton];
+        [self reFreshDevice];
     }
     
     return self;
@@ -50,9 +49,8 @@
         _isPop = isPop;
         
         [self loadLabel];
-        [self loadShowModels];
         [self loadTableView];
-        // [self loadButton];
+        [self reFreshDevice];
     }
     
     return self;
@@ -67,58 +65,53 @@
 
         _isShowAll = YES;
         _isOpenHead = YES;
-        [self loadShowModels];
         [self loadTableView];
-        // [self loadButton];
+        [self reFreshDevice];
     }
     
     return self;
 }
 
-
-
 - (void)reFreshDevice
 {
-    if (_isShowAll)
-    {
-        // 按连接排序.
-        [[BLTManager sharedInstance].allWareArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    // 按连接排序.
+    [[BLTManager sharedInstance].allWareArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2)
+     {
+         BLTModel *model1 = obj1;
+         BLTModel *model2 = obj2;
+         
+         if (model1.peripheral.state > model2.peripheral.state)
          {
-             BLTModel *model1 = obj1;
-             BLTModel *model2 = obj2;
-             
-             if (model1.peripheral.state > model2.peripheral.state)
-             {
-                 return NSOrderedAscending;
-             }
-             else
-             {
-                 return NSOrderedDescending;
-             }
-         }];
+             return NSOrderedAscending;
+         }
+         else
+         {
+             return NSOrderedDescending;
+         }
+     }];
+    
+    if (_isPop)
+    {
+        NSMutableArray *popArray = [[NSMutableArray alloc] initWithCapacity:0];
         
-        _showArray = [BLTManager sharedInstance].allWareArray;
+        for (int i = 0; i < [BLTManager sharedInstance].allWareArray.count; i++)
+        {
+            BLTModel *model = [BLTManager sharedInstance].allWareArray[i];
+            
+            if (model.isBinding)
+            {
+                [popArray addObject:model];
+            }
+        }
+        
+        _showArray = popArray;
     }
     else
     {
-        [self loadShowModels];
+        _showArray = [BLTManager sharedInstance].allWareArray;
     }
     
     [_tableView reloadData];
-}
-
-- (void)loadShowModels
-{
-    NSArray *array = [LS_BindingID getObjectValue];
-
-    if (array && array.count > 0)
-    {
-        _showArray = [self addBindingDevices:array];
-    }
-    else
-    {
-        _showArray = [BLTManager sharedInstance].allWareArray;
-    }
 }
 
 - (NSArray *)addBindingDevices:(NSArray *)array
@@ -144,7 +137,7 @@
     _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 20)];
     
     _label.backgroundColor = [UIColor clearColor];
-    _label.text = @"没有发现设备.";
+    _label.text = @"没有发现绑定的设备.";
     _label.textColor = [UIColor blackColor];
     [self addSubview:_label];
     _label.hidden = YES;

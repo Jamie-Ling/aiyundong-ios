@@ -6,6 +6,9 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
+#define LS_PedometerOld_Date @"LS_PedometerOld_Date"
+#define LS_PedometerOld_TimeIndex @"LS_PedometerOld_TimeIndex"
+
 #import <Foundation/Foundation.h>
 #import "PedometerModel.h"
 

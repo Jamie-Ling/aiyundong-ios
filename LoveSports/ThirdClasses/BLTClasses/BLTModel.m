@@ -181,6 +181,12 @@
     [BLTModel updateToDB:self where:where];
 }
 
+- (void)setIsNewDevice:(BOOL)isNewDevice
+{
+    _isNewDevice = isNewDevice;
+    [BLTModel updateToDB:self where:nil];
+}
+
 - (void)setIsLeftHand:(BOOL)isLeftHand
 {
     _isLeftHand = isLeftHand;

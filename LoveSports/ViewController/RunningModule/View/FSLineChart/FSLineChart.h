@@ -23,9 +23,15 @@
 
 typedef enum {
     FSLineChartShowNoType = 0,
-    FSLineChartShowDateType = 1,
-    FSLineChartShowWeekType = 2,
-    FSLineChartShowMonthType = 3
+    FSLineChartShowDateStepsType = 1,
+    FSLineChartShowDateCaloriesType = 2,
+    FSLineChartShowDateDistanceType = 3,
+    FSLineChartShowWeekStepsType = 4,
+    FSLineChartShowWeekCaloriesType = 5,
+    FSLineChartShowWeekDistanceType = 6,
+    FSLineChartShowMonthStepsType = 7,
+    FSLineChartShowMonthCaloriesType = 8,
+    FSLineChartShowMonthDistanceType = 9
 } FSLineChartShowType;
 
 @interface FSLineChart : UIView
@@ -96,7 +102,7 @@ typedef NS_ENUM(NSInteger, ValueLabelPositionType) {
 // Animations
 @property (nonatomic) CGFloat animationDuration;
 
-@property (nonatomic, assign) NSInteger levelNumber;
+@property (nonatomic, assign) CGFloat levelNumber;
 
 @property (nonatomic, strong) NSArray *titlesArray;
 @property (nonatomic, assign) FSLineChartShowType showType;

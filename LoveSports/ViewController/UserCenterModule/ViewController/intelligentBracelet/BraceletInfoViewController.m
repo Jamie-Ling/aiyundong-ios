@@ -117,10 +117,7 @@
     
     _userInfo = [UserInfoHelp sharedInstance].userModel;
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
-    
-    //初始化
-    //    _cellTitleArray = [NSArray arrayWithObjects:@"每日目标", @"自定义", @"", @"时间与闹钟", @"久坐提醒", @"防丢提醒", @"固件升级", @"恢复到默认设置", @"蓝牙手环信息设置", nil];
-    
+
     _cellTitleArrayFor240 = [NSArray arrayWithObjects:@"每日目标", @"步距", @"佩戴方式", @"久座提醒", @"振动闹钟", @"", @"恢复到默认设置", @"解除绑定", nil];
     
     _cellTitleArrayFor240N = [NSArray arrayWithObjects:@"每日目标", @"步距", @"佩戴方式", @"久座提醒", @"振动闹钟", @"实时同步", @"固件升级", @"", @"恢复到默认设置", @"解除绑定", nil];
@@ -129,10 +126,10 @@
     _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
     
     //初始化为240N
-    _cellTitleArray = _cellTitleArrayFor240N;
+    _is240N = _braceModel.isNewDevice;
+    _cellTitleArray = _is240N ? _cellTitleArrayFor240N : _cellTitleArrayFor240;
     
     [self addTableView];
-    
     [self addDidnotConectLabel];
 }
 
@@ -177,13 +174,15 @@
 //刷新整个页面
 - (void) reloadMainPage
 {
+    _braceModel = [UserInfoHelp sharedInstance].braceModel;
+    _is240N = _braceModel.isNewDevice;
+    _cellTitleArray = _is240N ? _cellTitleArrayFor240N : _cellTitleArrayFor240;
+
     if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
     {
         //没有连接设备
         _haveConect = NO;
-        _is240N = YES;  //初始化显示最新的240n
         [_notConectLabel setHidden:NO];
-//        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
         [self reloadUserInfoTableView];  //刷新UI
         return;
     }
@@ -193,17 +192,11 @@
     
     if (![BLTManager sharedInstance].model.isNewDevice)
     {
-        _is240N = NO;  //不是最新的240n
-        _cellTitleArray = _cellTitleArrayFor240;
-        
         [self reloadUserInfoTableView];  //刷新UI
         
         return;
     }
     
-    _cellTitleArray = _cellTitleArrayFor240N;
-    _is240N = YES;
-    NSLog(@"在此请求是否有新固件版本，请求完后再做标记 _newVersionInfoModel,并刷新list");
     //假设有
     _haveNewVersion = [BLTManager sharedInstance].model.hardVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
     _newVersionInfoModel = [[VersionInfoModel alloc] init];
@@ -216,11 +209,8 @@
 {
     if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
     {
-        //没有连接设备
         _haveConect = NO;
-        _is240N = YES;  //初始化显示最新的240n
         [_notConectLabel setHidden:NO];
-        //        SHOWMBProgressHUD(@"没有链接设备.", @"无法设置", nil, NO, 2.0);       //提示要连接设备
         [self reloadUserInfoTableView];  //刷新UI
         return NO;
     }
@@ -232,13 +222,8 @@
 
 - (void) reloadUserInfoTableView
 {
-    //    self.title = _thisBraceletInfoModel._name;
-    
-    //用户信息
-    
     [_listTableView reloadData];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

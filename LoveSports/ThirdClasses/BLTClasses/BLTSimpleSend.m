@@ -243,6 +243,12 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     }];
 }
 
+// 如果开启了实时传输就发送实时传输
+- (void)sendRealTime
+{
+    [BLTSendData sendRealtimeTransmissionSportDataWithUpdateBlock:nil];
+}
+
 /**
  *   ---------------------------------   定时器操作中心   --------------------------------------
  */
@@ -264,7 +270,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         // 停止同步数据因意外情况
         [self stopTimer];
         dispatch_async(dispatch_get_main_queue(), ^{
-            HIDDENMBProgressHUD
+            SHOWMBProgressHUD(@"同步数据失败", nil, nil, NO, 2.0);
         });
     }
 }
@@ -318,6 +324,9 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         [BLTManager sharedInstance].model.isNewDevice = YES;
         [self newDeviceChannel];
     }
+    
+    // 保存最后设备是新的还是旧的
+    [LS_LastDeviceType setBOOLValue:[BLTManager sharedInstance].model.isNewDevice];
 }
 
 // 同步历史数据.目前可以统一用历史接口而不单独使用同步今天的接口

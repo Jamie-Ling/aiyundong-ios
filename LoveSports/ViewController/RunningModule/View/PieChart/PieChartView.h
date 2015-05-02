@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Strokin Alexey. All rights reserved.
 //
 
+#define LS_PieChartCount 360
+
 #import <UIKit/UIKit.h>
 #import "PedometerModel.h"
 

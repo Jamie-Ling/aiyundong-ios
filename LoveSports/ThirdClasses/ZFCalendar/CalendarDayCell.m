@@ -11,6 +11,7 @@
 // 发布代码于最专业的源码分享网站: Code4App.com
 
 #import "CalendarDayCell.h"
+#import "StepDataRecord.h"
 
 @implementation CalendarDayCell
 
@@ -126,6 +127,16 @@
         default:
             
             break;
+    }
+    
+    NSString *dateString = [[model.date dateToString] componentsSeparatedByString:@" "][0];
+    if ([StepDataRecord isHaveDate:dateString])
+    {
+        if (!day_lab.hidden)
+        {
+            imgview.hidden = NO;
+            day_lab.textColor = [UIColor whiteColor];
+        }
     }
 }
 

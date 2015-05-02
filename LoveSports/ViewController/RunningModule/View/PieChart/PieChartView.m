@@ -78,7 +78,7 @@
    
    int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
    
-    double sum = 288 * 10;
+    double sum = LS_PieChartCount * 10;
 
     /*
    for (int i = 0; i < slicesCount; i++)
@@ -129,14 +129,17 @@
 - (void)updateContentForViewWithModel:(PedometerModel *)model withState:(PieChartViewShowState)state  withReloadBlock:(PieChartViewReload)block;
 {
     CGFloat percent = 0.0;
+    NSInteger targetStep = 10000;
+    CGFloat targetCal = [self stepsConvertCalories:10000 withWeight:62 withModel:[UserInfoHelp sharedInstance].userModel.isMetricSystem];
+    CGFloat targetDis = [self StepsConvertDistance:10000 withPace:50] / 1000.0;
     switch (state)
     {
         case PieChartViewShowSteps:
         {
             self.signView.image = [UIImage image:@"脚印1.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalSteps];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000) * 100];
-            percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : 10000);
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : targetStep) * 100];
+            percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : targetStep);
         }
             break;
             
@@ -144,9 +147,9 @@
         {
             self.signView.image = [UIImage image:@"能量sign@2x.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%ld", (long)model.totalCalories];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : 1000) * 100];
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalCalories * 1.0 / (model.targetCalories > 1 ? model.targetCalories : targetCal) * 100];
             //percent = model.totalCalories / (model.targetCalories > 1 ? model.targetCalories : 1000);
-            percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
+            percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : targetStep);
         }
             break;
             
@@ -154,17 +157,17 @@
         {
             self.signView.image = [UIImage image:@"路程sign@2x.png"];
             _timeLabel.text = [NSString stringWithFormat:@"%.02f", (long)model.totalDistance * 0.01];
-            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 1.0 / (model.targetDistance > 1 ? model.targetDistance : 1000) * 100];
+            _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 0.01 / (model.targetDistance > 0.01 ? model.targetDistance : targetDis) * 100];
             //percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);
-            percent = model.totalSteps / (model.targetStep > 1 ? model.targetStep : 10000);
+            percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : targetStep);
         }
             break;
             
         case PieChartViewShowSleep:
         {
-            _timeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", model.totalSleepTime / 60, model.totalSleepTime % 60];
+            _timeLabel.text = [NSString stringWithFormat:@"%02d:%02d", model.totalSleepTime / 60, model.totalSleepTime % 60];
             _durationLabel.text = [NSString stringWithFormat:@"%ld小时", (long)model.targetSleep / 60];
-            percent = model.totalSleepTime / (model.targetSleep > 1 ? model.targetSleep : 8 * 60);
+            percent = model.totalSleepTime * 1.0 / (model.targetSleep > 1 ? model.targetSleep : 8 * 60);
 
         }
             break;

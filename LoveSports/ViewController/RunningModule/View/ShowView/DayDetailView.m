@@ -325,14 +325,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 288;
+    return LS_PieChartCount;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 288 * (_percent * 0.01))
+        if (index <= LS_PieChartCount * (_percent * 0.01))
         {
             return UIColorRGB(82, 182, 21);
         }

@@ -119,6 +119,9 @@ DEF_SINGLETON(BLTManager)
         return;
     }
     
+    // 先停止扫描然后继续扫描.
+    [_centralManager stopScan];
+
     [_allWareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         BLTModel *model = obj;
         if (model.peripheral.state != CBPeripheralStateConnected)
@@ -128,7 +131,6 @@ DEF_SINGLETON(BLTManager)
     }];
     
     [self notifyViewUpdateModelState];
-    
     [self.centralManager scanForPeripheralsWithServices:nil
                                                 options:nil];
      
@@ -422,27 +424,28 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 {
     if (self.discoverPeripheral.state == CBPeripheralStateConnected)
     {
+        [BLTDFUHelper sharedInstance].endBlock = ^(BOOL success) {
+            [self firmWareUpdateEnd:success];
+        };
+        
         [[BLTDFUHelper sharedInstance] prepareUpdateFirmWare:^{
             [self checkIsAllownUpdateFirmWare];
         }];
     }
     else
     {
-        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"设备没有链接", nil, nil, NO, 2.0);
     }
 }
 
 - (void)checkIsAllownUpdateFirmWare
 {
     _isUpdateing = YES;
+    _model.isRealTime = NO;
     _updateModel = _model;
     [BLTSendData sendUpdateFirmware];
     
-    [BLTDFUHelper sharedInstance].endBlock = ^(BOOL success) {
-        [self firmWareUpdateEnd:success];
-    };
-    
-    SHOWMBProgressHUD(@"固件升级中...", nil, nil, NO, 90);
+    SHOWMBProgressHUD(@"准备固件更新", nil, nil, NO, 5.0);
 }
 
 - (void)firmWareUpdateEnd:(BOOL)success
@@ -460,7 +463,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     }
     else
     {
-        SHOWMBProgressHUD(@"升级失败.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(@"固件更新失败", nil, nil, NO, 2.0);
     }
 }
 

@@ -106,4 +106,14 @@ DEF_SINGLETON(DataShare)
     return existed;
 }
 
+- (StepDataRecord *)stepRecord
+{
+    if (!_stepRecord)
+    {
+        _stepRecord = [StepDataRecord getStepDataRecordFromDB];
+    }
+    
+    return _stepRecord;
+}
+
 @end

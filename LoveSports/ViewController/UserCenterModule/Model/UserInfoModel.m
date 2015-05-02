@@ -42,12 +42,11 @@
         _weight = 62;
         _step = 50;
         
-        _targetSteps= 10000;
-        _targetCalories = [self stepsConvertCalories:_targetSteps withWeight:_weight withModel:YES];
-        _targetDistance = [self StepsConvertDistance:_targetSteps withPace:_step];
+        _targetSteps = 10000;
+        _targetCalories = [self stepsConvertCalories:10000 withWeight:62 withModel:YES];
+        _targetDistance = [self StepsConvertDistance:10000 withPace:50] / 1000;
         _targetSleep = 60 * 8;
- 
- 
+        
         _nickName = @"我是运动达人";
         _interest = @"爱运动";
         _manifesto = @"我要成为运动达人!";
@@ -93,7 +92,7 @@
                                       withWeight:_weight
                                        withModel:_isMetricSystem];
     _targetDistance = [self StepsConvertDistance:_targetSteps
-                                        withPace:_step];
+                                        withPace:_step] / 1000;
     
     [UserInfoModel updateToDB:self where:nil];
 }

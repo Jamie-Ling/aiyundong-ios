@@ -64,11 +64,16 @@
 // 最后同步的序号
 #define LS_LastSyncOrder    @"LS_LastSyncOrder"
 
+#define LS_LastDeviceType    @"LS_LastDeviceType"
+
 // 趋势表一次展示的个数
 // #define LS_TrendChartShowCount  (7)
 
 // 实时传输的状态。
 #define LS_RealTimeTransState  @"LS_RealTimeTransState"
+
+// 当天是否有数据
+#define LS_IsHaveData @"LS_IsHaveData"
 
 // 基准年
 #define LS_Baseyear (2015)

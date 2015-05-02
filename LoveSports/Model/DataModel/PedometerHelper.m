@@ -102,6 +102,15 @@ DEF_SINGLETON(PedometerHelper)
         // 4代表不是睡眠.而是运动
         [array addObject:@(4)];
     }
+    
+    // 测试
+    /*
+    for (int k = 100 + arc4random() % 30; k < 204 + arc4random() % 20; k++)
+    {
+        [array replaceObjectAtIndex:k withObject:@(arc4random() % 20 % 4)];
+    }
+     */
+    
     model.detailSleeps = [NSArray arrayWithArray:array];
     model.nextDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];
     model.lastDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];
@@ -112,7 +121,10 @@ DEF_SINGLETON(PedometerHelper)
 {
     PedometerModel *model = [PedometerModel simpleInitWithDate:date];
     
+    [model addTargetForModelFromUserInfo];
+    
     [PedometerHelper creatEmptyDataArrayWithModel:model];
+    [model addSleepStartTimeAndEndTime];
 
     if (![date isSameWithDate:[NSDate date]])
     {

@@ -11,6 +11,7 @@
 #import "ShowManage.h"
 #import "PedometerHelper.h"
 #import "UserInfoHelp.h"
+#import "StepDataRecord.h"
 
 @implementation SportsModel
 
@@ -66,13 +67,17 @@
         NSString *dateString = [[NSDate date] dateToString];
         _dateString= [dateString componentsSeparatedByString:@" "][0];
         
-        _targetStep = 0.0001;
-        _totalCalories = 0.0001;
-        _targetDistance = 0.0001;
-        _targetSleep = 0.0001;
-        _sleepNextStartTime = 144;
-        _sleepTodayStartTime = 144;
-        _sleepTodayEndTime = 144;
+        _targetStep = 10000;
+        _targetCalories = [self stepsConvertCalories:10000 withWeight:62 withModel:YES];
+        _targetDistance = [self StepsConvertDistance:10000 withPace:50] / 1000;
+        _targetSleep = 60 * 8;
+        
+        // _totalSleepTime = 300 + arc4random() % 60;
+        _sleepNextStartTime = 143;
+        _sleepTodayStartTime = 143;
+        _sleepTodayEndTime = 143;
+        
+        _userName = [UserInfoHelp sharedInstance].userModel.userName;
     }
     
     return self;
@@ -94,27 +99,26 @@
     self.totalSteps       = (val[8]  << 24) | (val[9]  << 16)  | (val[10] << 8) | (val[11]);
     self.totalCalories    = (val[12] << 24) | (val[13] << 16)  | (val[14] << 8) | (val[15]);
     self.totalDistance    = (val[16] << 8)  | val[17];
-    self.totalSportTime   = (val[18] << 8)  | val[19];
+    self.totalSportTime   = val[18] * 60 + val[19];
     
     // 第二个包
-    self.totalSleepTime = (val[20] << 8) | val[21]; // (val[20] << 8)  | val[21];
-    self.totalStillTime = (val[22] << 8) | val[23]; // (val[20] << 8)  | val[21];
-    self.walkTime       = (val[24] << 8) | val[25];
-    self.slowWalkTime   = (val[26] << 8) | val[27];
-    self.midWalkTime    = (val[28] << 8) | val[29];
-    self.fastWalkTime   = (val[30] << 8) | val[31];
-    self.slowRunTime    = (val[32] << 8) | val[33];
-    self.midRunTime     = (val[34] << 8) | val[35];
-    self.fastRunTime    = (val[36] << 8) | val[37];
+    self.totalSleepTime = val[20] * 60 + val[21];
+    self.totalStillTime = val[22] * 60 + val[23];
+    self.walkTime       = val[24] * 60 + val[25];
+    self.slowWalkTime   = val[26] * 60 + val[27];
+    self.midWalkTime    = val[28] * 60 + val[29];
+    self.fastWalkTime   = val[30] * 60 + val[31];
+    self.slowRunTime    = val[32] * 60 + val[33];
+    self.midRunTime     = val[34] * 60 + val[35];
+    self.fastRunTime    = val[36] * 60 + val[37];
     [BLTManager sharedInstance].elecQuantity = val[38];
     
     // 第三个包
     self.stepSize     = (val[40] << 8)  | (val[41]) / 100;
     self.weight       = ((val[42] << 8) + (val[43])) / 100;
     self.targetStep   = (val[44] << 16) | (val[45] << 8) | (val[46]);
-    self.targetSleep  = (val[47] << 8)  | (val[48]);
+    self.targetSleep  = val[47] * 60 + val[48];
     self.totalBytes   = (val[49] << 8)  | (val[50]);
-    NSLog(@"totalBytes..%ld", (long)self.totalBytes);
 }
 
 - (void)showMessage
@@ -144,7 +148,6 @@
 
     PedometerModel *totalModel = [PedometerHelper getModelFromDBWithDate:tmpDate];
     
-    totalModel.userName = [UserInfoHelp sharedInstance].userModel.userName;
     totalModel.dateString = dateString;
     
     if (!tmpDate || [tmpDate timeIntervalSince1970] < 0
@@ -250,11 +253,6 @@
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
-    [totalModel setTargetDataForModel];
-    
-    // 从用户模型获取目标
-    [totalModel addTargetForModelFromUserInfo];
-
     // 将数据保存到周－月表
     [totalModel savePedometerModelToWeekModelAndMonthModel];
     // 将压缩的数据进行每5分钟的详细的转化.
@@ -290,6 +288,12 @@
     else
     {
         [totalModel saveToDB];
+    }
+    
+    // 如果有数据就保存到record
+    if (totalModel.totalSteps > 0)
+    {
+        [StepDataRecord addDateToStepDataRecord:totalModel.dateString];
     }
     
     if (endBlock)
@@ -362,15 +366,17 @@
         if (state == 4)
         {
             _sleepTodayStartTime = i;
+            break;
         }
     }
     
-    for (int i = 287; i >= 144; i--)
+    for (int i = 287; i >= 143; i--)
     {
         NSInteger state = [_detailSleeps[i] integerValue];
         if (state != 4)
         {
             _sleepTodayEndTime = i;
+            break;
         }
     }
 }
@@ -433,7 +439,6 @@
         NSInteger total = [self getDataWithIndex:i withType:SportsModelSleep];
         [detailSleeps addObject:@(total)];
     }
-    
     
     // 昨天半天的加上今天半天的.
     NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -580,13 +585,6 @@
             }
         }
          */
-
-// 设置当前模型的各种目标.
-- (void)setTargetDataForModel
-{
-    self.targetCalories = [self stepsConvertCalories:self.targetStep withWeight:self.weight withModel:YES];
-    self.targetDistance = [self StepsConvertDistance:self.targetStep withPace:self.stepSize];
-}
 
 // 从用户信息为模型添加各种目标.
 - (void)addTargetForModelFromUserInfo

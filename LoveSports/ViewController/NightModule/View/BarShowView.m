@@ -94,18 +94,18 @@
 
 - (void)updateContentForView:(NSArray *)array withStart:(NSInteger)start withEnd:(NSInteger)end
 {
-    NSString *startString = [NSString stringWithFormat:@"%02ld:%02ld", 12 + (start) * 5 / 60, (start) * 5 % 60];
-    if (start == 144)
+    NSString *startString = [NSString stringWithFormat:@"%02d:%02d", 12 + (start + 1) * 5 / 60, (start + 1) * 5 % 60];
+    if (start == 143)
     {
         startString = @"00:00";
     }
-    NSString *endString = [NSString stringWithFormat:@"%02ld:%02ld", (end) * 5 / 60 - 12, (end) * 5 % 60];
+    NSString *endString = [NSString stringWithFormat:@"%02d:%02d", (end + 1) * 5 / 60 - 12, (end + 1) * 5 % 60];
     _startLabel.text = startString;
     _endLabel.text = endString;
-
+    
     if (array.count >= end)
     {
-        _barView.array = array; //[array subarrayWithRange:NSMakeRange(start, end - start)];
+        _barView.array = [array subarrayWithRange:NSMakeRange(start, end - start)];
     }
     else
     {

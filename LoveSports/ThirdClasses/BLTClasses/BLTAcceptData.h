@@ -78,6 +78,9 @@ typedef void(^BLTAcceptDataUpdateValue)(id object, BLTAcceptDataType type);
 
 @property (nonatomic, strong) NSMutableData *realTimeData;
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+@property (nonatomic, assign) NSInteger dataLength;
+
 AS_SINGLETON(BLTAcceptData)
 
 /**

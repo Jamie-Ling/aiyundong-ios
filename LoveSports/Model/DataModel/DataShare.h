@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StepDataRecord.h"
 
 #define DS_HeadImage @"headImage.jpg"
 
@@ -18,6 +19,8 @@
 @property (nonatomic, assign) BOOL isIp5;
 @property (nonatomic, assign) BOOL isIp6;
 @property (nonatomic, assign) BOOL isIp6P;
+
+@property (nonatomic, strong) StepDataRecord *stepRecord;
 
 AS_SINGLETON(DataShare)
 

@@ -118,7 +118,7 @@
             if (_showType == FSLineChartShowNoType)
             {
             }
-            else if (_showType == FSLineChartShowDateType)
+            else if (_showType < 4)
             {
                 NSDate *date = [NSDate dateWithString:text];
                 if (date.weekday == 1 || date.weekday == 7)
@@ -130,7 +130,7 @@
                     label.textColor = [UIColor greenColor];
                 }
             }
-            else if (_showType == FSLineChartShowWeekType)
+            else if (_showType < 7)
             {
                 NSDate *date = [NSDate date];
                 NSArray *array = [text componentsSeparatedByString:@"/"];
@@ -141,7 +141,7 @@
                     label.textColor = [UIColor greenColor];
                 }
             }
-            else if (_showType == FSLineChartShowMonthType)
+            else if (_showType < 10)
             {
                 NSDate *date = [NSDate date];
                 NSArray *array = [text componentsSeparatedByString:@"/"];
@@ -393,7 +393,46 @@
             _max = [number floatValue];
     }
     
-    _levelNumber = (NSInteger)_max / 10;
+    if (_showType == FSLineChartShowNoType)
+    {
+        _levelNumber = _max / 10;
+    }
+    else if (_showType == FSLineChartShowDateStepsType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetSteps / 10;
+    }
+    else if (_showType == FSLineChartShowDateCaloriesType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetCalories / 10;
+    }
+    else if (_showType == FSLineChartShowDateDistanceType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetDistance / 10;
+    }
+    else if (_showType == FSLineChartShowWeekStepsType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetSteps * 7 / 10;
+    }
+    else if (_showType == FSLineChartShowWeekCaloriesType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetCalories * 7 / 10;
+    }
+    else if (_showType == FSLineChartShowWeekDistanceType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetDistance * 7 / 10;
+    }
+    else if (_showType == FSLineChartShowMonthStepsType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetSteps * 30 / 10;
+    }
+    else if (_showType == FSLineChartShowMonthCaloriesType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetCalories * 30 / 10;
+    }
+    else if (_showType == FSLineChartShowMonthDistanceType)
+    {
+        _levelNumber = [UserInfoHelp sharedInstance].userModel.targetDistance * 30 / 10;
+    }
     
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];

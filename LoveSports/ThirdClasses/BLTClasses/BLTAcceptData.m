@@ -333,7 +333,8 @@ DEF_SINGLETON(BLTAcceptData)
                 if (val[3] == 01)
                 {
                     _type = BLTAcceptDataTypeOldRequestDataLength;
-                    object = @(val[4] | val[5] << 8);
+                    _dataLength = val[4] | val[5] << 8;
+                    object = @(_dataLength);
                     
                     NSLog(@"length...%d..%d..%@", val[4], val[5], object);
                 }
@@ -407,6 +408,29 @@ DEF_SINGLETON(BLTAcceptData)
     [BLTSimpleSend sharedInstance].waitTime = 0;
 
     [_syncData appendData:data];
+    [self showProgress];
+}
+
+- (void)showProgress
+{
+    if (![BLTManager sharedInstance].model.isNewDevice)
+    {
+        if (_dataLength == 0)
+        {
+            return;
+        }
+        
+        CGFloat progress = (_syncData.length - _syncData.length / 20) * 1.0 / _dataLength;
+        
+        if (progress > 1.000)
+        {
+            progress = 1.0;
+        }
+        
+        NSString *title = [NSString stringWithFormat:@"目前同步进度: %.0f%%", progress * 100];
+        
+        SHOWMBProgressHUDIndeterminate(title, nil, NO);
+    }
 }
 
 - (void)saveSyncDataToModel

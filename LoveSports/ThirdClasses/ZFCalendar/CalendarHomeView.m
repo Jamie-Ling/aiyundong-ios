@@ -56,6 +56,17 @@ DEF_SINGLETON(CalendarHomeView)
     [super.collectionView scrollToItemAtIndexPath:indexPath1
                                  atScrollPosition:UICollectionViewScrollPositionBottom
                                          animated:NO];
+    
+    CGFloat offetY = super.collectionView.contentOffset.y;
+    NSDate *date = [NSDate date];
+    if (date.day > 15)
+    {
+        [super.collectionView setContentOffset:CGPointMake(0, offetY)];
+    }
+    else
+    {
+        [super.collectionView setContentOffset:CGPointMake(0, offetY - self.halfHeight)];
+    }
 }
 
 #pragma mark - 逻辑代码初始化

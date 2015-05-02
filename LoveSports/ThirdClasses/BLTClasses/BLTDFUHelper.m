@@ -36,6 +36,13 @@ DEF_SINGLETON(BLTDFUHelper)
             updateBlock();
         }
     }
+    else
+    {
+        if (_endBlock)
+        {
+            _endBlock(NO);
+        }
+    }
 }
 
 - (void)setControlPointChar:(CBCharacteristic *)controlPointChar
@@ -244,6 +251,9 @@ DEF_SINGLETON(BLTDFUHelper)
     [self didWriteDataPacket];
     
     NSLog(@"Sent %d bytes, total %ld.", currentDataSent, (long)_firmDataSend);
+    
+    NSString *title = [NSString stringWithFormat:@"固件升级进度: %.0f%%", _firmDataSend * 1.0 / _firmData.length * 100];
+    SHOWMBProgressHUDIndeterminate(title, nil, NO);
 }
 
 - (void)didWriteDataPacket

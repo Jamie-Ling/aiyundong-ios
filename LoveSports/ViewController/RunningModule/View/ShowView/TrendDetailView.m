@@ -70,7 +70,7 @@
     // Generating some dummy data
     
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(self.width * 0.05, 0, self.width * 0.9, self.height)];
-    _lineChart.showType = FSLineChartShowDateType;
+    _lineChart.showType = FSLineChartShowDateStepsType;
     _lineChart.verticalGridStep = 6;
     _lineChart.horizontalGridStep = (int)[DataShare sharedInstance].showCount; // 151,187,205,0.2
     _lineChart.color = [UIColor colorWithRed:151.0f/255.0f green:187.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
@@ -150,23 +150,21 @@
 {
     //_showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
     _showType = type;
-    
+    _lineChart.showType = _showType + 1;
+
     NSInteger currentYear = LS_Baseyear;
     if (type < 3)
     {
-        _lineChart.showType = FSLineChartShowDateType;
         [self refreshTrendChartViewWithDayDate:_dayDate];
         currentYear = _dayDate.year;
     }
     else if (type < 6)
     {
-        _lineChart.showType = FSLineChartShowWeekType;
         [self refreshTrendChartViewWithWeekDate:_weekDate];
         currentYear = _weekDate.year;
     }
     else
     {
-        _lineChart.showType = FSLineChartShowMonthType;
         [self refreshTrendChartViewWithMonthIndex:_monthIndex];
         currentYear = [YearModel getYearWithMonthIndex:_monthIndex];
     }

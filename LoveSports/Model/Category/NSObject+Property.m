@@ -82,14 +82,14 @@
     }
     else
     {
-        return Calories * 100 / (0.0315 * weight - 0.45) + 0.5;
+        return Calories * 100 / (0.0315 * weight - 0.45);
     }
 }
 
 - (CGFloat)StepsConvertDistance:(NSInteger)steps
                        withPace:(NSInteger)pace
 {
-    return steps * pace / 1000.0;
+    return steps * (pace * 1.0 / 100);
 }
 
 - (NSInteger)distanceConvertSteps:(CGFloat)distance

@@ -225,14 +225,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return 288;
+    return LS_PieChartCount;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= 288 * (_percent * 0.01))
+        if (index <= LS_PieChartCount * (_percent * 0.01))
         {
             return UIColorRGB(82, 182, 21);
         }
@@ -252,7 +252,6 @@
     return 100 / 10;
 }
 
-
 // 下面为内容更新的各种方法.
 - (void)updateContentForBarShowViewWithDate:(NSDate *)date
 {
@@ -266,10 +265,12 @@
     DEF_WEAKSELF_(NightDetailView);
     [_chartView updateContentForViewWithModel:model withState:PieChartViewShowSleep withReloadBlock:^(CGFloat percent) {
         weakSelf.totalPercent = percent;
+        [weakSelf updatePercentForLabels];
     }];
     
     [_sleepView updateContentForLabelsWithPercent:self.totalPercent withTime:model.totalSleepTime];
-    
+    [_showView updateContentForView:model.detailSleeps withStart:model.sleepTodayStartTime withEnd:model.sleepTodayEndTime];
+
     /*
      NSMutableArray *array = [[NSMutableArray alloc] init];
      if (model.detailSleeps && model.detailSleeps.count > 0)
@@ -295,8 +296,11 @@
      }
      }
      */
-    
-    [_showView updateContentForView:model.detailSleeps withStart:model.sleepTodayStartTime withEnd:model.sleepTodayEndTime];
+}
+
+- (void)updatePercentForLabels
+{
+    [_sleepView updateContentForLabelsWithPercent:self.totalPercent withTime:_model.totalSleepTime];
 }
 
 - (void)updateContentForLabel:(PedometerModel *)model
