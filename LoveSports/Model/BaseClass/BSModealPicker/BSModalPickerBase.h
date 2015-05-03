@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeekView.h"
+#import "AlarmRepeatView.h"
 
 typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
@@ -25,11 +26,14 @@ typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
 @property (nonatomic, strong) UIView *picker;
 
+@property (nonatomic, assign) BOOL isNewDevice;
+
 /* Determines whether to display the opaque backdrop view.  By default, this is YES. */
 @property (nonatomic) BOOL presentBackdropView;
 
 @property (nonatomic, strong) NSArray *_dayArray;
 @property (nonatomic, strong) WeekView *_weekView;
+@property (nonatomic, strong) AlarmRepeatView *repeatView;
 
 
 - (void)presentWithWeekDayInView:(UIView *)view  withUpdatWeedArray: (NSArray *) weedDayArray withBlock:(BSModalPickerViewCallback)callback;

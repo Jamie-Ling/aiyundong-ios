@@ -292,7 +292,6 @@
                             
                             weakSelf.userInfo.targetSteps = targetSums;
                             
-                           // [_userInfo updateToDB];
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 [NSObject showMessageOnMain:object];
                             }];
@@ -360,15 +359,12 @@
                             [nowSelectedString integerValue] :
                             vBackToCM([nowSelectedString floatValue]);
                             
-                            //[BLTModel updateToDB];
-                            /*
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 if ([object boolValue])
                                 {
                                     SHOWMBProgressHUD(@"修改成功.", nil, nil, NO, 2.0);
                                 }
                             }];
-                             */
                             
                             [weakSelf.listTableView reloadData];
                         }

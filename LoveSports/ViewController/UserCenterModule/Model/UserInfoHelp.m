@@ -92,7 +92,7 @@ DEF_SINGLETON(UserInfoHelp)
         return;
     }
     
-    NSDate *birthDay = [NSDate stringToDate:_userModel.birthDay];
+    NSDate *birthDay = [NSDate dateWithString:_userModel.birthDay];
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
         [BLTSendData sendUserInformationBodyDataWithBirthDay:birthDay

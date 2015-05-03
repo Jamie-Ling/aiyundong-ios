@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *wareUUID;
 
 @property (nonatomic, assign) BOOL isOpen;
+@property (nonatomic, assign) BOOL isRepeat;
 @property (nonatomic, strong) NSString *alarmTime;
 @property (nonatomic, strong) NSArray *weekArray;
 

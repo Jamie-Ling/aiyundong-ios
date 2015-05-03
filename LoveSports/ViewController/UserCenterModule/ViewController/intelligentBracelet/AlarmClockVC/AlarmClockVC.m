@@ -61,8 +61,6 @@
     {
         [model convertToBLTNeed];
     }
-    
-    NSLog(@"._alarmArray.%@", _alarmArray);
 
     [[UserInfoHelp sharedInstance] sendSetAlarmClock:^(id object) {
         if ([object boolValue])
@@ -106,7 +104,12 @@
 #pragma mark --- UITableView ---
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _alarmArray.count;
+    if ([UserInfoHelp sharedInstance].braceModel.isNewDevice)
+    {
+        return _alarmArray.count;
+    }
+    
+    return _alarmArray.count - 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -122,6 +125,7 @@
     if (!cell)
     {
         cell = [[AlarmClockCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellString];
+        cell.frame = CGRectMake(0, 0, tableView.width, 0);
     }
     
     AlarmClockModel *model = _alarmArray[indexPath.row];
@@ -149,6 +153,7 @@
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
     datePicker.showTodayButton = NO;
     datePicker.mode = UIDatePickerModeTime;
+    datePicker.isNewDevice = [UserInfoHelp sharedInstance].braceModel.isNewDevice;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:model.weekArray
                                withBlock:^(BOOL madeChoice) {
@@ -164,10 +169,12 @@
                                        NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
                                        model.weekArray = datePicker._dayArray;
                                        model.alarmTime = choiceString;
+                                       model.isRepeat = datePicker.repeatView.repeat.on;
 
                                        [weakSelf.tableView reloadData];
                                    }
                                }];
+    datePicker.repeatView.repeat.on = model.isRepeat;
 }
 
 - (void)didReceiveMemoryWarning

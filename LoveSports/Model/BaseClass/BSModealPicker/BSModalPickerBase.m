@@ -41,7 +41,7 @@
         CGRect pickerFrame = CGRectMake(0,
                                         BSMODALPICKER_TOOLBAR_HEIGHT,
                                         self.bounds.size.width,
-                                        BSMODALPICKER_PANEL_HEIGHT - BSMODALPICKER_TOOLBAR_HEIGHT);
+                                        BSMODALPICKER_PANEL_HEIGHT - BSMODALPICKER_TOOLBAR_HEIGHT * 2.0);
 
         _picker = [self pickerWithFrame:pickerFrame];
         _picker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
@@ -140,15 +140,17 @@
     [self.panel addSubview:self.toolbar];
     
     
-    [self.picker setCenterY:self.picker.centerY - kNavigationBarHeight];
+    [self.picker setCenterY:self.picker.centerY - kNavigationBarHeight * 1.5];
     [self.toolbar setCenterY:self.toolbar.centerY - kNavigationBarHeight];
     
     [self.panel setHeight:self.panel.height + kNavigationBarHeight];
     [self.panel setCenterY:self.panel.centerY - kNavigationBarHeight];
     
-    
     DEF_WEAKSELF_(BSModalPickerBase);
-    _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.width * 0, self.panel.height  - kNavigationBarHeight, self.panel.width * 1.0, kNavigationBarHeight)
+    _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.width * 0,
+                                                           self.panel.height  - kNavigationBarHeight * 2.0,
+                                                           self.panel.width * 1.0,
+                                                           kNavigationBarHeight)
                                   withWeekBlock:^(WeekView *weekView) {
         weakSelf._dayArray = weekView.selArray;
     }];
@@ -156,6 +158,10 @@
     [self.panel addSubview:_weekView];
     _dayArray = weedDayArray;
     [_weekView updateSelButtonForWeekView:weedDayArray];
+    
+    _repeatView = [[AlarmRepeatView alloc] initWithFrame:CGRectMake(0, self.panel.height  - kNavigationBarHeight, self.panel.width, kNavigationBarHeight)];
+    [self.panel addSubview:_repeatView];
+    _repeatView.hidden = _isNewDevice;
     
     [self addSubview:self.panel];
     [view addSubview:self];
