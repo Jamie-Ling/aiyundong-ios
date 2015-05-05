@@ -134,11 +134,12 @@
 
 - (void)loadLabel
 {
-    _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 20)];
+    _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 40)];
     
     _label.backgroundColor = [UIColor clearColor];
-    _label.text = @"没有发现绑定的设备.";
+    _label.text = @"没有发现绑定的设备\n可以下拉进行刷新";
     _label.textColor = [UIColor blackColor];
+    _label.numberOfLines = 2;
     [self addSubview:_label];
     _label.hidden = YES;
     _label.center = CGPointMake(self.width / 2, self.height / 2);

@@ -89,11 +89,6 @@ DEF_SINGLETON(BLTSendData)
         (UInt8)target, (UInt8)(step * 100 >> 8) ,(UInt8)step * 100,
         time/60, time%60};
     [self sendDataToWare:&val withLength:17 withUpdate:block];
-    NSLog(@"用户信息");
-    for (int i = 0; i < 17; i++)
-    {
-        NSLog(@"..%d..%d", val[i], step);
-    }
 }
 
 + (void)sendCheckDateOfHardwareDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
@@ -216,7 +211,7 @@ DEF_SINGLETON(BLTSendData)
                 break;
             }
             
-            val[3] = val[3] | (model.isOpen << openIndex);
+            val[4] = val[4] | (model.isOpen << openIndex);
             openIndex++;
             
             val[count] = model.hour;
@@ -235,7 +230,14 @@ DEF_SINGLETON(BLTSendData)
         }
     }
     
+    /*
+    for (int i = 0; i < 20; i++)
+    {
+        NSLog(@"%d..%x", i, val[i]);
+    }
+    
     NSLog(@"设置结束.");
+     */
     
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }

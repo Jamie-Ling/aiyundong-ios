@@ -78,44 +78,44 @@
 {
     if (index == 0)
     {
-        return UIColorHEXA(0x61bf1a, 0.5);
+        return UIColorHEXA(0x61bf1a, 0.9);
     }
     else if (index == 1)
     {
-        return UIColorHEXA(0x61bf1a, 0.6);
+        return UIColorHEXA(0x61bf1a, 0.7);
     }
     else if (index == 2)
     {
-        return UIColorHEXA(0x61bf1a, 0.8);
+        return UIColorHEXA(0x61bf1a, 0.5);
     }
     else if (index == 3 || index == 4)
     {
-        return UIColorHEXA(0x61bf1a, 0.2);
+        return UIColorHEXA(0x61bf1a, 0.3);
     }
     
-    return UIColorHEXA(0x61bf1a, 0.2);
+    return UIColorHEXA(0x61bf1a, 0.3);
 }
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index
 {
     if (index == 0)
     {
-        return 1.0;
+        return 0.3;
     }
     else if (index == 1)
     {
-        return 0.8;
+        return 0.5;
     }
     else if (index == 2)
     {
-        return 0.5;
+        return 0.8;
     }
     else if (index == 3 || index == 4)
     {
-        return 0.3;
+        return 1.0;
     }
     
-    return 0.3;
+    return 1.0;
 }
 
 @end

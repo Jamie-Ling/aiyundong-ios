@@ -2767,8 +2767,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2788,7 +2788,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0f5f1407-5594-4fa3-a6d9-b2c028959a50";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2811,8 +2811,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2825,7 +2825,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0f5f1407-5594-4fa3-a6d9-b2c028959a50";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2837,8 +2837,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2849,7 +2849,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0f5f1407-5594-4fa3-a6d9-b2c028959a50";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2859,8 +2859,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhang kang (5BUM3NVR3U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhang kang (5BUM3NVR3U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Wah Press Pte Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tien Wah Press Pte Limited";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LoveSports/PrefixHeader.pch;
 				INFOPLIST_FILE = LoveSports/Info.plist;
@@ -2871,7 +2871,7 @@
 					"$(PROJECT_DIR)/ThirdClasses/ZipArchiveB",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0f5f1407-5594-4fa3-a6d9-b2c028959a50";
+				PROVISIONING_PROFILE = "95201cd2-856d-45a4-a2b3-cf865e5169fa";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

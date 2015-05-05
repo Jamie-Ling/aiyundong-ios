@@ -109,7 +109,7 @@ DEF_SINGLETON(PedometerHelper)
     {
         [array replaceObjectAtIndex:k withObject:@(arc4random() % 20 % 4)];
     }
-     */
+    */
     
     model.detailSleeps = [NSArray arrayWithArray:array];
     model.nextDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];

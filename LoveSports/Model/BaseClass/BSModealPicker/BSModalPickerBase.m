@@ -161,7 +161,6 @@
     
     _repeatView = [[AlarmRepeatView alloc] initWithFrame:CGRectMake(0, self.panel.height  - kNavigationBarHeight, self.panel.width, kNavigationBarHeight)];
     [self.panel addSubview:_repeatView];
-    _repeatView.hidden = _isNewDevice;
     
     [self addSubview:self.panel];
     [view addSubview:self];

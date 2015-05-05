@@ -85,6 +85,10 @@
     [BLTManager sharedInstance].elecQuantityBlock = ^{
         [weakSelf updateElecQuantity];
     };
+    
+    [BLTManager sharedInstance].disConnectBlock = ^ {
+        [weakSelf updateElecQuantity];
+    };
 }
 
 // 更新电量
@@ -110,9 +114,11 @@
     [super viewWillDisappear:animated];
     
     [BLTManager sharedInstance].elecQuantityBlock = nil;
+    [BLTManager sharedInstance].disConnectBlock = nil;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

@@ -50,7 +50,6 @@
     {
         self.backgroundColor = UIColorRGB(247, 247, 247);
         // self.layer.contents = (id)[UIImage imageNamed:@"background@2x.jpg"].CGImage;
-        NSLog(@".height..%f", self.height);
         _offsetY = (self.height < 485) ? 20.0 : 0.0;
         _percent = 25;
         _chartData = [[NSMutableArray alloc] initWithCapacity:0];
@@ -287,8 +286,6 @@
         NSString *string = [NSString stringWithFormat:@"%d", i / 2];
         [bottomTitles addObject:string];
     }
-    
-    NSLog(@".bottomTitles.count. = %d",  bottomTitles.count);
     
     _lineChart = [[FSLineChart alloc] initWithFrame:CGRectMake(10.0, 20, _fsLineView.width - 20, _fsLineView.height)];
     _lineChart.increase = 6;

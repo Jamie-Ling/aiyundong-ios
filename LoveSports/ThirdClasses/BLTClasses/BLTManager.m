@@ -145,14 +145,20 @@ DEF_SINGLETON(BLTManager)
                   RSSI:(NSNumber *)RSSI
 {
     NSString *name = peripheral.name;
-    NSString *idString = [peripheral.identifier UUIDString];
-
-    if (!name || !idString || ![_containNames containsObject:name])
+    if (!name)
+    {
+        name = [advertisementData objectForKey:@"kCBAdvDataLocalName"];
+    }
+    if (!name || ![_containNames containsObject:name])
     {
         return;
     }
-    
-    NSLog(@"advertisementData. ＝ ...%@..idString = %@", name, idString);
+
+    NSString *idString = [peripheral.identifier UUIDString];
+    if (!idString)
+    {
+        return;
+    }
 
     if (!_isUpdateing)
     {
@@ -162,6 +168,7 @@ DEF_SINGLETON(BLTManager)
         if (model)
         {
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+            model.peripheral = peripheral;
         }
         else
         {
@@ -232,7 +239,6 @@ DEF_SINGLETON(BLTManager)
 
 - (void)repareConnectedDevice:(BLTModel *)model
 {
-    NSLog(@"..%@..%d..%@..", model.peripheral.RSSI, model.peripheral.state, model.peripheral.services);
     // 扫描时自动连接或者是切换设备.
     if (model.peripheral.state != CBPeripheralStateConnected)
     {

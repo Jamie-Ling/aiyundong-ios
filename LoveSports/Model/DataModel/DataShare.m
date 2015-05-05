@@ -23,6 +23,8 @@ DEF_SINGLETON(DataShare)
         _isIp5 = NO;
         _isIp6 = NO;
         _isIp6P = NO;
+        
+        _currentDate = [NSDate date];
     }
     
     return self;
