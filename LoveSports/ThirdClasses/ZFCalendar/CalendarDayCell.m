@@ -138,6 +138,11 @@
             day_lab.textColor = [UIColor whiteColor];
         }
     }
+    
+    if ([LS_Text(@"English") isEqualToString:@"YES"])
+    {
+        day_title.hidden = YES;
+    }
 }
 
 - (void)hidden_YES

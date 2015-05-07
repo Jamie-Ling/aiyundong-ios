@@ -110,23 +110,33 @@
     //    self.title = _thisBraceletInfoModel._name;
     
     //名字写死
-    self.title = @"爱运动手环";
+    self.title = LS_Text(@"Isport bracelet");
     
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     _userInfo = [UserInfoHelp sharedInstance].userModel;
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
 
-    _cellTitleArrayFor240 = [NSArray arrayWithObjects:@"每日目标", @"步距", @"佩戴方式", @"久座提醒", @"振动闹钟", @"", @"恢复到默认设置", @"解除绑定", nil];
+    _cellTitleArrayFor240 = [NSArray arrayWithObjects:LS_Text(@"Daily Goals"), LS_Text(@"Stride Length"),
+                             LS_Text(@"Wearing info"), LS_Text(@"Sedentary remind"),
+                             LS_Text(@"Vibration Alarm"), @"",
+                             LS_Text(@"Reset All Settings"), LS_Text(@"Unpair"), nil];
     
-    _cellTitleArrayFor240N = [NSArray arrayWithObjects:@"每日目标", @"步距", @"佩戴方式", @"久座提醒", @"振动闹钟", @"实时同步", @"固件升级", @"", @"恢复到默认设置", @"解除绑定", nil];
+    _cellTitleArrayFor240N = [NSArray arrayWithObjects:LS_Text(@"Daily Goals"), LS_Text(@"Stride Length"),
+                              LS_Text(@"Wearing info"), LS_Text(@"Sedentary remind"),
+                              LS_Text(@"Vibration Alarm"), LS_Text(@"Real-time synchronization"),
+                              LS_Text(@"Firmware update"), @"",
+                              LS_Text(@"Reset All Settings"), LS_Text(@"Unpair"), nil];
     
     _stepNumbersArray = [[NSMutableArray alloc] initWithCapacity:32];
     _stepLongMustableArray = [[NSMutableArray alloc] initWithCapacity:32];
     
     //初始化为240N
-    _is240N = _braceModel.isNewDevice;
+    _is240N =  _braceModel.isNewDevice;
     _cellTitleArray = _is240N ? _cellTitleArrayFor240N : _cellTitleArrayFor240;
     
     [self addTableView];
@@ -175,7 +185,7 @@
 - (void) reloadMainPage
 {
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
-    _is240N = _braceModel.isNewDevice;
+    _is240N =  _braceModel.isNewDevice;
     _cellTitleArray = _is240N ? _cellTitleArrayFor240N : _cellTitleArrayFor240;
 
     if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
@@ -265,7 +275,7 @@
     [_stepNumbersArray removeAllObjects];
     for (int i = 5; i <= 30; i++)
     {
-        NSString *stepLongString = [NSString stringWithFormat:@"%d 步", i * 1000];
+        NSString *stepLongString = [NSString stringWithFormat:@"%d %@", i * 1000, LS_Text(@"steps")];
         [_stepNumbersArray addObject:stepLongString];
     }
     
@@ -306,9 +316,9 @@
     NSLog(@"设置带左手还是右手");
     UIActionSheet * aciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                               delegate:self
-                                                     cancelButtonTitle:@"取消"
-                                                destructiveButtonTitle:@"左手"
-                                                     otherButtonTitles:@"右手", nil];
+                                                     cancelButtonTitle:LS_Text(@"Cancel")
+                                                destructiveButtonTitle:LS_Text(@"Right hand")
+                                                     otherButtonTitles:LS_Text(@"Left hand"), nil];
     aciotnSheet.tag = vHandTag;
     [aciotnSheet showInView:self.view];
 }
@@ -362,7 +372,7 @@
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 if ([object boolValue])
                                 {
-                                    SHOWMBProgressHUD(@"修改成功.", nil, nil, NO, 2.0);
+                                    SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
                                 }
                             }];
                             
@@ -412,7 +422,11 @@
 {
     NSLog(@"恢复默认设置");
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"恢复到默认设置?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:[NSString stringWithFormat:@"%@?", LS_Text(@"Reset All Settings")]
+                                                  delegate:self
+                                         cancelButtonTitle:LS_Text(@"Cancel")
+                                         otherButtonTitles:LS_Text(@"Confirm") ,nil];
     [alert setTag:100861];
     [alert show];
 }
@@ -459,11 +473,11 @@
             [[BLTRealTime sharedInstance] startRealTimeTransWithBackBlock:^(BOOL success) {
                 if (success)
                 {
-                    SHOWMBProgressHUD(@"实时传输开启成功.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
                 }
                 else
                 {
-                    SHOWMBProgressHUD(@"实时传输开启失败.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(LS_Text(@"Setting fail"), nil, nil, NO, 2.0);
                     weakSelf.realTimeSwitch.on = NO;
                 }
             }];
@@ -473,11 +487,11 @@
             [[BLTRealTime sharedInstance] closeRealTimeTransWithBackBlock:^(BOOL success) {
                 if (success)
                 {
-                    SHOWMBProgressHUD(@"实时传输关闭成功.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
                 }
                 else
                 {
-                    SHOWMBProgressHUD(@"实时传输关闭失败.", nil, nil, NO, 2.0);
+                    SHOWMBProgressHUD(LS_Text(@"Setting fail"), nil, nil, NO, 2.0);
                     weakSelf.realTimeSwitch.on = YES;
                 }
             }];
@@ -498,7 +512,11 @@
 {
     NSLog(@"解除绑定");
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"确定解除绑定?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:[NSString stringWithFormat:@"%@?", LS_Text(@"Unpair")]
+                                                  delegate:self
+                                         cancelButtonTitle:LS_Text(@"Cancel")
+                                         otherButtonTitles:LS_Text(@"Confirm") ,nil];
     [alert setTag:100962];
     [alert show];
     
@@ -660,12 +678,12 @@
         {
             //目标
             
-            NSString *stepLongString = [NSString stringWithFormat:@"%ld 步/天", (long)_userInfo.targetSteps];
+            NSString *stepLongString = [NSString stringWithFormat:@"%ld %@", (long)_userInfo.targetSteps, LS_Text(@"steps per day")];
             [rightTitle setText:stepLongString];
             
             [rightTitle sizeToFit];
             [rightTitle setCenterY:vOneCellHeight / 2.0];
-            [rightTitle setX: vOneCellWidth / 2.0 + 50];
+            [rightTitle setX: vOneCellWidth / 2.0 + 40];
             [oneCell.contentView addSubview:rightTitle];
             
             break;
@@ -678,7 +696,7 @@
             
             [rightTitle sizeToFit];
             [rightTitle setCenterY:vOneCellHeight / 2.0];
-            [rightTitle setX: vOneCellWidth / 2.0 + 50];
+            [rightTitle setX: vOneCellWidth / 2.0 + 40];
             [oneCell.contentView addSubview:rightTitle];
             
             break;
@@ -687,13 +705,13 @@
         case 2:
         {
             //左右手
-            NSString *show =  _braceModel.isLeftHand ? @"左手" : @"右手";
+            NSString *show =  _braceModel.isLeftHand ? LS_Text(@"Left hand") : LS_Text(@"Right hand");
     
             [rightTitle setText:show];
             
             [rightTitle sizeToFit];
             [rightTitle setCenterY:vOneCellHeight / 2.0];
-            [rightTitle setX: vOneCellWidth / 2.0 + 50];
+            [rightTitle setX: vOneCellWidth / 2.0 + 40];
             [oneCell.contentView addSubview:rightTitle];
             
             break;
@@ -727,7 +745,7 @@
                 
                 [rightTitle sizeToFit];
                 [rightTitle setCenterY:vOneCellHeight / 2.0];
-                [rightTitle setX: vOneCellWidth / 2.0 + 50];
+                [rightTitle setX: vOneCellWidth / 2.0 + 40];
                 [oneCell.contentView addSubview:rightTitle];
                 
                 //添加未读标记
@@ -926,7 +944,7 @@
     CGRect titleFrame = CGRectMake(0, 0, kButtonDefaultWidth, 35);
     _notConectLabel = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                   backgroundColor:[UIColor blackColor]
-                                                             text:@"没有连接设备，无法进行相关设置"
+                                                             text:LS_Text(@"No connection, can't be set")
                                                         textColor:[UIColor whiteColor]
                                                              font:[UIFont boldSystemFontOfSize:15]
                                                     textAlignment:NSTextAlignmentCenter

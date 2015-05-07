@@ -182,19 +182,19 @@
         && comps_today.month == comps_other.month
         && comps_today.day == comps_other.day)
     {
-        return @"今天";
+        return LS_Text(@"Today");
     }
     else if (comps_today.year == comps_other.year
               && comps_today.month == comps_other.month
               && (comps_today.day - comps_other.day) == -1)
     {
-        return @"明天";
+        return LS_Text(@"Tomorrow");
     }
     else if (comps_today.year == comps_other.year
              && comps_today.month == comps_other.month
              && (comps_today.day - comps_other.day) == -2)
     {
-        return @"后天";
+        return LS_Text(@"The Day After Tomorrow");
     }
     else
     {

@@ -21,11 +21,8 @@
    {
       //initialization
       self.backgroundColor = [UIColor clearColor];
-      //    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-      //    self.layer.shadowOffset = CGSizeMake(0.0f, 2.5f);
-      //    self.layer.shadowRadius = 1.9f;
-      //    self.layer.shadowOpacity = 0.9f;
-       
+
+       _lineWidth = FitScreenNumber(13, 14, 15, 16, 16);
        [self loadLabels];
    }
     
@@ -99,7 +96,7 @@
       UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
    
       CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
-      CGContextSetLineWidth(context, 16);
+      CGContextSetLineWidth(context, _lineWidth);
       CGContextStrokePath(context);
       startAngle += M_PI*2*value/sum;
    }
@@ -112,6 +109,8 @@
     _timeLabel.text = @"07:00";
     _targetLabel.text = @"目标";
     _durationLabel.text = @"8小时";
+    _targetLabel.hidden = YES;
+    _durationLabel.hidden = YES;
 }
 
 - (void)daySetting

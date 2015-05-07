@@ -427,7 +427,7 @@ DEF_SINGLETON(BLTAcceptData)
             progress = 1.0;
         }
         
-        NSString *title = [NSString stringWithFormat:@"目前同步进度: %.0f%%", progress * 100];
+        NSString *title = [NSString stringWithFormat:@"%@: %.0f%%", LS_Text(@"Synchronous progress"), progress * 100];
         
         SHOWMBProgressHUDIndeterminate(title, nil, NO);
     }

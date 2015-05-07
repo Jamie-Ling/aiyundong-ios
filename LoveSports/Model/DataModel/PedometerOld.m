@@ -108,6 +108,7 @@ DEF_SINGLETON(PedometerOld)
                 sleepState = 3;
             }
             
+            currentModel.totalSleepTime += 5;
             [self updateDataForSleep:currentModel withNumber:sleepState withTimeIndex:timeIndex];
         }
         else

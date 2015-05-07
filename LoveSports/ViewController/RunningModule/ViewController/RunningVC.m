@@ -168,15 +168,15 @@
     _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
-                                 withFontSize:20
-                                     withText:@"星期一"
+                                 withFontSize:15
+                                     withText:LS_Text(@"Monday")
                                 withTextColor:[UIColor blackColor]];
     [_srcollView addSubview:_weekLabel];
     
-    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.width, 30)
+    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 20, self.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
-                                 withFontSize:20
+                                 withFontSize:15
                                      withText:@"2015/2/2"
                                 withTextColor:[UIColor blackColor]];
     [_srcollView addSubview:_dateLabel];
@@ -212,16 +212,16 @@
 
 - (void)setTitleForConnect
 {
-    [self.tableView.header setTitle:@"下拉进行刷新." forState:MJRefreshHeaderStateIdle];
-    [self.tableView.header setTitle:@"下拉进行刷新." forState:MJRefreshHeaderStatePulling];
-    [self.tableView.header setTitle:@"更新数据..." forState:MJRefreshHeaderStateRefreshing];
+    [self.tableView.header setTitle:LS_Text(@"Pull-down refresh") forState:MJRefreshHeaderStateIdle];
+    [self.tableView.header setTitle:LS_Text(@"Pull-down refresh") forState:MJRefreshHeaderStatePulling];
+    [self.tableView.header setTitle:LS_Text(@"Synchronizing") forState:MJRefreshHeaderStateRefreshing];
 }
 
 - (void)setTitleForNoConnect
 {
-    [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStateIdle];
-    [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStatePulling];
-    [self.tableView.header setTitle:@"请按下设备按键进行同步." forState:MJRefreshHeaderStateRefreshing];
+    [self.tableView.header setTitle:LS_Text(@"Please press device button to sync") forState:MJRefreshHeaderStateIdle];
+    [self.tableView.header setTitle:LS_Text(@"Please press device button to sync") forState:MJRefreshHeaderStatePulling];
+    [self.tableView.header setTitle:LS_Text(@"Please press device button to sync") forState:MJRefreshHeaderStateRefreshing];
 }
 
 - (void)headerRereshing
@@ -254,7 +254,7 @@
             }
             else
             {
-                SHOWMBProgressHUD(@"实时同步期间关闭下拉同步数据.", nil, nil, NO, 2.0);
+                SHOWMBProgressHUD(LS_Text(@"Real-time synchronization"), nil, nil, NO, 2.0);
                 [self endRefreshing];
             }
         }

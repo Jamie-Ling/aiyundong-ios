@@ -51,12 +51,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"个性签名";
+    self.title = LS_Text(@"Hobby");
     bIsThisView = NO;
     
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(cancel) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back") target:self selector:@selector(cancel) ImageName:@""];
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:@"保存" target:self selector:@selector(backtohome) ImageName:@""];
+    self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:LS_Text(@"Save") target:self selector:@selector(backtohome) ImageName:@""];
     
     isFirst = YES;
     scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-49)];
@@ -95,13 +95,13 @@
 {
     if ([txtView.text length] > vMaxLenth)
     {
-        SHOWMBProgressHUD(@"输入内容长度过长，请重新设置", nil, nil, NO, 2.0);
+        // SHOWMBProgressHUD(@"输入内容长度过长，请重新设置", nil, nil, NO, 2.0);
         return;
     }
     
     if ([txtView.text isContainQuotationMark])
     {
-        SHOWMBProgressHUD(@"不能包含'或者\"", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"Can't contain"), nil, nil, NO, 2);
 
         return;
     }

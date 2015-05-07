@@ -49,9 +49,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"绑定硬件";
+    self.title = LS_Text(@"Paired with hardware");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     [self loadShowWareView];
 }

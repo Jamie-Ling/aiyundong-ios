@@ -71,21 +71,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"设置个人信息";
+    self.title = LS_Text(@"Set Personal Data");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     //    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
     
-    self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:@"完成" target:self selector:@selector(complete) ImageName:@""];
+    self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:LS_Text(@"Accomplish")
+                                                                                      target:self
+                                                                                    selector:@selector(complete)
+                                                                                   ImageName:@""];
     
     _userInfo = [UserInfoHelp sharedInstance].userModel;
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
     
     //初始化
-    _cellTitleArray = [NSArray arrayWithObjects:@"出生日期", @"性别", @"公/英制", @"身高", @"体重", @"经常活动地时区", nil];
+    _cellTitleArray = [NSArray arrayWithObjects:LS_Text(@"Date of Birth"), LS_Text(@"Gender"),
+                       LS_Text(@"Metric/Imperial"), LS_Text(@"Height"),
+                       LS_Text(@"Weight"), LS_Text(@"Time zone of regular activity place"), nil];
     
     NSLog(@"..%d", _userInfo.isMetricSystem );
-    _cellTitleKeyArray = [NSArray arrayWithObjects:_userInfo.birthDay, _userInfo.gender,
-                          _userInfo.isMetricSystem ? @"公制" : @"英制", NSStringWithInt(_userInfo.height),
+    _cellTitleKeyArray = [NSArray arrayWithObjects:_userInfo.birthDay, _userInfo.genderSex,
+                          _userInfo.isMetricSystem ? LS_Text(@"Metric") : LS_Text(@"Imperial"), NSStringWithInt(_userInfo.height),
                           NSStringWithInt(_userInfo.weight), _userInfo.showTimeZone, nil];
     
     
@@ -98,9 +103,7 @@
     //tableview
     [self addUserHead];
     [self addTableView];
-    
 }
-
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -224,7 +227,11 @@
 
 - (void)complete
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"重要提示" message:@"保存后 <公/英制> 和 <时区> 将不能再修改，是否确认保存?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:LS_Text(@"Important tips")
+                                                        message:LS_Text(@"Metric/imperial and time zone can't be modified once saved. Confirm to save?")
+                                                       delegate:self
+                                              cancelButtonTitle:LS_Text(@"Cancel")
+                                              otherButtonTitles:LS_Text(@"Confirm"), nil];
     
     alertView.delegate = self;
     [alertView show];
@@ -248,16 +255,16 @@
     {
         sheet  = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self
-                                    cancelButtonTitle:@"取消"
-                               destructiveButtonTitle:@"从相册选择"
-                                    otherButtonTitles:@"拍照", nil];
+                                    cancelButtonTitle:LS_Text(@"Cancel")
+                               destructiveButtonTitle:LS_Text(@"Choose from the album")
+                                    otherButtonTitles:LS_Text(@"take a picture"), nil];
     }
     else
     {
         sheet  = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self
-                                    cancelButtonTitle:@"取消"
-                               destructiveButtonTitle:@"从相册选择"
+                                    cancelButtonTitle:LS_Text(@"Cancel")
+                               destructiveButtonTitle:LS_Text(@"Choose from the album")
                                     otherButtonTitles:nil];
         
     }
@@ -391,9 +398,9 @@
 {
     UIActionSheet * genderChoiceAciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                           delegate:self
-                                                                 cancelButtonTitle:@"取消"
-                                                            destructiveButtonTitle:@"男"
-                                                                 otherButtonTitles:@"女", nil];
+                                                                 cancelButtonTitle:LS_Text(@"Cancel")
+                                                            destructiveButtonTitle:LS_Text(@"Male")
+                                                                 otherButtonTitles:LS_Text(@"Female"), nil];
     genderChoiceAciotnSheet.tag = vGenderChoiceAciotnSheetTag;
     [genderChoiceAciotnSheet showInView:self.view];
 }
@@ -403,9 +410,9 @@
     NSLog(@"设置是否是公制");
     UIActionSheet * aciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                               delegate:self
-                                                     cancelButtonTitle:@"取消"
-                                                destructiveButtonTitle:@"公制"
-                                                     otherButtonTitles:@"英制", nil];
+                                                     cancelButtonTitle:LS_Text(@"Cancel")
+                                                destructiveButtonTitle:LS_Text(@"Metric")
+                                                     otherButtonTitles:LS_Text(@"Imperial"), nil];
     aciotnSheet.tag = vMetricSystemTag;
     [aciotnSheet showInView:self.view];
 }
@@ -536,7 +543,7 @@
     {
         if (buttonIndex != 2)
         {
-            _userInfo.gender = buttonIndex ? @"女" : @"男";
+            _userInfo.genderSex = buttonIndex ? LS_Text(@"Female") : LS_Text(@"Male");
             
             [_listTableView reloadData];
         }
@@ -569,7 +576,7 @@
     }
     
     //label
-    CGRect titleFrame = CGRectMake(0, 0, 200, vOneCellHeight);
+    CGRect titleFrame = CGRectMake(0, 0, 150, vOneCellHeight);
     UILabel *title = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                  backgroundColor:[UIColor clearColor]
                                                             text:[_cellTitleArray objectAtIndex:indexPath.row]
@@ -610,12 +617,12 @@
                     break;
                 case 1:
                 {
-                    nameString = _userInfo.gender;
+                    nameString = _userInfo.showGenderSex;
                 }
                     break;
                 case 2:
                 {
-                    nameString = _userInfo.isMetricSystem ? @"公制" : @"英制";
+                    nameString = _userInfo.isMetricSystem ? LS_Text(@"Metric") : LS_Text(@"Imperial");
                 }
                     break;
                     
@@ -765,7 +772,6 @@
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSLog(@"上传图像....，开始网络请求吧,请求成功后请URL写入NSUserDefaults,再调用刷新方法refreshTheHeadImage");
     
     [picker dismissViewControllerAnimated:YES completion:^{
         
@@ -778,7 +784,6 @@
 {
     
     //通知首页等也刷新头像吧
-    NSLog(@"通知首页等地方刷新头像");
 }
 
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -798,7 +803,6 @@
         return;
     }
     
-    NSLog(@"开始进行性别修改的请求吧,请求成功后请写拉NSUserDefaults,再调用刷新方法reloadUserInfoTableView");
     
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
 }

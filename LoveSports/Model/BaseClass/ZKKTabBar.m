@@ -43,7 +43,7 @@
                 _lastButton = button;
                 button.selected = YES;
             }
-            else if (i == 2 || i == 3)
+            else if (i == 2 || i == 3 || i == 4)
             {
                 button.userInteractionEnabled = NO;
             }

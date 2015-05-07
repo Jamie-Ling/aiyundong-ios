@@ -59,14 +59,9 @@ DEF_SINGLETON(CalendarHomeView)
     
     CGFloat offetY = super.collectionView.contentOffset.y;
     NSDate *date = [NSDate date];
-    if (date.day > 15)
-    {
-        [super.collectionView setContentOffset:CGPointMake(0, offetY)];
-    }
-    else
-    {
-        [super.collectionView setContentOffset:CGPointMake(0, offetY - self.halfHeight)];
-    }
+    
+    CGFloat cellHeight = [DataShare sharedInstance].isEnglish ? 40 : 70;
+    [super.collectionView setContentOffset:CGPointMake(0, offetY - (30 - date.day) / 7 * cellHeight)];
 }
 
 #pragma mark - 逻辑代码初始化
@@ -74,7 +69,7 @@ DEF_SINGLETON(CalendarHomeView)
 - (NSMutableArray *)getMonthArrayOfDayNumber:(int)day ToDateforString:(NSString *)todate
 {
     NSDate *date = [NSDate date]; // dateWithTimeIntervalSinceNow:-(365 * 24 * 3600)];
-    NSDate *selectdate  = [NSDate date];//dateWithTimeIntervalSinceNow:-(365 * 24 * 3600)];
+    NSDate *selectdate  = [NSDate date]; // dateWithTimeIntervalSinceNow:-(365 * 24 * 3600)];
     
     if (todate)
     {
@@ -82,7 +77,7 @@ DEF_SINGLETON(CalendarHomeView)
     }
     
     super.Logic = [[CalendarLogic alloc]init];
-    return [super.Logic reloadCalendarView:date selectDate:selectdate  needDays:day];
+    return [super.Logic reloadCalendarView:date selectDate:selectdate needDays:day];
 }
 
 #pragma mark - 设置标题

@@ -97,7 +97,7 @@ static NSString *DayCell = @"DayCell";
         NSMutableArray *month_Array = [self.calendarMonth objectAtIndex:indexPath.section];
         CalendarDayModel *model = [month_Array objectAtIndex:15];
         CalendarMonthHeaderView *monthHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MonthHeader forIndexPath:indexPath];
-        monthHeader.masterLabel.text = [NSString stringWithFormat:@"%d年 %d月",model.year,model.month];   //  @"日期";
+        monthHeader.masterLabel.text = [NSString stringWithFormat:@"%d%@ %d%@",model.year, LS_Text(@"Year"), model.month, LS_Text(@"Month")];   //  @"日期";
         monthHeader.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8f];
         reusableview = monthHeader;
     }

@@ -20,20 +20,21 @@
     UITableView *_listTableView;
 
     NSMutableArray *_timeZoneArray;
-
 }
 
 @end
-
 
 @implementation TimeZoneChoiceViewController
 @synthesize _choiceIndex;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"选择时区";
+    self.title = LS_Text(@"Select Time Zone");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
         //tableview
     
     //获取所有的时区名字

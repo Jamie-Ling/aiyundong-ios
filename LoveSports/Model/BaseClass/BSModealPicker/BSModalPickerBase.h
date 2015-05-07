@@ -26,7 +26,7 @@ typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
 @property (nonatomic, strong) UIView *picker;
 
-@property (nonatomic, assign) BOOL isNewDevice;
+@property (nonatomic, assign) BOOL isAlarm;
 
 /* Determines whether to display the opaque backdrop view.  By default, this is YES. */
 @property (nonatomic) BOOL presentBackdropView;

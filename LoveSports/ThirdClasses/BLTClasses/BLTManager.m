@@ -159,6 +159,8 @@ DEF_SINGLETON(BLTManager)
     {
         return;
     }
+    
+    NSLog(@"..%@..%@", advertisementData, [advertisementData objectForKey:@"kCBAdvDataLocalName"]);
 
     if (!_isUpdateing)
     {
@@ -297,7 +299,7 @@ DEF_SINGLETON(BLTManager)
 
     if (!_isUpdateing)
     {
-        [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID]];
+        [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID, BLTUUID.batteryServiceUUID]];
     }
     else
     {

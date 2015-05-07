@@ -137,7 +137,7 @@
     _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 40)];
     
     _label.backgroundColor = [UIColor clearColor];
-    _label.text = @"没有发现绑定的设备\n可以下拉进行刷新";
+    _label.text = LS_Text(@"No device found");
     _label.textColor = [UIColor blackColor];
     _label.numberOfLines = 2;
     [self addSubview:_label];
@@ -170,9 +170,9 @@
         });
     }];
     
-    [_tableView.header setTitle:@"更新设备." forState:MJRefreshHeaderStateIdle];
-    [_tableView.header setTitle:@"正在扫描设备中..." forState:MJRefreshHeaderStatePulling];
-    [_tableView.header setTitle:@"下拉刷新,重新搜索" forState:MJRefreshHeaderStateRefreshing];
+    [_tableView.header setTitle:LS_Text(@"Pull-down refresh") forState:MJRefreshHeaderStateIdle];
+    [_tableView.header setTitle:LS_Text(@"Searching...") forState:MJRefreshHeaderStatePulling];
+    [_tableView.header setTitle:LS_Text(@"Searching...") forState:MJRefreshHeaderStateRefreshing];
 }
 
 - (void)loadHeadImage
@@ -251,7 +251,7 @@
 
     if (_isPop)
     {
-        SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 2);
+        SHOWMBProgressHUD(LS_Text(@"Connecting..."), nil, nil, NO, 2);
 
         model.isBinding = YES;
         [[BLTManager sharedInstance] repareConnectedDevice:model];

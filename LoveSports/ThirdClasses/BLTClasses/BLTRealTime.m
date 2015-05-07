@@ -67,7 +67,7 @@ DEF_SINGLETON(BLTRealTime)
     }
     else
     {
-        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
         
         //add by jamie
         if (block)
@@ -105,7 +105,7 @@ DEF_SINGLETON(BLTRealTime)
     }
     else
     {
-        SHOWMBProgressHUD(@"设备没有链接.", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
         
         //add by jamie
         if (block)

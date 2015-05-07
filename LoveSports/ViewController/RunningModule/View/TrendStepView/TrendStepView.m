@@ -38,8 +38,8 @@
     
     _middleLabel = [UILabel simpleLabelWithRect:CGRectMake((self.width - 50) / 2, 0, 50, self.height)
                                   withAlignment:NSTextAlignmentCenter
-                                   withFontSize:20
-                                       withText:@"日"
+                                   withFontSize:[DataShare sharedInstance].isEnglish ? 16 : 20
+                                       withText:LS_Text(@"Day")
                                   withTextColor:[UIColor blackColor]
                                         withTag:20000];
     [self addSubview:_middleLabel];
@@ -81,7 +81,7 @@
 
 - (void)updateContentForSuperView
 {
-    NSArray *array = @[@"日", @"周", @"月"];
+    NSArray *array = @[LS_Text(@"Day"), LS_Text(@"Week"), LS_Text(@"Month")];
     _middleLabel.text = array[_selectIndex];
     
     if (_backBlock)

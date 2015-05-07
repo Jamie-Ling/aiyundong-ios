@@ -76,7 +76,7 @@ DEF_SINGLETON(UserInfoHelp)
     _userModel.nickName = [userInfoDictionary objectForKey:kUserInfoOfNickNameKey];
     _userModel.avatar = [userInfoDictionary objectForKey:kUserInfoOfHeadPhotoKey];
     _userModel.birthDay = @"没多大用，暂未存储";
-    _userModel.gender = [userInfoDictionary objectForKey:kUserInfoOfSexKey];
+    _userModel.genderSex = [userInfoDictionary objectForKey:kUserInfoOfSexKey];
     _userModel.age = [[userInfoDictionary objectForKey:kUserInfoOfAgeKey] integerValue];
     _userModel.height = [[userInfoDictionary objectForKey:kUserInfoOfHeightKey] floatValue];
     _userModel.weight = [[userInfoDictionary objectForKey:kUserInfoOfWeightKey] floatValue];
@@ -248,7 +248,7 @@ DEF_SINGLETON(UserInfoHelp)
         return YES;
     }
     
-    SHOWMBProgressHUD(@"设备没有连接.", nil, nil, NO, 2.0);
+    SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
     return NO;
 }
 

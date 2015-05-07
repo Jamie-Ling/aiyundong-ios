@@ -1,0 +1,174 @@
+/* 
+  LSLanguage.strings
+  LoveSports
+
+  Created by zorro on 15/5/6.
+  Copyright (c) 2015年 zorro. All rights reserved.
+*/
+
+
+"English" = "NO";
+
+"Set Personal Data" = "设置个人信息";
+"Accomplish" = "完成";
+"Date of Birth" = "出生日期";
+"Age-year" = "岁";
+"Cancel" = "取消";
+"Confirm" = "确定";
+"Year" = "年";
+"Month" = "月";
+"Day" = "日";
+"Gender" = "性别：";
+"Male" = "男";
+"Female" = "女";
+"Metric" = "公制";
+"Imperial" = "英制";
+"Metric/Imperial" = "公/英制";
+
+"Height" = "身高：";
+"Weight" = "体重：";
+"Time zone of regular activity place" = "经常活动地时区：";
+"Asia/Beijing" = "亚洲/北京";
+"Select Time Zone" = "选择时区";
+"Important tips" = "重要提示";
+
+"Metric/imperial and time zone can't be modified once saved. Confirm to save?" = "保存后公/英制和时区蒋不能再修改, 是否确认保存?";
+
+"Week" = "周";
+"Please press device button to sync" = "请按下设备按键进行同步。";
+"Latest update:" = "最后更新:";
+"no record" = "无记录";
+"Synchronizing" = "正在同步";
+"Data sync complete" = "数据同步成功";
+"Data sync failed" = "同步失败";
+"Pull-down refresh" = "下拉刷新";
+
+
+"Target" = "目标";
+"hour" = "时";
+"Sleep quality" = "睡眠质量";
+"Total Sleep quality" = "总睡眠质量";
+"minute" = "分";
+"No device found" = "没有发现设备";
+"The lastest update time" = "最后更新时间";
+"Synchronous progress" = "同步进度";
+"No connect" = "没有连接";
+
+"back" = "返回";
+"Setting" = "设置";
+"Setting success" = "设置成功";
+"Setting fail" = "设置失败";
+
+"Account Management" = "账号管理";
+"Paired with hardware" = "绑定硬件";
+"Paired" = "绑定";
+
+"Connected" = "已连接";
+"Pair with device" = "绑定设备";
+"Connecting..." = "连接设备中…";
+"No data" = "没有数据";
+"Device name" = "  设备名称";
+"Device ID" = "  设备ID";
+"Unpair" = "解除绑定";
+"User info" = "用户信息";
+"Photo" = "头像";
+"Choose from the album" = "从相册选择";
+"take a picture" = "拍照";
+"Nickname" = "昵称";
+"Nickname:" = "昵称：";
+"Connect" = "连接";
+
+"I'm a sports talent" = "我是运动达人";
+"Save" = "保存";
+"Age" = "年龄：";
+"Hobby" = "兴趣爱好：";
+"Isport" = "爱运动";
+"What's Up" = "个性签名";
+"No connection, can't be set" = "没有连接设备，无法进行相关设置";
+"Manifesto" = "运动宣言：";
+"I want to be a sports talent" = "我要成为运动达人";
+"Isport bracelet" = "爱运动手环";
+"Daily Goals" = "每日目标";
+"steps per day" = "步/天";
+"steps" = "步";
+
+"Stride Length" = "步距";
+"Wearing info" = "佩戴方式";
+"Right hand" = "右手";
+"Left hand" = "左手";
+"Sedentary remind" = "久坐提醒";
+"On-Off" = "  开关";
+"Time interval" = "  时间间隔";
+"Beginning Time" = "  开始时间";
+"Ending Time" = "  结束时间";
+"Vibration Alarm" = "震动闹钟";
+"Vibrating remind" = "震动提醒";
+"Real-time synchronization" = "实时同步";
+"Reset All Settings" = "恢复到默认设置";
+"Firmware update" = "固件升级";
+"News" = "消息";
+"Friends" = "朋友";
+"Isport mall" = "爱运动商城";
+"Likes" = "求点赞";
+"About Isport" = "关于爱运动";
+"Feedback" = "意见反馈";
+"Help" = "帮助";
+"APP Version" = "APP版本";
+"ISPORT I HEALTH" = "要健康，爱运动";
+"Searching..." = "搜索中...";
+"" = "";
+"Can't contain" = "不能包含 ' or \"";
+"Repeat" = "是否重复";
+
+
+"Monday" = "星期一";
+"Tuesday" = "星期二";
+"Wednesday" = "星期三";
+"Thursday" = "星期四";
+"Friday" = "星期五";
+"Saturday" = "星期六";
+"Sunday" = "星期日";
+
+"Mon" = "一";
+"Tues" = "二";
+"Wed" = "三";
+"Thur" = "四";
+"Fri" = "五";
+"Satur" = "六";
+"Sun" = "日";
+
+
+"1st in Lunar Calendar" = "初一";
+"2nd in Lunar Calendar" = "初二";
+"3rd in Lunar Calendar" = "初三";
+"4th in Lunar Calendar" = "初四";
+"5th in Lunar Calendar" = "初五";
+"6th in Lunar Calendar" = "初六";
+"7th in Lunar Calendar" = "初七";
+"8th in Lunar Calendar" = "初八";
+"9th in Lunar Calendar" = "初九";
+"10th in Lunar Calendar" = "初十";
+
+"Today" = "今天";
+"Tomorrow" = "明天";
+"The Day After Tomorrow" = "后天";
+"NewYear's Day" = "元旦";
+"The laba Rice Porridge Festival" = "腊八";
+"Valentine's Day" = "情人节";
+"New Year's Eve" = "除夕";
+"Spring Festival" = "春节";
+"Lantern Festival" = "元宵";
+"Women's Day" = "妇女节";
+"Dragon Heads-raising Day" = "龙抬头";
+"Labour Day" = "劳动节";
+"Children's Day" = "儿童节";
+"Dragon Boat Festival" = "端午节";
+"Army Day" = "建军节";
+"Tanabata Festival" = "七夕";
+"The Mid-Autumn Festival" = "中秋节";
+"Teachers' Day" = "教师节";
+"National Day" = "国庆节";
+"Double Ninth Festival" = "重阳节";
+"Arbor Day" = "植树节";
+"Singles' Day" = "光棍节";
+

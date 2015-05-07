@@ -33,9 +33,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"关于爱运动";
+    self.title = LS_Text(@"About Isport");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     //
     [self addAllControl];
@@ -74,9 +77,9 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *appVersion = [NSString stringWithFormat:@"APP版本:  %@", [infoDictionary objectForKey:@"CFBundleVersion"]];
+    NSString *appVersion = [NSString stringWithFormat:@"%@:  %@", LS_Text(@"APP Version"), [infoDictionary objectForKey:@"CFBundleVersion"]];
 
-    _cellTitleArray = [NSMutableArray arrayWithObjects: @"意见反馈", @"帮助", appVersion, nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects: LS_Text(@"Feedback"), LS_Text(@"Help"), appVersion, nil];
 
     [self addTableView];
 }

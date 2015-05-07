@@ -16,9 +16,6 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
-#define vChangeToFT(A)  (A / 30.48) + 1   //CM - >转换为英尺
-#define vChangeToLB(A)  A * 2.2046226  //KG - >转换为磅
-
 
 //#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
 //#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
@@ -32,9 +29,6 @@
 //
 //#define vStepLongMin(a)   (a ? 30 : vChangeToFT(30))
 //#define vStepLongMax(a)   (a ? 120 : vChangeToFT(120))
-
-
-
 
 #import "UserInfoViewController.h"
 #import "FlatRoundedButton.h"
@@ -85,16 +79,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"用户信息";
+    self.title = LS_Text(@"User info");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     _userInfo = [UserInfoHelp sharedInstance].userModel;
 
     //初始化
 //    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"步距 ：", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
     
-    _cellTitleArray = [NSArray arrayWithObjects:@"头像", @"昵称 ：", @"", @"年龄 ：", @"性别 ：", @"身高 ：", @"体重 ：", @"", @"兴趣爱好 ：", @"经常活动地 ：", @"运动宣言 ：", nil];
+    _cellTitleArray = [NSArray arrayWithObjects:LS_Text(@"Photo"), LS_Text(@"Nickname:"),
+                       @"", LS_Text(@"Age"), LS_Text(@"Gender"),
+                       LS_Text(@"Height"), LS_Text(@"Weight"), @"",
+                       LS_Text(@"Hobby"), LS_Text(@"Time zone of regular activity place"),
+                       LS_Text(@"Manifesto"), nil];
 
     
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
@@ -266,16 +267,16 @@
     {
         sheet  = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self
-                                    cancelButtonTitle:@"取消"
-                               destructiveButtonTitle:@"从相册选择"
-                                    otherButtonTitles:@"拍照", nil];
+                                    cancelButtonTitle:LS_Text(@"Cancel")
+                               destructiveButtonTitle:LS_Text(@"Choose from the album")
+                                    otherButtonTitles:LS_Text(@"take a picture"), nil];
     }
     else
     {
         sheet  = [[UIActionSheet alloc] initWithTitle:nil
                                              delegate:self
-                                    cancelButtonTitle:@"取消"
-                               destructiveButtonTitle:@"从相册选择"
+                                    cancelButtonTitle:LS_Text(@"Cancel")
+                               destructiveButtonTitle:LS_Text(@"Choose from the album")
                                     otherButtonTitles:nil];
         
     }
@@ -397,14 +398,12 @@
                         if (madeChoice) {
                             if (pickerView.selectedIndex == lastIndex)
                             {
-                                NSLog(@"未做修改");
                                 return;
                             }
                             
 //                            [BraceletInfoModel updateUserInfoToBLTWithUserInfo:_userInfoDictionary withnewestModel:_thisModel WithSuccess:^(bool success) {
 //                                if (success)
 //                                {
-                                    NSLog(@"发送修改步长信息的请求吧");
                                     NSString *longString = pickerView.selectedValue;
                                     NSString *nowSelectedString = [[longString componentsSeparatedByString:@" "] firstObject];
                             
@@ -430,9 +429,9 @@
 {
     UIActionSheet * genderChoiceAciotnSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                           delegate:self
-                                                                 cancelButtonTitle:@"取消"
-                                                            destructiveButtonTitle:@"男"
-                                                                 otherButtonTitles:@"女", nil];
+                                                                 cancelButtonTitle:LS_Text(@"Cancel")
+                                                            destructiveButtonTitle:LS_Text(@"Male")
+                                                                 otherButtonTitles:LS_Text(@"Female"), nil];
     genderChoiceAciotnSheet.tag = vGenderChoiceAciotnSheetTag;
     [genderChoiceAciotnSheet showInView:self.view];
 }
@@ -514,11 +513,9 @@
                         if (madeChoice) {
                             if (pickerView.selectedIndex == lastIndex)
                             {
-                                NSLog(@"未做修改");
                                 return;
                             }
                             
-                            NSLog(@"发送体重修改的请求吧");
                             NSString *heightString = pickerView.selectedValue;
                             NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
                             
@@ -527,7 +524,6 @@
                             vBackToKG([nowSelectedString floatValue]);
                             
                             [weakSelf.listTableView reloadData];
-
                         }
                     }];
 }
@@ -660,7 +656,7 @@
                     break;
                 case 4:
                 {
-                    nameString = _userInfo.gender;
+                    nameString = _userInfo.showGenderSex;
                 }
                     break;
                 case 5:
@@ -712,15 +708,13 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = YES;
+        oneCell.userInteractionEnabled = NO;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
-
     }
     else
     {
         oneCell.userInteractionEnabled = YES;
         [oneCell.contentView setBackgroundColor:kBackgroundColor];
-
     }
     
     if (indexPath.row == 9)
@@ -829,7 +823,7 @@
     {
         if (buttonIndex != 2)
         {
-            _userInfo.gender = buttonIndex ? @"女" : @"男";
+            _userInfo.genderSex = buttonIndex ? LS_Text(@"Female") : LS_Text(@"Male");
             
             [_listTableView reloadData];
         }
@@ -942,7 +936,7 @@
     CGRect titleFrame = CGRectMake(0, 0, kButtonDefaultWidth, 35);
     _notConectLabel = [[ObjectCTools shared] getACustomLableFrame:titleFrame
                                                   backgroundColor:[UIColor blackColor]
-                                                             text:@"没有连接设备，无法进行相关设置"
+                                                             text:LS_Text(@"No connection, can't be set")
                                                         textColor:[UIColor whiteColor]
                                                              font:[UIFont boldSystemFontOfSize:15]
                                                     textAlignment:NSTextAlignmentCenter

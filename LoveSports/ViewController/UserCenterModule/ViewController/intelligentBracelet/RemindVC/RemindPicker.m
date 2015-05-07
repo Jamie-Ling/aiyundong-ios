@@ -31,16 +31,16 @@
 - (void)loadButtons
 {
     _cancelButton = [UIButton simpleWithRect:CGRectMake(0, 0, 64, 44)
-                                   withTitle:@"取消"
-                             withSelectTitle:@"取消"
+                                   withTitle:LS_Text(@"Cancel")
+                             withSelectTitle:LS_Text(@"Cancel")
                                    withColor:[UIColor clearColor]];
     _cancelButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_cancelButton addTouchUpTarget:self action:@selector(clickCancelButton:)];
     [self addSubview:_cancelButton];
     
-    _confirmButton = [UIButton simpleWithRect:CGRectMake(self.width - 64, 0, 64, 44)
-                                    withTitle:@"确定"
-                              withSelectTitle:@"确定"
+    _confirmButton = [UIButton simpleWithRect:CGRectMake(self.width - 84, 0, 84, 44)
+                                    withTitle:LS_Text(@"Confirm")
+                              withSelectTitle:LS_Text(@"Confirm")
                                     withColor:[UIColor clearColor]];
     _confirmButton.titleColorNormal = UIColorFromHEX(0x169ad8);
     [_confirmButton addTouchUpTarget:self action:@selector(clickConfirmButton:)];
@@ -63,7 +63,7 @@
     _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, self.width, self.height - 44)];
     
     [_datePicker setDatePickerMode:UIDatePickerModeTime];
-    _datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    _datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:[DataShare sharedInstance].isEnglish ? @"en_US" : @"zh_CN"];
     NSTimeZone *timeZone = [NSTimeZone localTimeZone];
     [_datePicker setTimeZone:timeZone];
     [self addSubview:_datePicker];
@@ -91,7 +91,7 @@
     NSDate *date = [NSDate dateWithString:string];
     
     [_datePicker setDate:date animated:NO];
-    _titleLabel.text = index ? @"结束时间" : @"开始时间";
+    _titleLabel.text = index ? [NSString stringWithFormat:@"%@  ", LS_Text(@"Ending Time")] : [NSString stringWithFormat:@"%@  ", LS_Text(@"Beginning Time")];
 }
 
 /*

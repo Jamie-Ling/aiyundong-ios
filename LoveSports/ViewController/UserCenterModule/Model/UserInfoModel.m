@@ -34,10 +34,10 @@
         _avatar = @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425";
         _birthDay = @"1990-01-01";
         _isMetricSystem = YES;
-        _activePlace = @"亚洲/北京";
+        _activePlace = LS_Text(@"Asia/Beijing");
         _activeTimeZone = 8 * 2;
         _height = 172;
-        _gender = @"男";
+        _genderSex = LS_Text(@"Male");
 
         _weight = 62;
         _step = 50;
@@ -47,9 +47,9 @@
         _targetDistance = [self StepsConvertDistance:10000 withPace:50] / 1000;
         _targetSleep = 60 * 8;
         
-        _nickName = @"我是运动达人";
-        _interest = @"爱运动";
-        _manifesto = @"我要成为运动达人!";
+        _nickName = @"";
+        _interest = @"";
+        _manifesto = @"";
     }
  
     return self;
@@ -97,11 +97,12 @@
     [UserInfoModel updateToDB:self where:nil];
 }
 
-- (void)setGender:(NSString *)gender
+- (void)setGenderSex:(NSString *)genderSex
 {
-    _gender = gender;
+    _genderSex = genderSex;
     [UserInfoModel updateToDB:self where:nil];
 }
+
 
 - (void)setWeight:(CGFloat)weight
 {
@@ -213,6 +214,19 @@
     _activeTimeZone = timeZone.timeZone;
     
     [UserInfoModel updateToDB:self where:nil];
+}
+
+- (NSString *)showGenderSex
+{
+    if ([_genderSex isEqualToString:@"Male"] ||
+        [_genderSex isEqualToString:@"男"])
+    {
+        return LS_Text(@"Male");
+    }
+    else
+    {
+        return LS_Text(@"Female");
+    }
 }
 
 // 表名

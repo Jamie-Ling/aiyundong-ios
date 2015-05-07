@@ -56,9 +56,12 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"设置";
+    self.title = LS_Text(@"Setting");
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     _userInfo = [UserInfoHelp sharedInstance].userModel;
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
@@ -67,7 +70,11 @@
     _cellImageArray = [NSMutableArray arrayWithObjects:@"账号管理", @"用户信息",@"", @"爱动运手环", @"梆定硬件", @"", @"消息", @"朋友", @"",@"爱运动商城",  @"", @"求点赞", @"关于爱运动商城", nil];
     
     // @"消息", @"朋友",@"",
-    _cellTitleArray = [NSMutableArray arrayWithObjects:@"账号管理", @"用户信息",@"", @"爱动运手环", @"绑定硬件", @"", @"消息", @"朋友", @"",@"爱运动商城",  @"", @"求点赞", @"关于爱运动", nil];
+    _cellTitleArray = [NSMutableArray arrayWithObjects:LS_Text(@"Account Management"), LS_Text(@"User info"),
+                       @"", LS_Text(@"Isport bracelet"), LS_Text(@"Paired with hardware"),
+                       @"", LS_Text(@"News"), LS_Text(@"Friends"), @"",
+                       LS_Text(@"Isport mall"),  @"", LS_Text(@"Likes"),
+                       LS_Text(@"About Isport"), nil];
     
     //tableview
     [self addTableView];
@@ -206,12 +213,11 @@
 
 - (void) ourShop
 {
-    NSLog(@"爱运动商城");
     
     MSCustomWebViewController *oneWebVC = [[MSCustomWebViewController alloc] init];
-    [oneWebVC setNavTitle:@"爱运动商城"];
+    [oneWebVC setNavTitle:LS_Text(@"Isport mall")];
     oneWebVC.hidesBottomBarWhenPushed = YES;
-    oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"  返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back") target:self selector:@selector(goBackPrePage) ImageName:@""];
     [oneWebVC loadURL:[NSURL URLWithString:kShopUrl]];
     [oneWebVC.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:oneWebVC animated:YES];
@@ -230,14 +236,11 @@
 
 - (void) praise
 {
-    NSLog(@"求点赞,跳转至测试");
-    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/jie-zou-da-shi/id493901993?mt=8"]];
 }
 
 - (void) clearCache
 {
-    NSLog(@"清除缓存");
     UIAlertView *cacheAlert =  [[UIAlertView alloc]initWithTitle:@"确定清除缓存?"
                                                          message:@""
                                                         delegate:self

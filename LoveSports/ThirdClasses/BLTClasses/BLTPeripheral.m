@@ -114,6 +114,10 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [_peripheral discoverCharacteristics:@[BLTUUID.controlPointCharacteristicUUID, BLTUUID.packetCharacteristicUUID] forService:service];
         }
+        else if ([service.UUID isEqual:BLTUUID.batteryServiceUUID])
+        {
+            [_peripheral discoverCharacteristics:@[BLTUUID.batteryCharacteristicUUID] forService:service];
+        }
     }
 }
 
@@ -159,8 +163,13 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [BLTDFUHelper sharedInstance].packetChar = charac;
         }
-        
-        NSLog(@"..%@", charac.UUID);
+        else if ([charac.UUID isEqual:BLTUUID.batteryCharacteristicUUID])
+        {
+            char batteryLevel;
+            [charac.value getBytes:&batteryLevel length:1];
+            
+            [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
+        }
     }
 }
 

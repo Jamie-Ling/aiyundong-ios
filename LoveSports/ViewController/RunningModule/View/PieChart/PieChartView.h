@@ -33,6 +33,8 @@ typedef void(^PieChartViewReload)(CGFloat percent);
 @property (nonatomic, strong) UILabel *durationLabel;
 @property (nonatomic, strong) PieChartViewReload reloadBlock;
 
+@property (nonatomic, assign) CGFloat lineWidth;
+
 - (void)reloadData;
 - (void)nightSetting;
 - (void)daySetting;

@@ -63,13 +63,13 @@ DEF_SINGLETON(BLTSimpleSend)
                                          else if (type == BLTAcceptDataTypeError)
                                          {
                                              NSLog(@"...失败。。。");
-                                             SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+                                             SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
                                              [self endSyncFail];
                                          }
                                          else if (type == BLTAcceptDataTypeRequestHistoryNoData)
                                          {
                                              NSString *dateString = [[self.startDate dateToString] componentsSeparatedByString:@" "][0];
-                                             NSString *alertString = [NSString stringWithFormat:@"%@没有数据", dateString];
+                                             NSString *alertString = [NSString stringWithFormat:@"%@%@", dateString, LS_Text(@"No data")];
                                              SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
                                              
                                              [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
@@ -165,8 +165,6 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 {
     [BLTSendData sendSetWearingWayDataWithRightHand:arc4random() % 2
                                     withUpdateBlock:^(id object, BLTAcceptDataType type) {
-                                        NSLog(@"手环设置...");
-                                        
                                     }];
 }
 
@@ -270,7 +268,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
         // 停止同步数据因意外情况
         [self stopTimer];
         dispatch_async(dispatch_get_main_queue(), ^{
-            SHOWMBProgressHUD(@"同步数据失败", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
         });
     }
 }

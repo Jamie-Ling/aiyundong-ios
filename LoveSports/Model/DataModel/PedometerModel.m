@@ -124,9 +124,8 @@
 - (void)showMessage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"。。通知主线城刷新。");
-        NSString *alertString = [NSString stringWithFormat:@"%@的数据", self.dateString];
-        SHOWMBProgressHUD(alertString, @"同步成功.", nil, NO, 2.0);
+        NSString *alertString = [NSString stringWithFormat:@"%@", self.dateString];
+        SHOWMBProgressHUD(alertString, LS_Text(@"Data sync complete"), nil, NO, 2.0);
     });
 }
 

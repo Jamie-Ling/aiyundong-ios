@@ -12,6 +12,11 @@
 @interface BLTUUID : NSObject
 
 + (CBUUID *)uartServiceUUID;
+
+// 旧设备.
++ (CBUUID *)batteryServiceUUID;
++ (CBUUID *)batteryCharacteristicUUID;
+
 + (CBUUID *)txCharacteristicUUID;
 + (CBUUID *)rxCharacteristicUUID;
 + (CBUUID *)realTimeCharacteristicUUID;
@@ -25,4 +30,7 @@
 + (CBUUID *)controlPointCharacteristicUUID;
 // 数据传输通道.
 + (CBUUID *)packetCharacteristicUUID;
+
++ (NSString *)representativeStringWithUUID:(CBUUID *)uuid;
+
 @end

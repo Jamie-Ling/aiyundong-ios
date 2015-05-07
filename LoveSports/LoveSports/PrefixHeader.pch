@@ -92,4 +92,16 @@
 #define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
 #define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
 
+// 国际化文件.
+#define LS_Text(string) NSLocalizedStringFromTable(string, @"LSLanguage", nil)
+
+
+
+
+
+
+
+
+
+
 

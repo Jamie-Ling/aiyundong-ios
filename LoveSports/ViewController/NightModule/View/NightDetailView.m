@@ -181,15 +181,15 @@
     _weekLabel = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
-                                 withFontSize:20
+                                 withFontSize:15
                                      withText:@"星期一"
                                 withTextColor:[UIColor blackColor]];
     [self addSubview:_weekLabel];
     
-    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 25, self.width, 30)
+    _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 20, self.width, 30)
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
-                                 withFontSize:20
+                                 withFontSize:15
                                      withText:@"2015/2/2"
                                 withTextColor:[UIColor blackColor]];
     [self addSubview:_dateLabel];
@@ -200,6 +200,11 @@
     _sleepView = [[SleepTimeView alloc] initWithFrame:CGRectMake(0, _chartView.totalHeight + 5, self.width, 32)];
     
     [self addSubview:_sleepView];
+    
+    if (![UserInfoHelp sharedInstance].braceModel.isNewDevice)
+    {
+        _sleepView.hidden = YES;
+    }
 }
 
 - (void)loadBarShowView

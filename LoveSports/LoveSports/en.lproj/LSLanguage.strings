@@ -1,0 +1,200 @@
+/* 
+  LSLanguage.strings
+  LoveSports
+
+  Created by zorro on 15/5/6.
+  Copyright (c) 2015年 zorro. All rights reserved.
+*/
+
+"English" = "YES";
+
+"Set Personal Data" = "Set Personal Data";
+"Accomplish" = "Accomplish";
+"Date of Birth" = "Date of Birth";
+"Age-year" = "Age";
+"Cancel" = "Cancel";
+"Confirm" = "Confirm";
+"Year" = "Year";
+"Month" = "Month";
+"Day" = "Day";
+"Gender" = "Gender:";
+"Male" = "Male";
+"Female" = "Female";
+"Metric" = "Metric";
+"Imperial" = "Imperial";
+"Metric/Imperial" = "Metric/Imperial";
+
+"Height" = "Height:";
+"Weight" = "Weight:";
+"Time zone of regular activity place" = "Time zone of activity place:";
+"Asia/Beijing" = "Asia/Beijing";
+"Select Time Zone" = "Select Time Zone";
+"Important tips" = "Important tips";
+
+"Metric/imperial and time zone can't be modified once saved. Confirm to save?" = "Metric/imperial and time zone can't be modified once saved. Confirm to save?";
+
+"Monday" = "Monday";
+"Tuesday" = "Tuesday";
+"Wednesday" = "Wednesday";
+"Thursday" = "Thursday";
+"Friday" = "Friday";
+"Saturday" = "Saturday";
+"Sunday" = "Sunday";
+
+"Mon" = "Mon";
+"Tues" = "Tues";
+"Wed" = "Wed";
+"Thur" = "Thur";
+"Fri" = "Fri";
+"Satur" = "Satur";
+"Sun" = "Sun";
+
+
+"1st in Lunar Calendar" = "1st";
+"2nd in Lunar Calendar" = "2nd";
+"3rd in Lunar Calendar" = "3rd";
+"4th in Lunar Calendar" = "4th";
+"5th in Lunar Calendar" = "5th";
+"6th in Lunar Calendar" = "6th";
+"7th in Lunar Calendar" = "7th";
+"8th in Lunar Calendar" = "8th";
+"9th in Lunar Calendar" = "9th";
+"10th in Lunar Calendar" = "10th";
+
+"Today" = "TDY";
+"Tomorrow" = "TMR";
+"The Day After Tomorrow" = "DAT";
+"NewYear's Day" = "NewYear's Day";
+"The laba Rice Porridge Festival" = "The laba Rice Porridge Festival";
+"Valentine's Day" = "Valentine's Day";
+"New Year's Eve" = "New Year's Eve";
+"Spring Festival" = "Spring Festival";
+"Lantern Festival" = "Lantern Festival";
+"Women's Day" = "Women's Day";
+"Dragon Heads-raising Day" = "Dragon Heads-raising Day";
+"Labour Day" = "Labour Day";
+"Children's Day" = "Children's Day";
+"Dragon Boat Festival" = "Dragon Boat Festival";
+"Army Day" = "Army Day";
+"Tanabata Festival" = "Tanabata Festival";
+"The Mid-Autumn Festival" = "The Mid-Autumn Festival";
+"Teachers' Day" = "Teachers' Day";
+"National Day" = "National Day";
+"Double Ninth Festival" = "Double Ninth Festival";
+"Arbor Day" = "Arbor Day";
+"Singles' Day" = "Singles' Day";
+
+
+"Week" = "Week";
+"Please press device button to sync" = "Please press device button to sync";
+"Latest update:" = "Latest update:";
+"no record" = "no record";
+"Synchronizing" = "Synchronizing";
+"Data sync complete" = "Data sync complete";
+"Data sync failed" = "Data sync failed";
+"Pull-down refresh" = "Pull-down refresh";
+
+
+"Target" = "Target";
+"hour" = "hour";
+"Sleep quality" = "Sleep quality";
+"Total Sleep quality" = "Total Sleep quality";
+"minute" = "minute";
+"No device found" = "No device found";
+"The lastest update time" = "The lastest update time";
+"Synchronous progress" = "Synchronous progress";
+
+
+"back" = "back";
+"Setting" = "Setting";
+"Account Management" = "Account Management";
+"Paired with hardware" = "Paired with hardware";
+"Paired" = "Paired";
+"Setting success" = "Setting success";
+"Setting fail" = "Setting fail";
+
+"Connected" = "Connected";
+"Pair with device" = "Pair with device";
+"Connecting..." = "Connecting...";
+"No data" = "No data";
+"Device name" = "  Device name";
+"Device ID" = "  Device ID";
+"Unpair" = "Unpair";
+"User info" = "User info";
+"Photo" = "Photo";
+"Choose from the album" = "Choose from the album";
+"take a picture" = "take a picture";
+"Nickname" = "Nickname";
+"Nickname:" = "Nickname:";
+"Connect" = "Connect";
+"No connect" = "No connect";
+
+
+"I'm a sports talent" = "I'm a sports talent";
+"Save" = "Save";
+"Age" = "Age:";
+"Hobby" = "Hobby:";
+"Isport" = "Isport";
+"What's Up" = "What's Up";
+"No connection, can't be set" = "No connection, can't be set";
+"Manifesto" = "Manifesto:";
+"I want to be a sports talent" = "I want to be a sports talent";
+"Isport bracelet" = "Isport bracelet";
+"Daily Goals" = "Daily Goals";
+"steps per day" = "steps/day";
+"steps" = "steps";
+
+"Stride Length" = "Stride Length";
+"Wearing info" = "Wearing info";
+"Right hand" = "Right hand";
+"Left hand" = "Left hand";
+"Sedentary remind" = "Sedentary remind";
+"On-Off" = "  On-Off";
+"Time interval" = "  Time interval";
+"Beginning Time" = "  Beginning Time";
+"Ending Time" = "  Ending Time";
+"Vibration Alarm" = "Vibration Alarm";
+"Vibrating remind" = "Vibrating remind";
+"Real-time synchronization" = "Real-time synchronization";
+"Firmware update" = "Firmware update";
+
+"Reset All Settings" = "Reset All Settings";
+"News" = "News";
+"Friends" = "Friends";
+"Isport mall" = "Isport mall";
+"Likes" = "Likes";
+"About Isport" = "About Isport";
+"Feedback" = "Feedback";
+"Help" = "Help";
+"APP Version" = "APP Version";
+"ISPORT I HEALTH" = "ISPORT I HEALTH";
+"Repeat" = "Repeat";
+"" = "";
+"Searching..." = "Searching...";
+"Can't contain" = "Can't contain ' or \"";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

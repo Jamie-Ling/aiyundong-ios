@@ -317,7 +317,7 @@ DUMMY_CLASS(NSDate_XY);
     NSTimeInterval dateDiff = [[dateFormatter dateFromString:dateString] timeIntervalSinceNow];
     
     int age = trunc(dateDiff / (60 * 60 * 24)) / 365;
-    return [NSString stringWithFormat:@"%d岁", abs(age)];
+    return [NSString stringWithFormat:@"%d%@", abs(age), LS_Text(@"Age-year")];
 }
 
 - (NSInteger)compareOtherData:(NSDate *)date

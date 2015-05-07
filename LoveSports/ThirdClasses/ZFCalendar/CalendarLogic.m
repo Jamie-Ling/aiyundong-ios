@@ -87,7 +87,7 @@
     for (int i = daysCount - partialDaysCount + 1; i < daysCount + 1; ++i)
     {
         CalendarDayModel *calendarDay = [CalendarDayModel calendarDayWithYear:components.year month:components.month day:i];
-        calendarDay.style = CellDayTypeEmpty;//不显示
+        calendarDay.style = CellDayTypeEmpty;   //  不显示
         [array addObject:calendarDay];
     }
     
@@ -115,15 +115,15 @@
 //  计算当月的天数
 - (void)calculateDaysInCurrentMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
 {
-    NSUInteger daysCount = [date numberOfDaysInCurrentMonth];   //  计算这个月有多少天
-    NSDateComponents *components = [date YMDComponents];        //  今天日期的年月日
+    NSUInteger daysCount = [date numberOfDaysInCurrentMonth];       //  计算这个月有多少天
+    NSDateComponents *components = [date YMDComponents];            //  今天日期的年月日
     
     for (int i = 1; i < daysCount + 1; ++i)
     {
         CalendarDayModel *calendarDay = [CalendarDayModel calendarDayWithYear:components.year month:components.month day:i];
         
         //  calendarDay.Chinese_calendar = [self LunarForSolarYear:components.year Month:components.month Day:i];
-        calendarDay.week = [[calendarDay date]getWeekIntValueWithDate];
+        calendarDay.week = [[calendarDay date] getWeekIntValueWithDate];
         [self LunarForSolarYear:calendarDay];
         [self changStyle:calendarDay];
         [array addObject:calendarDay];
@@ -152,14 +152,14 @@
             & calendarToDay.day <= calendarDay.day)
         {
             calendarDay.style = CellDayTypePast;
-        //  之后的时间时间段
+            //  之后的时间时间段
         }
         else if (calendarbefore.year > calendarDay.year
                  & calendarbefore.month > calendarDay.month
                  & calendarbefore.day > calendarDay.day)
         {
             calendarDay.style = CellDayTypePast;
-        //  需要正常显示的时间段
+            //  需要正常显示的时间段
         }
         else
         {
@@ -183,160 +183,159 @@
         && calendarToDay.month == calendarDay.month
         && calendarToDay.day == calendarDay.day)
     {
-        calendarDay.holiday = @"今天";
+        calendarDay.holiday = LS_Text(@"Today");
     //  明天
     }
     else if(calendarToDay.year == calendarDay.year
             && calendarToDay.month == calendarDay.month
             && calendarToDay.day - calendarDay.day == -1)
     {
-        calendarDay.holiday = @"明天";
-        
+        calendarDay.holiday = LS_Text(@"Tomorrow");
     //  后天
     }
     else if(calendarToDay.year == calendarDay.year
             && calendarToDay.month == calendarDay.month
             && calendarToDay.day - calendarDay.day == -2)
     {
-        calendarDay.holiday = @"后天";
-        
+        calendarDay.holiday = LS_Text(@"The Day After Tomorrow");
     //  1.1元旦
     }
-    else if (calendarDay.month == 1
-              && calendarDay.day == 1)
+    else if (![DataShare sharedInstance].isEnglish)
     {
-        calendarDay.holiday = @"元旦";
-    //  2.14情人节
-    }
-    else if (calendarDay.month == 2
-             && calendarDay.day == 14)
-    {
-        calendarDay.holiday = @"情人节";
-    //  3.8妇女节
-    }
-    else if (calendarDay.month == 3
-             && calendarDay.day == 8)
-    {
-        calendarDay.holiday = @"妇女节";
-        
-    //  5.1劳动节
-    }
-    else if (calendarDay.month == 5
-             && calendarDay.day == 1)
-    {
-        calendarDay.holiday = @"劳动节";
-        
-    //  6.1儿童节
-    }
-    else if (calendarDay.month == 6
-             && calendarDay.day == 1)
-    {
-        calendarDay.holiday = @"儿童节";
-        
-    //  8.1建军节
-    }
-    else if (calendarDay.month == 8
-             && calendarDay.day == 1)
-    {
-        calendarDay.holiday = @"建军节";
-        
-    //  9.10教师节
-    }
-    else if (calendarDay.month == 9
-             && calendarDay.day == 10)
-    {
-        calendarDay.holiday = @"教师节";
-        
-    //  10.1国庆节
-    }
-    else if (calendarDay.month == 10
-             && calendarDay.day == 1)
-    {
-        calendarDay.holiday = @"国庆节";
-        
-    //  11.1植树节
-    }
-    else if (calendarDay.month == 11
-             && calendarDay.day == 1)
-    {
-        calendarDay.holiday = @"植树节";
-        
-    //  11.11光棍节
-    }
-    else if (calendarDay.month == 11
-             && calendarDay.day == 11)
-    {
-        calendarDay.holiday = @"光棍节";
-    }
-    else
-    {
-        // 这里写其它的节日
+        if (calendarDay.month == 1
+            && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"元旦";
+            //  2.14情人节
+        }
+        else if (calendarDay.month == 2
+                 && calendarDay.day == 14)
+        {
+            calendarDay.holiday = @"情人节";
+            //  3.8妇女节
+        }
+        else if (calendarDay.month == 3
+                 && calendarDay.day == 8)
+        {
+            calendarDay.holiday = @"妇女节";
+            //  5.1劳动节
+        }
+        else if (calendarDay.month == 5
+                 && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"劳动节";
+            //  6.1儿童节
+        }
+        else if (calendarDay.month == 6
+                 && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"儿童节";
+            //  8.1建军节
+        }
+        else if (calendarDay.month == 8
+                 && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"建军节";
+            //  9.10教师节
+        }
+        else if (calendarDay.month == 9
+                 && calendarDay.day == 10)
+        {
+            calendarDay.holiday = @"教师节";
+            //  10.1国庆节
+        }
+        else if (calendarDay.month == 10
+                 && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"国庆节";
+            //  11.1植树节
+        }
+        else if (calendarDay.month == 11
+                 && calendarDay.day == 1)
+        {
+            calendarDay.holiday = @"植树节";
+            //  11.11光棍节
+        }
+        else if (calendarDay.month == 11
+                 && calendarDay.day == 11)
+        {
+            calendarDay.holiday = @"光棍节";
+        }
+        else
+        {
+            // 这里写其它的节日
+        }
+
     }
 }
 
 #pragma mark - 农历转换函数
 - (void)LunarForSolarYear:(CalendarDayModel *)calendarDay
 {
+    if ([DataShare sharedInstance].isEnglish)
+    {
+        return;
+    }
+    
     NSString *solarYear = [self LunarForSolarYear:calendarDay.year Month:calendarDay.month Day:calendarDay.day];
     NSArray *solarYear_arr= [solarYear componentsSeparatedByString:@"-"];
   
-    if([solarYear_arr[0]isEqualToString:@"正"]
-       && [solarYear_arr[1]isEqualToString:@"初一"])
+    if([solarYear_arr[0] isEqualToString:@"正"] &&
+       [solarYear_arr[1] isEqualToString:@"初一"])
     {
     //  正月初一：春节
         calendarDay.holiday = @"春节";
     }
-    else if([solarYear_arr[0]isEqualToString:@"正"]
-            && [solarYear_arr[1]isEqualToString:@"十五"])
+    else if([solarYear_arr[0] isEqualToString:@"正"] &&
+            [solarYear_arr[1] isEqualToString:@"十五"])
     {
     //  正月十五：元宵节
         calendarDay.holiday = @"元宵";
     }
-    else if([solarYear_arr[0]isEqualToString:@"二"]
-            && [solarYear_arr[1]isEqualToString:@"初二"])
+    else if([solarYear_arr[0] isEqualToString:@"二"] &&
+            [solarYear_arr[1] isEqualToString:@"初二"])
     {
     //  二月初二：春龙节(龙抬头)
         calendarDay.holiday = @"龙抬头";
     }
-    else if([solarYear_arr[0]isEqualToString:@"五"]
-            && [solarYear_arr[1]isEqualToString:@"初五"])
+    else if([solarYear_arr[0] isEqualToString:@"五"] &&
+            [solarYear_arr[1] isEqualToString:@"初五"])
     {
     //  五月初五：端午节
         calendarDay.holiday = @"端午";
-    }
-    else if([solarYear_arr[0]isEqualToString:@"七"]
-            && [solarYear_arr[1]isEqualToString:@"初七"])
+    }  
+    else if([solarYear_arr[0] isEqualToString:@"七"] &&
+            [solarYear_arr[1] isEqualToString:@"初七"])
     {
     //  七月初七：七夕情人节
         calendarDay.holiday = @"七夕";
     }
-    else if([solarYear_arr[0]isEqualToString:@"八"]
-            && [solarYear_arr[1]isEqualToString:@"十五"])
+    else if([solarYear_arr[0] isEqualToString:@"八"] &&
+            [solarYear_arr[1] isEqualToString:@"十五"])
     {
     //  八月十五：中秋节
         calendarDay.holiday = @"中秋";
     }
-    else if([solarYear_arr[0]isEqualToString:@"九"]
-            && [solarYear_arr[1]isEqualToString:@"初九"])
+    else if([solarYear_arr[0] isEqualToString:@"九"] &&
+            [solarYear_arr[1] isEqualToString:@"初九"])
     {
     //  九月初九：重阳节、中国老年节（义务助老活动日）
         calendarDay.holiday = @"重阳";
     }
-    else if([solarYear_arr[0]isEqualToString:@"腊"]
-            && [solarYear_arr[1]isEqualToString:@"初八"])
+    else if([solarYear_arr[0] isEqualToString:@"腊"] &&
+            [solarYear_arr[1] isEqualToString:@"初八"])
     {
     //  腊月初八：腊八节
         calendarDay.holiday = @"腊八";
     }
-    else if([solarYear_arr[0]isEqualToString:@"腊"]
-            && [solarYear_arr[1]isEqualToString:@"二十四"])
+    else if([solarYear_arr[0] isEqualToString:@"腊"] &&
+            [solarYear_arr[1] isEqualToString:@"二十四"])
     {
     //  腊月二十四 小年
         calendarDay.holiday = @"小年";
-        
     }
-    else if([solarYear_arr[0]isEqualToString:@"腊"]
-             &&[solarYear_arr[1]isEqualToString:@"三十"])
+    else if([solarYear_arr[0] isEqualToString:@"腊"] &&
+            [solarYear_arr[1] isEqualToString:@"三十"])
     {
     //  腊月三十（小月二十九）：除夕
         calendarDay.holiday = @"除夕";

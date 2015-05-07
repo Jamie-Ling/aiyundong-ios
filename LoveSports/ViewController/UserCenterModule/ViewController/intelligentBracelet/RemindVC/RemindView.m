@@ -35,7 +35,7 @@
     _openLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                 withAlignment:NSTextAlignmentLeft
                                  withFontSize:16
-                                     withText:@"  开关"
+                                     withText:LS_Text(@"On-Off")
                                 withTextColor:[UIColor blackColor]
                                       withTag:1000];
     [_openLabel addUpAndDownLine];
@@ -49,7 +49,7 @@
     _intervalLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _openLabel.totalHeight + 4, self.width, _offset)
                                     withAlignment:NSTextAlignmentLeft
                                      withFontSize:16
-                                         withText:@"  时间间隔"
+                                         withText:LS_Text(@"Time interval")
                                     withTextColor:[UIColor blackColor]
                                           withTag:1000];
     [_intervalLabel addUpAndDownLine];
@@ -68,7 +68,7 @@
     _startLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _intervalLabel.totalHeight + 4, self.width, _offset)
                                  withAlignment:NSTextAlignmentLeft
                                   withFontSize:16
-                                      withText:@"  开始时间"
+                                      withText:LS_Text(@"Beginning Time")
                                  withTextColor:[UIColor blackColor]
                                        withTag:1000];
     [self addSubview:_startLabel];
@@ -85,7 +85,7 @@
     _endLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _startLabel.totalHeight + 4, self.width, _offset)
                                withAlignment:NSTextAlignmentLeft
                                 withFontSize:16
-                                    withText:@"  结束时间"
+                                    withText:LS_Text(@"Ending Time")
                                withTextColor:[UIColor blackColor]
                                      withTag:1000];
     [self addSubview:_endLabel];

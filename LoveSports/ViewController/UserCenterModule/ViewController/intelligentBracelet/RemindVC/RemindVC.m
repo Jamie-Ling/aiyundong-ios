@@ -54,8 +54,8 @@
 - (void)loadRightItem
 {
     UIButton *button = [UIButton simpleWithRect:CGRectMake(0, 0, 44, 44)
-                                      withTitle:@"保存"
-                                withSelectTitle:@"保存"
+                                      withTitle:LS_Text(@"Save")
+                                withSelectTitle:LS_Text(@"Save")
                                       withColor:[UIColor clearColor]];
     button.titleColorNormal = UIColorFromHEX(0x169ad8);
     [button addTouchUpTarget:self action:@selector(clickConfirmButton:)];
@@ -75,8 +75,8 @@
     [_remindView updateContentWithModel:_remindModel];
     
     _confirmButton = [UIButton simpleWithRect:CGRectMake(0, _remindView.totalHeight + 30, self.width, 44)
-                                    withTitle:@"确定"
-                              withSelectTitle:@"确定"
+                                    withTitle:LS_Text(@"Confirm")
+                              withSelectTitle:LS_Text(@"Confirm")
                                     withColor:[UIColor whiteColor]];
     [_confirmButton addUpAndDownLine];
     _confirmButton.titleColorNormal = UIColorFromHEX(0x169ad8);
@@ -110,11 +110,11 @@
     [[UserInfoHelp sharedInstance] sendSetSedentariness:^(id object) {
         if ([object boolValue])
         {
-            SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(@"Setting success", nil, nil, NO, 2.0);
         }
         else
         {
-            SHOWMBProgressHUD(@"设置失败.", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(@"Setting fail", nil, nil, NO, 2.0);
         }
     }];
 }
@@ -129,7 +129,7 @@
     label.textColor = [UIColor blackColor];
     self.navigationItem.titleView = label;
     
-    label.text = @"久坐提醒";
+    label.text = LS_Text(@"Sedentary remind");
     [label sizeToFit];
 }
 

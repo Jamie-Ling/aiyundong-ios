@@ -107,8 +107,8 @@ static ObjectCTools *_tools = nil;
     [button setImage:image forState:UIControlStateNormal];
     
     //本应用返回时仍需要显示返回二字
-    if ([title isEqualToString:@"返回"]) {
-        title = @"  返回";
+    if ([title isEqualToString:LS_Text(@"back")]) {
+        title = [NSString stringWithFormat:@"  %@", LS_Text(@"back")];
     }
     
     if ([title length] > 0) {

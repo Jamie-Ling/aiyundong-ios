@@ -45,8 +45,8 @@
 - (void)loadRightItem
 {
     UIButton *button = [UIButton simpleWithRect:CGRectMake(0, 0, 44, 44)
-                                      withTitle:@"保存"
-                                withSelectTitle:@"保存"
+                                      withTitle:LS_Text(@"Save")
+                                withSelectTitle:LS_Text(@"Save")
                                       withColor:[UIColor clearColor]];
     button.titleColorNormal = UIColorFromHEX(0x169ad8);
     [button addTouchUpTarget:self action:@selector(clickSaveButton:)];
@@ -65,11 +65,11 @@
     [[UserInfoHelp sharedInstance] sendSetAlarmClock:^(id object) {
         if ([object boolValue])
         {
-            SHOWMBProgressHUD(@"设置成功.", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
         }
         else
         {
-            SHOWMBProgressHUD(@"设置失败.", @"断开连接请重新设置.", nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Setting fail"), nil, nil, NO, 2.0);
             [[BLTManager sharedInstance] dismissLink];
         }
     }];
@@ -85,7 +85,7 @@
     label.textColor = [UIColor blackColor];
     self.navigationItem.titleView = label;
     
-    label.text = @"振动提醒";
+    label.text = LS_Text(@"Vibration Alarm");
     [label sizeToFit];
 }
 
@@ -153,7 +153,7 @@
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
     datePicker.showTodayButton = NO;
     datePicker.mode = UIDatePickerModeTime;
-    datePicker.isNewDevice = [UserInfoHelp sharedInstance].braceModel.isNewDevice;
+    datePicker.isAlarm = YES;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:model.weekArray
                                withBlock:^(BOOL madeChoice) {

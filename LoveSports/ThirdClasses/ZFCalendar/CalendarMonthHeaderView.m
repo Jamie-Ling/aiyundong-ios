@@ -133,7 +133,8 @@
     self.day7OfTheWeekLabel.textColor = COLOR_THEME1;
     [self addSubview:self.day7OfTheWeekLabel];
     
-    [self updateWithDayNames:@[@"日", @"一", @"二", @"三", @"四", @"五", @"六"]];
+    [self updateWithDayNames:@[LS_Text(@"Sun"), LS_Text(@"Mon"), LS_Text(@"Tues"),
+                               LS_Text(@"Wed"), LS_Text(@"Thur"), LS_Text(@"Fri"), LS_Text(@"Satur")]];
 }
 
 //  设置 @"日", @"一", @"二", @"三", @"四", @"五", @"六"

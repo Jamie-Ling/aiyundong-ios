@@ -159,7 +159,7 @@
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
-                                     withText:@"星期一"
+                                     withText:@""
                                 withTextColor:[UIColor whiteColor]];
     [self addSubview:_weekLabel];
     
@@ -167,7 +167,7 @@
                                     withColor:[UIColor clearColor]
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:20
-                                     withText:@"2015/2/2"
+                                     withText:@""
                                 withTextColor:[UIColor whiteColor]];
     [self addSubview:_dateLabel];
 }
@@ -180,7 +180,7 @@
     
     DEF_WEAKSELF_(TrendChartView);
     _scrollView.yearBlock = ^ (UIView *view, id object) {
-        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@年", object];
+        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@%@", object, LS_Text(@"Year")];
     };
 }
 
@@ -202,15 +202,15 @@
     [self addSubview:_typeView];
     _lastButton = _typeView.lastButton;
     
-    rect = FitScreenRect(CGRectMake(4, 300, 44, 20),
-                         CGRectMake(4, 350, 44, 20),
-                         CGRectMake(4, 400, 44, 20),
-                         CGRectMake(4, 450, 44, 20),
-                         CGRectMake(4, 350, 44, 20));
+    rect = FitScreenRect(CGRectMake(4, 300, 64, 20),
+                         CGRectMake(4, 350, 64, 20),
+                         CGRectMake(4, 400, 64, 20),
+                         CGRectMake(4, 450, 64, 20),
+                         CGRectMake(4, 350, 64, 20));
     _yearLabel = [self addSubLabelWithRect:rect
                              withAlignment:NSTextAlignmentCenter
                               withFontSize:13
-                                  withText:[NSString stringWithFormat:@"%ld年", (long)[NSDate date].year]
+                                  withText:[NSString stringWithFormat:@"%ld%@", (long)[NSDate date].year, LS_Text(@"Year")]
                              withTextColor:[UIColor blackColor]
                                    withTag:3000];
 }

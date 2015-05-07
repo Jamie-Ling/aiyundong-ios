@@ -29,7 +29,7 @@
     _textLabel = [UILabel simpleLabelWithRect:CGRectMake(6, 0, self.width * 0.3, self.height)
                                 withAlignment:NSTextAlignmentLeft
                                  withFontSize:16
-                                     withText:@"是否重复"
+                                     withText:LS_Text(@"Repeat")
                                 withTextColor:UIColorFromHEX(0x169ad8)
                                       withTag:0];
     [self addSubview:_textLabel];

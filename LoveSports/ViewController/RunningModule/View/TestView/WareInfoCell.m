@@ -111,7 +111,7 @@
     if (model.peripheral.state == CBPeripheralStateConnected)
     {
         // _bltView.backgroundColor = [UIColor greenColor];
-        _connectLabel.text = @"已连接";
+        _connectLabel.text = LS_Text(@"Connected");
     }
     else
     {

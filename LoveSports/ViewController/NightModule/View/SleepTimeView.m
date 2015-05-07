@@ -28,7 +28,7 @@
     _qualityLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width / 2, self.height / 2)
                                    withAlignment:NSTextAlignmentCenter
                                     withFontSize:14
-                                        withText:@"睡眠质量"
+                                        withText:LS_Text(@"Sleep quality")
                                    withTextColor:[UIColor lightGrayColor]
                                          withTag:3000];
     [self addSubview:_qualityLabel];
@@ -44,7 +44,7 @@
     _timeLabel = [UILabel simpleLabelWithRect:CGRectMake(self.width / 2, 0, self.width / 2, self.height / 2)
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:14
-                                     withText:@"总睡眠时间"
+                                     withText:LS_Text(@"Total Sleep quality")
                                 withTextColor:[UIColor lightGrayColor]
                                       withTag:3002];
     [self addSubview:_timeLabel];
@@ -52,7 +52,7 @@
     _timeText = [UILabel simpleLabelWithRect:CGRectMake(self.width / 2, self.height / 2, self.width / 2, self.height / 2)
                                withAlignment:NSTextAlignmentCenter
                                 withFontSize:12
-                                    withText:@"7小时45分"
+                                    withText:@""
                                withTextColor:[UIColor blackColor]
                                      withTag:3002];
     [self addSubview:_timeText];
@@ -66,7 +66,7 @@
         _qualityText.text = @"100%";
     }
     
-    _timeText.text = [NSString stringWithFormat:@"%ld小时%ld分", time / 60, time % 60];
+    _timeText.text = [NSString stringWithFormat:@"%d%@%d%@", time / 60, LS_Text(@"hour"), time % 60, LS_Text(@"minute")];
 }
 
 

@@ -76,7 +76,10 @@
     
     self.navigationItem.title = _model.bltName;
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
     
     [self loadLabels];
     if (_model.isBinding && _model.peripheral.state == CBPeripheralStateConnected)
@@ -116,7 +119,7 @@
 
 - (void)loadLabels
 {
-    NSArray *leftText = @[@"  设备ID", @"  设备名称"];
+    NSArray *leftText = @[LS_Text(@"Device ID"), LS_Text(@"Device name")];
     NSArray *rightText = @[_model.bltID, _model.bltName];
     for (int i = 0; i < 2; i++)
     {
@@ -215,8 +218,8 @@
 {
     _removeButton = [UIButton
                      simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
-                     withTitle:@"解除绑定"
-                     withSelectTitle:@"解除绑定"
+                     withTitle:LS_Text(@"Unpair")
+                     withSelectTitle:LS_Text(@"Unpair")
                      withColor:[UIColor whiteColor]];
     [_removeButton addUpAndDownLine];
     _removeButton.titleColorNormal = UIColorFromHEX(0xfc7d18);
@@ -228,8 +231,8 @@
 {
     _connectButton = [UIButton
                                simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
-                               withTitle:@"连接"
-                               withSelectTitle:@"连接"
+                               withTitle:LS_Text(@"Connect")
+                               withSelectTitle:LS_Text(@"Connect")
                                withColor:[UIColor whiteColor]];
     [_connectButton addUpAndDownLine];
     _connectButton.titleColorNormal = UIColorFromHEX(0x169ad8);
@@ -238,8 +241,8 @@
 
     _removeButton = [UIButton
                      simpleWithRect:CGRectMake(0, 196, self.view.width, 44)
-                     withTitle:@"解除绑定"
-                     withSelectTitle:@"解除绑定"
+                     withTitle:LS_Text(@"Unpair")
+                     withSelectTitle:LS_Text(@"Unpair")
                      withColor:[UIColor whiteColor]];
     [_removeButton addUpAndDownLine];
     _removeButton.titleColorNormal = UIColorFromHEX(0xfc7d18);
@@ -259,8 +262,8 @@
     
     _bindingButton = [UIButton
                       simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
-                      withTitle:@"绑定设备"
-                      withSelectTitle:@"绑定设备"
+                      withTitle:LS_Text(@"Paired")
+                      withSelectTitle:LS_Text(@"Paired")
                       withColor:[UIColor whiteColor]];
     [_bindingButton addUpAndDownLine];
     _bindingButton.titleColorNormal = UIColorFromHEX(0x169ad8);
@@ -273,7 +276,7 @@
     _model.isBinding = YES;
     
     [[BLTManager sharedInstance] repareConnectedDevice:_model];
-    SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 5);
+    SHOWMBProgressHUD(LS_Text(@"Connecting..."), nil, nil, NO, 5);
 }
 
 - (void)brokenLinkButton:(UIButton *)button
@@ -298,7 +301,7 @@
     button.selected = !button.selected;
     [[BLTManager sharedInstance] repareConnectedDevice:_model];
     
-    SHOWMBProgressHUD(@"连接设备中...", nil, nil, NO, 2);
+    SHOWMBProgressHUD(LS_Text(@"Connecting..."), nil, nil, NO, 2);
 }
 
 // 忽略该设备
@@ -341,9 +344,10 @@
     /**
      *  需要有返回值。根据返回值加载不同的设置页面.
      */
-    HIDDENMBProgressHUD;
-    NSLog(@"..........连接成功更新ui。。。。。。");
+    
     [self.view removeAllSubviews];
+    
+    HIDDENMBProgressHUD;
     [self loadLabels];
     [self loadBindingAndConnectSetting];
     

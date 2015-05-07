@@ -26,8 +26,8 @@
 
 - (void)loadButtons
 {
-    NSArray *titleArray = @[@"周日", @"周一", @"周二",
-                            @"周三" ,@"周四", @"周五", @"周六"];
+    NSArray *titleArray = @[LS_Text(@"Sun"), LS_Text(@"Mon"), LS_Text(@"Tues"),
+                            LS_Text(@"Wed"), LS_Text(@"Thur"), LS_Text(@"Fri"), LS_Text(@"Satur")];
     NSArray *norImageArray = @[@"", @"", @"",
                                @"", @"", @"", @""];
 //    NSArray *selImageArray = @[@"周日选中.png", @"周一选中.png", @"周一选中.png",

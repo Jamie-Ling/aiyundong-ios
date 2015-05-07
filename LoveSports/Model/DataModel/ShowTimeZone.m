@@ -47,12 +47,12 @@
     NSRange range = [_place rangeOfString:@"Shanghai"];
     if (range.location != NSNotFound)
     {
-        _showPlace = @"亚洲/北京";
+        _showPlace = LS_Text(@"Asia/Beijing");
     }
     
     _timeZone = [array[3] integerValue] * 2 / 3600;
     NSInteger totalMin = _timeZone * 3600 / 2 / 60;
-    NSString *timeString = [NSString stringWithFormat:@"%@%ld:%02ld",
+    NSString *timeString = [NSString stringWithFormat:@"%@%d:%02d",
                             _timeZone >= 0 ? @"＋" : @"", totalMin / 60, totalMin % 60];
     _showString = [NSString stringWithFormat:@"%@  GMT %@", _showPlace, timeString];
 }

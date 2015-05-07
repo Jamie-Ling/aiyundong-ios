@@ -41,7 +41,7 @@
         CGRect pickerFrame = CGRectMake(0,
                                         BSMODALPICKER_TOOLBAR_HEIGHT,
                                         self.bounds.size.width,
-                                        BSMODALPICKER_PANEL_HEIGHT - BSMODALPICKER_TOOLBAR_HEIGHT * 2.0);
+                                        BSMODALPICKER_PANEL_HEIGHT - BSMODALPICKER_TOOLBAR_HEIGHT * (_isAlarm ? 2.0 : 1.0));
 
         _picker = [self pickerWithFrame:pickerFrame];
         _picker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
@@ -71,9 +71,9 @@
         
         [_toolbar setBarTintColor:vToolBarColor];
         
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(onCancel:)];
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:LS_Text(@"Cancel") style:UIBarButtonItemStylePlain target:self action:@selector(onCancel:)];
 
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(onDone:)];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:LS_Text(@"Confirm") style:UIBarButtonItemStylePlain target:self action:@selector(onDone:)];
     
         NSMutableArray *toolbarItems = [NSMutableArray array];
         [toolbarItems addObject:cancelButton];
@@ -139,8 +139,7 @@
     [self.panel addSubview:self.picker];
     [self.panel addSubview:self.toolbar];
     
-    
-    [self.picker setCenterY:self.picker.centerY - kNavigationBarHeight * 1.5];
+    [self.picker setCenterY:self.picker.centerY - kNavigationBarHeight * (_isAlarm ? 1.5 : 1.0)];
     [self.toolbar setCenterY:self.toolbar.centerY - kNavigationBarHeight];
     
     [self.panel setHeight:self.panel.height + kNavigationBarHeight];
@@ -148,7 +147,7 @@
     
     DEF_WEAKSELF_(BSModalPickerBase);
     _weekView = [[WeekView alloc] initWithFrame:CGRectMake(self.panel.width * 0,
-                                                           self.panel.height  - kNavigationBarHeight * 2.0,
+                                                           self.panel.height  - kNavigationBarHeight * (_isAlarm ? 2.0 : 1.0),
                                                            self.panel.width * 1.0,
                                                            kNavigationBarHeight)
                                   withWeekBlock:^(WeekView *weekView) {
@@ -159,7 +158,7 @@
     _dayArray = weedDayArray;
     [_weekView updateSelButtonForWeekView:weedDayArray];
     
-    _repeatView = [[AlarmRepeatView alloc] initWithFrame:CGRectMake(0, self.panel.height  - kNavigationBarHeight, self.panel.width, kNavigationBarHeight)];
+    _repeatView = [[AlarmRepeatView alloc] initWithFrame:CGRectMake(0, self.panel.height - kNavigationBarHeight, self.panel.width, kNavigationBarHeight)];
     [self.panel addSubview:_repeatView];
     
     [self addSubview:self.panel];

@@ -35,7 +35,7 @@
     NSTimeZone *timeZone = [NSTimeZone localTimeZone];
     [datePicker setTimeZone:timeZone];
     //设置为显示中文
-    datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:[DataShare sharedInstance].isEnglish ? @"en_US" : @"zh_CN"];
     
     [datePicker setMaximumDate:[NSDate date]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

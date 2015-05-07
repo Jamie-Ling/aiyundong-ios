@@ -23,9 +23,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"昵称";
-    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
-      self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:@"保存" target:self selector:@selector(overChangeNickName) ImageName:@""];
+    self.title = LS_Text(@"Nickname");
+    self.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back")
+                                                                                    target:self
+                                                                                  selector:@selector(goBackPrePage)
+                                                                                 ImageName:@""];
+      self.navigationItem.rightBarButtonItem = [[ObjectCTools shared] createRightBarButtonItem:LS_Text(@"Save")
+                                                                                        target:self
+                                                                                      selector:@selector(overChangeNickName)
+                                                                                     ImageName:@""];
     self.view.backgroundColor = kBackgroundColor;   //设置通用背景颜色
     
     [self addAllControl];
@@ -57,7 +63,7 @@
     //昵称
     CGRect newPasswordTextfieldFrame = CGRectMake(26.0, 30.0, kButtonDefaultWidth, kButtonDefaultHeight);
     _nickNameTextField = [[ObjectCTools shared] getACustomTextFiledWithFrame:newPasswordTextfieldFrame
-                                                                  withPlaceholder:kUpdateNickNamePlaceHoldText
+                                                                  withPlaceholder:LS_Text(@"Nickname")
                                                                           withTag:0
                                                                 withLeftImaegName:@""
                                                                          withZoom:0
@@ -86,22 +92,20 @@
     }
     if ([_nickNameTextField.text isEqualToString:_lastNickName])
     {
-        SHOWMBProgressHUD(@"昵称无修改哦~", nil, nil, NO, 2.0);
-
         [_nickNameTextField becomeFirstResponder];
+        
         return;
     }
 
     if ([_nickNameTextField.text isContainQuotationMark])
     {
-        SHOWMBProgressHUD(@"不能带有'或者\"符号", nil, nil, NO, 2);
+        SHOWMBProgressHUD(LS_Text(@"Can't contain"), nil, nil, NO, 2);
         [_nickNameTextField becomeFirstResponder];
 
         return;
     }
 
     [self.view endEditing:YES];
-    NSLog(@"发送新的昵称请求吧，同时成功后存储至NSUserDefaults");
     
     //[[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfNickNameKey withValue:_nickNameTextField.text];
     

@@ -25,6 +25,8 @@ DEF_SINGLETON(DataShare)
         _isIp6P = NO;
         
         _currentDate = [NSDate date];
+        
+        _isEnglish = [LS_Text(@"English") isEqualToString:@"YES"];
     }
     
     return self;

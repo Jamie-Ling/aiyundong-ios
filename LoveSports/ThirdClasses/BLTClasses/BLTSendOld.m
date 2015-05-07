@@ -164,12 +164,12 @@ DEF_SINGLETON(BLTSendOld)
         }
         else if (type == BLTAcceptDataTypeError)
         {
-            SHOWMBProgressHUD(@"同步数据失败...", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
             _isSyncing = NO;
         }
         else if (type == BLTAcceptDataTypeRequestHistoryNoData)
         {
-            SHOWMBProgressHUD(@"没有数据.", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"No data"), nil, nil, NO, 2.0);
             _isSyncing = NO;
         }
     }];

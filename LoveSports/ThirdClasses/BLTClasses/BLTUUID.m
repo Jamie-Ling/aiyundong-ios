@@ -17,6 +17,18 @@
     return [CBUUID UUIDWithString:@"D0A2FF00-2996-D38B-E214-86515DF5A1DF"];
 }
 
+// 电量
++ (CBUUID *)batteryServiceUUID
+{
+    return [CBUUID UUIDWithString:@"180F"];
+}
+
+// 电量
++ (CBUUID *)batteryCharacteristicUUID
+{
+    return [CBUUID UUIDWithString:@"2A19"];
+}
+
 // 写
 + (CBUUID *)txCharacteristicUUID
 {
@@ -65,6 +77,31 @@
 + (CBUUID *)packetCharacteristicUUID
 {
     return [CBUUID UUIDWithString:@"00001532-1212-EFDE-1523-785FEABCD123"];
+}
+
++ (NSString *)representativeStringWithUUID:(CBUUID *)uuid
+{
+    NSData *data = [uuid data];
+    
+    NSUInteger bytesToConvert = [data length];
+    const unsigned char *uuidBytes = [data bytes];
+    NSMutableString *outputString = [NSMutableString stringWithCapacity:16];
+    
+    for (NSUInteger currentByteIndex = 0; currentByteIndex < bytesToConvert; currentByteIndex++)
+    {
+        switch (currentByteIndex)
+        {
+            case 3:
+            case 5:
+            case 7:
+            case 9:[outputString appendFormat:@"%02x-", uuidBytes[currentByteIndex]];
+                break;
+            default:[outputString appendFormat:@"%02x", uuidBytes[currentByteIndex]];
+        }
+        
+    }
+    
+    return outputString;
 }
 
 @end
