@@ -14,7 +14,7 @@
 @synthesize delegate;
 @synthesize datasource;
 
--(id)initWithFrame:(CGRect)frame
+-(id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount
 {
    self = [super initWithFrame:frame];
    if (self)
@@ -22,6 +22,7 @@
       //initialization
       self.backgroundColor = [UIColor clearColor];
 
+       _pieCount = pieCount;
        _lineWidth = FitScreenNumber(13, 14, 15, 16, 16);
        [self loadLabels];
    }
@@ -56,50 +57,61 @@
 
 - (void)drawRect:(CGRect)rect
 {
-
-//prepare
-   CGContextRef context = UIGraphicsGetCurrentContext();
-   CGFloat theHalf = rect.size.width/2;
-   CGFloat lineWidth = theHalf;
-   if ([self.delegate respondsToSelector:@selector(centerCircleRadius)])
-   {
-      lineWidth -= [self.delegate centerCircleRadius];
-      NSAssert(lineWidth <= theHalf, @"wrong circle radius");
-   }
-   CGFloat radius = theHalf-lineWidth/2;
-   
-   CGFloat centerX = theHalf;
-   CGFloat centerY = rect.size.height/2;
-   
-//drawing
-   
-   int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
-   
-    double sum = LS_PieChartCount * 10;
-
-    /*
-   for (int i = 0; i < slicesCount; i++)
-   {
-      sum += [self.datasource pieChartView:self valueForSliceAtIndex:i];
-   }*/
-   
-   float startAngle = - M_PI_2;
-   float endAngle = 0.0f;
+    // prepare
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGFloat theHalf = rect.size.width / 2;
+    CGFloat lineWidth = theHalf;
+    if ([self.delegate respondsToSelector:@selector(centerCircleRadius)])
+    {
+        lineWidth -= [self.delegate centerCircleRadius];
+        NSAssert(lineWidth <= theHalf, @"wrong circle radius");
+    }
     
-   double value = 10; //[self.datasource pieChartView:self valueForSliceAtIndex:i];
+    NSLog(@"lineWidth = ..%f", lineWidth);
+    CGFloat radius = theHalf - lineWidth / 2;
+    CGFloat centerX = theHalf;
+    CGFloat centerY = rect.size.height / 2;
+    
+    // drawing
+    
+    int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
+    
+    double sum = _pieCount * 10;
+    
+    /*
+     for (int i = 0; i < slicesCount; i++)
+     {
+     sum += [self.datasource pieChartView:self valueForSliceAtIndex:i];
+     }*/
+    
+    float startAngle = -M_PI_2;
+    float endAngle = 0.0f;
+    
+    double value = 10; //[self.datasource pieChartView:self valueForSliceAtIndex:i];
+    
+    for (int i = 0; i < slicesCount; i++)
+    {
+        endAngle = startAngle + M_PI * 2 * value / sum;
 
-   for (int i = 0; i < slicesCount; i++)
-   {
-      endAngle = startAngle + M_PI*2*value/sum;
-      CGContextAddArc(context, centerX, centerY, radius, startAngle, endAngle, false);
-   
-      UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
-   
-      CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
-      CGContextSetLineWidth(context, _lineWidth);
-      CGContextStrokePath(context);
-      startAngle += M_PI*2*value/sum;
-   }
+        CGFloat width = _lineWidth;
+        if (_sleepsArray)
+        {
+            NSInteger number = [_sleepsArray[((i + 1) / 2) % _sleepsArray.count] integerValue];
+            width = _lineWidth - (_lineWidth / 6 * number);
+            CGContextAddArc(context, centerX, centerY, radius - (_lineWidth / 6 * number) / 2, startAngle, endAngle, false);
+        }
+        else
+        {
+            CGContextAddArc(context, centerX, centerY, radius, startAngle, endAngle, false);
+        }
+        
+        UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
+        CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
+        
+        CGContextSetLineWidth(context, width);
+        CGContextStrokePath(context);
+        startAngle += M_PI * 2 * value / sum;
+    }
 }
 
 - (void)nightSetting

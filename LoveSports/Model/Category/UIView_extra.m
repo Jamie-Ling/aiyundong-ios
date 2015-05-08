@@ -199,7 +199,7 @@
     // 横线
     for (int i = 0; i < hori; i++)
     {
-        CGContextSetLineWidth(con, 1.0);
+        CGContextSetLineWidth(con, 0.5);
         CGContextSetStrokeColorWithColor(con, UIColorFromHEX(0xcfcdce).CGColor);
         CGFloat lengths[] = {3, 3};
         CGContextSetLineDash(con, 0, lengths, 2);
@@ -211,7 +211,7 @@
     // 竖线
     for (int i = 0; i < vert; i++)
     {
-        CGContextSetLineWidth(con, 1.0);
+        CGContextSetLineWidth(con, 0.5);
         CGContextSetStrokeColorWithColor(con, UIColorFromHEX(0xcfcdce).CGColor);
         CGFloat lengths[] = {3, 3};
         CGContextSetLineDash(con, 0, lengths, 2);

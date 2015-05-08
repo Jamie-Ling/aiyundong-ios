@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Strokin Alexey. All rights reserved.
 //
 
-#define LS_PieChartCount 360
+#define LS_PieChartCount 720
 
 #import <UIKit/UIKit.h>
 #import "PedometerModel.h"
@@ -33,7 +33,12 @@ typedef void(^PieChartViewReload)(CGFloat percent);
 @property (nonatomic, strong) UILabel *durationLabel;
 @property (nonatomic, strong) PieChartViewReload reloadBlock;
 
+@property (nonatomic, strong) NSArray *sleepsArray;
+@property (nonatomic, assign) NSInteger pieCount;
+
 @property (nonatomic, assign) CGFloat lineWidth;
+
+- (id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount;
 
 - (void)reloadData;
 - (void)nightSetting;

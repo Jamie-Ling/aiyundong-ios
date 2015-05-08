@@ -72,9 +72,11 @@
     // 将内存之前的图标清除...
     _allowAnimation = NO;
     _percent = 0;
-    [_chartView reloadData];
     
     [self updateContentForBarShowViewWithDate:_currentDate];
+    
+    _chartView.sleepsArray = _model.detailSleeps;
+    [_chartView reloadData];
 }
 
 - (void)setAllowAnimation:(BOOL)allowAnimation
@@ -87,15 +89,16 @@
     }
 }
 
+#define NightDetail_PieCount 576
 - (void)loadPieChartView
 {
     CGRect rect = CGRectMake((self.width - 200 + _offsetY) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
-    _chartView = [[PieChartView alloc] initWithFrame:rect];
+    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:NightDetail_PieCount];
     _chartView.delegate = self;
     _chartView.datasource = self;
     [self addSubview:_chartView];
     [_chartView nightSetting];
-    [_chartView reloadData];
+    // [_chartView reloadData];
 }
 
 - (void)startTimer
@@ -109,7 +112,7 @@
 #define NightVC_TotalPercent 100
 - (void)updateChartView
 {
-    if (_percent >= (int)(_totalPercent * 100))
+    if (_percent >= (int)(100))
     {
         [self stopTimer];
         return;
@@ -230,20 +233,21 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return LS_PieChartCount;
+    return NightDetail_PieCount;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= LS_PieChartCount * (_percent * 0.01))
+        if (index <= NightDetail_PieCount * (_percent * 0.01))
         {
             return UIColorRGB(82, 182, 21);
         }
         else
         {
-            return UIColorRGB(205, 205, 205);
+            return [UIColor clearColor];
+           // return UIColorRGB(205, 205, 205);
         }
     }
     else

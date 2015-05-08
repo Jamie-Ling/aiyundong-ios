@@ -96,10 +96,11 @@
     }
 }
 
+#define Daytail_PieCount 720
 - (void)loadPieChartView
 {
     CGRect rect = CGRectMake((self.width - 200 + _offsetY) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
-    _chartView = [[PieChartView alloc] initWithFrame:rect];
+    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:Daytail_PieCount];
     _chartView.delegate = self;
     _chartView.datasource = self;
     [self addSubview:_chartView];
@@ -322,14 +323,14 @@
 #pragma mark --- PieChartViewDataSource ---
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView
 {
-    return LS_PieChartCount;
+    return Daytail_PieCount;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index
 {
     if (index % 2)
     {
-        if (index <= LS_PieChartCount * (_percent * 0.01))
+        if (index <= Daytail_PieCount * (_percent * 0.01))
         {
             return UIColorRGB(82, 182, 21);
         }

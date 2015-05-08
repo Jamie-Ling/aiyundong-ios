@@ -40,9 +40,12 @@
     _leftView = [self addSubViewWithRect:CGRectMake(2, -37.5, 37.5, 37.5)
                                withColor:[UIColor clearColor]
                                withImage:@"小图标1@2x.png"];
+    _leftView.hidden = YES;
+    
     _rightView = [self addSubViewWithRect:CGRectMake(self.width - 40, -37.5, 37.5, 37.5)
                                 withColor:[UIColor clearColor]
                                 withImage:@"小图标3@2x.png"];
+    _rightView.hidden = YES;
 
     _startLabel = [self addSubLabelWithRect:CGRectMake(0, self.height - 14, 60, 14)
                               withAlignment:NSTextAlignmentCenter
@@ -50,12 +53,15 @@
                                    withText:@"23:34"
                               withTextColor:[UIColor lightGrayColor]
                                     withTag:999];
+    _startLabel.hidden = YES;
+    
     _endLabel = [self addSubLabelWithRect:CGRectMake(self.width - 60, self.height - 14, 60, 14)
                             withAlignment:NSTextAlignmentCenter
                              withFontSize:14.0
                                  withText:@"07:34"
                             withTextColor:[UIColor lightGrayColor]
                                   withTag:999];
+    _endLabel.hidden = YES;
     
     /*
     for (int i = 24; i < 49; i++)
@@ -94,14 +100,20 @@
 
 - (void)updateContentForView:(NSArray *)array withStart:(NSInteger)start withEnd:(NSInteger)end
 {
-    NSString *startString = [NSString stringWithFormat:@"%02d:%02d", 12 + (start + 1) * 5 / 60, (start + 1) * 5 % 60];
+    if (array)
+    {
+        _barView.array = array;
+    }
+    
+    /*
+    NSString *startString = [NSString stringWithFormat:@"%02ld:%02ld", 12 + (start + 1) * 5 / 60, (start + 1) * 5 % 60];
     if (start == 143)
     {
         startString = @"00:00";
     }
-    NSString *endString = [NSString stringWithFormat:@"%02d:%02d", (end + 1) * 5 / 60 - 12, (end + 1) * 5 % 60];
-    _startLabel.text = startString;
-    _endLabel.text = endString;
+    // NSString *endString = [NSString stringWithFormat:@"%02ld:%02ld", (end + 1) * 5 / 60 - 12, (end + 1) * 5 % 60];
+    // _startLabel.text = startString;
+    // _endLabel.text = endString;
     
     if (array.count >= end)
     {
@@ -111,6 +123,7 @@
     {
         _barView.array = nil;
     }
+     */
 }
 
 @end

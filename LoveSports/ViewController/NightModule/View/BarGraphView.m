@@ -41,11 +41,11 @@
     
     CGFloat width = 0;
     CGContextRef con = UIGraphicsGetCurrentContext();
-    CGFloat interval = (self.frame.size.width - 40) / _array.count;
+    CGFloat interval = (self.frame.size.width - 0) / _array.count;
     for (NSNumber *number in _array)
     {
         CGMutablePathRef path = CGPathCreateMutable();
-        CGRect rectAngle = CGRectMake(width + 20, self.height * (1 - [self getHeightWithIndex:[number integerValue]]), interval, self.height * [self getHeightWithIndex:[number integerValue]]);
+        CGRect rectAngle = CGRectMake(width + 0, self.height * (1 - [self getHeightWithIndex:[number integerValue]]), interval, self.height * [self getHeightWithIndex:[number integerValue]]);
         CGPathAddRect(path, NULL, rectAngle);
         CGContextAddPath(con, path);
         [[self getColorWithIndex:[number integerValue]] setFill];
@@ -88,34 +88,34 @@
     {
         return UIColorHEXA(0x61bf1a, 0.5);
     }
-    else if (index == 3 || index == 4)
+    else if (index == 3)
     {
         return UIColorHEXA(0x61bf1a, 0.3);
     }
     
-    return UIColorHEXA(0x61bf1a, 0.3);
+    return UIColorHEXA(0x61bf1a, 0.1);
 }
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index
 {
     if (index == 0)
     {
-        return 0.3;
+        return 1.0;
     }
     else if (index == 1)
     {
-        return 0.5;
+        return 0.8;
     }
     else if (index == 2)
     {
-        return 0.8;
+        return 0.6;
     }
-    else if (index == 3 || index == 4)
+    else if (index == 3 )
     {
-        return 1.0;
+        return 0.4;
     }
     
-    return 1.0;
+    return 0.2;
 }
 
 @end
