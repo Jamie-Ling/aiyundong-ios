@@ -164,8 +164,6 @@ DEF_SINGLETON(PedometerOld)
     // 将数据存储
     [[PedometerOld sharedInstance] saveModelDataOfPedometerOldToDB];
     
-    NSLog(@"...%@", [NSDate date]);
-
     [currentModel showMessage];
     
     if (endBlock)

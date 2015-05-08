@@ -69,7 +69,7 @@ DEF_SINGLETON(BLTRealTime)
     {
         SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
         
-        //add by jamie
+        // add by jamie
         if (block)
         {
             block(NO);
@@ -107,7 +107,7 @@ DEF_SINGLETON(BLTRealTime)
     {
         SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
         
-        //add by jamie
+        // add by jamie
         if (block)
         {
             block(NO);

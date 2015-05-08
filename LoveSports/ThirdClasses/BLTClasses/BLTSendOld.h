@@ -47,6 +47,9 @@ AS_SINGLETON(BLTSendOld)
 + (void)sendOldAboutEventWithRemind:(NSArray *)times
                     withUpdateBlock:(BLTAcceptDataUpdateValue)block;
 
+// 删除运动数据 十
++ (void)sendOldDeleteSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block;
+
 // 刚链接时设置用户信息并同步
 + (void)setUserInfoToOldDevice;
 

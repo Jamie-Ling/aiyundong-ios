@@ -64,7 +64,7 @@ DEF_SINGLETON(BLTAcceptData)
     if (_type == BLTAcceptDataTypeUnKnown)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
-        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:1.0];
+        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:2.0];
     }
 }
 
@@ -368,6 +368,10 @@ DEF_SINGLETON(BLTAcceptData)
                 {
                     _type = BLTAcceptDataTypeOldEventInfo;
                 }
+            }
+            else if (val[2] == 0x0E)
+            {
+                _type = BLTAcceptDataTypeOldDeleteSuccess;
             }
         }
         else if (val[1] == 0xAA)

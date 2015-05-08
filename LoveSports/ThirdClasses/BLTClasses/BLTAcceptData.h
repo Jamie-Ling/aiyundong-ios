@@ -53,7 +53,8 @@ typedef enum {                                  // 详细的看接口参数。
     BLTAcceptDataTypeOldRequestSportNoData,     // 请求后没有数据.
     BLTAcceptDataTypeOldSetWearingWay,          // 设置佩戴方式
     BLTAcceptDataTypeOldEventInfo,              // 传输事件信息
-    
+    BLTAcceptDataTypeOldDeleteSuccess,          // 数据删除成功
+
     BLTAcceptDataTypeSuccess,                   // 通讯成功
     BLTAcceptDataTypeError                      // 通讯错误
 } BLTAcceptDataType;

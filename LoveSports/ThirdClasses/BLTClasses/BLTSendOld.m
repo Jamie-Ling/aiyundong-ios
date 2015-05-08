@@ -93,6 +93,13 @@ DEF_SINGLETON(BLTSendOld)
     [self sendDataToWare:&val withLength:3 withUpdate:block];
 }
 
+// 删除运动数据 十
++ (void)sendOldDeleteSportDataWithUpdateBlock:(BLTAcceptDataUpdateValue)block
+{
+    UInt8 val[3] = {0x0E, 01, 00};
+    [self sendDataToWare:&val withLength:3 withUpdate:block];
+}
+
 // 左右手
 + (void)sendOldSetWearingWayDataWithRightHand:(BOOL)right
                               withUpdateBlock:(BLTAcceptDataUpdateValue)block
@@ -198,10 +205,23 @@ DEF_SINGLETON(BLTSendOld)
 // 同步数据结束
 - (void)endSyncData:(NSDate *)date
 {
+    [BLTSendOld sendOldDeleteSportDataWithUpdateBlock:^(id object, BLTAcceptDataType type) {
+        if (type != BLTAcceptDataTypeOldDeleteSuccess)
+        {
+            [self performSelector:@selector(deleteSportDataAgain) withObject:nil afterDelay:0.5];
+        }
+    }];
+    
     if (self.backBlock)
     {
         self.backBlock(date);
     }
+}
+
+// 第一次没删除成功再删除一次，再删除不了就不管了。。。这种概率很来就很小.
+- (void)deleteSportDataAgain
+{
+    [BLTSendOld sendOldDeleteSportDataWithUpdateBlock:nil];
 }
 
 // 设置用户信息.
