@@ -212,9 +212,23 @@ DEF_SINGLETON(BLTSendOld)
         }
     }];
     
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dismissConnect) object:nil];
+    [self performSelector:@selector(dismissConnect) withObject:nil afterDelay:45.0];
+    
     if (self.backBlock)
     {
         self.backBlock(date);
+    }
+}
+
+// 旧设备1分钟后断开链接.
+- (void)dismissConnect
+{
+    if ([BLTManager sharedInstance].model)
+    {
+        // 将当前连接的模型干掉...
+        [[BLTManager sharedInstance] initiativeDismissCurrentModel:[BLTManager sharedInstance].model];
+        [BLTManager sharedInstance].model = nil;
     }
 }
 

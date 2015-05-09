@@ -252,7 +252,7 @@ DEF_SINGLETON(BLTDFUHelper)
     
     NSLog(@"Sent %d bytes, total %ld.", currentDataSent, (long)_firmDataSend);
     
-    NSString *title = [NSString stringWithFormat:@"固件升级进度: %.0f%%", _firmDataSend * 1.0 / _firmData.length * 100];
+    NSString *title = [NSString stringWithFormat:@"%@: %.0f%%", LS_Text(@"Update progress"), _firmDataSend * 1.0 / _firmData.length * 100];
     SHOWMBProgressHUDIndeterminate(title, nil, NO);
 }
 

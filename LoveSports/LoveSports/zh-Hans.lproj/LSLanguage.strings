@@ -52,6 +52,10 @@
 "The lastest update time" = "最后更新时间";
 "Synchronous progress" = "同步进度";
 "No connect" = "没有连接";
+"Ready to update" = "准备更新";
+"Update progress" = "更新进度";
+"Update successful" = "更新成功";
+"Update failed" = "更新失败";
 
 "back" = "返回";
 "Setting" = "设置";
@@ -115,7 +119,7 @@
 "APP Version" = "APP版本";
 "ISPORT I HEALTH" = "要健康，爱运动";
 "Searching..." = "搜索中...";
-"" = "";
+"Next" = "下一步";
 "Can't contain" = "不能包含 ' or \"";
 "Repeat" = "是否重复";
 
@@ -171,6 +175,7 @@
 "Arbor Day" = "植树节";
 "Singles' Day" = "光棍节";
 
+"Skip, binding later" = "跳过，以后再绑定";
 
 
 

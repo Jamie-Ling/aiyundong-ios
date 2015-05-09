@@ -79,8 +79,6 @@
 
     if (!model)
     {
-        NSLog(@"..0..%@", uuid);
-
         model = [BLTModel initWithUUID:uuid];
         
         [model saveToDB];

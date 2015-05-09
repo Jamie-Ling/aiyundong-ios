@@ -139,6 +139,11 @@
 		69FD42291A7FCC2C0023B74D /* UpSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */; };
 		69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */; };
 		F422278B1ADA64F000BC30CF /* LineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F422278A1ADA64F000BC30CF /* LineView.m */; };
+		F4233CD61AFE115F007D9C31 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4233CD81AFE115F007D9C31 /* InfoPlist.strings */; };
+		F4233CDE1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDA1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png */; };
+		F4233CDF1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDB1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png */; };
+		F4233CE01AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDC1AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png */; };
+		F4233CE11AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDD1AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png */; };
 		F42E3E3D1AF387A700F0549F /* StepDataRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E3E3C1AF387A700F0549F /* StepDataRecord.m */; };
 		F42E75E21A8607AF00FAB64C /* DayDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E75E11A8607AF00FAB64C /* DayDetailView.m */; };
 		F42E75E51A8615AF00FAB64C /* TrendChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42E75E41A8615AF00FAB64C /* TrendChartView.m */; };
@@ -239,6 +244,8 @@
 		F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CE1A766E03002A5382 /* BLTPeripheral.m */; };
 		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
+		F4A4F85F1AFDEBC1006CEA93 /* clock_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */; };
+		F4A4F8601AFDEBC1006CEA93 /* clock@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */; };
 		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
 		F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E71AC06C580075D99E /* NightScrollView.m */; };
 		F4AC15491AD81B2500994C9E /* TimeZoneChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */; };
@@ -563,6 +570,12 @@
 		69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		F42227891ADA64F000BC30CF /* LineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineView.h; sourceTree = "<group>"; };
 		F422278A1ADA64F000BC30CF /* LineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineView.m; sourceTree = "<group>"; };
+		F4233CD71AFE115F007D9C31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F4233CD91AFE1160007D9C31 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F4233CDA1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth2_5@2x.png"; sourceTree = "<group>"; };
+		F4233CDB1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth3_5@2x.png"; sourceTree = "<group>"; };
+		F4233CDC1AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth4_5@2x.png"; sourceTree = "<group>"; };
+		F4233CDD1AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth5_5@2x.png"; sourceTree = "<group>"; };
 		F42E3E3B1AF387A700F0549F /* StepDataRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepDataRecord.h; sourceTree = "<group>"; };
 		F42E3E3C1AF387A700F0549F /* StepDataRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepDataRecord.m; sourceTree = "<group>"; };
 		F42E75E01A8607AF00FAB64C /* DayDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayDetailView.h; sourceTree = "<group>"; };
@@ -729,6 +742,8 @@
 		F49529CF1A766E03002A5382 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
 		F49529D01A766E03002A5382 /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
 		F496931A1A872952008D81CA /* home_sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_sports@2x.png"; sourceTree = "<group>"; };
+		F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock_5@2x.png"; sourceTree = "<group>"; };
+		F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@1x.png"; sourceTree = "<group>"; };
 		F4A536E31AC06A0B0075D99E /* NightDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightDetailView.h; sourceTree = "<group>"; };
 		F4A536E41AC06A0B0075D99E /* NightDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightDetailView.m; sourceTree = "<group>"; };
 		F4A536E61AC06C580075D99E /* NightScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightScrollView.h; sourceTree = "<group>"; };
@@ -1121,6 +1136,8 @@
 				69EFC21B1A738E4A00B5BC53 /* testImage.jpg */,
 				69EFC1D91A737ABD00B5BC53 /* backArrow@2x.png */,
 				69EFC1DA1A737ABD00B5BC53 /* right@2x.png */,
+				F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */,
+				F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */,
 			);
 			path = UserCenter;
 			sourceTree = "<group>";
@@ -1180,6 +1197,10 @@
 				F4BF2EDA1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png */,
 				F4BF2EDB1ADA313B00A99F2A /* 2_bluetooth_list2_5@2x.png */,
 				F4BF2EDC1ADA313B00A99F2A /* 2_bluetooth_list3_5@2x.png */,
+				F4233CDA1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png */,
+				F4233CDB1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png */,
+				F4233CDC1AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png */,
+				F4233CDD1AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png */,
 				F4BF2ED81ADA2FA400A99F2A /* isport_5@2x.png */,
 			);
 			path = Public;
@@ -1954,6 +1975,7 @@
 				F4B692F21A6F3EBC00B42395 /* Info.plist */,
 				F4B692F31A6F3EBC00B42395 /* main.m */,
 				F4B6931F1A6F3F8F00B42395 /* PrefixHeader.pch */,
+				F4233CD81AFE115F007D9C31 /* InfoPlist.strings */,
 				F485E9821AF9B00F00900B51 /* LSLanguage.strings */,
 			);
 			name = "Supporting Files";
@@ -2400,11 +2422,13 @@
 				F4C4C8271AC6D426005D511A /* 脚印-小选中@2x.png in Resources */,
 				F45870561AB2914F005A72CA /* 脚印1@2x.png in Resources */,
 				69EFC2131A737ABD00B5BC53 /* right@2x.png in Resources */,
+				F4233CDE1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png in Resources */,
 				695549341A8CF4D900423EA9 /* 求点赞@2x.png in Resources */,
 				F4C4C8291AC6D426005D511A /* 路程选中@2x.png in Resources */,
 				69EFC1E41A737ABD00B5BC53 /* 距离.png in Resources */,
 				F430E4681AC7C9E0004E7130 /* 顶部四格-4选中@2x.png in Resources */,
 				6955492D1A8CF4D900423EA9 /* 右箭头@2x.png in Resources */,
+				F4A4F85F1AFDEBC1006CEA93 /* clock_5@2x.png in Resources */,
 				699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */,
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
@@ -2419,6 +2443,7 @@
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
 				699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */,
 				6955493B1A8CF4D900423EA9 /* 电池电量-满@2x.png in Resources */,
+				F4A4F8601AFDEBC1006CEA93 /* clock@1x.png in Resources */,
 				F485E9801AF9B00F00900B51 /* LSLanguage.strings in Resources */,
 				F43390671AE7D51C000D3A0B /* shelf_book_update.png in Resources */,
 				F4C4C8281AC6D426005D511A /* 路程@2x.png in Resources */,
@@ -2443,12 +2468,15 @@
 				F470E7D61A7FAD680009E649 /* 起床.png in Resources */,
 				F430E4621AC7C9E0004E7130 /* 顶部四格-1选中@2x.png in Resources */,
 				69FD42111A7FCC2C0023B74D /* CitiesList.plist in Resources */,
+				F4233CE01AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png in Resources */,
 				F470E7D71A7FAD680009E649 /* 闹钟.png in Resources */,
 				69EFC1DF1A737ABD00B5BC53 /* 卡路里.png in Resources */,
+				F4233CDF1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png in Resources */,
 				F4C4C83B1AC6E345005D511A /* 旋转屏幕@2x.png in Resources */,
 				6955493A1A8CF4D900423EA9 /* 电池电量-低@2x.png in Resources */,
 				69EFC21C1A738E4A00B5BC53 /* testImage.jpg in Resources */,
 				F43390641AE7D382000D3A0B /* link_5@2x.png in Resources */,
+				F4233CE11AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png in Resources */,
 				F430E46D1AC7CFF1004E7130 /* ITC Avant Garde Book SWA.ttf in Resources */,
 				F4C4C82A1AC6D426005D511A /* 能量@2x.png in Resources */,
 				F4ED0B161AEC9BEF00F08C06 /* 能量sign@2x.png in Resources */,
@@ -2502,6 +2530,7 @@
 				F4ED0B151AEC9BEF00F08C06 /* 路程sign@2x.png in Resources */,
 				F43979ED1AB550680033B7BB /* MJRefresh.bundle in Resources */,
 				695549371A8CF4D900423EA9 /* 爱动运手环@2x.png in Resources */,
+				F4233CD61AFE115F007D9C31 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2740,6 +2769,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		F4233CD81AFE115F007D9C31 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4233CD71AFE115F007D9C31 /* en */,
+				F4233CD91AFE1160007D9C31 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		F485E9821AF9B00F00900B51 /* LSLanguage.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

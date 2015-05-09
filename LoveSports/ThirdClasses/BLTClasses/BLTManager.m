@@ -30,6 +30,7 @@ DEF_SINGLETON(BLTManager)
     {
         if (![LS_BindingID getObjectValue])
         {
+            // 这个已经没用到了.
             [LS_BindingID setObjectValue:@[]];
         }
         
@@ -160,7 +161,7 @@ DEF_SINGLETON(BLTManager)
         return;
     }
     
-    NSLog(@"..%@..%@", advertisementData, [advertisementData objectForKey:@"kCBAdvDataLocalName"]);
+    // NSLog(@"..%@..%@", advertisementData, [advertisementData objectForKey:@"kCBAdvDataLocalName"]);
 
     if (!_isUpdateing)
     {
@@ -169,7 +170,7 @@ DEF_SINGLETON(BLTManager)
         
         if (model)
         {
-            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @""];
             model.peripheral = peripheral;
         }
         else
@@ -177,7 +178,7 @@ DEF_SINGLETON(BLTManager)
             model = [BLTModel getModelFromDBWtihUUID:idString];
             
             model.bltName = name;
-            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @"未知"];
+            model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @""];
             model.peripheral = peripheral;
             
             // 没有被忽略就加入到设备组。
@@ -348,6 +349,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         }
         
         model.isInitiative = NO;
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
+        [self performSelector:@selector(startCan) withObject:nil afterDelay:3];
     }
     else
     {
@@ -442,7 +445,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     }
     else
     {
-        SHOWMBProgressHUD(@"设备没有链接", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"No connect"), nil, nil, NO, 2.0);
     }
 }
 
@@ -453,7 +456,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     _updateModel = _model;
     [BLTSendData sendUpdateFirmware];
     
-    SHOWMBProgressHUD(@"准备固件更新", nil, nil, NO, 5.0);
+    SHOWMBProgressHUD(LS_Text(@"Ready to update"), nil, nil, NO, 5.0);
 }
 
 - (void)firmWareUpdateEnd:(BOOL)success
@@ -467,11 +470,11 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     
     if (success)
     {
-        SHOWMBProgressHUD(@"固件更新成功", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"Update successful"), nil, nil, NO, 2.0);
     }
     else
     {
-        SHOWMBProgressHUD(@"固件更新失败", nil, nil, NO, 2.0);
+        SHOWMBProgressHUD(LS_Text(@"Update failed"), nil, nil, NO, 2.0);
     }
 }
 

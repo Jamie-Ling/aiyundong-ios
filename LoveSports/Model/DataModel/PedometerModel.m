@@ -529,7 +529,7 @@
     {
         if (self.sleepArray && self.sleepArray.count > 0)
         {
-            for (int i = 0; i < self.sportsArray.count; i++)
+            for (int i = 0; i < self.sleepArray.count; i++)
             {
                 SleepModel *model = self.sleepArray[i];
                 if (index <= model.currentOrder)

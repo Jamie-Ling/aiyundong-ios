@@ -126,7 +126,7 @@
 - (void)loadTrendStepView
 {
     DEF_WEAKSELF_(TrendChartView);
-    _stepView = [[TrendStepView alloc] initWithFrame:CGRectMake((self.width - 190) / 2, 30, 190, 50)
+    _stepView = [[TrendStepView alloc] initWithFrame:CGRectMake((self.width - 150) / 2, 30, 150, 50)
                                            withBlock:^(UIView *aView, id object) {
                                                weakSelf.segIndex = [(NSNumber *)object integerValue];
                                                [weakSelf reloadTrendChartView];

@@ -63,6 +63,22 @@
                                   withTag:999];
     _endLabel.hidden = YES;
     
+    NSArray *textArray = @[@"12", @"15", @"18", @"21", @"24",
+                           @"3", @"6", @"9", @"12"];
+    
+    for (int i = 0; i < textArray.count; i++)
+    {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0 + self.width / 9 * i, self.height - 14,
+                                                                   self.width / 9, 14)];
+        
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+        label.font = [UIFont systemFontOfSize:11];
+        label.text = textArray[i];
+        label.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:label];
+    }
+    
     /*
     for (int i = 24; i < 49; i++)
     {

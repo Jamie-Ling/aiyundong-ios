@@ -153,7 +153,7 @@
         [self performSelector:@selector(setNavigationBarUserEnabled) withObject:nil afterDelay:0.8];*/
         
         [UIView transitionWithView:self.navigationController.view
-                          duration:0.5
+                          duration:0.35
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             [self.navigationController popViewControllerAnimated:NO];

@@ -93,7 +93,7 @@
         return UIColorHEXA(0x61bf1a, 0.3);
     }
     
-    return UIColorHEXA(0x61bf1a, 0.1);
+    return UIColorHEXA(0xcccccc, 1.0);
 }
 
 - (CGFloat)getHeightWithIndex:(NSInteger)index

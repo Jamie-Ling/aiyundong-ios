@@ -105,7 +105,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:@""
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [self addSubview:_weekLabel];
     
     _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 20, self.width, 30)
@@ -113,7 +113,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:@""
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [self addSubview:_dateLabel];
 }
 

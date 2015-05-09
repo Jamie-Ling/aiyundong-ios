@@ -165,9 +165,13 @@ DEF_SINGLETON(BLTPeripheral)
         }
         else if ([charac.UUID isEqual:BLTUUID.batteryCharacteristicUUID])
         {
+            [_peripheral setNotifyValue:YES forCharacteristic:charac];
+            // [_peripheral readValueForCharacteristic:charac];
+            
             char batteryLevel;
             [charac.value getBytes:&batteryLevel length:1];
             
+            NSLog(@".charac.value = .%@...%d", charac, batteryLevel);
             [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
         }
     }
@@ -264,7 +268,33 @@ DEF_SINGLETON(BLTPeripheral)
         {
             [[BLTDFUHelper sharedInstance] receiveControlPointInfo:characteristic.value.bytes];
         }
+        else if ([characteristic.UUID isEqual:BLTUUID.batteryCharacteristicUUID])
+        {
+            char batteryLevel;
+            [characteristic.value getBytes:&batteryLevel length:1];
+            
+            [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
+        }
     }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if (error)
+    {
+        NSLog(@"数据更新错误...");
+    }
+    else
+    {
+        if ([characteristic.UUID isEqual:BLTUUID.batteryCharacteristicUUID])
+        {
+            char batteryLevel;
+            [characteristic.value getBytes:&batteryLevel length:1];
+            
+            [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
+        }
+    }
+
 }
 
 #pragma mark --- 向外围设备发送数据 ---

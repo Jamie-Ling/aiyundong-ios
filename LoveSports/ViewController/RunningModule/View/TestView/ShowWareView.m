@@ -30,6 +30,7 @@
         
         _isShowAll = YES;
         _isOpenHead = open;
+        [self loadLabel];
         [self loadTableView];
         [self reFreshDevice];
     }
@@ -64,7 +65,7 @@
         self.backgroundColor = [UIColor clearColor];
 
         _isShowAll = YES;
-        _isOpenHead = YES;
+        
         [self loadTableView];
         [self reFreshDevice];
     }
@@ -134,15 +135,15 @@
 
 - (void)loadLabel
 {
-    _label = [UILabel customLabelWithRect:CGRectMake(0, 0, self.width, 40)];
+    _label = [UILabel customLabelWithRect:CGRectMake(0, 240, self.width, 80)];
     
     _label.backgroundColor = [UIColor clearColor];
-    _label.text = LS_Text(@"No device found");
-    _label.textColor = [UIColor blackColor];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.text = [NSString stringWithFormat:@"%@\n%@", LS_Text(@"No device found") ,LS_Text(@"Pull-down refresh")];
+    _label.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     _label.numberOfLines = 2;
     [self addSubview:_label];
     _label.hidden = YES;
-    _label.center = CGPointMake(self.width / 2, self.height / 2);
 }
 
 - (void)loadTableView
@@ -155,7 +156,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:_tableView];
     
-    //[self loadHeadImage];
+    [self loadHeadImage];
     
     DEF_WEAKSELF_(ShowWareView);
     // 添加下拉刷新控件
@@ -173,18 +174,27 @@
     [_tableView.header setTitle:LS_Text(@"Pull-down refresh") forState:MJRefreshHeaderStateIdle];
     [_tableView.header setTitle:LS_Text(@"Searching...") forState:MJRefreshHeaderStatePulling];
     [_tableView.header setTitle:LS_Text(@"Searching...") forState:MJRefreshHeaderStateRefreshing];
+    
+    [self bringSubviewToFront:_label];
 }
 
 - (void)loadHeadImage
 {
     if (_isOpenHead)
     {
-        _headImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        _headImage.animationImages = @[UIImageNamed(@"睡觉@2x.png"), UIImageNamed(@"起床.png")];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, 150)];
+        _headImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 125)];
+        _headImage.animationImages = @[UIImageNamed(@"02_bluetooth2_5@2x.png"),
+                                       UIImageNamed(@"02_bluetooth3_5@2x.png"),
+                                       UIImageNamed(@"02_bluetooth4_5@2x.png"),
+                                       UIImageNamed(@"02_bluetooth5_5@2x.png")];
         _headImage.animationRepeatCount = 9999;
-        _headImage.animationDuration = 0.5;
+        _headImage.animationDuration = 4;
         [_headImage startAnimating];
-        _tableView.tableHeaderView = _headImage;
+        [view addSubview:_headImage];
+        _headImage.center = CGPointMake(view.width / 2, view.height / 2);
+        
+        _tableView.tableHeaderView = view;
     }
 }
 
@@ -249,7 +259,7 @@
 {
     BLTModel *model = _showArray[indexPath.row];
 
-    if (_isPop)
+    if (_isOpenHead)
     {
         SHOWMBProgressHUD(LS_Text(@"Connecting..."), nil, nil, NO, 2);
 

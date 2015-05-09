@@ -71,7 +71,7 @@
     
     // 将内存之前的图标清除...
     _allowAnimation = NO;
-    _percent = 0;
+    _percent = 100;
     
     [self updateContentForBarShowViewWithDate:_currentDate];
     
@@ -83,17 +83,22 @@
 {
     _allowAnimation = allowAnimation;
     
+    _percent = 100;
+    [_chartView reloadData];
+    
+    /*
     if (_allowAnimation)
     {
         [self startTimer];
     }
+     */
 }
 
 #define NightDetail_PieCount 576
 - (void)loadPieChartView
 {
     CGRect rect = CGRectMake((self.width - 200 + _offsetY) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
-    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:NightDetail_PieCount];
+    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:NightDetail_PieCount withStartAngle:-M_PI_2 * 2];
     _chartView.delegate = self;
     _chartView.datasource = self;
     [self addSubview:_chartView];
@@ -186,7 +191,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:@"星期一"
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [self addSubview:_weekLabel];
     
     _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 20, self.width, 30)
@@ -194,7 +199,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:@"2015/2/2"
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [self addSubview:_dateLabel];
 }
 
@@ -246,8 +251,9 @@
         }
         else
         {
+            // return UIColorFromHEX(0xbdbdbe);
+            // return UIColorRGB(205, 205, 205);
             return [UIColor clearColor];
-           // return UIColorRGB(205, 205, 205);
         }
     }
     else

@@ -33,12 +33,14 @@ typedef void(^PieChartViewReload)(CGFloat percent);
 @property (nonatomic, strong) UILabel *durationLabel;
 @property (nonatomic, strong) PieChartViewReload reloadBlock;
 
+@property (nonatomic, strong) UIImageView *clockImage;
+
 @property (nonatomic, strong) NSArray *sleepsArray;
 @property (nonatomic, assign) NSInteger pieCount;
 
 @property (nonatomic, assign) CGFloat lineWidth;
 
-- (id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount;
+-(id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount withStartAngle:(CGFloat)startAngle;
 
 - (void)reloadData;
 - (void)nightSetting;

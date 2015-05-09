@@ -128,7 +128,10 @@
 "Nickname:" = "Nickname:";
 "Connect" = "Connect";
 "No connect" = "No connect";
-
+"Ready to update" = "Ready to update";
+"Update progress" = "Update progress";
+"Update successful" = "Update successful";
+"Update failed" = "Update failed";
 
 "I'm a sports talent" = "I'm a sports talent";
 "Save" = "Save";
@@ -172,8 +175,8 @@
 "" = "";
 "Searching..." = "Searching...";
 "Can't contain" = "Can't contain ' or \"";
-"" = "";
-"" = "";
+"Skip, binding later" = "Skip, binding later";
+"Next" = "Next";
 "" = "";
 "" = "";
 "" = "";

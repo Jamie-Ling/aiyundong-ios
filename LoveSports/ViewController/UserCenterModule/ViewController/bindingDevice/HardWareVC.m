@@ -138,13 +138,13 @@
         [view addSubview:label];
         CGFloat width = i ? 150 : self.view.width - 100;
 
-        label = [UILabel customLabelWithRect:CGRectMake(100, 0, width, view.height)
+        label = [UILabel customLabelWithRect:CGRectMake(i ? 150 : 100, 0, width, view.height)
                                    withColor:[UIColor clearColor]
                                withAlignment:NSTextAlignmentLeft
-                                withFontSize:18.0
+                                withFontSize:16.0
                                     withText:rightText[i]
-                               withTextColor:[UIColor blackColor]];
-        label.numberOfLines = 2;
+                               withTextColor:UIColorFromHEX(0x169ad8)];
+        label.numberOfLines = 3;
         [view addSubview:label];
         
         if (i == 1)

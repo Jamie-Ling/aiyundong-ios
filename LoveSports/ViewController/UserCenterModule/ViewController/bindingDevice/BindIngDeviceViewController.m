@@ -19,7 +19,7 @@
 
 @implementation BindIngDeviceViewController
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
@@ -37,7 +37,7 @@
     [_wareView reFreshDevice];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
@@ -55,7 +55,6 @@
                                                                                     target:self
                                                                                   selector:@selector(goBackPrePage)
                                                                                  ImageName:@""];
-    
     [self loadShowWareView];
 }
 
@@ -67,17 +66,6 @@
     //_wareView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
     //[_wareView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:YES succeedBlock:nil dismissBlock:nil];
     [self.view addSubview:_wareView];
-    
-    [self loadSkipButton];
-}
-
-- (void)loadSkipButton
-{
-    UIButton *skipButton = [UIButton simpleWithRect:CGRectMake(60, self.height - 64, self.width - 120, 64)
-                                          withTitle:@"跳过, 以后再绑定"
-                                    withSelectTitle:@"跳过, 以后再绑定"
-                                          withColor:[UIColor clearColor]];
-    [self addSubview:skipButton];
 }
 
 - (void)didReceiveMemoryWarning

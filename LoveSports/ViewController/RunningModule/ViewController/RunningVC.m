@@ -170,7 +170,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:LS_Text(@"Monday")
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [_srcollView addSubview:_weekLabel];
     
     _dateLabel = [UILabel customLabelWithRect:CGRectMake(0, 20, self.width, 30)
@@ -178,7 +178,7 @@
                                 withAlignment:NSTextAlignmentCenter
                                  withFontSize:15
                                      withText:@"2015/2/2"
-                                withTextColor:[UIColor blackColor]];
+                                withTextColor:[[UIColor blackColor] colorWithAlphaComponent:0.6]];
     [_srcollView addSubview:_dateLabel];
 }
 
@@ -267,7 +267,7 @@
         [self endRefreshing];
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(180.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.tableView.header.state != MJRefreshHeaderStateIdle)
         {
             [self.tableView.header endRefreshing];

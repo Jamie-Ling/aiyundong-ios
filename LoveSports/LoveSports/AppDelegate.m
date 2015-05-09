@@ -28,8 +28,6 @@
     // Override point for customization after application launch.
     // 80770100 008d0200 00130000 009a0100 00000000
 
-    NSLog(@"..%@", [[NSDate date] dateToString]);
-    
     [self createVideoFloders];
 
     [[DataShare sharedInstance] checkDeviceModel];
@@ -71,7 +69,11 @@
     
     //修改导航条标题栏颜色
     [[UINavigationBar appearance] setBarTintColor: kNavigationBarColor];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    if (IOS8_OR_LATER)
+    {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
     
     //按效果图的导航条只能设置成黑色，要么隐藏
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];

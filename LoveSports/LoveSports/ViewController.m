@@ -33,6 +33,7 @@
 #import "TimeZoneChoiceViewController.h"
 
 #import "UserInfoHelp.h"
+#import "LoginBindingVC.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
@@ -97,9 +98,7 @@
     _weightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
     _heightMutableArray = [[NSMutableArray alloc] initWithCapacity:32];
     _stepLongMustableArray  = [[NSMutableArray alloc] initWithCapacity:32];
-    
 
-    
     //tableview
     [self addUserHead];
     [self addTableView];
@@ -514,8 +513,6 @@
 
 }
 
-
-
 #pragma mark ---------------- UIAlertView delegate -----------------
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -524,7 +521,11 @@
     {
         //不再进入此页面
         [[ObjectCTools shared] setobject:[NSNumber numberWithInt:1] forKey:@"addVC"];
-        [self pushToHomeVC];
+        // [self pushToHomeVC];
+        
+        LoginBindingVC *vc = [[LoginBindingVC alloc] init];
+        
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

@@ -434,6 +434,11 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
 
 - (void)setImageNormal:(NSString *)imageNormal
 {
+    if (!IOS8_OR_LATER)
+    {
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     [self setImage:[UIImage image:imageNormal] forState:UIControlStateNormal];
 }
 
@@ -473,6 +478,12 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
 {
     UIButton *button = [[UIButton alloc] initWithFrame:rect];
     button.backgroundColor = [UIColor clearColor];
+    
+    if (!IOS8_OR_LATER)
+    {
+        button.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
     if (selImage)
     {
@@ -482,6 +493,8 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
     {
         [button setImage:[UIImage imageNamed:image] forState:UIControlStateSelected];
     }
+    
+  
     
     return button;
 }
@@ -493,6 +506,12 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
 {
     UIButton *button = [[UIButton alloc] initWithFrame:rect];
     button.backgroundColor = color;
+    
+    if (!IOS8_OR_LATER)
+    {
+        button.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     [button setTitle:title forState:UIControlStateNormal];
     if (selTitle)
     {

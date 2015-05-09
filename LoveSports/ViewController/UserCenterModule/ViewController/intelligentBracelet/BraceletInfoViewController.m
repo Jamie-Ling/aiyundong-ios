@@ -384,8 +384,6 @@
 
 - (void) goToCustom
 {
-    NSLog(@"设置自定义");
-    
     if (!_customVC)
     {
         _customVC = [[CustomViewController alloc] init];
@@ -396,18 +394,12 @@
 
 - (void) goToTimeAndClock
 {
-    NSLog(@"设置时间和闹钟");
-    
     AlarmClockVC *alarmVC = [[AlarmClockVC alloc] initWithAlarmClock:_braceModel.alarmArray];
-    
     [self.navigationController pushViewController:alarmVC animated:YES];
-    
 }
 
 - (void) goToUpdateSystem
 {
-    NSLog(@"固件升级");
-    
     if (!_deviceUpdateVC)
     {
         _deviceUpdateVC = [[DeviceUpdateViewController alloc] init];
@@ -420,8 +412,6 @@
 
 - (void) goToRecoverDefaultSet
 {
-    NSLog(@"恢复默认设置");
-    
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil
                                                    message:[NSString stringWithFormat:@"%@?", LS_Text(@"Reset All Settings")]
                                                   delegate:self
@@ -440,7 +430,6 @@
     
     if (theSwitch.tag == 3)
     {
-        NSLog(@"更改久坐提醒的状态：%d", theSwitch.on);
         _thisBraceletInfoModel._longTimeSetRemind = theSwitch.on;
         
         AlarmClockModel *oneClockBeginModel = [[AlarmClockModel alloc] init];
@@ -539,8 +528,9 @@
     {
         if (buttonIndex != 2)
         {
-            _braceModel.isLeftHand = !buttonIndex;
-            DEF_WEAKSELF_(BraceletInfoViewController);
+            _braceModel.isLeftHand = buttonIndex;
+            
+            // DEF_WEAKSELF_(BraceletInfoViewController);
             [[UserInfoHelp sharedInstance] sendSetAdornType:^(id object) {
                 [NSObject showMessageOnMain:object];
             }];

@@ -210,9 +210,9 @@
             NSLog(@"意见反馈");
             
             MSCustomWebViewController *oneWebVC = [[MSCustomWebViewController alloc] init];
-            [oneWebVC setNavTitle:@"意见反馈"];
+            [oneWebVC setNavTitle:LS_Text(@"Feedback")];
             oneWebVC.hidesBottomBarWhenPushed = YES;
-            oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"  返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+            oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back") target:self selector:@selector(goBackPrePage) ImageName:@""];
             [oneWebVC loadURL:[NSURL URLWithString:kOpinionUrl]];
             [oneWebVC.navigationController setNavigationBarHidden:NO];
             [self.navigationController pushViewController:oneWebVC animated:YES];
@@ -223,9 +223,9 @@
             NSLog(@"帮助");
             
             MSCustomWebViewController *oneWebVC = [[MSCustomWebViewController alloc] init];
-            [oneWebVC setNavTitle:@"帮助"];
+            [oneWebVC setNavTitle:LS_Text(@"Help")];
             oneWebVC.hidesBottomBarWhenPushed = YES;
-            oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:@"  返回" target:self selector:@selector(goBackPrePage) ImageName:@""];
+            oneWebVC.navigationItem.leftBarButtonItem = [[ObjectCTools shared] createLeftBarButtonItem:LS_Text(@"back") target:self selector:@selector(goBackPrePage) ImageName:@""];
             [oneWebVC loadURL:[NSURL URLWithString:kHelpUrl]];
             [oneWebVC.navigationController setNavigationBarHidden:NO];
             [self.navigationController pushViewController:oneWebVC animated:YES];

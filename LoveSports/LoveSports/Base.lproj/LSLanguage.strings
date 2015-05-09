@@ -6,7 +6,6 @@
   Copyright (c) 2015年 zorro. All rights reserved.
 */
 
-
 "English" = "NO";
 
 "Set Personal Data" = "设置个人信息";
@@ -53,6 +52,10 @@
 "The lastest update time" = "最后更新时间";
 "Synchronous progress" = "同步进度";
 "No connect" = "没有连接";
+"Ready to update" = "准备更新";
+"Update progress" = "更新进度";
+"Update successful" = "更新成功";
+"Update failed" = "更新失败";
 
 "back" = "返回";
 "Setting" = "设置";
@@ -171,4 +174,3 @@
 "Double Ninth Festival" = "重阳节";
 "Arbor Day" = "植树节";
 "Singles' Day" = "光棍节";
-

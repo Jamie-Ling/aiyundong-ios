@@ -9,12 +9,18 @@
 #import "PieChartView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface PieChartView ()
+
+@property (nonatomic, assign) CGFloat startAngle;
+
+@end
+
 @implementation PieChartView
 
 @synthesize delegate;
 @synthesize datasource;
 
--(id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount
+-(id)initWithFrame:(CGRect)frame withPieCount:(NSInteger)pieCount withStartAngle:(CGFloat)startAngle
 {
    self = [super initWithFrame:frame];
    if (self)
@@ -22,6 +28,7 @@
       //initialization
       self.backgroundColor = [UIColor clearColor];
 
+       _startAngle = startAngle;
        _pieCount = pieCount;
        _lineWidth = FitScreenNumber(13, 14, 15, 16, 16);
        [self loadLabels];
@@ -48,6 +55,19 @@
     
     _durationLabel = [UILabel customLabelWithRect:CGRectMake(0, self.height / 3 * 2 + self.height / 12, self.width, self.height / 12) withColor:[UIColor clearColor] withAlignment:NSTextAlignmentCenter withFontSize:20 withText:@"" withTextColor:[UIColor blackColor]];
     [self addSubview:_durationLabel];
+    
+    CGFloat theHalf = self.width / 2;
+    CGFloat lineWidth = theHalf;
+    if ([self.delegate respondsToSelector:@selector(centerCircleRadius)])
+    {
+        lineWidth -= [self.delegate centerCircleRadius];
+    }
+    
+    _clockImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (lineWidth - _lineWidth) * 2 - 16, (lineWidth - _lineWidth) * 2 - 16)];
+    _clockImage.image = UIImageNamed(@"clock@1x.png");
+    [self addSubview:_clockImage];
+    _clockImage.center = CGPointMake(self.width / 2, self.height / 2);
+    _clockImage.hidden = YES;
 }
 
 -(void)reloadData
@@ -67,15 +87,12 @@
         NSAssert(lineWidth <= theHalf, @"wrong circle radius");
     }
     
-    NSLog(@"lineWidth = ..%f", lineWidth);
     CGFloat radius = theHalf - lineWidth / 2;
     CGFloat centerX = theHalf;
     CGFloat centerY = rect.size.height / 2;
     
     // drawing
-    
     int slicesCount = [self.datasource numberOfSlicesInPieChartView:self];
-    
     double sum = _pieCount * 10;
     
     /*
@@ -84,7 +101,7 @@
      sum += [self.datasource pieChartView:self valueForSliceAtIndex:i];
      }*/
     
-    float startAngle = -M_PI_2;
+    float startAngle = _startAngle;
     float endAngle = 0.0f;
     
     double value = 10; //[self.datasource pieChartView:self valueForSliceAtIndex:i];
@@ -93,20 +110,32 @@
     {
         endAngle = startAngle + M_PI * 2 * value / sum;
 
+        UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
+
         CGFloat width = _lineWidth;
         if (_sleepsArray)
         {
             NSInteger number = [_sleepsArray[((i + 1) / 2) % _sleepsArray.count] integerValue];
             width = _lineWidth - (_lineWidth / 6 * number);
-            CGContextAddArc(context, centerX, centerY, radius - (_lineWidth / 6 * number) / 2, startAngle, endAngle, false);
+            
+            if (number == 4 && i % 2)
+            {
+                width = _lineWidth;
+                drawColor = UIColorFromHEX(0xbdbdbe);
+                CGContextAddArc(context, centerX, centerY, radius, startAngle, endAngle, false);
+            }
+            else
+            {
+                CGContextAddArc(context, centerX, centerY, radius - (_lineWidth / 6 * number) / 2, startAngle, endAngle, false);
+            }
+            
+            CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
         }
         else
         {
             CGContextAddArc(context, centerX, centerY, radius, startAngle, endAngle, false);
+            CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
         }
-        
-        UIColor *drawColor = [self.datasource pieChartView:self colorForSliceAtIndex:i];
-        CGContextSetStrokeColorWithColor(context, drawColor.CGColor);
         
         CGContextSetLineWidth(context, width);
         CGContextStrokePath(context);
@@ -123,6 +152,11 @@
     _durationLabel.text = @"8小时";
     _targetLabel.hidden = YES;
     _durationLabel.hidden = YES;
+    
+    _clockImage.hidden = NO;
+    self.signView.hidden = YES;
+    _timeLabel.hidden = YES;
+    _minLabel.hidden = YES;
 }
 
 - (void)daySetting
@@ -135,6 +169,7 @@
     _timeLabel.text = @"步数";
    // _targetLabel.text = @"卡路里";
     _durationLabel.text = @"百分比";
+    _clockImage.hidden = YES;
 }
 
 - (void)updateContentForViewWithModel:(PedometerModel *)model withState:(PieChartViewShowState)state  withReloadBlock:(PieChartViewReload)block;
@@ -176,8 +211,8 @@
             
         case PieChartViewShowSleep:
         {
-            _timeLabel.text = [NSString stringWithFormat:@"%02d:%02d", model.totalSleepTime / 60, model.totalSleepTime % 60];
-            _durationLabel.text = [NSString stringWithFormat:@"%ld小时", (long)model.targetSleep / 60];
+            //_timeLabel.text = [NSString stringWithFormat:@"%02d:%02d", model.totalSleepTime / 60, model.totalSleepTime % 60];
+            //_durationLabel.text = [NSString stringWithFormat:@"%ld小时", (long)model.targetSleep / 60];
             percent = model.totalSleepTime * 1.0 / (model.targetSleep > 1 ? model.targetSleep : 8 * 60);
 
         }

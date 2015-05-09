@@ -79,8 +79,8 @@
     NSArray *vcArray = @[vc2, vc3, vc4, vc5, vc6, vc1];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    NSArray *imagesArray = @[@"顶部四格-1@2x.png", @"顶部四格-2@2x.png", @"", @"", @"", @"默认头像@2x.png"];
-    NSArray *selImagesArray = @[@"顶部四格-1选中@2x.png", @"顶部四格-2-选中@2x.png", @"", @"", @"", @"默认头像@2x.png"];
+    NSArray *imagesArray = @[@"顶部四格-1@2x.png", @"顶部四格-2@2x.png", @"", @"", @"", @""];
+    NSArray *selImagesArray = @[@"顶部四格-1选中@2x.png", @"顶部四格-2-选中@2x.png", @"", @"", @"", @""];
 
     for (int i = 0; i < vcArray.count; i++)
     {
@@ -184,7 +184,7 @@
      */
     
     [UIView transitionWithView:self.navigationController.view
-                      duration:0.5
+                      duration:0.35
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         [self.navigationController pushViewController:[self.viewControllers lastObject] animated:NO];

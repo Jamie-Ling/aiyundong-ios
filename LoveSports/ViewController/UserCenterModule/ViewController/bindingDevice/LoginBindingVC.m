@@ -14,25 +14,63 @@
 @interface LoginBindingVC () <ShowWareViewDelegate>
 
 @property (nonatomic, strong) ShowWareView *wareView;
+@property (nonatomic, strong) UIButton *skipButton;
 
 @end
 
 @implementation LoginBindingVC
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[BLTManager sharedInstance] checkOtherDevices];
+    
+    __weak LoginBindingVC *safeSelf = self;
+    [BLTManager sharedInstance].updateModelBlock = ^(BLTModel *model)
+    {
+        if (safeSelf.wareView)
+        {
+            [safeSelf.wareView reFreshDevice];
+        }
+    };
+    
+    [BLTManager sharedInstance].connectBlock = ^() {
+        [safeSelf bltIsConnect];
+    };
+    
+    [_wareView reFreshDevice];
+}
+
+- (void)bltIsConnect
+{
+    _skipButton.titleNormal = LS_Text(@"Next");
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [BLTManager sharedInstance].updateModelBlock = nil;
+    [BLTManager sharedInstance].connectBlock = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"绑定硬件";
-
+    self.title = LS_Text(@"Pair with device");
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
     // Do any additional setup after loading the view.
+    
+    [self loadShowWareView];
 }
 
 - (void)loadShowWareView
 {
-    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width , self.view.height - 64)];
+    _wareView = [[ShowWareView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 128) withOpenHead:YES];
     
-    _wareView.delegate = self;
     [self.view addSubview:_wareView];
     
     [self loadSkipButton];
@@ -40,11 +78,20 @@
 
 - (void)loadSkipButton
 {
-    UIButton *skipButton = [UIButton simpleWithRect:CGRectMake(60, self.height - 64, self.width - 120, 64)
-                                          withTitle:@"跳过, 以后再绑定"
-                                    withSelectTitle:@"跳过, 以后再绑定"
-                                          withColor:[UIColor clearColor]];
-    [self addSubview:skipButton];
+    _skipButton = [UIButton simpleWithRect:CGRectMake(60, self.height - 128, self.width - 120, 64)
+                                 withTitle:LS_Text(@"Skip, binding later")
+                           withSelectTitle:LS_Text(@"Skip, binding later")
+                                 withColor:[UIColor clearColor]];
+    _skipButton.titleColorNormal = UIColorFromHEX(0x169ad8);
+    [_skipButton addTouchUpTarget:self action:@selector(clickSkipButton:)];
+    [self addSubview:_skipButton];
+}
+
+- (void)clickSkipButton:(UIButton *)button
+{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    
+    [app pushToContentVC];
 }
 
 - (void)didReceiveMemoryWarning

@@ -26,12 +26,13 @@
 {
     self.scrollView.frame = CGRectMake(0, 100, self.width, 160);
 
-    self.yearLabel.frame = CGRectMake(20, 240, 44, 20);
+    CGFloat offsetY = FitScreenNumber(240, 240, 260, 280, 260);
+    self.yearLabel.frame = CGRectMake(20, offsetY, 100, 20);
 
-    self.typeView.frame = CGRectMake(0, 260, self.width, 64);
-    self.typeView.offset = 160;
+    offsetY = FitScreenNumber(260, 260, 280, 300, 300);
+    self.typeView.frame = CGRectMake(0, offsetY, self.width, 64);
+    self.typeView.offset = FitScreenNumber(140, 170, 180, 200, 300);
 }
-
 
 - (void)clickCalendarButton
 {
