@@ -73,5 +73,7 @@ AS_SINGLETON(BLTManager)
 
 // 主动断开设备. 要连下一个设备触发
 - (void)initiativeDismissCurrentModel:(BLTModel *)model;
+// 因通信错误断开重链接.
+- (void)repeatConnectThenDismissCurrentModel:(BLTModel *)model;
 
 @end

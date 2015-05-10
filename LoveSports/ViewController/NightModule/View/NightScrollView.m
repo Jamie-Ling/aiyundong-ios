@@ -83,7 +83,7 @@
     
     if (index == -1)
     {
-        if ([date isSameWithDate:[NSDate date]])
+        if ([date isSameWithDate:[[NSDate date] dateAfterDay:1]])
         {
             return YES;
         }

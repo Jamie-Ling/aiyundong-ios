@@ -63,8 +63,8 @@ DEF_SINGLETON(BLTAcceptData)
     
     if (_type == BLTAcceptDataTypeUnKnown)
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
-        [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:2.0];
+        // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkWhetherCommunicationError) object:nil];
+        // [self performSelector:@selector(checkWhetherCommunicationError) withObject:nil afterDelay:2.0];
     }
 }
 
@@ -434,12 +434,18 @@ DEF_SINGLETON(BLTAcceptData)
         NSString *title = [NSString stringWithFormat:@"%@: %.0f%%", LS_Text(@"Synchronous progress"), progress * 100];
         
         SHOWMBProgressHUDIndeterminate(title, nil, NO);
+        
+        if (progress >= 0.99)
+        {
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hiddenProgress) object:nil];
+            [self performSelector:@selector(hiddenProgress) withObject:nil afterDelay:10.0];
+        }
     }
 }
 
-- (void)saveSyncDataToModel
+- (void)hiddenProgress
 {
-    
+    HIDDENMBProgressHUD;
 }
 
 - (void)saveRealTimeData:(NSData *)data

@@ -110,11 +110,11 @@
     [[UserInfoHelp sharedInstance] sendSetSedentariness:^(id object) {
         if ([object boolValue])
         {
-            SHOWMBProgressHUD(@"Setting success", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
         }
         else
         {
-            SHOWMBProgressHUD(@"Setting fail", nil, nil, NO, 2.0);
+            SHOWMBProgressHUD(LS_Text(@"Setting fail"), nil, nil, NO, 2.0);
         }
     }];
 }

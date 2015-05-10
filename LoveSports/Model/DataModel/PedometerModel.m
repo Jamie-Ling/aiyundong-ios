@@ -261,6 +261,7 @@
     {
         totalModel.isSaveAllDay = NO;
         [BLTRealTime sharedInstance].currentDayModel = totalModel;
+        [totalModel setNextSleepDataForNextModel];
     }
     else
     {
@@ -383,12 +384,31 @@
 // 为当前的模型附加上昨天的睡眠模型, 数据
 - (void)setLastSleepDataForCurrentModel
 {
-    NSDate *date = [NSDate dateWithString:self.dateString];
+    // 取出昨天的模型.
+    NSDate *date = [[NSDate dateWithString:self.dateString] dateAfterDay:-1];
     PedometerModel *model = [PedometerHelper getModelFromDBWithDate:date];
     
     if (model)
     {
         _lastDetailSleeps = model.nextDetailSleeps;
+    }
+}
+
+// 为明天附上今天晚上的数据.
+- (void)setNextSleepDataForNextModel
+{
+    // 取出明天的模型.
+    NSDate *date = [[NSDate dateWithString:self.dateString] dateAfterDay:1];
+    PedometerModel *model = [PedometerHelper getModelFromDBWithDate:date];
+    
+    if (model)
+    {
+        NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
+        [sleepArray addObjectsFromArray:[_currentDaySleeps subarrayWithRange:NSMakeRange(144, 144)]];
+        [sleepArray addObjectsFromArray:[model.detailSleeps subarrayWithRange:NSMakeRange(144, 144)]];
+
+        model.detailSleeps = sleepArray;
+        [PedometerModel updateToDB:model where:nil];
     }
 }
 
@@ -403,41 +423,14 @@
     NSMutableArray *detailDistans  = [[NSMutableArray alloc] initWithCapacity:0];
     NSMutableArray *detailCalories = [[NSMutableArray alloc] initWithCapacity:0];
 
-    /*
-    // 差就补，多就移除
-    if ((timeOrder / 6) > detailSteps.count)
-    {
-        for (NSUInteger i = detailSteps.count; i < timeOrder / 6; i++)
-        {
-            [detailSteps addObject:@(0)];
-            [detailCalories addObject:@(0)];
-            [detailDistans addObject:@(0)];
-        }
-    }
-    else if ((timeOrder / 6) < detailSteps.count)
-    {
-        [detailSteps removeObjectsInRange:NSMakeRange(timeOrder / 6, detailSteps.count - timeOrder / 6)];
-    }
-    
-    if (timeOrder > detailSleeps.count)
-    {
-        for (NSUInteger i = detailSleeps.count; i < timeOrder; i++)
-        {
-            [detailSleeps addObject:@(3)];
-        }
-    }
-    else if (timeOrder < detailSleeps.count)
-    {
-        [detailSteps removeObjectsInRange:NSMakeRange(timeOrder, detailSteps.count - timeOrder)];
-    }
-    */
-    
     // 展示的时候不足的个数再展示的时候自动补满48个.
     for (int i = 0; i < 288; i++)
     {
         NSInteger total = [self getDataWithIndex:i withType:SportsModelSleep];
         [detailSleeps addObject:@(total)];
     }
+    
+    self.currentDaySleeps = detailSleeps;
     
     // 昨天半天的加上今天半天的.
     NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];

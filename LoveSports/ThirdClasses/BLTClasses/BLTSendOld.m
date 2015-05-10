@@ -164,6 +164,7 @@ DEF_SINGLETON(BLTSendOld)
         [self stopTimer];
         if (type == BLTAcceptDataTypeOldRequestSportEnd)
         {
+            HIDDENMBProgressHUD;
             if (object)
             {
                 [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, _dataBytes]];
@@ -178,6 +179,10 @@ DEF_SINGLETON(BLTSendOld)
         {
             SHOWMBProgressHUD(LS_Text(@"No data"), nil, nil, NO, 2.0);
             _isSyncing = NO;
+        }
+        else
+        {
+            HIDDENMBProgressHUD;
         }
     }];
     
@@ -224,8 +229,9 @@ DEF_SINGLETON(BLTSendOld)
 // 旧设备1分钟后断开链接.
 - (void)dismissConnect
 {
-    if ([BLTManager sharedInstance].model)
+    if ([BLTManager sharedInstance].model && ![BLTManager sharedInstance].model.isNewDevice)
     {
+        HIDDENMBProgressHUD;
         // 将当前连接的模型干掉...
         [[BLTManager sharedInstance] initiativeDismissCurrentModel:[BLTManager sharedInstance].model];
         [BLTManager sharedInstance].model = nil;

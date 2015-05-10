@@ -110,6 +110,8 @@ DEF_SINGLETON(PedometerOld)
             
             currentModel.totalSleepTime += 5;
             [self updateDataForSleep:currentModel withNumber:sleepState withTimeIndex:timeIndex];
+            
+            NSLog(@"..sleepState = .%d..%d", sleepState, timeIndex);
         }
         else
         {
@@ -211,10 +213,10 @@ DEF_SINGLETON(PedometerOld)
 
 + (void)updateDataForSleep:(PedometerModel *)model withNumber:(NSInteger)number withTimeIndex:(NSInteger)order
 {
-    NSMutableArray *sleepArray = [NSMutableArray arrayWithArray:model.detailSleeps];
+    NSMutableArray *sleepArray = [NSMutableArray arrayWithArray:model.currentDaySleeps];
     [self fixMutableArray:sleepArray withCount:288];
     sleepArray[order] = @(number);
-    model.detailSleeps = sleepArray;
+    model.currentDaySleeps = sleepArray;
 }
 
 + (void)fixMutableArray:(NSMutableArray *)array withCount:(int)count
@@ -271,19 +273,27 @@ DEF_SINGLETON(PedometerOld)
     {
         PedometerModel *tmpModel = _modelArray[i];
         
+        // 第二天的半天的睡眠数据.
+        tmpModel.nextDetailSleeps = [tmpModel.currentDaySleeps subarrayWithRange:NSMakeRange(144, 144)];
+
         // 最后设置睡眠的数据。昨天半天加上今天半天的.
         [tmpModel setLastSleepDataForCurrentModel];
-        tmpModel.nextDetailSleeps = [tmpModel.detailSleeps subarrayWithRange:NSMakeRange(144, 144)];
         
         // 昨天半天的加上今天半天的.
         NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
         [sleepArray addObjectsFromArray:tmpModel.lastDetailSleeps];
-        [sleepArray addObjectsFromArray:[tmpModel.detailSleeps subarrayWithRange:NSMakeRange(0, 144)]];
+        [sleepArray addObjectsFromArray:[tmpModel.currentDaySleeps subarrayWithRange:NSMakeRange(0, 144)]];
         tmpModel.detailSleeps = sleepArray;
         
         // 加上开始睡眠和结束睡眠的时间.
         [tmpModel addSleepStartTimeAndEndTime];
- 
+        
+        if ([[NSDate date] isSameWithDate:[NSDate dateWithString:tmpModel.dateString]])
+        {
+            NSLog(@"确定附上去了撒...");
+            [tmpModel setNextSleepDataForNextModel];
+        }
+
         [PedometerModel updateToDB:tmpModel where:nil];
         [tmpModel savePedometerModelToWeekModelAndMonthModel];
         

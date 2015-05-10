@@ -80,12 +80,15 @@
                                                                                     target:self
                                                                                   selector:@selector(goBackPrePage)
                                                                                  ImageName:@""];
-    
+    [self loadViewsForConnectState];
+}
+
+- (void)loadViewsForConnectState
+{
     [self loadLabels];
     if (_model.isBinding && _model.peripheral.state == CBPeripheralStateConnected)
     {
         [self loadBindingAndConnectSetting];
-       // [self bltIsConnect];
     }
     else if (_model.isBinding && _model.peripheral.state != CBPeripheralStateConnected)
     {
@@ -99,17 +102,8 @@
 
 - (void)dismissLink
 {
-    // SHOWMBProgressHUD(@"该设备连接突然断开", nil, nil, NO, 2.0);
-    // [self performSelector:@selector(popCurrentVC) withObject:nil afterDelay:2.0];
-    
-    if (_model.isBinding)
-    {
-        [self loaoNoConnectAndBindingSetting];
-    }
-    else
-    {
-        [self loadNoBindingAndNoConnectSetting];
-    }
+    [self.view removeAllSubviews];
+    [self loadViewsForConnectState];
 }
 
 - (void)popCurrentVC
@@ -341,26 +335,8 @@
 
 - (void)bltIsConnect
 {
-    /**
-     *  需要有返回值。根据返回值加载不同的设置页面.
-     */
-    
     [self.view removeAllSubviews];
-    
-    HIDDENMBProgressHUD;
-    [self loadLabels];
-    [self loadBindingAndConnectSetting];
-    
-    /*
-    if (![LS_SettingBaseTimeZoneInfo getBOOLValue] && [BLTManager sharedInstance].model.isNewDevice)
-    {
-        _timeView = [[TimeZoneView alloc] initWithFrame:CGRectMake(0, 0, 180, 200)];
-        
-        _timeView.backgroundColor = [UIColor whiteColor];
-        _timeView.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-        [_timeView popupWithtype:PopupViewOption_colorLump touchOutsideHidden:NO succeedBlock:nil dismissBlock:nil];
-    }
-     */
+    [self loadViewsForConnectState];
 }
 
 #pragma mark --- UITextField Delegate ---

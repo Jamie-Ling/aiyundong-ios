@@ -350,7 +350,28 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 // 程序进入到前台时的同步方法.
 - (void)synHistoryDataEnterForeground
 {
-    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+    if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
+    {
+        if ([BLTManager sharedInstance].model.isNewDevice)
+        {
+            if ([BLTManager sharedInstance].model.isRealTime)
+            {
+                [[BLTRealTime sharedInstance] startRealTimeTransWithBackBlock:nil];
+            }
+            else
+            {
+                [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+            }
+        }
+        else
+        {
+            [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+        }
+    }
+    else
+    {
+        // SHOWMBProgressHUD(@"设备没有链接.", @"无法同步数据.", nil, NO, 2.0);
+    }
 }
 
 // 空中升级。

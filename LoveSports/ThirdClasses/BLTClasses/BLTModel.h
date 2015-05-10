@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSArray *remindArray; //久坐提醒.
 
 @property (nonatomic, assign) BOOL isRealTime; // 是否时时同步
+@property (nonatomic, assign) BOOL isRepeatConnect; // 是否重链接
 
 
 + (instancetype)initWithUUID:(NSString *)uuid;

@@ -189,6 +189,7 @@ DEF_SINGLETON(BLTManager)
         }
        
         model.isInitiative = NO;
+        model.isRepeatConnect = NO;
         if (model.isBinding && !_model)
         {
             // 如果该设备已经绑定并且没有连接设备时就直接连接.
@@ -345,12 +346,22 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     {
         if (!model.isInitiative)
         {
-            [self startCan];
+            if (model.isRepeatConnect)
+            {
+                [_centralManager connectPeripheral:peripheral options:nil];
+            }
+            else
+            {
+                [self startCan];
+            }
         }
-        
-        model.isInitiative = NO;
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
-        [self performSelector:@selector(startCan) withObject:nil afterDelay:3];
+        else
+        {
+            // 主动断开的.
+            model.isInitiative = NO;
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
+            [self performSelector:@selector(startCan) withObject:nil afterDelay:8.0];
+        }
     }
     else
     {
@@ -385,6 +396,12 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 - (void)initiativeDismissCurrentModel:(BLTModel *)model
 {
     model.isInitiative = YES;
+    [_centralManager cancelPeripheralConnection:model.peripheral];
+}
+
+- (void)repeatConnectThenDismissCurrentModel:(BLTModel *)model
+{
+    model.isRepeatConnect = YES;
     [_centralManager cancelPeripheralConnection:model.peripheral];
 }
 

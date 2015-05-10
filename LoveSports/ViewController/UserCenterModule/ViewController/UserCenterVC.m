@@ -94,7 +94,7 @@
     };
     
     [BLTManager sharedInstance].disConnectBlock = ^ {
-        [weakSelf updateElecQuantity];
+       // [weakSelf updateElecQuantity];
     };
 }
 
@@ -109,8 +109,8 @@
     }
     else
     {
-        _dumpEnergy = 0;
-        _showModel._deviceVersion = @"";
+       // _dumpEnergy = 0;
+       // _showModel._deviceVersion = @"";
     }
     
     [self refreshMainPage];

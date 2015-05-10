@@ -156,9 +156,9 @@ typedef enum{
 #pragma mark ---------------- 描述文字、默认业务字符------------
 #define kCustomerServicePhoneNumber   @"0591-8888888"  //客服电话号码
 
-#define kShopUrl  @"http://www.baidu.com"   //爱运动商城URL
-#define kOpinionUrl  @"http://www.baidu.com"   //意见反馈URL
-#define kHelpUrl  @"http://www.baidu.com"   //帮助URL
+#define kShopUrl  @"http://isport.tmall.com/"   //爱运动商城URL
+#define kOpinionUrl  @"http://isport.tmall.com/"   //意见反馈URL
+#define kHelpUrl  @"http://isport.tmall.com/"   //帮助URL
 
 #define kBraceletDefaultNamePrefixion  @"爱运动智能手环"  //智能手环默认名字前缀
 

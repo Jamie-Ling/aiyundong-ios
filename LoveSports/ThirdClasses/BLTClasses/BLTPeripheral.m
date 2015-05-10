@@ -46,7 +46,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        [self stopUpdateRSSI];
+       // [self stopUpdateRSSI];
     }
 }
 
@@ -171,7 +171,7 @@ DEF_SINGLETON(BLTPeripheral)
             char batteryLevel;
             [charac.value getBytes:&batteryLevel length:1];
             
-            NSLog(@".charac.value = .%@...%d", charac, batteryLevel);
+            NSLog(@".charac.value = .%@...%d..%d", charac, batteryLevel, (NSUInteger)batteryLevel);
             [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
         }
     }
@@ -203,6 +203,9 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         NSLog(@"写数据时发生错误...%@", error);
+        
+        [self dismissAndRepeatConnect];
+
         if (_failBlock)
         {
             _failBlock();
@@ -229,6 +232,8 @@ DEF_SINGLETON(BLTPeripheral)
     {
         NSLog(@"数据更新错误...");
         
+        [self dismissAndRepeatConnect];
+
         if (_failBlock)
         {
             _failBlock();
@@ -282,6 +287,8 @@ DEF_SINGLETON(BLTPeripheral)
 {
     if (error)
     {
+        [self dismissAndRepeatConnect];
+
         NSLog(@"数据更新错误...");
     }
     else
@@ -309,6 +316,7 @@ DEF_SINGLETON(BLTPeripheral)
         
         if (!service)
         {
+            [self dismissAndRepeatConnect];
             NSLog(@"service有错误...");
             return;
         }
@@ -316,6 +324,7 @@ DEF_SINGLETON(BLTPeripheral)
         CBCharacteristic *chara = [self searchCharacteristcFromUUID:charaUUID withService:service];
         if (!chara)
         {
+            [self dismissAndRepeatConnect];
             NSLog(@"chara有错误...");
             return;
         }
@@ -398,6 +407,10 @@ DEF_SINGLETON(BLTPeripheral)
     }
 }
 
+- (void)dismissAndRepeatConnect
+{
+    [[BLTManager sharedInstance] repeatConnectThenDismissCurrentModel:[BLTManager sharedInstance].model];
+}
 
 #pragma mark --- receiveData 数据清空 ---
 - (void)cleanMutableData:(NSMutableData *)data

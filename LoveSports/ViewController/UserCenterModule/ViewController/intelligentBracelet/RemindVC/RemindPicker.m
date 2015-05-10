@@ -82,6 +82,7 @@
     if (_confirmBlock)
     {
         _confirmBlock(self, _datePicker.date);
+        // NSLog(@".._datePicker.date = %@ %d...%d..", _datePicker.date, _datePicker.date.hour, _datePicker.date.minute);
     }
 }
 

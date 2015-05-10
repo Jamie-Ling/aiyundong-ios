@@ -77,6 +77,12 @@ DEF_SINGLETON(BLTRealTime)
     };
 }
 
+// 开始实时后先同步历史数据
+- (void)synHistoryData
+{
+    [[BLTSimpleSend sharedInstance] synHistoryDataWithBackBlock:[BLTSimpleSend sharedInstance].backBlock];
+}
+
 - (void)closeRealTimeTransWithBackBlock:(BLTRealTimeBackBlock)block
 {
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)

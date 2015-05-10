@@ -111,6 +111,7 @@ DEF_SINGLETON(PedometerHelper)
     }
      */
     
+    model.currentDaySleeps = [NSArray arrayWithArray:array];
     model.detailSleeps = [NSArray arrayWithArray:array];
     model.nextDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];
     model.lastDetailSleeps = [NSArray arrayWithArray:[array subarrayWithRange:NSMakeRange(0, 144)]];

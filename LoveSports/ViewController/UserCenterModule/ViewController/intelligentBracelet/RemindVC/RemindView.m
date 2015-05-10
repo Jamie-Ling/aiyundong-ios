@@ -63,7 +63,7 @@
     _textField.keyboardType = UIKeyboardTypeNumberPad;
     _textField.delegate = self;
     [_intervalLabel addSubview:_textField];
-    [_textField becomeFirstResponder];
+    //[_textField becomeFirstResponder];
     
     _startLabel = [UILabel simpleLabelWithRect:CGRectMake(0, _intervalLabel.totalHeight + 4, self.width, _offset)
                                  withAlignment:NSTextAlignmentLeft
