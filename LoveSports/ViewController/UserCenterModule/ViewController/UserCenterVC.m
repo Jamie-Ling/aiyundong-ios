@@ -101,16 +101,11 @@
 // 更新电量
 - (void)updateElecQuantity
 {
-    //得到电量
+    _dumpEnergy = [LS_ElecQuantity getIntValue];
+
     if ([BLTManager sharedInstance].connectState == BLTManagerConnected)
     {
-        _dumpEnergy = [BLTManager sharedInstance].elecQuantity; //_showModel._deviceElectricity;
         _showModel._deviceVersion = [NSString stringWithFormat:@"VB %ld", (long)[BLTManager sharedInstance].model.hardVersion];
-    }
-    else
-    {
-       // _dumpEnergy = 0;
-       // _showModel._deviceVersion = @"";
     }
     
     [self refreshMainPage];

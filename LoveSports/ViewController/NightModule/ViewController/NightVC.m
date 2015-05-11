@@ -31,6 +31,10 @@
     [BLTSimpleSend sharedInstance].backBlock = ^(NSDate *date){
         [weakSelf updateConnectForView];
     };
+    
+    [BLTManager sharedInstance].connectBlock = ^ {
+        [weakSelf.scrollView refreshSleepViewHiddenForScrollView];
+    };
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -38,6 +42,7 @@
     [super viewDidAppear:animated];
     
     [_scrollView startChartAnimation];
+    [BLTManager sharedInstance].connectBlock = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

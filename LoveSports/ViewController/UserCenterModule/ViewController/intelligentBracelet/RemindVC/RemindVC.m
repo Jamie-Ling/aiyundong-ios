@@ -97,8 +97,8 @@
 - (void)controlRemindPickerHidden:(BOOL)isHidden
 {
     CGRect rect = isHidden ?
-    CGRectMake(0, self.height, self.width, 300) :
-    CGRectMake(0, self.height - 300, self.width, 300);
+    CGRectMake(0, self.view.height, self.width, 200) :
+    CGRectMake(0, self.view.height - 200, self.width, 200);
     
     [UIView animateWithDuration:0.2 animations:^{
         _remindPicker.frame = rect;
@@ -135,7 +135,7 @@
 
 - (void)loadRemindPicker
 {
-    _remindPicker = [[RemindPicker alloc] initWithFrame:CGRectMake(0, self.height, self.width, 300)];
+    _remindPicker = [[RemindPicker alloc] initWithFrame:CGRectMake(0, self.view.height, self.width, 200)];
     
     [self addSubview:_remindPicker];
     DEF_WEAKSELF_(RemindVC);
@@ -147,13 +147,14 @@
     };
 }
 
-- (void)updateContentForRemindView:(NSDate *)date
+- (void)updateContentForRemindView:(TimePickerView *)timePicker
 {
     [self controlRemindPickerHidden:YES];
     
-    if (date)
+    if (timePicker)
     {
-        NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)date.hour, (long)date.minute];
+        NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)timePicker.hourOrder,
+                            (long)timePicker.minutesOrder];
         [_remindView updateContentForLabelWithTime:string withIndex:_currentIndex];
     }
 }

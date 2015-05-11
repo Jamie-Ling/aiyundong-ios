@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "RemindModel.h"
+#import "TimePickerView.h"
 
 @interface RemindPicker : UIView
 
-@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) TimePickerView *timePicker;
 
 @property (nonatomic, strong) UIButton *confirmButton;
 @property (nonatomic, strong) UIButton *cancelButton;

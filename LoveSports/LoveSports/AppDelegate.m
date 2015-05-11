@@ -28,6 +28,9 @@
     // Override point for customization after application launch.
     // 80770100 008d0200 00130000 009a0100 00000000
 
+    // 测试
+    // [LS_LastWareUUID setObjectValue:@"A25E1B12-6C08-85EB-60DF-954ABC73A116"];
+    
     [self createVideoFloders];
 
     [[DataShare sharedInstance] checkDeviceModel];

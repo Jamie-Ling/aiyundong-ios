@@ -22,7 +22,7 @@
         self.backgroundColor = [UIColor whiteColor];
         
         [self loadButtons];
-        [self loadDatePicker];
+        [self loadTimePicker];
     }
     
     return self;
@@ -58,15 +58,11 @@
     [self addSubview:downLine];
 }
 
-- (void)loadDatePicker
+- (void)loadTimePicker
 {
-    _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, self.width, self.height - 44)];
+    _timePicker = [[TimePickerView alloc] initWithFrame:CGRectMake(0, 44, self.width, self.height - 44)];
     
-    [_datePicker setDatePickerMode:UIDatePickerModeTime];
-    _datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:[DataShare sharedInstance].isEnglish ? @"en_US" : @"zh_CN"];
-    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-    [_datePicker setTimeZone:timeZone];
-    [self addSubview:_datePicker];
+    [self addSubview:_timePicker];
 }
 
 - (void)clickCancelButton:(UIButton *)button
@@ -81,17 +77,24 @@
 {
     if (_confirmBlock)
     {
-        _confirmBlock(self, _datePicker.date);
+        //_confirmBlock(self, _datePicker.date);
         // NSLog(@".._datePicker.date = %@ %d...%d..", _datePicker.date, _datePicker.date.hour, _datePicker.date.minute);
+        _confirmBlock(self, _timePicker);
     }
 }
 
 - (void)updateContentForDatePicker:(NSString *)time withIndex:(NSInteger)index
 {
+    /*
     NSString *string = [NSString stringWithFormat:@"2000-01-01 %@:00", time];
     NSDate *date = [NSDate dateWithString:string];
     
     [_datePicker setDate:date animated:NO];
+     */
+    
+    NSArray *array = [time componentsSeparatedByString:@":"];
+    
+    [_timePicker setPositionWithHour:[array[0] integerValue] withMinute:[array[1] integerValue]];
     _titleLabel.text = index ? [NSString stringWithFormat:@"%@  ", LS_Text(@"Ending Time")] : [NSString stringWithFormat:@"%@  ", LS_Text(@"Beginning Time")];
 }
 

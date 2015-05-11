@@ -50,6 +50,32 @@
     return _picker;
 }
 
+- (void)loadTimePickerViewWithTime:(NSString *)time
+{
+    if (!_timePicker)
+    {
+        CGFloat height = BSMODALPICKER_PANEL_HEIGHT - BSMODALPICKER_TOOLBAR_HEIGHT * (_isAlarm ? 2.0 : 1.0);
+        CGRect pickerFrame = CGRectMake(0,
+                                        BSMODALPICKER_TOOLBAR_HEIGHT,
+                                        self.width,
+                                        height);
+        _timePicker = [[TimePickerView alloc] initWithFrame:pickerFrame];
+        _timePicker.backgroundColor = [UIColor whiteColor];
+        
+        if (time)
+        {
+            NSArray *array = [time componentsSeparatedByString:@":"];
+            if (array.count == 2)
+            {
+                [_timePicker setPositionWithHour:[array[0] integerValue] withMinute:[array[1] integerValue]];
+            }
+        }
+    }
+    
+    _picker = _timePicker;
+    _picker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+}
+
 - (UIView *)pickerWithFrame:(CGRect)pickerFrame {
     [NSException raise:NSGenericException
                 format:@"pickerWithFrame: must be implemented by a subclass"];

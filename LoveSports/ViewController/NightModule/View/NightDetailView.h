@@ -17,4 +17,6 @@
 @property (nonatomic, strong) UIViewSimpleBlock backBlock;
 @property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;
 
+- (void)refreshSleepViewHidden;
+
 @end

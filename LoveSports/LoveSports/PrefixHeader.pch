@@ -52,6 +52,10 @@
 // 最后连接的设备的uuid。
 #define LS_LastWareUUID        @"LS_LastWareUUID"
 
+// 最后的电量
+#define LS_ElecQuantity        @"LS_ElecQuantity"
+
+
 // 是否已经设置过基本时区和度量
 #define LS_SettingBaseTimeZoneInfo  @"LS_SettingBaseTimeZoneInfo"
 

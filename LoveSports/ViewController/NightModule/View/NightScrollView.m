@@ -138,6 +138,16 @@
     }
 }
 
+- (void)refreshSleepViewHiddenForScrollView
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        NightDetailView *detailView = _viewsArray[i];
+        
+        [detailView refreshSleepViewHidden];
+    }
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

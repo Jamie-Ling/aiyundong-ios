@@ -62,8 +62,10 @@
     return _selectedDate;
 }
 
-- (UIDatePickerMode)mode {
-    if (_picker) {
+- (UIDatePickerMode)mode
+{
+    if (_picker)
+    {
         UIDatePicker *datePicker = (UIDatePicker *)self.picker;
         _mode = datePicker.datePickerMode;
     }
@@ -71,8 +73,10 @@
     return _mode;
 }
 
-- (NSArray *)additionalToolbarItems {
-    if (self.showTodayButton) {
+- (NSArray *)additionalToolbarItems
+{
+    if (self.showTodayButton)
+    {
         return @[
                  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                target:nil action:nil],
@@ -83,29 +87,37 @@
                  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                target:nil action:nil],
                  ];
-    } else {
+    }
+    else
+    {
         return [super additionalToolbarItems];
     }
 }
 
 #pragma mark - Custom Setters
 
-- (void)setSelectedDate:(NSDate *)selectedDate {
-    if (_selectedDate != selectedDate) {
+- (void)setSelectedDate:(NSDate *)selectedDate
+{
+    if (_selectedDate != selectedDate)
+    {
         _selectedDate = selectedDate;
         
-        if (self.picker) {
+        if (self.picker)
+        {
             UIDatePicker *datePicker = (UIDatePicker *)self.picker;
             datePicker.date = _selectedDate;
         }
     }
 }
 
-- (void)setMode:(UIDatePickerMode)mode {
-    if (_mode != mode) {
+- (void)setMode:(UIDatePickerMode)mode
+{
+    if (_mode != mode)
+    {
         _mode = mode;
         
-        if (self.picker) {
+        if (self.picker)
+        {
             UIDatePicker *datePicker = (UIDatePicker *)self.picker;
             datePicker.datePickerMode = _mode;
         }

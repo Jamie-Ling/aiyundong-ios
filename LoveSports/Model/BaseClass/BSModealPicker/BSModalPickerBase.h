@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 #import "WeekView.h"
 #import "AlarmRepeatView.h"
+#import "TimePickerView.h"
 
 typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 
@@ -27,6 +28,7 @@ typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 @property (nonatomic, strong) UIView *picker;
 
 @property (nonatomic, assign) BOOL isAlarm;
+@property (nonatomic, strong) TimePickerView *timePicker;
 
 /* Determines whether to display the opaque backdrop view.  By default, this is YES. */
 @property (nonatomic) BOOL presentBackdropView;
@@ -58,6 +60,8 @@ typedef void (^BSModalPickerViewCallback)(BOOL madeChoice);
 - (void)onDone:(id)sender;
 - (void)onCancel:(id)sender;
 - (void)onBackdropTap:(id)sender;
+// 替换picker.
+- (void)loadTimePickerViewWithTime:(NSString *)time;
 
 /* Override and return any additional buttons that you want on the toolbar.  By default, this is just a flexible space item. */
 - (NSArray *)additionalToolbarItems;

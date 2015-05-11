@@ -360,23 +360,26 @@
 // 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
 - (void)addSleepStartTimeAndEndTime
 {
-    for (int i = 143; i >= 0; i--)
+    if (_detailSleeps && _detailSleeps.count == 288)
     {
-        NSInteger state = [_detailSleeps[i] integerValue];
-        if (state == 4)
+        for (int i = 143; i >= 0; i--)
         {
-            _sleepTodayStartTime = i;
-            break;
+            NSInteger state = [_detailSleeps[i] integerValue];
+            if (state == 4)
+            {
+                _sleepTodayStartTime = i;
+                break;
+            }
         }
-    }
-    
-    for (int i = 287; i >= 143; i--)
-    {
-        NSInteger state = [_detailSleeps[i] integerValue];
-        if (state != 4)
+        
+        for (int i = 287; i >= 143; i--)
         {
-            _sleepTodayEndTime = i;
-            break;
+            NSInteger state = [_detailSleeps[i] integerValue];
+            if (state != 4)
+            {
+                _sleepTodayEndTime = i;
+                break;
+            }
         }
     }
 }

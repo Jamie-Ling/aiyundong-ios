@@ -208,10 +208,18 @@
     _sleepView = [[SleepTimeView alloc] initWithFrame:CGRectMake(0, _chartView.totalHeight + 5, self.width, 32)];
     
     [self addSubview:_sleepView];
-    
+    [self refreshSleepViewHidden];
+}
+
+- (void)refreshSleepViewHidden
+{
     if (![UserInfoHelp sharedInstance].braceModel.isNewDevice)
     {
         _sleepView.hidden = YES;
+    }
+    else
+    {
+        _sleepView.hidden = NO;
     }
 }
 
@@ -285,6 +293,8 @@
     
     [_sleepView updateContentForLabelsWithPercent:self.totalPercent withTime:model.totalSleepTime];
     [_showView updateContentForView:model.detailSleeps withStart:model.sleepTodayStartTime withEnd:model.sleepTodayEndTime];
+    
+    // NSLog(@"..model.detailSleeps = .  %d", model.detailSleeps.count);
 
     /*
      NSMutableArray *array = [[NSMutableArray alloc] init];

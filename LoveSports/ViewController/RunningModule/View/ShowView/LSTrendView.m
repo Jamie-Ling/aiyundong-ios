@@ -34,6 +34,16 @@
     self.typeView.offset = FitScreenNumber(140, 170, 180, 200, 300);
 }
 
+- (void)loadLandscapeButton
+{
+    UIButton *landscapeButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
+                                               withImage:@"旋转屏幕@2x.png"
+                                         withSelectImage:@"旋转屏幕@2x.png"];
+    
+    [landscapeButton addTarget:self action:@selector(landscapeViewData) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:landscapeButton];
+}
+
 - (void)clickCalendarButton
 {
     DEF_WEAKSELF_(LSTrendView);

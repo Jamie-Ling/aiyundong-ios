@@ -21,4 +21,7 @@
 - (void)updateContentToToday;
 - (void)updateContentWithDate:(NSDate *)date;
 
+//
+- (void)refreshSleepViewHiddenForScrollView;
+
 @end

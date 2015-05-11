@@ -151,13 +151,15 @@
     
     DEF_WEAKSELF_(AlarmClockVC);
     BSModalDatePickerView *datePicker = [[BSModalDatePickerView alloc] initWithDate:theDate];
+    [datePicker loadTimePickerViewWithTime:model.alarmTime];
     datePicker.showTodayButton = NO;
-    datePicker.mode = UIDatePickerModeTime;
+    //datePicker.mode = UIDatePickerModeTime;
     datePicker.isAlarm = YES;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:model.weekArray
                                withBlock:^(BOOL madeChoice) {
                                    if (madeChoice) {
+                                       /*
                                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                        [dateFormatter setDateFormat:@"HH:mm"];     //大写HH，强制24小时
                                        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
@@ -167,8 +169,13 @@
                                        //                            if (![choiceString isEqualToString:setTimeString] )
                                        //                            {
                                        NSLog(@"修改闹钟时间吧， 为 %@", choiceString);
+                                        */
                                        model.weekArray = datePicker._dayArray;
-                                       model.alarmTime = choiceString;
+                                       
+                                       NSString *alarmTime = [NSString stringWithFormat:@"%02ld:%02ld",
+                                                              (long)datePicker.timePicker.hourOrder,
+                                                              (long)datePicker.timePicker.minutesOrder];
+                                       model.alarmTime = alarmTime;
                                        model.isRepeat = datePicker.repeatView.repeat.on;
 
                                        [weakSelf.tableView reloadData];

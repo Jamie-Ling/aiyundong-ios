@@ -138,8 +138,8 @@
 - (void)loadLandscapeButton
 {
     UIButton *landscapeButton = [UIButton simpleWithRect:CGRectMake(self.width - 70, 18, 50, 44)
-                                               withImage:@"旋转屏幕@2x.png"
-                                         withSelectImage:@"旋转屏幕@2x.png"];
+                                               withImage:@"竖屏@2x.png"
+                                         withSelectImage:@"竖屏@2x.png"];
     
     [landscapeButton addTarget:self action:@selector(landscapeViewData) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:landscapeButton];

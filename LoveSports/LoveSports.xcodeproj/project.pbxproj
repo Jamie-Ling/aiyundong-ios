@@ -197,7 +197,6 @@
 		F46A76311AC97F84000D5EDB /* 小图标2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46A762E1AC97F84000D5EDB /* 小图标2@2x.png */; };
 		F46A76321AC97F84000D5EDB /* 小图标3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46A762F1AC97F84000D5EDB /* 小图标3@2x.png */; };
 		F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7691A7FAD680009E649 /* 奖杯.png */; };
-		F470E7AD1A7FAD680009E649 /* 竖屏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7701A7FAD680009E649 /* 竖屏@2x.png */; };
 		F470E7C51A7FAD680009E649 /* 能量_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E7891A7FAD680009E649 /* 能量_big@2x.png */; };
 		F470E7C61A7FAD680009E649 /* 能量选中_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E78A1A7FAD680009E649 /* 能量选中_big@2x.png */; };
 		F470E7C71A7FAD680009E649 /* 足迹-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F470E78B1A7FAD680009E649 /* 足迹-选中@2x.png */; };
@@ -244,6 +243,8 @@
 		F49529D31A766E03002A5382 /* BLTPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529CE1A766E03002A5382 /* BLTPeripheral.m */; };
 		F49529D41A766E03002A5382 /* BLTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = F49529D01A766E03002A5382 /* BLTUUID.m */; };
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
+		F4969E701B0086AA0090D767 /* 竖屏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4969E6F1B0086AA0090D767 /* 竖屏@2x.png */; };
+		F4969EB11B00C5070090D767 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4969EB01B00C5070090D767 /* TimePickerView.m */; };
 		F4A4F85F1AFDEBC1006CEA93 /* clock_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */; };
 		F4A4F8601AFDEBC1006CEA93 /* clock@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */; };
 		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
@@ -660,7 +661,6 @@
 		F46A762E1AC97F84000D5EDB /* 小图标2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "小图标2@2x.png"; sourceTree = "<group>"; };
 		F46A762F1AC97F84000D5EDB /* 小图标3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "小图标3@2x.png"; sourceTree = "<group>"; };
 		F470E7691A7FAD680009E649 /* 奖杯.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "奖杯.png"; sourceTree = "<group>"; };
-		F470E7701A7FAD680009E649 /* 竖屏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏@2x.png"; sourceTree = "<group>"; };
 		F470E7891A7FAD680009E649 /* 能量_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量_big@2x.png"; sourceTree = "<group>"; };
 		F470E78A1A7FAD680009E649 /* 能量选中_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量选中_big@2x.png"; sourceTree = "<group>"; };
 		F470E78B1A7FAD680009E649 /* 足迹-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "足迹-选中@2x.png"; sourceTree = "<group>"; };
@@ -742,6 +742,9 @@
 		F49529CF1A766E03002A5382 /* BLTUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLTUUID.h; sourceTree = "<group>"; };
 		F49529D01A766E03002A5382 /* BLTUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLTUUID.m; sourceTree = "<group>"; };
 		F496931A1A872952008D81CA /* home_sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_sports@2x.png"; sourceTree = "<group>"; };
+		F4969E6F1B0086AA0090D767 /* 竖屏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏@2x.png"; sourceTree = "<group>"; };
+		F4969EAF1B00C5070090D767 /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
+		F4969EB01B00C5070090D767 /* TimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerView.m; sourceTree = "<group>"; };
 		F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock_5@2x.png"; sourceTree = "<group>"; };
 		F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@1x.png"; sourceTree = "<group>"; };
 		F4A536E31AC06A0B0075D99E /* NightDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightDetailView.h; sourceTree = "<group>"; };
@@ -1487,6 +1490,8 @@
 				69FD41D41A7FCC2C0023B74D /* MS-OCWebView */,
 				69FD41D91A7FCC2C0023B74D /* PAGameAnswerItem.h */,
 				69FD41DA1A7FCC2C0023B74D /* PAGameAnswerItem.m */,
+				F4969EAF1B00C5070090D767 /* TimePickerView.h */,
+				F4969EB01B00C5070090D767 /* TimePickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1761,9 +1766,9 @@
 				F430E45F1AC7C9E0004E7130 /* 顶部四格-5选中@2x.png */,
 				F430E4601AC7C9E0004E7130 /* 默认头像@2x.png */,
 				F4C4C8191AC6C917005D511A /* 返回@2x.png */,
+				F4969E6F1B0086AA0090D767 /* 竖屏@2x.png */,
 				F4C4C81B1AC6C920005D511A /* 分享@2x.png */,
 				F470E7691A7FAD680009E649 /* 奖杯.png */,
-				F470E7701A7FAD680009E649 /* 竖屏@2x.png */,
 				F4C4C8201AC6D426005D511A /* 脚印-小@2x.png */,
 				F4C4C8211AC6D426005D511A /* 脚印-小选中@2x.png */,
 				F4C4C8221AC6D426005D511A /* 路程@2x.png */,
@@ -2457,7 +2462,6 @@
 				F4C4C82B1AC6D426005D511A /* 能量选中@2x.png in Resources */,
 				695549311A8CF4D900423EA9 /* 朋友@2x.png in Resources */,
 				F4B692FD1A6F3EBC00B42395 /* Main.storyboard in Resources */,
-				F470E7AD1A7FAD680009E649 /* 竖屏@2x.png in Resources */,
 				695549541A8D012B00423EA9 /* 左箭头.png in Resources */,
 				69EFC2291A7397C600B5BC53 /* battery@2x.png in Resources */,
 				F470E7C61A7FAD680009E649 /* 能量选中_big@2x.png in Resources */,
@@ -2474,6 +2478,7 @@
 				F4233CDF1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png in Resources */,
 				F4C4C83B1AC6E345005D511A /* 旋转屏幕@2x.png in Resources */,
 				6955493A1A8CF4D900423EA9 /* 电池电量-低@2x.png in Resources */,
+				F4969E701B0086AA0090D767 /* 竖屏@2x.png in Resources */,
 				69EFC21C1A738E4A00B5BC53 /* testImage.jpg in Resources */,
 				F43390641AE7D382000D3A0B /* link_5@2x.png in Resources */,
 				F4233CE11AFE12CD007D9C31 /* 02_bluetooth5_5@2x.png in Resources */,
@@ -2598,6 +2603,7 @@
 				F4BF5F6A1A6F529E004C433D /* XYSystemInfo.m in Sources */,
 				F4B693551A6F401A00B42395 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F488DEE61AD8D71E00746FC4 /* LKDBUtils.m in Sources */,
+				F4969EB11B00C5070090D767 /* TimePickerView.m in Sources */,
 				69E097421A873D6E003F2EB9 /* README.md in Sources */,
 				F4B692FA1A6F3EBC00B42395 /* ViewController.m in Sources */,
 				69EFC22A1A7397C600B5BC53 /* UIView+ALQuickFrame.m in Sources */,

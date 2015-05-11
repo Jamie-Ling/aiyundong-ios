@@ -110,8 +110,6 @@ DEF_SINGLETON(PedometerOld)
             
             currentModel.totalSleepTime += 5;
             [self updateDataForSleep:currentModel withNumber:sleepState withTimeIndex:timeIndex];
-            
-            NSLog(@"..sleepState = .%d..%d", sleepState, timeIndex);
         }
         else
         {

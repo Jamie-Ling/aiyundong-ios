@@ -401,10 +401,6 @@ DEF_SINGLETON(BLTSendData)
         (UInt8)(date.year >> 8), (UInt8)date.year,
         date.month, date.day, (UInt8)(order >> 8), (UInt8)order};
     
-    for (int i = 0; i < 10; i++)
-    {
-        NSLog(@"%x", val[i]);
-    }
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
@@ -424,10 +420,6 @@ DEF_SINGLETON(BLTSendData)
         (UInt8)(date.year >> 8), (UInt8)date.year,
         date.month, date.day, (UInt8)(order >> 8), (UInt8)order};
     
-    for (int i = 0; i < 10; i++)
-    {
-        NSLog(@"%x", val[i]);
-    }
     [self sendDataToWare:&val withLength:10 withUpdate:block];
 }
 
@@ -435,7 +427,6 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendRequestTodaySportDataWithOrder:(NSInteger)order
                            withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSLog(@"%d..%d", (UInt8)(order >> 8), (UInt8)order);
     UInt8 val[6] = {0xBE, 0x02, 0x03, 0xFE, (UInt8)(order >> 8), (UInt8)order};
     [self sendDataToWare:&val withLength:6 withUpdate:block];
 }

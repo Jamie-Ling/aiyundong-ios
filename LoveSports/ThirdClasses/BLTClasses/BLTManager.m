@@ -59,7 +59,7 @@ DEF_SINGLETON(BLTManager)
             [self updateRSSI:RSSI];
         };
         
-        // MillionPedometer==P118 W240=ActivityTracker
+        // MillionPedometer == P118 W240=ActivityTracker
         _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer",
                           @"W286", @"P118S", @"W194"];
     }
@@ -82,6 +82,11 @@ DEF_SINGLETON(BLTManager)
 - (void)setElecQuantity:(NSInteger)elecQuantity
 {
     _elecQuantity = elecQuantity;
+    
+    if (_elecQuantity != 0)
+    {
+        [LS_ElecQuantity setIntValue:_elecQuantity];
+    }
     
     if (_elecQuantityBlock)
     {

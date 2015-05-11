@@ -11,7 +11,7 @@
 @interface BSModalDatePickerView : BSModalPickerBase
 
 @property (nonatomic, strong) NSDate *selectedDate;
-@property (nonatomic) UIDatePickerMode mode;
+@property (nonatomic, assign) UIDatePickerMode mode;
 @property (nonatomic) BOOL showTodayButton;
 
 /* Initializes a new instance of the date picker with the values to present to the user.

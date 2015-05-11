@@ -68,9 +68,10 @@
     
     for (int i = 0; i < textArray.count; i++)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0 + self.width / 9 * i, self.height - 14,
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                    self.width / 9, 14)];
         
+        label.center = CGPointMake(0 + self.width / 8 * i, self.height - 7);
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
         label.font = [UIFont systemFontOfSize:11];
