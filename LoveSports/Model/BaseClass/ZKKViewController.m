@@ -32,6 +32,10 @@
 {
     [super viewWillAppear:animated];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        HIDDENMBProgressHUD;
+    });
+    
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 

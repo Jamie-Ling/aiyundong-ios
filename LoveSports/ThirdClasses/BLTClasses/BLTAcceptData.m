@@ -431,10 +431,11 @@ DEF_SINGLETON(BLTAcceptData)
             progress = 1.0;
         }
         
-        NSString *title = [NSString stringWithFormat:@"%@: %.0f%%", LS_Text(@"Synchronous progress"), progress * 100];
-        
-        SHOWMBProgressHUDIndeterminate(title, nil, NO);
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *title = [NSString stringWithFormat:@"%@: %.0f%%", LS_Text(@"Synchronous progress"), progress * 100];
+            SHOWMBProgressHUDIndeterminate(title, nil, NO);
+        });
+
         if (progress >= 0.99)
         {
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hiddenProgress) object:nil];
@@ -445,7 +446,9 @@ DEF_SINGLETON(BLTAcceptData)
 
 - (void)hiddenProgress
 {
-    HIDDENMBProgressHUD;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        HIDDENMBProgressHUD;
+    });
 }
 
 - (void)saveRealTimeData:(NSData *)data

@@ -164,7 +164,7 @@ DEF_SINGLETON(BLTSendOld)
         [self stopTimer];
         if (type == BLTAcceptDataTypeOldRequestSportEnd)
         {
-            HIDDENMBProgressHUD;
+            // HIDDENMBProgressHUD;
             if (object)
             {
                 [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, _dataBytes]];

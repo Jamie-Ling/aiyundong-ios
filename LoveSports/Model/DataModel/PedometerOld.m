@@ -288,7 +288,6 @@ DEF_SINGLETON(PedometerOld)
         
         if ([[NSDate date] isSameWithDate:[NSDate dateWithString:tmpModel.dateString]])
         {
-            NSLog(@"确定附上去了撒...");
             [tmpModel setNextSleepDataForNextModel];
         }
 
