@@ -136,11 +136,10 @@
 
 - (void)updateContentForLabelsAndButton:(NightDetailView *)detailView
 {
-    _dateLabel.text = [detailView.model.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
-    NSDate *date = detailView.currentDate;
-    NSString *weekString = [NSObject numberTransferWeek:date.weekday];
-    _weekLabel.text = weekString;
+    _dateLabel.text = [detailView.model showDateTextForSleep];
+    _weekLabel.text = [detailView.model showWeekTextForSleep];
     
+    NSDate *date = detailView.currentDate;
     [_backButton rotationAccordingWithDate:date];
     _backButton.hidden = [date isSameWithDate:[NSDate date]];
 }

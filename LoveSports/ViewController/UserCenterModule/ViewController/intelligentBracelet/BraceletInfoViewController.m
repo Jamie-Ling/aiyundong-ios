@@ -207,8 +207,9 @@
         return;
     }
     
+    NSLog(@"..%d..%d", [BLTManager sharedInstance].model.firmVersion, [BLTDFUBaseInfo sharedInstance].zipVersion);
     //假设有
-    _haveNewVersion = [BLTManager sharedInstance].model.hardVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
+    _haveNewVersion = [BLTManager sharedInstance].model.firmVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
     _newVersionInfoModel = [[VersionInfoModel alloc] init];
     
     [self reloadUserInfoTableView];

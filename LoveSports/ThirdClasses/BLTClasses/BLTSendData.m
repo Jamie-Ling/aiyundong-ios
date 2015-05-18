@@ -229,14 +229,13 @@ DEF_SINGLETON(BLTSendData)
             val[i] = 0x00;
         }
     }
-    
     /*
+    NSLog(@"闹钟设置开始.");
     for (int i = 0; i < 20; i++)
     {
         NSLog(@"%d..%x", i, val[i]);
     }
-    
-    NSLog(@"设置结束.");
+    NSLog(@"闹钟设置结束.");
      */
     
     [self sendDataToWare:&val withLength:20 withUpdate:block];

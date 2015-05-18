@@ -589,6 +589,37 @@
     _targetSleep = [UserInfoHelp sharedInstance].userModel.targetSleep;
 }
 
+// 睡眠时的星期显示
+- (NSString *)showWeekTextForSleep
+{
+    NSDate *currentDate = [NSDate dateWithString:self.dateString];
+    NSDate *lastDate = [currentDate dateAfterDay:-1];
+    NSString *currentWeek = [NSObject numberTransferWeek:currentDate.weekday];
+    NSString *lastWeek = [NSObject numberTransferWeek:lastDate.weekday];
+    
+    NSString *showWeek = [NSString stringWithFormat:@"%@-%@", lastWeek, currentWeek];
+    
+    return showWeek;
+}
+
+// 睡眠时的日期显示
+- (NSString *)showDateTextForSleep
+{
+    NSDate *currentDate = [NSDate dateWithString:self.dateString];
+    NSDate *lastDate = [currentDate dateAfterDay:-1];
+    NSArray *lastArray = [[lastDate dateToString] componentsSeparatedByString:@" "];
+    NSString *lastDateString = [lastArray[0] stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+    NSString *currentDateString = @"";
+    if (self.dateString.length > 5)
+    {
+        currentDateString = [[self.dateString stringByReplacingOccurrencesOfString:@"-" withString:@"/"] substringFromIndex:5];
+    }
+    
+    NSString *showString = [NSString stringWithFormat:@"%@-%@", lastDateString, currentDateString];
+    
+    return showString;
+}
+
 // 表名
 + (NSString *)getTableName
 {

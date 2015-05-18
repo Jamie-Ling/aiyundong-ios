@@ -64,7 +64,7 @@
     }
     
     _clockImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (lineWidth - _lineWidth) * 2 - 16, (lineWidth - _lineWidth) * 2 - 16)];
-    _clockImage.image = UIImageNamed(@"clock@1x.png");
+    _clockImage.image = UIImageNamed(@"clock_5@2x.png");
     [self addSubview:_clockImage];
     _clockImage.center = CGPointMake(self.width / 2, self.height / 2);
     _clockImage.hidden = YES;

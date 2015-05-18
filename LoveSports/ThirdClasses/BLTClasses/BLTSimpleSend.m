@@ -195,7 +195,7 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             [BLTManager sharedInstance].model.hardVersion = val[10];
             [BLTManager sharedInstance].model.firmVersion = val[11];
             
-            NSLog(@"..%@..%ld..%ld", [BLTManager sharedInstance].model.hardType,
+            NSLog(@"固件版本信息...%@..%ld..%ld", [BLTManager sharedInstance].model.hardType,
                   (long)[BLTManager sharedInstance].model.hardVersion,
                   (long)[BLTManager sharedInstance].model.firmVersion);
         }

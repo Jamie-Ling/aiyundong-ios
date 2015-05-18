@@ -121,6 +121,11 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 // 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
 - (void)addSleepStartTimeAndEndTime;
 
+// 睡眠时的星期显示
+- (NSString *)showWeekTextForSleep;
+// 睡眠时的日期显示
+- (NSString *)showDateTextForSleep;
+
 @end
 
 

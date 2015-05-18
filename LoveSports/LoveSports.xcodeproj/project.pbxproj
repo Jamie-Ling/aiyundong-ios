@@ -245,8 +245,6 @@
 		F496931B1A872952008D81CA /* home_sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F496931A1A872952008D81CA /* home_sports@2x.png */; };
 		F4969E701B0086AA0090D767 /* 竖屏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4969E6F1B0086AA0090D767 /* 竖屏@2x.png */; };
 		F4969EB11B00C5070090D767 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4969EB01B00C5070090D767 /* TimePickerView.m */; };
-		F4A4F85F1AFDEBC1006CEA93 /* clock_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */; };
-		F4A4F8601AFDEBC1006CEA93 /* clock@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */; };
 		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
 		F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E71AC06C580075D99E /* NightScrollView.m */; };
 		F4AC15491AD81B2500994C9E /* TimeZoneChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */; };
@@ -348,6 +346,8 @@
 		F4ED0B151AEC9BEF00F08C06 /* 路程sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4ED0B131AEC9BEF00F08C06 /* 路程sign@2x.png */; };
 		F4ED0B161AEC9BEF00F08C06 /* 能量sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4ED0B141AEC9BEF00F08C06 /* 能量sign@2x.png */; };
 		F4F0C7661AF634DC008FEA3E /* AlarmRepeatView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0C7651AF634DC008FEA3E /* AlarmRepeatView.m */; };
+		F4FA046F1B09C62F00CE7043 /* clock_5.png in Resources */ = {isa = PBXBuildFile; fileRef = F4FA046D1B09C62F00CE7043 /* clock_5.png */; };
+		F4FA04701B09C62F00CE7043 /* clock_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4FA046E1B09C62F00CE7043 /* clock_5@2x.png */; };
 		F4FFD8511AB455CE00A387A4 /* DayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8501AB455CE00A387A4 /* DayScrollView.m */; };
 		F4FFD8561AB456D500A387A4 /* UnlimitScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FFD8551AB456D500A387A4 /* UnlimitScroll.m */; };
 /* End PBXBuildFile section */
@@ -745,8 +745,6 @@
 		F4969E6F1B0086AA0090D767 /* 竖屏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "竖屏@2x.png"; sourceTree = "<group>"; };
 		F4969EAF1B00C5070090D767 /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
 		F4969EB01B00C5070090D767 /* TimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerView.m; sourceTree = "<group>"; };
-		F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock_5@2x.png"; sourceTree = "<group>"; };
-		F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@1x.png"; sourceTree = "<group>"; };
 		F4A536E31AC06A0B0075D99E /* NightDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightDetailView.h; sourceTree = "<group>"; };
 		F4A536E41AC06A0B0075D99E /* NightDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightDetailView.m; sourceTree = "<group>"; };
 		F4A536E61AC06C580075D99E /* NightScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightScrollView.h; sourceTree = "<group>"; };
@@ -936,6 +934,8 @@
 		F4ED0B141AEC9BEF00F08C06 /* 能量sign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "能量sign@2x.png"; sourceTree = "<group>"; };
 		F4F0C7641AF634DC008FEA3E /* AlarmRepeatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmRepeatView.h; sourceTree = "<group>"; };
 		F4F0C7651AF634DC008FEA3E /* AlarmRepeatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmRepeatView.m; sourceTree = "<group>"; };
+		F4FA046D1B09C62F00CE7043 /* clock_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_5.png; sourceTree = "<group>"; };
+		F4FA046E1B09C62F00CE7043 /* clock_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock_5@2x.png"; sourceTree = "<group>"; };
 		F4FFD84F1AB455CE00A387A4 /* DayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayScrollView.h; sourceTree = "<group>"; };
 		F4FFD8501AB455CE00A387A4 /* DayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayScrollView.m; sourceTree = "<group>"; };
 		F4FFD8541AB456D500A387A4 /* UnlimitScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlimitScroll.h; sourceTree = "<group>"; };
@@ -1139,8 +1139,8 @@
 				69EFC21B1A738E4A00B5BC53 /* testImage.jpg */,
 				69EFC1D91A737ABD00B5BC53 /* backArrow@2x.png */,
 				69EFC1DA1A737ABD00B5BC53 /* right@2x.png */,
-				F4A4F85D1AFDEBC1006CEA93 /* clock_5@2x.png */,
-				F4A4F85E1AFDEBC1006CEA93 /* clock@1x.png */,
+				F4FA046D1B09C62F00CE7043 /* clock_5.png */,
+				F4FA046E1B09C62F00CE7043 /* clock_5@2x.png */,
 			);
 			path = UserCenter;
 			sourceTree = "<group>";
@@ -2433,11 +2433,11 @@
 				69EFC1E41A737ABD00B5BC53 /* 距离.png in Resources */,
 				F430E4681AC7C9E0004E7130 /* 顶部四格-4选中@2x.png in Resources */,
 				6955492D1A8CF4D900423EA9 /* 右箭头@2x.png in Resources */,
-				F4A4F85F1AFDEBC1006CEA93 /* clock_5@2x.png in Resources */,
 				699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */,
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
 				F4BF2EDD1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png in Resources */,
+				F4FA046F1B09C62F00CE7043 /* clock_5.png in Resources */,
 				F46A76301AC97F84000D5EDB /* 小图标1@2x.png in Resources */,
 				F45870541AB2905A005A72CA /* 睡觉@2x.png in Resources */,
 				F470E7A61A7FAD680009E649 /* 奖杯.png in Resources */,
@@ -2448,13 +2448,13 @@
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
 				699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */,
 				6955493B1A8CF4D900423EA9 /* 电池电量-满@2x.png in Resources */,
-				F4A4F8601AFDEBC1006CEA93 /* clock@1x.png in Resources */,
 				F485E9801AF9B00F00900B51 /* LSLanguage.strings in Resources */,
 				F43390671AE7D51C000D3A0B /* shelf_book_update.png in Resources */,
 				F4C4C8281AC6D426005D511A /* 路程@2x.png in Resources */,
 				F430E4661AC7C9E0004E7130 /* 顶部四格-3@2x.png in Resources */,
 				F47398E41ADA1D7B004825F9 /* Images-2.xcassets in Resources */,
 				F4BF2EDF1ADA313B00A99F2A /* 2_bluetooth_list3_5@2x.png in Resources */,
+				F4FA04701B09C62F00CE7043 /* clock_5@2x.png in Resources */,
 				695549501A8D012B00423EA9 /* 加号.png in Resources */,
 				F48C58DD1AE395250053559C /* 休选中.png in Resources */,
 				6955493E1A8CF4D900423EA9 /* 账号管理@2x.png in Resources */,

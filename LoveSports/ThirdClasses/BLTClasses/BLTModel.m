@@ -48,7 +48,7 @@
 {
     _bltName = [NSString stringWithFormat:@"Device %d", arc4random() % 100];
     _bltID = @"sjdfkjsdfjskdfsdfsdfsdfsdf";
-    _bltVersion = @"45";
+    _bltVersion = @"20";
     _bltElec = @"30";
     _bltRSSI = @"888";
 }
