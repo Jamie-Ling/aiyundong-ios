@@ -139,7 +139,7 @@
     NSDate *theDate = [NSDate date];
     __weak AlarmClockModel *model = _alarmArray[indexPath.row];
     
-    NSString *setTimeString = model.alarmTime ;
+    NSString *setTimeString = model.alarmTime;
     if (![NSString isNilOrEmpty:setTimeString ])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

@@ -29,7 +29,7 @@
     self = [super init];
     if (self)
     {
-        _userName = @"iSport"; //这个不能修改. 目前为单用户使用.
+        _userName = LS_UserName; //这个不能修改. 目前为单用户使用.
         
         _avatar = @"http://www.woyo.li/statics/users/avatar/46/thumbs/200_200_46.jpg?1422252425";
         _birthDay = @"1990-01-01";

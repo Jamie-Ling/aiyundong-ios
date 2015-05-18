@@ -36,7 +36,7 @@ DEF_SINGLETON(BLTManager)
         
         if (![LS_LastWareUUID getObjectValue])
         {
-            [LS_LastWareUUID setObjectValue:@""];
+            [LS_LastWareUUID setObjectValue:LS_APPName];
         }
         
         if (![LS_LastSyncDate getObjectValue])

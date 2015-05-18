@@ -18,7 +18,7 @@
     if (self)
     {
         _bltName = @"";
-        _bltID = @"";
+        _bltID = LS_APPName;
         _bltVersion = @"";
         _bltElec = @"";
         _bltRSSI = @"";

@@ -20,6 +20,7 @@
         _repeat = 0;
         _height = 56.0;
         _seconds = 0;
+        //_wareUUID = [LS_LastWareUUID getObjectValue];
     }
     
     return self;
@@ -199,42 +200,42 @@
 - (void)setIsOpen:(BOOL)isOpen
 {
     _isOpen = isOpen;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setAlarmTime:(NSString *)alarmTime
 {
     _alarmTime = alarmTime;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setWeekArray:(NSArray *)weekArray
 {
     _weekArray = weekArray;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setRepeat:(UInt8)repeat
 {
     _repeat = repeat;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setHour:(NSInteger)hour
 {
     _hour = hour;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 
 - (void)setMinutes:(NSInteger)minutes
 {
     _minutes = minutes;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
 }
 

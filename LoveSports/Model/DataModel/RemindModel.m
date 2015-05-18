@@ -52,25 +52,25 @@
 - (void)setIsOpen:(BOOL)isOpen
 {
     _isOpen = isOpen;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [RemindModel updateToDB:self where:where];}
 
 - (void)setInterval:(NSString *)interval
 {
     _interval = interval;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [RemindModel updateToDB:self where:where];}
 
 - (void)setStartTime:(NSString *)startTime
 {
     _startTime = startTime;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [RemindModel updateToDB:self where:where];}
 
 - (void)setEndTime:(NSString *)endTime
 {
     _endTime = endTime;
-    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %d", _wareUUID, _orderIndex];
+    NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [RemindModel updateToDB:self where:where];
 }
 
@@ -83,7 +83,7 @@
 // 复合主键
 + (NSArray *)getPrimaryKeyUnionArray
 {
-    return @[@"userName", @"wareUUID", @"orderIndex"];
+    return @[@"wareUUID", @"orderIndex"];
 }
 
 // 表版本

@@ -63,6 +63,12 @@
 #define LS_FileCache_UpgradePatch @"UpdatePatch"
 #define LS_FileCache_HeadImage @"HeadImage"
 
+// APP名字
+#define LS_APPName @"iSport"
+
+// 默认用户名
+#define LS_UserName @"iSport"
+
 // 最后同步的时间
 #define LS_LastSyncDate     @"LS_LastSyncDate"
 // 最后同步的序号

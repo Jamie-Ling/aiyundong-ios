@@ -27,27 +27,32 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (BLTModel *)braceModel
 {
-    BLTModel *model = [BLTManager sharedInstance].model;
-    if (model)
+    if (!_braceModel)
     {
-        return model;
-    }
-    else
-    {
-        NSString *where = [NSString stringWithFormat:@"bltID = '%@'", [LS_LastWareUUID getObjectValue]];
-        model = [BLTModel searchSingleWithWhere:where orderBy:nil];
-        
+        BLTModel *model = [BLTManager sharedInstance].model;
         if (model)
         {
-            return model;
+            _braceModel = model;
         }
         else
         {
-            model = [BLTModel initWithUUID:@""];
+            NSString *where = [NSString stringWithFormat:@"bltID = '%@'", [LS_LastWareUUID getObjectValue]];
+            model = [BLTModel searchSingleWithWhere:where orderBy:nil];
             
-            return model;
+            if (model)
+            {
+                _braceModel = model;
+            }
+            else
+            {
+                model = [BLTModel initWithUUID:[LS_LastWareUUID getObjectValue]];
+                
+                _braceModel = model;
+            }
         }
     }
+    
+    return _braceModel;
 }
 
 /**
@@ -162,7 +167,7 @@ DEF_SINGLETON(UserInfoHelp)
     
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
-        [BLTSendData sendSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
+        [BLTSendData sendSetWearingWayDataWithRightHand:!self.braceModel.isLeftHand
                                         withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                             [self notifyViewWithBackBlock:backBlock
                                                               withSuccess:type == BLTAcceptDataTypeSetWearingWay];
@@ -170,7 +175,7 @@ DEF_SINGLETON(UserInfoHelp)
     }
     else
     {
-        [BLTSendOld sendOldSetWearingWayDataWithRightHand:!_braceModel.isLeftHand
+        [BLTSendOld sendOldSetWearingWayDataWithRightHand:!self.braceModel.isLeftHand
                                           withUpdateBlock:^(id object, BLTAcceptDataType type) {
                                               [self notifyViewWithBackBlock:backBlock
                                                                 withSuccess:type == BLTAcceptDataTypeOldSetWearingWay];
@@ -187,14 +192,14 @@ DEF_SINGLETON(UserInfoHelp)
     
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
-        [BLTSendData sendSedentaryRemindDataWithRemind:_braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        [BLTSendData sendSedentaryRemindDataWithRemind:self.braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
             [self notifyViewWithBackBlock:backBlock
                               withSuccess:type == BLTAcceptDataTypeSetSedentaryRemind];
         }];
     }
     else
     {
-        [BLTSendOld sendOldAboutEventWithRemind:_braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        [BLTSendOld sendOldAboutEventWithRemind:self.braceModel.remindArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
             [self notifyViewWithBackBlock:backBlock
                               withSuccess:type == BLTAcceptDataTypeOldEventInfo];
         }];
@@ -210,15 +215,14 @@ DEF_SINGLETON(UserInfoHelp)
     
     if ([BLTManager sharedInstance].model.isNewDevice)
     {
-        NSLog(@"._braceModel.alarmArray.%@", _braceModel.alarmArray);
-        [BLTSendData sendAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        [BLTSendData sendAlarmClockDataWithAlarm:self.braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
             [self notifyViewWithBackBlock:backBlock
                               withSuccess:type == BLTAcceptDataTypeSetAlarmClock];
         }];
     }
     else
     {
-        [BLTSendOld sendOldSetAlarmClockDataWithAlarm:_braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
+        [BLTSendOld sendOldSetAlarmClockDataWithAlarm:self.braceModel.alarmArray withUpdateBlock:^(id object, BLTAcceptDataType type) {
             [self notifyViewWithBackBlock:backBlock
                               withSuccess:type == BLTAcceptDataTypeOldSetAlarmClock];
         }];
