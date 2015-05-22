@@ -147,6 +147,19 @@
     };
 }
 
+- (void)updateContentForRemindView:(NSDate *)date
+{
+    [self controlRemindPickerHidden:YES];
+    
+    if (date)
+    {
+        NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)date.hour,
+                            (long)date.minute];
+        [_remindView updateContentForLabelWithTime:string withIndex:_currentIndex];
+    }
+}
+
+/*
 - (void)updateContentForRemindView:(TimePickerView *)timePicker
 {
     [self controlRemindPickerHidden:YES];
@@ -158,6 +171,7 @@
         [_remindView updateContentForLabelWithTime:string withIndex:_currentIndex];
     }
 }
+ */
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

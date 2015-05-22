@@ -13,6 +13,7 @@
 @interface RemindPicker : UIView
 
 @property (nonatomic, strong) TimePickerView *timePicker;
+@property (nonatomic, strong) UIDatePicker *datePicker;
 
 @property (nonatomic, strong) UIButton *confirmButton;
 @property (nonatomic, strong) UIButton *cancelButton;

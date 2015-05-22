@@ -21,6 +21,7 @@ DEF_SINGLETON(BLTSendOld)
                   withType:(BOOL)type
            withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    NSLog(@"..设置公英制: %d", type);
     UInt8 val[20] = {01, 01, 00,
         (UInt8)date.year, date.month, date.day,
         (UInt8)birthDay.year, (UInt8)(birthDay.year >> 8), birthDay.month,
@@ -244,6 +245,16 @@ DEF_SINGLETON(BLTSendOld)
     [BLTSendOld sendOldDeleteSportDataWithUpdateBlock:nil];
 }
 
+// 直接删除运动数据 延迟调用
+- (void)delaySendOldDeleteSportData
+{
+    if (![UserInfoHelp sharedInstance].braceModel.isNewDevice)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(deleteSportDataAgain) object:nil];
+        [self performSelector:@selector(deleteSportDataAgain) withObject:nil afterDelay:0.5];
+    }
+}
+
 // 设置用户信息.
 + (void)setUserInfoToOldDevice
 {
@@ -296,9 +307,14 @@ DEF_SINGLETON(BLTSendOld)
  
  */
 
+// 睡眠数据
+/*
+ <00000000 00000000 00000000 00f481f4 81f48144>
+ <01823282 43820000 00000000 00000000 00000000>
+ <82000000 009e0600 00000000 00000000 00000000>
+ */
 
-
-
+// f481f4 81f481 与 44823282 4382 和 8a877e 872f89
 
 
 

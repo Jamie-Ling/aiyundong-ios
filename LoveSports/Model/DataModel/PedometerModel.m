@@ -251,6 +251,8 @@
     totalModel.sportsArray = sports;
     totalModel.sleepArray = sleeps;
     
+    // 设置最新的目标
+    [totalModel addTargetForModelFromUserInfo];
     // 将数据保存到周－月表
     [totalModel savePedometerModelToWeekModelAndMonthModel];
     // 将压缩的数据进行每5分钟的详细的转化.

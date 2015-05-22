@@ -170,7 +170,6 @@ DEF_SINGLETON(BLTPeripheral)
             char batteryLevel;
             [charac.value getBytes:&batteryLevel length:1];
             
-            NSLog(@".charac.value = .%@...%d..%lu", charac, batteryLevel, (unsigned long)batteryLevel);
             [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
             
             if ([BLTManager sharedInstance].elecQuantity == 0)
@@ -250,7 +249,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        // NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
+        NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
            // [self cleanMutableData:_receiveData];
@@ -297,8 +296,6 @@ DEF_SINGLETON(BLTPeripheral)
     if (error)
     {
         [self dismissAndRepeatConnect];
-
-        NSLog(@"数据更新错误...");
     }
     else
     {

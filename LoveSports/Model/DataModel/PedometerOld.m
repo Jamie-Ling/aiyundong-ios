@@ -70,7 +70,7 @@ DEF_SINGLETON(PedometerOld)
     currentModel.totalCalories = val[4] | (val[5]  << 8) | (val[6]  << 16) | (val[7]  << 24);
     currentModel.totalDistance = val[8] | (val[9]  << 8) | (val[10] << 16) | (val[11] << 24);
     
-    NSLog(@"..%d..%d..%d", currentModel.totalSteps, currentModel.totalCalories, currentModel.totalDistance);
+    // NSLog(@"..%d..%d..%d", currentModel.totalSteps, currentModel.totalCalories, currentModel.totalDistance);
     // [PedometerModel updateToDB:currentModel where:where];
 
     NSLog(@"...%@", [NSDate date]);
@@ -91,15 +91,16 @@ DEF_SINGLETON(PedometerOld)
             NSInteger sleepZ = val[i+4] | ((val[i+5] & 0x0F) << 8);
             NSInteger sleep = sleepX + sleepY + sleepZ;
             NSInteger sleepState = 0;
-            if (sleep < 800)
+            
+            if (sleep <= 800)
             {
                 sleepState = 0;
             }
-            else if (sleep > 801 && sleep < 1600)
+            else if (sleep >= 801 && sleep <= 1600)
             {
                 sleepState = 1;
             }
-            else if (sleep > 1601 && sleep < 3500)
+            else if (sleep >= 1601 && sleep <= 3500)
             {
                 sleepState = 2;
             }
@@ -148,13 +149,12 @@ DEF_SINGLETON(PedometerOld)
             currentDay--;
             today = NO;
             currentDate = [[NSDate date] dateAfterDay:currentDay];
-            NSLog(@"...currentDate..%@", currentDate);
+            // NSLog(@"...currentDate..%@", currentDate);
             currentModel = [[PedometerOld sharedInstance] getCurrentModelWithDate:currentDate
                                                                          withUUID:[LS_LastWareUUID getObjectValue]];
         }
         
         timeIndex--;
-   
     }
     
     // 存储最后同步的日期和时间避免重复同步.
@@ -270,6 +270,9 @@ DEF_SINGLETON(PedometerOld)
     for (NSInteger i = _modelArray.count - 1; i >= 0; i--)
     {
         PedometerModel *tmpModel = _modelArray[i];
+        
+        // 设置最新的目标
+        [tmpModel addTargetForModelFromUserInfo];
         
         // 第二天的半天的睡眠数据.
         tmpModel.nextDetailSleeps = [tmpModel.currentDaySleeps subarrayWithRange:NSMakeRange(144, 144)];

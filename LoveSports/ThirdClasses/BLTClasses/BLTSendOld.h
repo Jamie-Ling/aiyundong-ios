@@ -53,4 +53,7 @@ AS_SINGLETON(BLTSendOld)
 // 刚链接时设置用户信息并同步
 + (void)setUserInfoToOldDevice;
 
+// 直接删除运动数据 延迟调用
+- (void)delaySendOldDeleteSportData;
+
 @end

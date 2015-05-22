@@ -52,7 +52,6 @@
     if ((![[ObjectCTools shared] objectForKey:@"addVC"]))
     {
           [self addLoginView:YES];
-       
     }
     else
     {
@@ -217,12 +216,6 @@
 
 - (void)pushToLoginVC
 {
-//    LoginVC *login = [[LoginVC alloc] init];
-//    ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: login];
-//    
-//    self.window.rootViewController = nav;
-    
-    
     ViewController *VC = [[ViewController alloc] init];
     ZKKNavigationController *nav = [[ZKKNavigationController alloc] initWithRootViewController: VC];
     //

@@ -374,6 +374,9 @@
                                 if ([object boolValue])
                                 {
                                     SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
+                                    
+                                    // 旧设备需要清除之前的数据.
+                                    [[BLTSendOld sharedInstance] delaySendOldDeleteSportData];
                                 }
                             }];
                             
@@ -381,7 +384,6 @@
                         }
                     }];
 }
-
 
 - (void) goToCustom
 {

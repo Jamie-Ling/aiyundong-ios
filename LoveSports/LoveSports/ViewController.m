@@ -537,7 +537,6 @@
         if (buttonIndex != 2)
         {
             _userInfo.isMetricSystem = !buttonIndex;
-
         }
     }
     else if (actionSheet.tag == vGenderChoiceAciotnSheetTag)
@@ -545,8 +544,6 @@
         if (buttonIndex != 2)
         {
             _userInfo.genderSex = buttonIndex ? LS_Text(@"Female") : LS_Text(@"Male");
-            
-            [_listTableView reloadData];
         }
     }
     
