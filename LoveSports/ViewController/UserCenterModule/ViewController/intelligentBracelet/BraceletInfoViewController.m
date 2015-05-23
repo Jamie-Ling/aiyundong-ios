@@ -207,7 +207,7 @@
         return;
     }
     
-    NSLog(@"..%d..%d", [BLTManager sharedInstance].model.firmVersion, [BLTDFUBaseInfo sharedInstance].zipVersion);
+    // NSLog(@"..%d..%d", [BLTManager sharedInstance].model.firmVersion, [BLTDFUBaseInfo sharedInstance].zipVersion);
     //假设有
     _haveNewVersion = [BLTManager sharedInstance].model.firmVersion < [BLTDFUBaseInfo sharedInstance].zipVersion;
     _newVersionInfoModel = [[VersionInfoModel alloc] init];
@@ -274,15 +274,15 @@
 - (void) goToTarget
 {
     [_stepNumbersArray removeAllObjects];
-    for (int i = 5; i <= 30; i++)
+    for (int i = 1; i <= 300; i++)
     {
-        NSString *stepLongString = [NSString stringWithFormat:@"%d %@", i * 1000, LS_Text(@"steps")];
+        NSString *stepLongString = [NSString stringWithFormat:@"%d %@", i * 100, LS_Text(@"steps")];
         [_stepNumbersArray addObject:stepLongString];
     }
     
     BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_stepNumbersArray];
     
-    NSInteger lastIndex = (_userInfo.targetSteps - 5000) / 1000;
+    NSInteger lastIndex = (_userInfo.targetSteps - 100) / 100;
     pickerView.selectedIndex = lastIndex;
     //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ cm", lastHeight];
     

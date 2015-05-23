@@ -298,6 +298,7 @@
 		F4B693E31A6F40D200B42395 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B693D61A6F40D200B42395 /* NSString+Extension.m */; };
 		F4B693E61A6F40D200B42395 /* UIImage+ZKK.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B693DC1A6F40D200B42395 /* UIImage+ZKK.m */; };
 		F4B693E71A6F40D200B42395 /* UILabel+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B693DE1A6F40D200B42395 /* UILabel+Custom.m */; };
+		F4BEEF801B10B640007BA47B /* BSWeightPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BEEF7F1B10B640007BA47B /* BSWeightPickerView.m */; };
 		F4BF2ED91ADA2FA400A99F2A /* isport_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BF2ED81ADA2FA400A99F2A /* isport_5@2x.png */; };
 		F4BF2EDD1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BF2EDA1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png */; };
 		F4BF2EDE1ADA313B00A99F2A /* 2_bluetooth_list2_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4BF2EDB1ADA313B00A99F2A /* 2_bluetooth_list2_5@2x.png */; };
@@ -847,6 +848,8 @@
 		F4B693DC1A6F40D200B42395 /* UIImage+ZKK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZKK.m"; sourceTree = "<group>"; };
 		F4B693DD1A6F40D200B42395 /* UILabel+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Custom.h"; sourceTree = "<group>"; };
 		F4B693DE1A6F40D200B42395 /* UILabel+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Custom.m"; sourceTree = "<group>"; };
+		F4BEEF7E1B10B640007BA47B /* BSWeightPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSWeightPickerView.h; sourceTree = "<group>"; };
+		F4BEEF7F1B10B640007BA47B /* BSWeightPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSWeightPickerView.m; sourceTree = "<group>"; };
 		F4BF2ED81ADA2FA400A99F2A /* isport_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isport_5@2x.png"; sourceTree = "<group>"; };
 		F4BF2EDA1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2_bluetooth_list1_5@2x.png"; sourceTree = "<group>"; };
 		F4BF2EDB1ADA313B00A99F2A /* 2_bluetooth_list2_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2_bluetooth_list2_5@2x.png"; sourceTree = "<group>"; };
@@ -1218,6 +1221,8 @@
 				69EFC2AD1A75D11900B5BC53 /* BSModalPickerBase.m */,
 				69EFC2AE1A75D11900B5BC53 /* BSModalPickerView.h */,
 				69EFC2AF1A75D11900B5BC53 /* BSModalPickerView.m */,
+				F4BEEF7E1B10B640007BA47B /* BSWeightPickerView.h */,
+				F4BEEF7F1B10B640007BA47B /* BSWeightPickerView.m */,
 				6970ED101A826266009572D5 /* WeekView.h */,
 				6970ED111A826266009572D5 /* WeekView.m */,
 			);
@@ -2743,6 +2748,7 @@
 				F4B693A71A6F403400B42395 /* NSDictionary+RequestEncoding.m in Sources */,
 				F4DB02401ACF916F00892B16 /* LeftItem.m in Sources */,
 				F4B693501A6F401A00B42395 /* IQSegmentedNextPrevious.m in Sources */,
+				F4BEEF801B10B640007BA47B /* BSWeightPickerView.m in Sources */,
 				69FD42211A7FCC2C0023B74D /* DeviceUpdateViewController.m in Sources */,
 				F4B693511A6F401A00B42395 /* IQTextView.m in Sources */,
 				698A90BD1A6FEB54005BABE6 /* EAIntroView.m in Sources */,

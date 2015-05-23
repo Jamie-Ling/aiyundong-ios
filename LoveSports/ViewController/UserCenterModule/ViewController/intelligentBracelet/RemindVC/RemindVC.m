@@ -94,11 +94,12 @@
     [self controlRemindPickerHidden:NO];
 }
 
+#define RemindVC_DPHeight 260.0
 - (void)controlRemindPickerHidden:(BOOL)isHidden
 {
     CGRect rect = isHidden ?
-    CGRectMake(0, self.view.height, self.width, 200) :
-    CGRectMake(0, self.view.height - 200, self.width, 200);
+    CGRectMake(0, self.view.height, self.width, RemindVC_DPHeight) :
+    CGRectMake(0, self.view.height - RemindVC_DPHeight, self.width, RemindVC_DPHeight);
     
     [UIView animateWithDuration:0.2 animations:^{
         _remindPicker.frame = rect;
@@ -135,7 +136,7 @@
 
 - (void)loadRemindPicker
 {
-    _remindPicker = [[RemindPicker alloc] initWithFrame:CGRectMake(0, self.view.height, self.width, 200)];
+    _remindPicker = [[RemindPicker alloc] initWithFrame:CGRectMake(0, self.view.height, self.width, RemindVC_DPHeight)];
     
     [self addSubview:_remindPicker];
     DEF_WEAKSELF_(RemindVC);

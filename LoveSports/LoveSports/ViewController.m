@@ -30,6 +30,8 @@
 #import "UserInfoViewController.h"
 #import "BSModalDatePickerView.h"
 #import "BSModalPickerView.h"
+#import "BSWeightPickerView.h"
+
 #import "TimeZoneChoiceViewController.h"
 
 #import "UserInfoHelp.h"
@@ -465,43 +467,67 @@
 - (void) changeWeight
 {
     [_weightMutableArray removeAllObjects];
+    NSMutableArray *intArray = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *floatArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
     for (float i = 20; i <= 300; i++)
     {
         NSString *weightString;
         if (_userInfo.isMetricSystem)
         {
-            weightString = [NSString stringWithFormat:@"%.f kg", i];
+            weightString = [NSString stringWithFormat:@"%d", (int)i];
         }
         else
         {
-            weightString = [NSString stringWithFormat:@"%0.2f lb", vChangeToLB(i)];
+            weightString = [NSString stringWithFormat:@"%d", (int)i];
         }
-        [_weightMutableArray addObject:weightString];
+        [intArray addObject:weightString];
     }
     
-    BSModalPickerView *pickerView = [[BSModalPickerView alloc] initWithValues:_weightMutableArray];
+    for (float i = 0; i <= 9; i++)
+    {
+        NSString *weightString;
+        if (_userInfo.isMetricSystem)
+        {
+            weightString = [NSString stringWithFormat:@"%d", (int)i];
+        }
+        else
+        {
+            weightString = [NSString stringWithFormat:@"%d", (int)i];
+        }
+        [floatArray addObject:weightString];
+    }
     
-    long lastIndex = _userInfo.weight - 20;
-    pickerView.selectedIndex = lastIndex;
-    //    pickerView.selectedValue = [NSString stringWithFormat:@"%@ kg", lastWeight];
+    BSWeightPickerView *pickerView = [[BSWeightPickerView alloc] initWithInteger:intArray
+                                                                    withDecimals:floatArray
+                                                                        withUnit:_userInfo.isMetricSystem ? @"kg" : @"lb"];
+    
+    int index1 = 0;
+    int index2 = 0;
+    
+    if (_userInfo.isMetricSystem)
+    {
+        index1 = (int)_userInfo.weight - 20;
+        index2 = ((int)(_userInfo.weight * 10)) % 10;
+    }
+    else
+    {
+        CGFloat lbWeight = vChangeToLB(_userInfo.weight);
+        index1 = (int)lbWeight - 20;
+        index2 = ((int)(lbWeight * 10)) % 10;
+    }
+    
+    pickerView.selectedIndex1 = index1;
+    pickerView.selectedIndex2 = index2;
     
     DEF_WEAKSELF_(ViewController);
     [pickerView presentInView:self.view
                     withBlock:^(BOOL madeChoice) {
                         if (madeChoice) {
-                            if (pickerView.selectedIndex == lastIndex)
-                            {
-                                NSLog(@"未做修改");
-                                return;
-                            }
                             
-                            NSLog(@"发送体重修改的请求吧");
-                            NSString *heightString = pickerView.selectedValue;
-                            NSString *nowSelectedString = [[heightString componentsSeparatedByString:@" "] firstObject];
-                            
+                            CGFloat weight = pickerView.selectedValue;
                             weakSelf.userInfo.weight = weakSelf.userInfo.isMetricSystem ?
-                            [nowSelectedString integerValue] :
-                            vBackToKG([nowSelectedString floatValue]);
+                            weight : vBackToKG(weight);
                             
                             [weakSelf.listTableView reloadData];
                         }

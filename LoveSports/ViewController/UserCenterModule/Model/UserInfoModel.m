@@ -176,7 +176,7 @@
 {
     if (_isMetricSystem)
     {
-        return [NSString stringWithFormat:@"%.f kg", _weight];
+        return [NSString stringWithFormat:@"%.1f kg", _weight];
     }
     else
     {
