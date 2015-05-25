@@ -431,7 +431,7 @@
     {
         if (!isMetricSystem)
         {
-            stepLong = [NSString stringWithFormat:@"%d", (int) vBackToCM([stepLong integerValue]) ];
+            stepLong = [NSString stringWithFormat:@"%d", (int) INBackToCM([stepLong integerValue]) ];
         }
     }
     

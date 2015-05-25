@@ -98,7 +98,7 @@
 - (void)loadPieChartView
 {
     CGRect rect = CGRectMake((self.width - 200 + _offsetY) / 2, 60 - _offsetY * 0.5, 200 - _offsetY, 200 - _offsetY);
-    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:NightDetail_PieCount withStartAngle:-M_PI_2 * 2];
+    _chartView = [[PieChartView alloc] initWithFrame:rect withPieCount:NightDetail_PieCount withStartAngle:M_PI_2];
     _chartView.delegate = self;
     _chartView.datasource = self;
     [self addSubview:_chartView];

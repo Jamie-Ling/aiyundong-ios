@@ -6,15 +6,6 @@
 //  Copyright (c) 2014年 Missionsky. All rights reserved.
 //
 
-#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
-#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
-
-#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里
-
-
-#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
-#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
-
 #define vMetricSystemTag   10099
 #define vHandTag   10100
 
@@ -328,7 +319,7 @@
 {
     [_stepLongMustableArray removeAllObjects];
     
-    for (float i = 30; i <= 120; i++)
+    for (float i = 30; i <= 150; i++)
     {
         NSString *stepLongString;
         if (_userInfo.isMetricSystem)
@@ -337,7 +328,7 @@
         }
         else
         {
-            stepLongString = [NSString stringWithFormat:@"%0.2f ft", vChangeToFT(i)];
+            stepLongString = [NSString stringWithFormat:@"%0.2f in",CMChangeToIN(i)];
         }
         [_stepLongMustableArray addObject:stepLongString];
     }
@@ -368,7 +359,7 @@
                             
                             _userInfo.step = weakSelf.userInfo.isMetricSystem ?
                             [nowSelectedString integerValue] :
-                            vBackToCM([nowSelectedString floatValue]);
+                            INBackToCM([nowSelectedString floatValue]);
                             
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
                                 if ([object boolValue])

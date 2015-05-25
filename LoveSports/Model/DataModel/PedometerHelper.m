@@ -103,8 +103,8 @@ DEF_SINGLETON(PedometerHelper)
         [array addObject:@(4)];
     }
     
-    // 测试
     /*
+    // 测试
     for (int k = 100 + arc4random() % 30; k < 204 + arc4random() % 20; k++)
     {
         [array replaceObjectAtIndex:k withObject:@(arc4random() % 20 % 4)];

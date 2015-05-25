@@ -6,15 +6,6 @@
 //  Copyright (c) 2015年 zorro. All rights reserved.
 //
 
-#define vChangeToFT(A)  ((A / 30.48) + 1)   //CM - >转换为英尺
-#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
-
-#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里
-
-
-#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
-#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
-
 #define vStepNumberMin   5
 #define vStepNumberMax  30
 

@@ -63,8 +63,8 @@
                                   withTag:999];
     _endLabel.hidden = YES;
     
-    NSArray *textArray = @[@"12", @"15", @"18", @"21", @"24",
-                           @"3", @"6", @"9", @"12"];
+    NSArray *textArray = @[@"12", @"15", @"18", @"21", @"00",
+                           @"03", @"06", @"09", @"12"];
     
     for (int i = 0; i < textArray.count; i++)
     {

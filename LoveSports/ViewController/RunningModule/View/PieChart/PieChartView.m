@@ -202,7 +202,14 @@
         case PieChartViewShowDistance:
         {
             self.signView.image = [UIImage image:@"路程sign@2x.png"];
-            _timeLabel.text = [NSString stringWithFormat:@"%.02f", (long)model.totalDistance * 0.01];
+            if ([UserInfoHelp sharedInstance].userModel.isMetricSystem)
+            {
+                _timeLabel.text = [NSString stringWithFormat:@"%0.2f", model.totalDistance / 100.0];
+            }
+            else
+            {
+                _timeLabel.text = [NSString stringWithFormat:@"%0.2f", vChangeToMI(model.totalDistance * 0.01)];
+            }
             _durationLabel.text = [NSString stringWithFormat:@"%.0f%%", model.totalDistance * 0.01 / (model.targetDistance > 0.01 ? model.targetDistance : targetDis) * 100];
             //percent = model.totalDistance / (model.targetDistance > 1 ? model.targetDistance : 1000);
             percent = model.totalSteps * 1.0 / (model.targetStep > 1 ? model.targetStep : targetStep);

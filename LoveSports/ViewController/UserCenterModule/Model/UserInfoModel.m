@@ -168,7 +168,7 @@
     }
     else
     {
-        return [NSString stringWithFormat:@"%.1f ft", vChangeToFT(_height)];
+        return [NSString stringWithFormat:@"%.1f in", CMChangeToIN(_height)];
     }
 }
         
@@ -192,7 +192,7 @@
     }
     else
     {
-        return [NSString stringWithFormat:@"%.1f ft", vChangeToFT(_step)];
+        return [NSString stringWithFormat:@"%.1f in", CMChangeToIN(_step)];
     }
 }
 

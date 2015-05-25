@@ -20,10 +20,6 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
-#define vChangeToFT(A)  (A / 30.48) + 1   //CM - >转换为英尺
-#define vChangeToLB(A)  A * 2.2046226  //KG - >转换为磅
-
-
 #import "FlatRoundedButton.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ViewController.h"
@@ -323,7 +319,7 @@
         lastIndex = 50 - vStepLongMin(YES);
         if (!_isMetricSystem)
         {
-            lastIndex = (int) (((int)vChangeToFT(50) - vStepLongMin(NO)) * 10);
+            lastIndex = (int) (((int)CMChangeToIN(50) - vStepLongMin(NO)));
         }
     }
     else
@@ -333,7 +329,7 @@
         
         if (!_isMetricSystem)
         {
-            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)) * 10);
+            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)));
             if (lastIndex < 0)
             {
                 lastIndex = 0;
@@ -430,7 +426,7 @@
         }
         else
         {
-            heightString = [NSString stringWithFormat:@"%0.2f ft", vChangeToFT(i)];
+            heightString = [NSString stringWithFormat:@"%0.2f in", CMChangeToIN(i)];
         }
         
         [_heightMutableArray addObject:heightString];
@@ -457,7 +453,7 @@
              
                             weakSelf.userInfo.height = weakSelf.userInfo.isMetricSystem ?
                             [nowSelectedString integerValue] :
-                            vBackToCM([nowSelectedString floatValue]);
+                            INBackToCM([nowSelectedString floatValue]);
                             
                             [weakSelf.listTableView reloadData];
                         }

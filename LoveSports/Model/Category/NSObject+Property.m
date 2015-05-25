@@ -61,6 +61,10 @@
                        withWeight:(CGFloat)weight
                         withModel:(BOOL)metric
 {
+    
+    return steps * ((weight - 13.63636) * 0.000693 + 0.00495);
+
+    /*
     if (metric)
     {
         return steps * ((weight - 13.63636) * 0.000693 + 0.00495);
@@ -69,12 +73,16 @@
     {
         return steps / 100 * (0.0315 * weight - 0.45);
     }
+     */
 }
 
 - (NSInteger)caloriesConvertSteps:(NSInteger)Calories
                        withWeight:(CGFloat)weight
                         withModel:(BOOL)metric
 {
+    return Calories / ((weight - 13.63636) * 0.000693 + 0.00495) + 0.5;
+
+    /*
     // 四舍五入...
     if (metric)
     {
@@ -84,6 +92,7 @@
     {
         return Calories * 100 / (0.0315 * weight - 0.45);
     }
+     */
 }
 
 - (CGFloat)StepsConvertDistance:(NSInteger)steps

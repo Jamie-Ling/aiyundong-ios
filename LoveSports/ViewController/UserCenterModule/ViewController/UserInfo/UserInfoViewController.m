@@ -16,20 +16,6 @@
 #define vOneCellHeight    (kIPhone4s ? 44 : 45.0) //cell单行高度
 #define vOneCellWidth     (kScreenWidth + vTableViewMoveLeftX)
 
-
-//#define vBackToCM(A)  ((A - 1) * 30.48)   //CM - >转换为英尺
-//#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
-
-
-//#define vHeightMin(a)    (a ? 60 : vChangeToFT(60))
-//#define vHeightMax(a)   (a ? 220 : vChangeToFT(220))
-//
-//#define vWeightMin(a)   (a ? 20 : vChangeToLB(20))
-//#define vWeightMax(a)   (a ? 297 : vChangeToLB(297))
-//
-//#define vStepLongMin(a)   (a ? 30 : vChangeToFT(30))
-//#define vStepLongMax(a)   (a ? 120 : vChangeToFT(120))
-
 #import "UserInfoViewController.h"
 #import "FlatRoundedButton.h"
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -356,17 +342,16 @@
         lastIndex = 50 - vStepLongMin(YES);
         if (!_isMetricSystem)
         {
-            lastIndex = (int) (((int)vChangeToFT(50) - vStepLongMin(NO)) * 10);
+            lastIndex = (int) (((int)CMChangeToIN(50) - vStepLongMin(NO)));
         }
     }
     else
     {
         lastIndex= [lastLong integerValue] - vStepLongMin(YES);
-      
         
         if (!_isMetricSystem)
         {
-            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)) * 10);
+            lastIndex = (int) (([lastLong floatValue] - vStepLongMin(NO)));
             if (lastIndex < 0)
             {
                 lastIndex = 0;
@@ -375,7 +360,6 @@
             {
                 lastIndex = vHeightMax(NO) - vHeightMin(NO) + 1;
             }
-
         }
         else
         {
@@ -449,7 +433,7 @@
         }
         else
         {
-            heightString = [NSString stringWithFormat:@"%0.2f ft", vChangeToFT(i)];
+            heightString = [NSString stringWithFormat:@"%0.2f in", CMChangeToIN(i)];
         }
         
         [_heightMutableArray addObject:heightString];
@@ -476,7 +460,7 @@
                             
                             weakSelf.userInfo.height = weakSelf.userInfo.isMetricSystem ?
                             [nowSelectedString integerValue] :
-                            vBackToCM([nowSelectedString floatValue]);
+                            INBackToCM([nowSelectedString floatValue]);
                             
                             [weakSelf.listTableView reloadData];
                             
@@ -735,7 +719,7 @@
     
     if (!_haveConect)
     {
-        oneCell.userInteractionEnabled = YES;
+        oneCell.userInteractionEnabled = NO;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
     }
     else
