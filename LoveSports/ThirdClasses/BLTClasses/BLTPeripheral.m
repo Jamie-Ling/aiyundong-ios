@@ -249,7 +249,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-        NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
+        // NSLog(@"数据更新%@...%@\n", characteristic.value, characteristic.UUID);
         if ([characteristic.UUID isEqual:BLTUUID.txCharacteristicUUID])
         {
            // [self cleanMutableData:_receiveData];

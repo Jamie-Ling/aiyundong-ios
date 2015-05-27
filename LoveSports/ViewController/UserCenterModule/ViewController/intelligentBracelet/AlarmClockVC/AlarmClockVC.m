@@ -154,6 +154,7 @@
     // [datePicker loadTimePickerViewWithTime:model.alarmTime];
     datePicker.showTodayButton = NO;
     datePicker.mode = UIDatePickerModeTime;
+    datePicker.selectedDate = theDate;
     datePicker.isAlarm = YES;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:model.weekArray
@@ -181,6 +182,7 @@
                                    }
                                }];
     datePicker.repeatView.repeat.on = model.isRepeat;
+    //datePicker.selectedDate = theDate;
 }
 
 - (void)didReceiveMemoryWarning

@@ -264,7 +264,6 @@ DEF_SINGLETON(BLTManager)
         _discoverPeripheral = _model.peripheral;
         [self.centralManager connectPeripheral:_model.peripheral options:nil];
         
-        [UserInfoHelp sharedInstance].braceModel = _model;
         [_centralManager stopScan];
     }
 }

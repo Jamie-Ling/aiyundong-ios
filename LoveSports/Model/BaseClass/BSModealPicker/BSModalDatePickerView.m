@@ -45,8 +45,8 @@
     
     
     [datePicker setBackgroundColor:vPickViewBackgroudColor];
-    if (self.selectedDate) {
-        datePicker.date = self.selectedDate;
+    if (_selectedDate) {
+        datePicker.date = _selectedDate;
     }
 
     datePicker.datePickerMode = self.mode;
@@ -98,7 +98,7 @@
 
 - (void)setSelectedDate:(NSDate *)selectedDate
 {
-    if (_selectedDate != selectedDate)
+    //if (_selectedDate != selectedDate)
     {
         _selectedDate = selectedDate;
         

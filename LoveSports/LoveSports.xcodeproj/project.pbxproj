@@ -139,7 +139,6 @@
 		69FD42291A7FCC2C0023B74D /* UpSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD41FE1A7FCC2C0023B74D /* UpSignatureViewController.m */; };
 		69FD422A1A7FCC2C0023B74D /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */; };
 		F422278B1ADA64F000BC30CF /* LineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F422278A1ADA64F000BC30CF /* LineView.m */; };
-		F4233CD61AFE115F007D9C31 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4233CD81AFE115F007D9C31 /* InfoPlist.strings */; };
 		F4233CDE1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDA1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png */; };
 		F4233CDF1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDB1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png */; };
 		F4233CE01AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4233CDC1AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png */; };
@@ -219,7 +218,6 @@
 		F4792FD61AAF2CF000B44A23 /* BLTAcceptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD51AAF2CF000B44A23 /* BLTAcceptOld.m */; };
 		F4792FD91AAF3C6000B44A23 /* PedometerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F4792FD81AAF3C6000B44A23 /* PedometerOld.m */; };
 		F47F35201A7E6D1400D6D220 /* PedometerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F47F351F1A7E6D1400D6D220 /* PedometerModel.m */; };
-		F485E9801AF9B00F00900B51 /* LSLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = F485E9821AF9B00F00900B51 /* LSLanguage.strings */; };
 		F486BE4E1AD2407900BA8A6B /* RemindModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE4D1AD2407900BA8A6B /* RemindModel.m */; };
 		F486BE521AD2449F00BA8A6B /* RemindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE511AD2449F00BA8A6B /* RemindVC.m */; };
 		F486BE551AD2450100BA8A6B /* RemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = F486BE541AD2450100BA8A6B /* RemindView.m */; };
@@ -247,6 +245,8 @@
 		F4969EB11B00C5070090D767 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4969EB01B00C5070090D767 /* TimePickerView.m */; };
 		F4A536E51AC06A0B0075D99E /* NightDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E41AC06A0B0075D99E /* NightDetailView.m */; };
 		F4A536E81AC06C580075D99E /* NightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A536E71AC06C580075D99E /* NightScrollView.m */; };
+		F4A75D9C1B1565FC00C7A5DD /* LSLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4A75D9E1B1565FC00C7A5DD /* LSLanguage.strings */; };
+		F4A75DA71B1566F500C7A5DD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4A75DA91B1566F500C7A5DD /* InfoPlist.strings */; };
 		F4AC15491AD81B2500994C9E /* TimeZoneChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */; };
 		F4AC154C1AD836FC00994C9E /* ShowTimeZone.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AC154B1AD836FC00994C9E /* ShowTimeZone.m */; };
 		F4AD56F81A8F777C00955BBC /* PedometerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AD56F61A8F777C00955BBC /* PedometerHelper.m */; };
@@ -572,8 +572,6 @@
 		69FD42001A7FCC2C0023B74D /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		F42227891ADA64F000BC30CF /* LineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineView.h; sourceTree = "<group>"; };
 		F422278A1ADA64F000BC30CF /* LineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineView.m; sourceTree = "<group>"; };
-		F4233CD71AFE115F007D9C31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F4233CD91AFE1160007D9C31 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F4233CDA1AFE12CD007D9C31 /* 02_bluetooth2_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth2_5@2x.png"; sourceTree = "<group>"; };
 		F4233CDB1AFE12CD007D9C31 /* 02_bluetooth3_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth3_5@2x.png"; sourceTree = "<group>"; };
 		F4233CDC1AFE12CD007D9C31 /* 02_bluetooth4_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02_bluetooth4_5@2x.png"; sourceTree = "<group>"; };
@@ -696,11 +694,6 @@
 		F4792FD81AAF3C6000B44A23 /* PedometerOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerOld.m; sourceTree = "<group>"; };
 		F47F351E1A7E6D1400D6D220 /* PedometerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PedometerModel.h; sourceTree = "<group>"; };
 		F47F351F1A7E6D1400D6D220 /* PedometerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PedometerModel.m; sourceTree = "<group>"; };
-		F485E9811AF9B00F00900B51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LSLanguage.strings; sourceTree = "<group>"; };
-		F485E9831AF9B01A00900B51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LSLanguage.strings; sourceTree = "<group>"; };
-		F485E9841AF9B04600900B51 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		F485E9851AF9B04600900B51 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		F485E9861AF9B04600900B51 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LSLanguage.strings"; sourceTree = "<group>"; };
 		F486BE4C1AD2407900BA8A6B /* RemindModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindModel.h; sourceTree = "<group>"; };
 		F486BE4D1AD2407900BA8A6B /* RemindModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindModel.m; sourceTree = "<group>"; };
 		F486BE501AD2449F00BA8A6B /* RemindVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindVC.h; sourceTree = "<group>"; };
@@ -750,6 +743,16 @@
 		F4A536E41AC06A0B0075D99E /* NightDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightDetailView.m; sourceTree = "<group>"; };
 		F4A536E61AC06C580075D99E /* NightScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NightScrollView.h; sourceTree = "<group>"; };
 		F4A536E71AC06C580075D99E /* NightScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NightScrollView.m; sourceTree = "<group>"; };
+		F4A75D9D1B1565FC00C7A5DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LSLanguage.strings; sourceTree = "<group>"; };
+		F4A75DA81B1566F500C7A5DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F4A75DAA1B1566FD00C7A5DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		F4A75DAB1B1566FD00C7A5DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F4A75DAC1B15670500C7A5DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		F4A75DAD1B15670500C7A5DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F4A75DAE1B15671200C7A5DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F4A75DAF1B15671400C7A5DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F4A75DB01B15671C00C7A5DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LSLanguage.strings; sourceTree = "<group>"; };
+		F4A75DB11B15671E00C7A5DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LSLanguage.strings"; sourceTree = "<group>"; };
 		F4AC15471AD81B2500994C9E /* TimeZoneChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeZoneChoiceViewController.h; sourceTree = "<group>"; };
 		F4AC15481AD81B2500994C9E /* TimeZoneChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeZoneChoiceViewController.m; sourceTree = "<group>"; };
 		F4AC154A1AD836FC00994C9E /* ShowTimeZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTimeZone.h; sourceTree = "<group>"; };
@@ -1985,8 +1988,8 @@
 				F4B692F21A6F3EBC00B42395 /* Info.plist */,
 				F4B692F31A6F3EBC00B42395 /* main.m */,
 				F4B6931F1A6F3F8F00B42395 /* PrefixHeader.pch */,
-				F4233CD81AFE115F007D9C31 /* InfoPlist.strings */,
-				F485E9821AF9B00F00900B51 /* LSLanguage.strings */,
+				F4A75DA91B1566F500C7A5DD /* InfoPlist.strings */,
+				F4A75D9E1B1565FC00C7A5DD /* LSLanguage.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2409,8 +2412,8 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 				"zh-Hans",
 			);
 			mainGroup = F4B692E51A6F3EBC00B42395;
@@ -2441,6 +2444,7 @@
 				699242121A77425200EFF121 /* game_button_select_Normal@2x.png in Resources */,
 				695549361A8CF4D900423EA9 /* 清除缓存@2x.png in Resources */,
 				695549401A8CF4D900423EA9 /* 默认头像2@2x.png in Resources */,
+				F4A75D9C1B1565FC00C7A5DD /* LSLanguage.strings in Resources */,
 				F4BF2EDD1ADA313B00A99F2A /* 2_bluetooth_list1_5@2x.png in Resources */,
 				F4FA046F1B09C62F00CE7043 /* clock_5.png in Resources */,
 				F46A76301AC97F84000D5EDB /* 小图标1@2x.png in Resources */,
@@ -2453,7 +2457,6 @@
 				69EFC1E01A737ABD00B5BC53 /* 头像@2x.png in Resources */,
 				699242111A77425200EFF121 /* game_button_select_Highlighted@2x.png in Resources */,
 				6955493B1A8CF4D900423EA9 /* 电池电量-满@2x.png in Resources */,
-				F485E9801AF9B00F00900B51 /* LSLanguage.strings in Resources */,
 				F43390671AE7D51C000D3A0B /* shelf_book_update.png in Resources */,
 				F4C4C8281AC6D426005D511A /* 路程@2x.png in Resources */,
 				F430E4661AC7C9E0004E7130 /* 顶部四格-3@2x.png in Resources */,
@@ -2519,6 +2522,7 @@
 				69EFC1E21A737ABD00B5BC53 /* 更多@2x.png in Resources */,
 				F46A76321AC97F84000D5EDB /* 小图标3@2x.png in Resources */,
 				698A90C11A6FEB54005BABE6 /* LICENSE in Resources */,
+				F4A75DA71B1566F500C7A5DD /* InfoPlist.strings in Resources */,
 				F4B693561A6F401A00B42395 /* IQKeyboardManager.bundle in Resources */,
 				F4B692FF1A6F3EBC00B42395 /* Images.xcassets in Resources */,
 				F430E4611AC7C9E0004E7130 /* 顶部四格-1@2x.png in Resources */,
@@ -2540,7 +2544,6 @@
 				F4ED0B151AEC9BEF00F08C06 /* 路程sign@2x.png in Resources */,
 				F43979ED1AB550680033B7BB /* MJRefresh.bundle in Resources */,
 				695549371A8CF4D900423EA9 /* 爱动运手环@2x.png in Resources */,
-				F4233CD61AFE115F007D9C31 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2781,30 +2784,32 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F4233CD81AFE115F007D9C31 /* InfoPlist.strings */ = {
+		F4A75D9E1B1565FC00C7A5DD /* LSLanguage.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F4233CD71AFE115F007D9C31 /* en */,
-				F4233CD91AFE1160007D9C31 /* zh-Hans */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F485E9821AF9B00F00900B51 /* LSLanguage.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F485E9811AF9B00F00900B51 /* en */,
-				F485E9831AF9B01A00900B51 /* Base */,
-				F485E9861AF9B04600900B51 /* zh-Hans */,
+				F4A75D9D1B1565FC00C7A5DD /* Base */,
+				F4A75DB01B15671C00C7A5DD /* en */,
+				F4A75DB11B15671E00C7A5DD /* zh-Hans */,
 			);
 			name = LSLanguage.strings;
+			sourceTree = "<group>";
+		};
+		F4A75DA91B1566F500C7A5DD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4A75DA81B1566F500C7A5DD /* Base */,
+				F4A75DAE1B15671200C7A5DD /* en */,
+				F4A75DAF1B15671400C7A5DD /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		F4B692FB1A6F3EBC00B42395 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F4B692FC1A6F3EBC00B42395 /* Base */,
-				F485E9841AF9B04600900B51 /* zh-Hans */,
+				F4A75DAA1B1566FD00C7A5DD /* en */,
+				F4A75DAC1B15670500C7A5DD /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2813,7 +2818,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				F4B693011A6F3EBC00B42395 /* Base */,
-				F485E9851AF9B04600900B51 /* zh-Hans */,
+				F4A75DAB1B1566FD00C7A5DD /* en */,
+				F4A75DAD1B15670500C7A5DD /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

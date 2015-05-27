@@ -73,9 +73,18 @@ DEF_SINGLETON(BLTSendOld)
     {
         for (int i = count + 1; i < 16; i++)
         {
-            val[count] = 0x00;
+            val[i] = 0x00;
         }
     }
+    
+    /*
+     NSLog(@"闹钟设置开始. 旧");
+     for (int i = 0; i < 16; i++)
+     {
+         NSLog(@"%d..%x", i, val[i]);
+     }
+     NSLog(@"闹钟设置结束.");
+     */
     
     [self sendDataToWare:&val withLength:16 withUpdate:block];
 }
