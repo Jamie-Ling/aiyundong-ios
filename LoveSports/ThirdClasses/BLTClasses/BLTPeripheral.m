@@ -172,6 +172,7 @@ DEF_SINGLETON(BLTPeripheral)
             
             [BLTManager sharedInstance].elecQuantity = (NSUInteger)batteryLevel;
             
+            // NSLog(@".电量...%@", charac.value);
             if ([BLTManager sharedInstance].elecQuantity == 0)
             {
                 [self performSelector:@selector(delayReadElecQuantityOfDevice:) withObject:charac afterDelay:5.0];

@@ -28,6 +28,8 @@
 @property (nonatomic, assign) BOOL isNewDevice;         // 是否是新设备
 @property (nonatomic, assign) BOOL isHaveActivePlace;   // 是否设置过活动时区
 
+@property (nonatomic, assign) BOOL isClickBindSetting;       // 是否是绑定设置. 是的话就不要同步.
+
 @property (nonatomic, strong) NSString *hardType;       // 硬件型号
 @property (nonatomic, assign) NSInteger hardVersion;    // 硬件版本
 @property (nonatomic, assign) NSInteger firmVersion;    // 固件版本

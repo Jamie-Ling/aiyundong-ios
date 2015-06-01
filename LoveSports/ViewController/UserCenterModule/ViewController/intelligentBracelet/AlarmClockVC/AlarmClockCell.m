@@ -39,9 +39,17 @@
     _downLine.backgroundColor = UIColorFromHEX(0xcfcdce);
     [_baseView addSubview:_downLine];
     
+    _indexLabel = [[UILabel alloc] init];
+    _indexLabel.backgroundColor = UIColorFromHEX(0x169ad8);
+    _indexLabel.font = [UIFont systemFontOfSize:10.0];
+    _indexLabel.textColor = [UIColor whiteColor];
+    _indexLabel.textAlignment = NSTextAlignmentCenter;
+    _indexLabel.layer.masksToBounds = YES;
+    [self addSubview:_indexLabel];
+    
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.backgroundColor = [UIColor clearColor];
-    _timeLabel.font = [UIFont systemFontOfSize:18.0];
+    _timeLabel.font = [UIFont systemFontOfSize:15.0];
     _timeLabel.textColor = [UIColor blackColor];
     [self addSubview:_timeLabel];
 
@@ -73,13 +81,17 @@
     _upLine.frame = CGRectMake(0, 0, _baseView.width, 0.5);
     _downLine.frame = CGRectMake(0, _baseView.height - 0.5, _baseView.width, 0.5);
     
-    _timeLabel.text = model.alarmTime;
+    _indexLabel.frame = CGRectMake(6, (height - 12) / 2, 12, 12);
+    _indexLabel.text = [NSString stringWithFormat:@"%d", model.orderIndex + 1];
+    _indexLabel.layer.cornerRadius = _indexLabel.width / 2;
+    
+    _timeLabel.text = model.showTimeString;
     CGSize size = [_timeLabel.text sizeWithFont:_timeLabel.font maxSize:CGSizeMake(120, 99999)];
-    _timeLabel.frame = CGRectMake(15, 4, size.width, _baseView.height);
+    _timeLabel.frame = CGRectMake(_indexLabel.totalWidth + 2, 4, size.width, _baseView.height);
     
     _weekLabel.text = [model showStringForWeekDay];
     // size = [_weekLabel.text sizeWithFont:_weekLabel.font maxSize:CGSizeMake(180, 99999)];
-    _weekLabel.frame = CGRectMake(_timeLabel.totalWidth + 18, 4, 200, _baseView.height);
+    _weekLabel.frame = CGRectMake(_timeLabel.totalWidth + 15, 4, 200, _baseView.height);
     
     _cellSwitch.frame = CGRectMake(self.width - (_baseView.height + 10), 4, _baseView.height, _baseView.height);
     _cellSwitch.center = CGPointMake(_cellSwitch.center.x, _baseView.center.y);

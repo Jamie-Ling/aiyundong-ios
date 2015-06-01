@@ -195,7 +195,11 @@ DEF_SINGLETON(BLTManager)
        
         model.isInitiative = NO;
         model.isRepeatConnect = NO;
-        if (model.isBinding && !_model)
+        model.isClickBindSetting = NO;
+        
+        NSString *lastUUID = [LS_LastWareUUID getObjectValue];
+        if (model.isBinding && !_model &&
+            [lastUUID isEqualToString:model.bltID])
         {
             // 如果该设备已经绑定并且没有连接设备时就直接连接.
             [self repareConnectedDevice:model];
@@ -363,8 +367,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         {
             // 主动断开的.
             model.isInitiative = NO;
-            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
-            [self performSelector:@selector(startCan) withObject:nil afterDelay:8.0];
+           // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
+           // [self performSelector:@selector(startCan) withObject:nil afterDelay:8.0];
         }
     }
     else

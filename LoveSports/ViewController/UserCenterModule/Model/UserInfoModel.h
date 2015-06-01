@@ -53,6 +53,9 @@
 // 传入时区地更新时区
 - (void)updateTimeZone:(ShowTimeZone *)timeZone;
 
+// 恢复到默认设置.
+- (void)restoreToDefaultSettings;
+
 // 从数据库获取用户信息
 + (UserInfoModel *)getUserInfoFromDB;
 

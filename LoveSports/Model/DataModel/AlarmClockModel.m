@@ -189,7 +189,16 @@
         }
     }
     
-    _repeat = val | (_isRepeat << 7);
+    if (_weekArray.count > 0)
+    {
+        _repeat = val | (1 << 7);
+    }
+    else
+    {
+        _repeat = val | (0 << 7);
+    }
+    
+    // _repeat = val | (_isRepeat << 7);
 
     NSArray *array = [_alarmTime componentsSeparatedByString:@":"];
     _hour = [array[0] integerValue];
@@ -237,6 +246,29 @@
     _minutes = minutes;
     NSString *where = [NSString stringWithFormat:@"wareUUID = '%@' AND orderIndex = %ld", _wareUUID, (long)_orderIndex];
     [AlarmClockModel updateToDB:self where:where];
+}
+
+- (NSString *)showTimeString
+{
+    if ([AlarmClockModel isHasAMPMTimeSystem])
+    {
+        NSArray *array = [_alarmTime componentsSeparatedByString:@":"];
+        _hour = [array[0] integerValue];
+        _minutes = [array[1] integerValue];
+
+        if (_hour <= 12)
+        {
+            return [NSString stringWithFormat:@"%@ %@", LS_Text(@"AM"), _alarmTime];
+        }
+        else
+        {
+            return [NSString stringWithFormat:@"%@ %02d:%02d", LS_Text(@"PM"), _hour - 12, _minutes];
+        }
+    }
+    else
+    {
+        return _alarmTime;
+    }
 }
 
 // 表名

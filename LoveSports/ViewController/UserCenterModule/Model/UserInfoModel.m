@@ -55,6 +55,13 @@
     return self;
 }
 
+// 恢复到默认设置.
+- (void)restoreToDefaultSettings
+{
+    self.step = 50;
+    self.targetSteps = 10000;
+}
+
 - (void)setManifesto:(NSString *)manifesto
 {
     _manifesto = manifesto;

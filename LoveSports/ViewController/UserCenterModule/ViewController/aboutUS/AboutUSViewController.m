@@ -58,8 +58,6 @@
 
 - (void) updateVersion
 {
-    NSLog(@"请求版本接口，如果有更新，跳转至APPSTORE更新");
-    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/jie-zou-da-shi/id493901993?mt=8"]];
 }
 
@@ -194,7 +192,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"点击第%ld行",  (long)indexPath.row);
     //去除点击的选中色
     [tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:YES];
     
@@ -207,7 +204,6 @@
             break;
         case 0:
         {
-            NSLog(@"意见反馈");
             
             MSCustomWebViewController *oneWebVC = [[MSCustomWebViewController alloc] init];
             [oneWebVC setNavTitle:LS_Text(@"Feedback")];
@@ -220,8 +216,6 @@
             break;
         case 1:
         {
-            NSLog(@"帮助");
-            
             MSCustomWebViewController *oneWebVC = [[MSCustomWebViewController alloc] init];
             [oneWebVC setNavTitle:LS_Text(@"Help")];
             oneWebVC.hidesBottomBarWhenPushed = YES;

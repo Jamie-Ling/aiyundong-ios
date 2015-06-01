@@ -268,6 +268,7 @@
 - (void)bindingHardWare
 {
     _model.isBinding = YES;
+    _model.isClickBindSetting = YES;
     
     [[BLTManager sharedInstance] repareConnectedDevice:_model];
     SHOWMBProgressHUD(LS_Text(@"Connecting..."), nil, nil, NO, 5);

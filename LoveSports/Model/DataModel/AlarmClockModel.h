@@ -27,6 +27,8 @@
 @property (nonatomic, assign) CGFloat height;   // 如果选了7天可能需要2行。
 @property (nonatomic, assign) NSInteger orderIndex;
 
+@property (nonatomic, strong) NSString *showTimeString;
+
 /**
  *  得到一个代表星期几的Uint8
  *

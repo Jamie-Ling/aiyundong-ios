@@ -13,7 +13,7 @@ typedef void(^NSObjectSimpleBlock)(id object);
 
 @property (nonatomic, readonly) NSArray *attributeList;
 
-+ (BOOL)queryCurrentTimeSystem;
++ (BOOL)isHasAMPMTimeSystem;
 
 + (NSString *)numberTransferWeek:(NSInteger)number;
 

@@ -8,6 +8,9 @@
 
 "English" = "YES";
 
+"AM" = "AM";
+"PM" = "PM";
+
 "Set Personal Data" = "Set Personal Data";
 "Accomplish" = "Accomplish";
 "Date of Birth" = "Date of Birth";

@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSString *endTime;
 @property (nonatomic, assign) NSInteger orderIndex;
 
+@property (nonatomic, strong) NSString *showStartTimeString;
+@property (nonatomic, strong) NSString *showEndTimeString;
+
 + (NSArray *)getRemindFromDBWithUUID:(NSString *)uuid;
 
 @end

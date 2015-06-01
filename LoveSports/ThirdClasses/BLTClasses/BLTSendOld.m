@@ -228,7 +228,7 @@ DEF_SINGLETON(BLTSendOld)
     }];
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dismissConnect) object:nil];
-    [self performSelector:@selector(dismissConnect) withObject:nil afterDelay:45.0];
+    //[self performSelector:@selector(dismissConnect) withObject:nil afterDelay:45.0];
     
     if (self.backBlock)
     {
@@ -280,7 +280,16 @@ DEF_SINGLETON(BLTSendOld)
                    withUpdateBlock:^(id object, BLTAcceptDataType type) {
                        if (type == BLTAcceptDataTypeOldSetUserInfo)
                        {
-                           [[BLTSendOld sharedInstance] performSelector:@selector(requestSportDataLength) withObject:nil afterDelay:0.3];
+                           if (![UserInfoHelp sharedInstance].braceModel.isClickBindSetting)
+                           {
+                                [[BLTSendOld sharedInstance] performSelector:@selector(requestSportDataLength) withObject:nil afterDelay:0.3];
+                           }
+                           else
+                           {
+                               [[BLTSendOld sharedInstance] performSelector:@selector(deleteSportDataAgain) withObject:nil afterDelay:0.3];
+                               
+                               [UserInfoHelp sharedInstance].braceModel.isClickBindSetting = NO;
+                           }
                        }
                    }];
 }

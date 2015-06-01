@@ -74,6 +74,52 @@
     [RemindModel updateToDB:self where:where];
 }
 
+- (NSString *)showStartTimeString
+{
+    if ([RemindModel isHasAMPMTimeSystem])
+    {
+        NSArray *array = [_startTime componentsSeparatedByString:@":"];
+        NSInteger hour = [array[0] integerValue];
+        NSInteger minutes = [array[1] integerValue];
+        
+        if (hour <= 12)
+        {
+            return [NSString stringWithFormat:@"%@ %@", LS_Text(@"AM"), _startTime];
+        }
+        else
+        {
+            return [NSString stringWithFormat:@"%@ %02d:%02d", LS_Text(@"PM"), hour - 12, minutes];
+        }
+    }
+    else
+    {
+        return _startTime;
+    }
+}
+
+- (NSString *)showEndTimeString
+{
+    if ([RemindModel isHasAMPMTimeSystem])
+    {
+        NSArray *array = [_endTime componentsSeparatedByString:@":"];
+        NSInteger hour = [array[0] integerValue];
+        NSInteger minutes = [array[1] integerValue];
+        
+        if (hour <= 12)
+        {
+            return [NSString stringWithFormat:@"%@ %@", LS_Text(@"AM"), _endTime];
+        }
+        else
+        {
+            return [NSString stringWithFormat:@"%@ %02d:%02d", LS_Text(@"PM"), hour - 12, minutes];
+        }
+    }
+    else
+    {
+        return _endTime;
+    }
+}
+
 // 表名
 + (NSString *)getTableName
 {

@@ -295,7 +295,13 @@
                             weakSelf.userInfo.targetSteps = targetSums;
                             
                             [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
-                                [NSObject showMessageOnMain:object];
+                                if ([object boolValue])
+                                {
+                                    SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
+                                    
+                                    // 旧设备需要清除之前的数据.
+                                    [[BLTSendOld sharedInstance] delaySendOldDeleteSportData];
+                                }
                             }];
                             
                             [weakSelf.listTableView reloadData];
@@ -541,10 +547,26 @@
     if (buttonIndex == 1)
     {
         if (alertView.tag == 100861) {
+            /*
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定" ,nil];
             alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
             alert.tag = 100862;
             [alert show];
+             */
+            
+            [_userInfo restoreToDefaultSettings];
+            [[UserInfoHelp sharedInstance] sendSetUserInfo:^(id object) {
+                if ([object boolValue])
+                {
+                    SHOWMBProgressHUD(LS_Text(@"Setting success"), nil, nil, NO, 2.0);
+                    
+                    // 旧设备需要清除之前的数据.
+                    [[BLTSendOld sharedInstance] delaySendOldDeleteSportData];
+                }
+            }];
+
+            [_listTableView reloadData];
+
             return;
         }
         if (alertView.tag == 100862) {

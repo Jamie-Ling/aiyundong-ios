@@ -30,6 +30,23 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+ 
+    DEF_WEAKSELF_(AlarmClockVC);
+    [BLTManager sharedInstance].disConnectBlock = ^() {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTManager sharedInstance].disConnectBlock = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -155,7 +172,7 @@
     datePicker.showTodayButton = NO;
     datePicker.mode = UIDatePickerModeTime;
     datePicker.selectedDate = theDate;
-    datePicker.isAlarm = YES;
+    datePicker.isAlarm = NO;
     [datePicker presentWithWeekDayInView:self.view
                       withUpdatWeedArray:model.weekArray
                                withBlock:^(BOOL madeChoice) {
@@ -176,6 +193,8 @@
                                                               (long)datePicker.timePicker.hourOrder,
                                                               (long)datePicker.timePicker.minutesOrder];*/
                                        model.alarmTime = choiceString;
+                                       
+                                       NSLog(@".wareUUID = .%@", model.wareUUID);
                                        model.isRepeat = datePicker.repeatView.repeat.on;
 
                                        [weakSelf.tableView reloadData];

@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIView *baseView;
 @property (nonatomic, strong) UIView *upLine;
 @property (nonatomic, strong) UIView *downLine;
+
+@property (nonatomic, strong) UILabel *indexLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *weekLabel;
 @property (nonatomic, strong) UISwitch *cellSwitch;

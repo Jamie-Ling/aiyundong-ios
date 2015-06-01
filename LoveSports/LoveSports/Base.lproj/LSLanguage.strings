@@ -8,6 +8,9 @@
 
 "English" = "NO";
 
+"AM" = "上午";
+"PM" = "下午";
+
 "Set Personal Data" = "设置个人信息";
 "Accomplish" = "完成";
 "Date of Birth" = "出生日期";

@@ -57,7 +57,7 @@ DEF_SINGLETON(BLTSendData)
 {
     NSLog(@"活动时区..%d..本地时区..%d",[self activityTimeZone:timeZone], [self timeZone]);
     NSDate *date = [NSDate date];
-    UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData queryCurrentTimeSystem], [self activityTimeZone:timeZone],
+    UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData isHasAMPMTimeSystem], [self activityTimeZone:timeZone],
                     [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday, date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:16 withUpdate:block];

@@ -76,7 +76,7 @@
     _startTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                      withAlignment:NSTextAlignmentCenter
                                       withFontSize:16
-                                          withText:@"00:00"
+                                          withText:@""
                                      withTextColor:[UIColor blackColor]
                                            withTag:1000];
     [_startTimeLabel addUpAndDownLine];
@@ -93,7 +93,7 @@
     _endTimeLabel = [UILabel simpleLabelWithRect:CGRectMake(0, 0, self.width, _offset)
                                    withAlignment:NSTextAlignmentCenter
                                     withFontSize:16
-                                        withText:@"00:00"
+                                        withText:@""
                                    withTextColor:[UIColor blackColor]
                                          withTag:1000];
     [_endTimeLabel addUpAndDownLine];
@@ -143,21 +143,21 @@
     
     _openSwitch.on = model.isOpen;
     _textField.text = model.interval;
-    _startTimeLabel.text = model.startTime;
-    _endTimeLabel.text = model.endTime;
+    _startTimeLabel.text = _model.showStartTimeString;
+    _endTimeLabel.text = _model.showEndTimeString;
 }
 
 - (void)updateContentForLabelWithTime:(NSString *)time withIndex:(NSInteger)index
 {
     if (index == 0)
     {
-        _startTimeLabel.text = time;
         _model.startTime = time;
+        _startTimeLabel.text = _model.showStartTimeString;
     }
     else
     {
-        _endTimeLabel.text = time;
         _model.endTime = time;
+        _endTimeLabel.text = _model.showEndTimeString;
     }
 }
 

@@ -27,26 +27,37 @@ DEF_SINGLETON(UserInfoHelp)
 
 - (BLTModel *)braceModel
 {
+    BLTModel *model = [BLTManager sharedInstance].model;
+
     if (!_braceModel)
     {
-        BLTModel *model = [BLTManager sharedInstance].model;
         if (model)
         {
             _braceModel = model;
         }
         else
         {
-            NSString *where = [NSString stringWithFormat:@"bltID = '%@'", [LS_LastWareUUID getObjectValue]];
-            model = [BLTModel searchSingleWithWhere:where orderBy:nil];
+            model = [BLTModel getModelFromDBWtihUUID:[LS_LastWareUUID getObjectValue]];
             
             if (model)
             {
+                
                 _braceModel = model;
             }
             else
             {
                 model = [BLTModel initWithUUID:[LS_LastWareUUID getObjectValue]];
                 
+                _braceModel = model;
+            }
+        }
+    }
+    else
+    {
+        if (model)
+        {
+            if (model != _braceModel)
+            {
                 _braceModel = model;
             }
         }

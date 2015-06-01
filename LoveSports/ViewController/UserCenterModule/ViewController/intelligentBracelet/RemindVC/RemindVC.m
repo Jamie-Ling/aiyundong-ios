@@ -38,6 +38,23 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    DEF_WEAKSELF_(RemindVC);
+    [BLTManager sharedInstance].disConnectBlock = ^() {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [BLTManager sharedInstance].disConnectBlock = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
