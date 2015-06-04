@@ -55,11 +55,11 @@ DEF_SINGLETON(BLTSendData)
                            withActivityTimeZone:(NSInteger)timeZone
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSLog(@"活动时区..%d..本地时区..%d",[self activityTimeZone:timeZone], [self timeZone]);
     NSDate *date = [NSDate date];
+    // NSLog(@"活动时区..%d..本地时区..%d.. %d",[self activityTimeZone:timeZone], [self timeZone], date.weekday);
     UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData isHasAMPMTimeSystem], [self activityTimeZone:timeZone],
                     [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
-                    date.weekday, date.hour, date.minute, date.second};
+                    date.weekday - 1, date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:16 withUpdate:block];
 }
 
@@ -67,11 +67,11 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    NSLog(@"..本地时区..%d", [self timeZone]);
+    // NSLog(@"..本地时区..%d..%d", [self timeZone], date.weekday);
 
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
-                    date.weekday, [self timeZone], date.hour, date.minute, date.second};
+                    date.weekday - 1, [self timeZone], date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:13 withUpdate:block];
 }
 
@@ -345,7 +345,7 @@ DEF_SINGLETON(BLTSendData)
 {
     UInt8 val[13] = {0xBE, 0x01, 0x14, 0xFE,
         (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
-        date.weekday, 8, date.hour, date.minute, date.second};
+        date.weekday - 1, 8, date.hour, date.minute, date.second};
     [self sendDataToWare:&val withLength:13 withUpdate:block];
 }
 
