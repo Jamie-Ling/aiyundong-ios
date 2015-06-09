@@ -43,6 +43,9 @@ CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad);
 - (void)removeAllSubviews;
 - (void)removeAllGestureRecognizers;
 
+// ios8以前的图片要自适应.
+- (void)imageFitForView;
+
 - (void)addUpAndDownLine;
 
 // UIButton

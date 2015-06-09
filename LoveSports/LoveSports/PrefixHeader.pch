@@ -108,6 +108,8 @@
 // 国际化文件.
 #define LS_Text(string) NSLocalizedStringFromTable(string, @"LSLanguage", nil)
 
+#define LS_NavBarOffset (IOS8_OR_LATER ? 0 : 64)
+
 
 
 

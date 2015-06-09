@@ -118,7 +118,7 @@
     for (int i = 0; i < 2; i++)
     {
         CGFloat height = i ? 50 : 64;
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 12 + i * (68), self.view.width, height)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 12 + i * (68) + LS_NavBarOffset, self.view.width, height)];
         view.backgroundColor = [UIColor whiteColor];
         [view addUpAndDownLine];
         [self.view addSubview:view];
@@ -211,7 +211,7 @@
 - (void)loadBindingAndConnectSetting
 {
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
+                     simpleWithRect:CGRectMake(0, 156 + LS_NavBarOffset, self.view.width, 44)
                      withTitle:LS_Text(@"Unpair")
                      withSelectTitle:LS_Text(@"Unpair")
                      withColor:[UIColor whiteColor]];
@@ -224,7 +224,7 @@
 - (void)loaoNoConnectAndBindingSetting
 {
     _connectButton = [UIButton
-                               simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
+                               simpleWithRect:CGRectMake(0, 156 + LS_NavBarOffset, self.view.width, 44)
                                withTitle:LS_Text(@"Connect")
                                withSelectTitle:LS_Text(@"Connect")
                                withColor:[UIColor whiteColor]];
@@ -234,7 +234,7 @@
     [self.view addSubview:_connectButton];
 
     _removeButton = [UIButton
-                     simpleWithRect:CGRectMake(0, 196, self.view.width, 44)
+                     simpleWithRect:CGRectMake(0, 196 + LS_NavBarOffset, self.view.width, 44)
                      withTitle:LS_Text(@"Unpair")
                      withSelectTitle:LS_Text(@"Unpair")
                      withColor:[UIColor whiteColor]];
@@ -247,7 +247,7 @@
 - (void)loadNoBindingAndNoConnectSetting
 {
     UIButton *ignoreButton = [UIButton
-                              simpleWithRect:CGRectMake(20, 200, self.view.width - 40, 44)
+                              simpleWithRect:CGRectMake(20, 200 + LS_NavBarOffset, self.view.width - 40, 44)
                               withTitle:@"忽略此设备"
                               withSelectTitle:@"忽略此设备"
                               withColor:UIColorRGB(253, 180, 30)];
@@ -255,7 +255,7 @@
     // [self.view addSubview:ignoreButton];
     
     _bindingButton = [UIButton
-                      simpleWithRect:CGRectMake(0, 156, self.view.width, 44)
+                      simpleWithRect:CGRectMake(0, 156 + LS_NavBarOffset, self.view.width, 44)
                       withTitle:LS_Text(@"Paired")
                       withSelectTitle:LS_Text(@"Paired")
                       withColor:[UIColor whiteColor]];

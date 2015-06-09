@@ -179,7 +179,7 @@
     UInt8 val = 0;
     for (int i = 0; i < 7; i++)
     {
-        if ([_weekArray containsObject:[NSString stringWithFormat:@"%d", i]])
+        if ( _weekArray && [_weekArray containsObject:[NSString stringWithFormat:@"%d", i]])
         {
             val = val | (1 << i);
         }

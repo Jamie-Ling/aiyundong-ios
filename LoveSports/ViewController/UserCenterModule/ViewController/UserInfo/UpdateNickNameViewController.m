@@ -56,7 +56,7 @@
 //添加所有控件
 - (void) addAllControl
 {
-    _upView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - kIOS7OffHeight)];
+    _upView = [[UIView alloc] initWithFrame:CGRectMake(0, LS_NavBarOffset, kScreenWidth, kScreenHeight - kIOS7OffHeight)];
     _upView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_upView];
     

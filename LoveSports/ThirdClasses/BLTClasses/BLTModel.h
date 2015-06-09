@@ -25,7 +25,7 @@
 @property (nonatomic, assign) BOOL isConnected;         // 是否已经连接
 @property (nonatomic, assign) BOOL isIgnore;            // 是否被忽略
 @property (nonatomic, assign) BOOL isBinding;           // 是否绑定了
-@property (nonatomic, assign) BOOL isNewDevice;         // 是否是新设备
+@property (nonatomic, assign, readonly) BOOL isNewDevice;         // 是否是新设备
 @property (nonatomic, assign) BOOL isHaveActivePlace;   // 是否设置过活动时区
 
 @property (nonatomic, assign) BOOL isClickBindSetting;       // 是否是绑定设置. 是的话就不要同步.

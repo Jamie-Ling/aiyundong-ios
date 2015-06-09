@@ -65,7 +65,9 @@
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addAllControl
 {
-    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  64.0) withImageName:@"isport_5@2x.png" withImageZoomSize:1.0];
+    _logoImageView = [[ObjectCTools shared] getACustomImageViewWithCenter:CGPointMake(kScreenWidth / 2.0,  64.0 + LS_NavBarOffset) withImageName:@"isport_5@2x.png" withImageZoomSize:1.0];
+    _logoImageView.frame = CGRectMake(0, LS_NavBarOffset, self.view.width, 150);
+    [_logoImageView imageFitForView];
     [self.view addSubview:_logoImageView];
     
     [self.view addSubViewWithRect:CGRectMake(0, _logoImageView.totalHeight + 20, self.width, 0.5)
@@ -85,7 +87,7 @@
 
 - (void) addTableView
 {
-    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _logoImageView.totalHeight + 24, vOneCellWidth, kScreenHeight - _logoImageView.bottom - kIOS7OffHeight) style:UITableViewStylePlain];
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _logoImageView.totalHeight + 21, vOneCellWidth, kScreenHeight - _logoImageView.bottom - kIOS7OffHeight) style:UITableViewStylePlain];
     
     [_listTableView setBackgroundColor:kBackgroundColor];
     

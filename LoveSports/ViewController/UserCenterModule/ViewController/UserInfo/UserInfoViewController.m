@@ -957,7 +957,7 @@
     [_notConectLabel.layer setCornerRadius:5.0];
     [_notConectLabel.layer setMasksToBounds:YES];
     //    [_notConectLabel sizeToFit];
-    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight)];
+    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight + LS_NavBarOffset)];
     [self.view addSubview:_notConectLabel];
     
     [_notConectLabel setHidden:YES];

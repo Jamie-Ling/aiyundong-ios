@@ -10,6 +10,7 @@
 #import "ShowWareView.h"
 #import "BLTManager.h"
 #import "HardWareVC.h"
+#import "AppDelegate.h"
 
 @interface LoginBindingVC () <ShowWareViewDelegate>
 
@@ -74,6 +75,12 @@
     [self.view addSubview:_wareView];
     
     [self loadSkipButton];
+    
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    __weak LoginBindingVC *safeSelf = self;
+    app.enterForegroundBlock = ^ (id object) {
+        [safeSelf.wareView resetAnimationForHeadImage];
+    };
 }
 
 - (void)loadSkipButton
@@ -91,6 +98,7 @@
 {
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     
+    app.enterForegroundBlock = nil;
     [app pushToContentVC];
 }
 

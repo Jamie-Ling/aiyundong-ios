@@ -15,6 +15,7 @@
 
 @property (nonatomic, assign) BOOL isOpenHead;
 @property (nonatomic, assign) BOOL isPop;
+@property (nonatomic, strong) UIView *headBaseView;
 @property (nonatomic, strong) UIImageView *headImage;
 
 @end
@@ -112,6 +113,16 @@
         _showArray = [BLTManager sharedInstance].allWareArray;
     }
     
+    /* 测试
+    for (int i = 0; i < 20; i++)
+    {
+        BLTModel *model = [[BLTModel alloc] init];
+
+        [[BLTManager sharedInstance].allWareArray addObject:model];
+    }
+    _showArray = [BLTManager sharedInstance].allWareArray;
+     */
+    
     [_tableView reloadData];
 }
 
@@ -182,7 +193,9 @@
 {
     if (_isOpenHead)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, 150)];
+        _headBaseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.width, 150)];
+        _headBaseView.backgroundColor = [UIColor clearColor];
+        
         _headImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 125)];
         _headImage.animationImages = @[UIImageNamed(@"02_bluetooth2_5@2x.png"),
                                        UIImageNamed(@"02_bluetooth3_5@2x.png"),
@@ -190,11 +203,30 @@
                                        UIImageNamed(@"02_bluetooth5_5@2x.png")];
         _headImage.animationRepeatCount = 9999;
         _headImage.animationDuration = 4;
+        _headImage.backgroundColor = [UIColor clearColor];
         [_headImage startAnimating];
-        [view addSubview:_headImage];
-        _headImage.center = CGPointMake(view.width / 2, view.height / 2);
+        [_headBaseView addSubview:_headImage];
+        _headImage.center = CGPointMake(_headBaseView.width / 2, _headBaseView.height / 2);
         
-        _tableView.tableHeaderView = view;
+        _tableView.tableHeaderView = _headBaseView;
+    }
+}
+
+- (void)resetAnimationForHeadImage
+{
+    if (_isOpenHead)
+    {
+        if (_headImage)
+        {
+            /*
+            _headImage.animationImages = @[UIImageNamed(@"02_bluetooth2_5@2x.png"),
+                                           UIImageNamed(@"02_bluetooth3_5@2x.png"),
+                                           UIImageNamed(@"02_bluetooth4_5@2x.png"),
+                                           UIImageNamed(@"02_bluetooth5_5@2x.png")];
+            _headImage.animationRepeatCount = 9999;
+            _headImage.animationDuration = 4;*/
+            [_headImage startAnimating];
+        }
     }
 }
 

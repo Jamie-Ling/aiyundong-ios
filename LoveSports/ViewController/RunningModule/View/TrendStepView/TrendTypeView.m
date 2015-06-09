@@ -17,6 +17,7 @@
     {
         self.backgroundColor = [UIColor clearColor];
         
+        _imageWidth = IOS8_OR_LATER ? 64 : 44;
         _backBlock = backBlock;
         [self loadButtons:offset withWidth:frame.size.width];
     }
@@ -26,24 +27,24 @@
 
 - (void)setOffset:(CGFloat)offset
 {
-    CGFloat offsetX = ((self.width - offset * 2) - 64 * 3) / 2;
+    CGFloat offsetX = ((self.width - offset * 2) - _imageWidth * 3) / 2;
     for (int i = 0; i < 3; i++)
     {
         UIButton *button = (UIButton *)[self viewWithTag:2000 + i];
-        button.frame = CGRectMake(offset + (64 + offsetX) * i, 0, 64, 64);
+        button.frame = CGRectMake(offset + (_imageWidth + offsetX) * i, 0, _imageWidth, _imageWidth);
     }
 }
 
 - (void)loadButtons:(CGFloat)offset withWidth:(CGFloat)width
 {
-    CGFloat offsetX = ((width - offset * 2) - 64 * 3) / 2;
+    CGFloat offsetX = ((width - offset * 2) - _imageWidth * 3) / 2;
 
     NSArray *images = @[@"足迹@2x.png", @"能量_big@2x.png", @"路程_big@2x.png"];
     NSArray *selectImages = @[@"足迹-选中@2x.png", @"能量选中_big@2x.png", @"路程选中_big@2x.png"];
     
     for (int i = 0; i < images.count; i++)
     {
-        UIButton *button = [UIButton simpleWithRect:CGRectMake(offset + (64 + offsetX) * i, 0, 64, 64)
+        UIButton *button = [UIButton simpleWithRect:CGRectMake(offset + (_imageWidth + offsetX) * i, 0, _imageWidth, _imageWidth)
                                           withImage:images[i]
                                     withSelectImage:selectImages[i]];
         

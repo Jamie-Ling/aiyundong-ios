@@ -176,7 +176,7 @@
 - (void) reloadMainPage
 {
     _braceModel = [UserInfoHelp sharedInstance].braceModel;
-    _is240N =  _braceModel.isNewDevice;
+    _is240N = _braceModel.isNewDevice;
     _cellTitleArray = _is240N ? _cellTitleArrayFor240N : _cellTitleArrayFor240;
 
     if ([BLTManager sharedInstance].model.peripheral.state != CBPeripheralStateConnected)
@@ -733,6 +733,8 @@
             if (_is240N)
             {
                 slideSwitchH.on = _braceModel.isRealTime;
+                
+                // NSLog(@"isRealTime..%d", _braceModel.isRealTime);
                 [oneCell.contentView addSubview:slideSwitchH];
                 
                 [rightImageView setHidden:YES];
@@ -787,7 +789,6 @@
         oneCell.userInteractionEnabled = NO;
         [oneCell.contentView setBackgroundColor:kRGBAlpha(243.0, 243.0, 243.0, 0.5)];
         slideSwitchH.userInteractionEnabled = NO;
-        slideSwitchH.on = NO;
     }
     else
     {
@@ -960,7 +961,7 @@
     [_notConectLabel.layer setCornerRadius:5.0];
     [_notConectLabel.layer setMasksToBounds:YES];
 //    [_notConectLabel sizeToFit];
-    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight)];
+    [_notConectLabel setCenter:CGPointMake(kScreenWidth / 2.0, self.view.height - 35 - _notConectLabel.height  - kNavigationBarHeight + LS_NavBarOffset)];
     [self.view addSubview:_notConectLabel];
     
     [_notConectLabel setHidden:YES];

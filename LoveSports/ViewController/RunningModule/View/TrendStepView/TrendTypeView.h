@@ -15,6 +15,8 @@
 
 @property (nonatomic, assign) CGFloat offset;
 
+@property (nonatomic, assign) CGFloat imageWidth;
+
 - (instancetype)initWithFrame:(CGRect)frame
                    withOffset:(CGFloat)offset
                     withBlock:(UIViewSimpleBlock)backBlock;

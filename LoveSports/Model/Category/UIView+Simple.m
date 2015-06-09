@@ -266,6 +266,14 @@ CGFloat FitSimpleNumber(CGFloat ip, CGFloat ipad)
     }
 }
 
+- (void)imageFitForView
+{
+    if (!IOS8_OR_LATER)
+    {
+        self.contentMode = UIViewContentModeScaleAspectFit;
+    }
+}
+
 - (void)removeAllGestureRecognizers
 {
     for (UIGestureRecognizer *ges in self.gestureRecognizers)
@@ -495,7 +503,6 @@ void UIButtonAddTouchup(UIButton *button, id object, SEL aSelector)
     }
     
   
-    
     return button;
 }
 

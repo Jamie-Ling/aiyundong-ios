@@ -97,6 +97,8 @@ DEF_SINGLETON(BLTPeripheral)
     
     for (CBService *service in peripheral.services)
     {
+        // NSLog(@"..%@", service.UUID);
+
         if ([service.UUID isEqual:BLTUUID.uartServiceUUID])
         {
             // self.blService = service;

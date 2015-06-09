@@ -179,12 +179,6 @@
     [BLTModel updateToDB:self where:where];
 }
 
-- (void)setIsNewDevice:(BOOL)isNewDevice
-{
-    _isNewDevice = isNewDevice;
-    [BLTModel updateToDB:self where:nil];
-}
-
 - (void)setIsLeftHand:(BOOL)isLeftHand
 {
     _isLeftHand = isLeftHand;
@@ -201,6 +195,21 @@
 {
     _isHaveActivePlace = isHaveActivePlace;
     [BLTModel updateToDB:self where:nil];
+}
+
+- (BOOL)isNewDevice
+{
+    if ([_bltName isEqualToString:@"W240N"] ||
+        [_bltName isEqualToString:@"W285N"] ||
+        [_bltName isEqualToString:@"W301"] ||
+        [_bltName isEqualToString:@"W307"])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 // 主键

@@ -244,7 +244,7 @@ DEF_SINGLETON(BLTSendOld)
         HIDDENMBProgressHUD;
         // 将当前连接的模型干掉...
         [[BLTManager sharedInstance] initiativeDismissCurrentModel:[BLTManager sharedInstance].model];
-        [BLTManager sharedInstance].model = nil;
+        // [BLTManager sharedInstance].model = nil;
     }
 }
 

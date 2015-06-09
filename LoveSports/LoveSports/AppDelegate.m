@@ -123,7 +123,12 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-     [DataShare sharedInstance].isEnglish = [LS_Text(@"English") isEqualToString:@"YES"];
+    [DataShare sharedInstance].isEnglish = [LS_Text(@"English") isEqualToString:@"YES"];
+    
+    if (_enterForegroundBlock)
+    {
+        _enterForegroundBlock(nil);
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

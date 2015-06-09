@@ -10,6 +10,7 @@
 #import "ZKKNavigationController.h"
 #import "HomeVC.h"
 #import "LoginVC.h"
+#import "NSObject+Property.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -18,6 +19,8 @@
 
 @property (strong, nonatomic) ZKKNavigationController *_mainNavigationController;        //主页面主流程控制器
 @property (strong, nonatomic) ZKKNavigationController *_loginNavigationController;          //登录、注册流程控制器
+
+@property (nonatomic, strong) NSObjectSimpleBlock enterForegroundBlock;
 
 /**
  @brief 添加登录页（用于非持续登录或退出当前用户后跳转回登录页）

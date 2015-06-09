@@ -91,6 +91,11 @@
         button.selected = NO;
         [button setImage:[UIImage imageNamed:imagesArray[i]] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:selImagesArray[i]] forState:UIControlStateSelected];
+        
+        if (!IOS8_OR_LATER)
+        {
+            button.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        }
        
         //注意，头像按钮是用户设置的（来自服务器或本地设置）  --- jamie
         if (i == 5)

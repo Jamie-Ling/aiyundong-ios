@@ -77,7 +77,7 @@
 #pragma mark ---------------- 页面布局 -----------------
 - (void) addTableView
 {
-    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, vTableViewLeaveTop, vOneCellWidth, kScreenHeight - vTableViewLeaveTop - 64) style:UITableViewStylePlain];
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, vTableViewLeaveTop, vOneCellWidth, kScreenHeight - vTableViewLeaveTop - 64 + LS_NavBarOffset) style:UITableViewStylePlain];
     
     [_listTableView setBackgroundColor:kBackgroundColor];
     [[ObjectCTools shared] setExtraCellLineHidden:_listTableView];

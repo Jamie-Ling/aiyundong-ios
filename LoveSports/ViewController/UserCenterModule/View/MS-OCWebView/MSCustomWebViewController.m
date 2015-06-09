@@ -31,11 +31,11 @@
         oldUrl = nil;
         newUrl = nil;
         
-        if (kIOSVersions >= 7.0) {
+        if (kIOSVersions >= 8.0) {
             self.automaticallyAdjustsScrollViewInsets = NO;
             webView = [[MSCustomWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - kIOS7OffHeight)];
         }else{
-            webView = [[MSCustomWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - 20 - 44)];
+            webView = [[MSCustomWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
         }
         webView.delegate = self;
         webView.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];

@@ -181,7 +181,7 @@
     [_userImageButton removeFromSuperview];
     _userImageButton = nil;
     _userImageButton = [[ObjectCTools shared] getARoundedButtonWithSize:68.0 withImageUrl:[_userInfoDictionary objectForKey:kUserInfoOfHeadPhotoKey]];  //实际应该是一个url从服务器获取图片显示
-    [_userImageButton setCenter:CGPointMake(kScreenWidth / 2.0, 55.0)];
+    [_userImageButton setCenter:CGPointMake(kScreenWidth / 2.0, 55.0 + LS_NavBarOffset)];
     
     [_userImageButton addTarget:self action:@selector(choicePicForUserHeadImage) forControlEvents:UIControlEventTouchUpInside];
     
@@ -193,7 +193,7 @@
 
 - (void) addTableView
 {
-    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, vTableViewLeaveTop, vOneCellWidth, kScreenHeight - vTableViewLeaveTop - 64) style:UITableViewStylePlain];
+    _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _userImageButton.totalHeight + 20, vOneCellWidth, self.view.height - _userImageButton.height - 20) style:UITableViewStylePlain];
     
     [_listTableView setBackgroundColor:kBackgroundColor];
     [[ObjectCTools shared] setExtraCellLineHidden:_listTableView];

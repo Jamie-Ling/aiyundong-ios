@@ -54,7 +54,7 @@ DEF_SINGLETON(BLTSimpleSend)
                                          if (type == BLTAcceptDataTypeRequestHistorySportsData)
                                          {
                                              self.startDate = [self.startDate dateAfterDay:1];
-                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
+                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
                                              if (object && self.startDate)
                                              {
                                                  [self performSelectorInBackground:@selector(syncInBackGround:) withObject:@[object, self.startDate]];
@@ -74,7 +74,7 @@ DEF_SINGLETON(BLTSimpleSend)
                                              
                                              [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
                                              self.startDate = [self.startDate dateAfterDay:1];
-                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.5];
+                                             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
                                          }
                                      }];
     [self startTimer];
@@ -153,14 +153,14 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     // 设置当前时间.
     [self performSelector:@selector(sendCurrentTime) withObject:nil afterDelay:0.3];
     // 请求硬件信息.
-    [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.6];
+    // [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.6];
     // 发送用户个人信息。 体重 目标
-    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.9];
+    [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.6];
     
     if (![UserInfoHelp sharedInstance].braceModel.isClickBindSetting)
     {
         // 请求历史数据.
-        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:1.2];
+        [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.9];
     }
     else
     {
@@ -196,15 +196,19 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
             UInt8 val[20] = {0};
             [data getBytes:&val length:data.length];
             
-            [BLTManager sharedInstance].model.hardType =
+            // 从固件获取设备的名字.
+            [BLTManager sharedInstance].model.bltName =
             [NSString stringWithFormat:@"%c%c%c%c%c%c",
              val[4], val[5], val[6], val[7], val[8], val[9]];
             [BLTManager sharedInstance].model.hardVersion = val[10];
             [BLTManager sharedInstance].model.firmVersion = val[11];
             
-            NSLog(@"固件版本信息...%@..%ld..%ld", [BLTManager sharedInstance].model.hardType,
+            // 保存最后设备是新的还是旧的
+            [LS_LastDeviceType setBOOLValue:[BLTManager sharedInstance].model.isNewDevice];
+
+            NSLog(@"固件版本信息...%@..%ld..%ld..%@", [BLTManager sharedInstance].model.bltName,
                   (long)[BLTManager sharedInstance].model.hardVersion,
-                  (long)[BLTManager sharedInstance].model.firmVersion);
+                  (long)[BLTManager sharedInstance].model.firmVersion, data);
         }
     }];
 }
@@ -229,9 +233,10 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
                     self.startDate = [NSDate date];
                 }
                 else if ([self.startDate timeIntervalSince1970] > 0
-                         && ([[NSDate date] timeIntervalSince1970] - [self.startDate timeIntervalSince1970]) > 60 * 24 * 3600)
+                         && ([[NSDate date] timeIntervalSince1970] - [self.startDate timeIntervalSince1970]) > 15 * 24 * 3600)
                 {
-                    self.startDate = [[NSDate date] dateAfterDay:-60];
+                    // 只能保存15天的数据.
+                    self.startDate = [[NSDate date] dateAfterDay:-15];
                 }
                 
                 self.endDate = [NSDate dateWithString:object[1]];
@@ -318,16 +323,20 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     // 纪录最后一次连的设备的uuid。
     [LS_LastWareUUID setObjectValue:[BLTManager sharedInstance].model.bltID];
     
-    NSString *name = [BLTManager sharedInstance].model.bltName;
-    if (![name isEqualToString:@"W240N"])
+    // 请求硬件信息.
+    [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(startSendCommandToInitialize) withObject:nil afterDelay:0.6];
+}
+
+- (void)startSendCommandToInitialize
+{
+    if ([BLTManager sharedInstance].model.isNewDevice)
     {
-        [BLTManager sharedInstance].model.isNewDevice = NO;
-        [self oldDeviceChannel];
+        [self newDeviceChannel];
     }
     else
     {
-        [BLTManager sharedInstance].model.isNewDevice = YES;
-        [self newDeviceChannel];
+        [self oldDeviceChannel];
     }
     
     // 保存最后设备是新的还是旧的

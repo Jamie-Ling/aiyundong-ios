@@ -24,6 +24,7 @@
 - (instancetype)initWithFrame:(CGRect)frame withPop:(BOOL)isPop;
 
 - (void)reFreshDevice;
+- (void)resetAnimationForHeadImage;
 
 @end
 

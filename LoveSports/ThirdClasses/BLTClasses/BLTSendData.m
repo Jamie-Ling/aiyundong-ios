@@ -56,7 +56,7 @@ DEF_SINGLETON(BLTSendData)
                       withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
     NSDate *date = [NSDate date];
-    // NSLog(@"活动时区..%d..本地时区..%d.. %d",[self activityTimeZone:timeZone], [self timeZone], date.weekday);
+    NSLog(@"活动时区..%d..本地时区..%d.. %d",[self activityTimeZone:timeZone], [self timeZone], date.weekday - 1);
     UInt8 val[16] = {0xBE, 0x01, 0x01, 0xFE, metric, [BLTSendData isHasAMPMTimeSystem], [self activityTimeZone:timeZone],
                     [self timeZone], (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
                     date.weekday - 1, date.hour, date.minute, date.second};
@@ -67,7 +67,7 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
-    // NSLog(@"..本地时区..%d..%d", [self timeZone], date.weekday);
+    NSLog(@"..本地时区..%d..%d", [self timeZone], date.weekday - 1);
 
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
                     (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
@@ -87,7 +87,7 @@ DEF_SINGLETON(BLTSendData)
         (UInt8)(date.year >> 8), (UInt8)date.year, date.month, date.day,
         (UInt8)(weight * 100 >> 8), (UInt8)weight * 100, (UInt8)(target >> 16), (UInt8)(target >> 8),
         (UInt8)target, (UInt8)(step * 100 >> 8) ,(UInt8)step * 100,
-        time/60, time%60};
+        time / 60, time % 60};
     [self sendDataToWare:&val withLength:17 withUpdate:block];
 }
 
@@ -229,14 +229,13 @@ DEF_SINGLETON(BLTSendData)
             val[i] = 0x00;
         }
     }
-    /*
+    
     NSLog(@"闹钟设置开始.");
     for (int i = 0; i < 20; i++)
     {
         NSLog(@"%d..%x", i, val[i]);
     }
     NSLog(@"闹钟设置结束.");
-     */
     
     [self sendDataToWare:&val withLength:20 withUpdate:block];
 }
@@ -454,7 +453,7 @@ DEF_SINGLETON(BLTSendData)
 // 获取当前硬件以及固件的信息
 + (void)sendAccessInformationAboutCurrentHardwareAndFirmware:(BLTAcceptDataUpdateValue)block
 {
-    UInt8 val[4] = {0xBE, 0x06, 0x09, 0xED};
+    UInt8 val[4] = {0xBE, 0x06, 0x09, 0xFB};
     [self sendDataToWare:&val withLength:4 withUpdate:block];
 }
 

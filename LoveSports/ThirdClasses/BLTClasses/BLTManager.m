@@ -61,7 +61,7 @@ DEF_SINGLETON(BLTManager)
         
         // MillionPedometer == P118 W240=ActivityTracker
         _containNames = @[@"W240N", @"W240", @"ActivityTracker", @"MillionPedometer",
-                          @"W286", @"P118S", @"W194"];
+                          @"W286", @"P118S", @"W194", @"W285N", @"W301", @"W307"];
     }
     
     return self;
@@ -155,18 +155,20 @@ DEF_SINGLETON(BLTManager)
     {
         name = [advertisementData objectForKey:@"kCBAdvDataLocalName"];
     }
+    
     if (!name || ![_containNames containsObject:name])
     {
         return;
     }
 
     NSString *idString = [peripheral.identifier UUIDString];
+    
     if (!idString)
     {
         return;
     }
     
-    // NSLog(@"..%@..%@", advertisementData, [advertisementData objectForKey:@"kCBAdvDataLocalName"]);
+    NSLog(@"..%@..%@..%@", advertisementData, [advertisementData objectForKey:@"kCBAdvDataLocalName"], peripheral.name);
 
     if (!_isUpdateing)
     {
@@ -175,6 +177,7 @@ DEF_SINGLETON(BLTManager)
         
         if (model)
         {
+            model.bltName = name;
             model.bltRSSI = [NSString stringWithFormat:@"%@", RSSI ? RSSI : @""];
             model.peripheral = peripheral;
         }
@@ -198,11 +201,14 @@ DEF_SINGLETON(BLTManager)
         model.isClickBindSetting = NO;
         
         NSString *lastUUID = [LS_LastWareUUID getObjectValue];
-        if (model.isBinding && !_model &&
+        if (model.isBinding &&
             [lastUUID isEqualToString:model.bltID])
         {
-            // 如果该设备已经绑定并且没有连接设备时就直接连接.
-            [self repareConnectedDevice:model];
+            if (!_model || _model.peripheral.state == CBPeripheralStateDisconnected)
+            {
+                // 如果该设备已经绑定并且没有连接设备时就直接连接.
+                [self repareConnectedDevice:model];
+            }
         }
         
         [self notifyViewUpdateModelState];
@@ -305,11 +311,23 @@ DEF_SINGLETON(BLTManager)
     _discoverPeripheral.delegate = [BLTPeripheral sharedInstance];
     [BLTPeripheral sharedInstance].peripheral = _discoverPeripheral;
     
+    if (_model)
+    {
+        // 如果设备组没有设备就添加进去.
+        BLTModel *model = [self checkIsAddInAllWareWithID:_model.bltID];
+        
+        if (!model)
+        {
+            [_allWareArray addObject:_model];
+        }
+    }
+    
     [self notifyViewUpdateModelState];
 
     if (!_isUpdateing)
     {
-        [_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID, BLTUUID.batteryServiceUUID]];
+        //[_discoverPeripheral discoverServices:@[BLTUUID.uartServiceUUID, BLTUUID.batteryServiceUUID]];
+        [_discoverPeripheral discoverServices:nil];
     }
     else
     {
@@ -329,8 +347,9 @@ didFailToConnectPeripheral:(CBPeripheral *)peripheral
     _isConnectNext = NO;
     _connectState = BLTManagerConnectFail;
     NSLog(@"链接失败");
-    [_centralManager connectPeripheral:peripheral options:nil];
     
+    [self startCan];
+
     [self notifyViewUpdateModelState];
 }
 
@@ -426,6 +445,8 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
     }];
 }
 
+
+
 // 在所有准备连接的数组中 根据设备寻找模型.
 - (BLTModel *)findModelWithPeripheral:(CBPeripheral *)peripheral
 {
@@ -449,8 +470,6 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         [_centralManager cancelPeripheralConnection:_discoverPeripheral];
         _discoverPeripheral = nil;
     }
-    
-    _model = nil;
 }
 
 /**
@@ -487,20 +506,25 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
 - (void)firmWareUpdateEnd:(BOOL)success
 {
     _isUpdateing = NO;
-    _updateModel = nil;
-    _discoverPeripheral.delegate = nil;
-    _discoverPeripheral = nil;
     _connectState = BLTManagerNoConnect;
-    [self startCan];
+    _model.isInitiative = YES;
+    
+    [_allWareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BLTModel *model = obj;
+        [_allWareArray removeObject:model];
+    }];
     
     if (success)
     {
+        [BLTManager sharedInstance].model.isHaveActivePlace = NO;
         SHOWMBProgressHUD(LS_Text(@"Update successful"), nil, nil, NO, 2.0);
     }
     else
     {
         SHOWMBProgressHUD(LS_Text(@"Update failed"), nil, nil, NO, 2.0);
     }
+    
+    [self startCan];
 }
 
 @end
