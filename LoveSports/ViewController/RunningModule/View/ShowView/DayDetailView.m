@@ -118,7 +118,7 @@
 
 - (void)updateChartView
 {
-    if (_percent >= (int)(_totalPercent * 100))
+    if (_percent * 1.0 >= (_totalPercent * 100))
     {
         [self stopTimer];
         return;
@@ -330,7 +330,13 @@
 {
     if (index % 2)
     {
-        if (index <= Daytail_PieCount * (_percent * 0.01))
+        CGFloat currentShow = _percent;
+        if (currentShow > _totalPercent * 100)
+        {
+            currentShow = _totalPercent * 100;
+        }
+        
+        if (index <= Daytail_PieCount * (currentShow * 0.01))
         {
             return UIColorRGB(82, 182, 21);
         }

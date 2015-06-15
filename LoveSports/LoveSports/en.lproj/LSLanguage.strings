@@ -101,7 +101,7 @@
 "Target" = "Target";
 "hour" = "hour";
 "Sleep quality" = "Sleep quality";
-"Total Sleep quality" = "Total Sleep quality";
+"Total Sleep quality" = "Total Sleep time";
 "minute" = "minute";
 "No device found" = "No device found";
 "The lastest update time" = "The lastest update time";
@@ -187,7 +187,7 @@
 "" = "";
 "" = "";
 
-
+"sign-week" = "";
 
 
 

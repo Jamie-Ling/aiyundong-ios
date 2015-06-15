@@ -13,47 +13,15 @@
 #import "UserInfoHelp.h"
 #import "StepDataRecord.h"
 
+@implementation StateModel
+
+@end
+
 @implementation SportsModel
-
-// 表名
-+ (NSString *)getTableName
-{
-    return @"SportsTable";
-}
-
-// 复合主键
-+ (NSArray *)getPrimaryKeyUnionArray
-{
-    return @[@"userName", @"dateDay", @"currentOrder", @"wareUUID"];
-}
-
-// 表版本
-+ (int)getTableVersion
-{
-    return 1;
-}
 
 @end
 
 @implementation SleepModel
-
-// 表名
-+ (NSString *)getTableName
-{
-    return @"SleepTable";
-}
-
-// 复合主键
-+ (NSArray *)getPrimaryKeyUnionArray
-{
-    return @[@"userName", @"dateDay", @"currentOrder", @"wareUUID"];
-}
-
-// 表版本
-+ (int)getTableVersion
-{
-    return 1;
-}
 
 @end
 
@@ -165,8 +133,7 @@
     //  NSLog(@"dateString = %d..%d..%ld", totalModel.totalSteps, totalModel.totalCalories, (long)totalModel.totalDistance);
     
     // 此处需要判断收到得字节与存储得字节长度。看看是否发生丢包。
-    NSMutableArray *sports = [[NSMutableArray alloc] init];
-    NSMutableArray *sleeps = [[NSMutableArray alloc] init];
+    NSMutableArray *states = [[NSMutableArray alloc] init];
 
     NSInteger lastOrder = 0;
     int i = 60;
@@ -179,45 +146,42 @@
     for (; i < data.length && i < (3 * 288 + 64);)
     {
         int state = (val[i + 1] >> 4);
-        if (state == 0)
+        if (state == 0 || state == 8)
         {
-            SportsModel *model = [[SportsModel alloc] init];
+            StateModel *model = [[StateModel alloc] init];
             model.wareUUID = [BLTManager sharedInstance].model.bltID;
             model.dateDay = totalModel.dateString;
             model.lastOrder = lastOrder;
             model.currentOrder = val[i] + signOrder;
-            model.steps = ((val[i + 1] & 0x0F) << 8) | val[i + 2];
             
-            CGFloat tmpCalories = [model stepsConvertCalories:model.steps
-                                                   withWeight:totalModel.weight
-                                                    withModel:YES] + caloriesPrecision;
-            model.calories = (NSInteger)tmpCalories;
-            caloriesPrecision = tmpCalories - (NSInteger)tmpCalories;
-            
-            CGFloat tmpDistance = [model StepsConvertDistance:model.steps
-                                                     withPace:totalModel.stepSize] + distancePrecision;
-            model.distance = (NSInteger)tmpDistance;
-            distancePrecision = tmpDistance - (NSInteger)tmpDistance;
-            
-            // totalModel.totalSteps += model.steps;
-            // totalModel.totalCalories += model.calories;
-
-            [sports addObject:model];
+            if (state == 0)
+            {
+                model.modelType = StateModelSport;
+                model.steps = ((val[i + 1] & 0x0F) << 8) | val[i + 2];
+                
+                CGFloat tmpCalories = [model stepsConvertCalories:model.steps
+                                                       withWeight:totalModel.weight
+                                                        withModel:YES] + caloriesPrecision;
+                model.calories = (NSInteger)tmpCalories;
+                caloriesPrecision = tmpCalories - (NSInteger)tmpCalories;
+                
+                CGFloat tmpDistance = [model StepsConvertDistance:model.steps
+                                                         withPace:totalModel.stepSize] + distancePrecision;
+                model.distance = (NSInteger)tmpDistance;
+                distancePrecision = tmpDistance - (NSInteger)tmpDistance;
+                
+                i += 3;
+            }
+            else
+            {
+                model.modelType = StateModelSleep;
+                model.sleepState = val[i + 1] & 0x0F;
+                NSLog(@"model.sleepState..%d", model.sleepState);
+                i += 2;
+            }
+         
+            [states addObject:model];
             lastOrder = model.currentOrder;
-            i += 3;
-        }
-        else if (state == 8)
-        {
-            SleepModel *model = [[SleepModel alloc] init];
-            model.wareUUID = [BLTManager sharedInstance].model.bltID;
-            model.dateDay = totalModel.dateString;
-            model.lastOrder = lastOrder;
-            model.currentOrder = val[i] + signOrder;
-            model.sleepState = val[i + 1] & 0x0F;
-            
-            [sleeps addObject:model];
-            lastOrder = model.currentOrder;
-            i += 2;
         }
         else
         {
@@ -248,9 +212,8 @@
     }
      */
 
-    totalModel.sportsArray = sports;
-    totalModel.sleepArray = sleeps;
-    
+    totalModel.stateArray = states;
+
     // 设置最新的目标
     [totalModel addTargetForModelFromUserInfo];
     // 将数据保存到周－月表
@@ -430,7 +393,7 @@
     // 展示的时候不足的个数再展示的时候自动补满48个.
     for (int i = 0; i < 288; i++)
     {
-        NSInteger total = [self getDataWithIndex:i withType:SportsModelSleep];
+        NSInteger total = [self getDataWithIndex:i withType:StateModelSportSleep];
         [detailSleeps addObject:@(total)];
     }
     
@@ -456,13 +419,13 @@
     
     for (int i = 0; i < 288; i += 6)
     {
-        NSInteger total = [self halfHourData:i withType:SportsModelSteps];
+        NSInteger total = [self halfHourData:i withType:StateModelSportSteps];
         [detailSteps addObject:@(total)];
         
-        total = [self halfHourData:i withType:SportsModelDistance];
+        total = [self halfHourData:i withType:StateModelSportDistance];
         [detailDistans addObject:@(total)];
         
-        total = [self halfHourData:i withType:SportsModelCalories];
+        total = [self halfHourData:i withType:StateModelSportCalories];
         [detailCalories addObject:@(total)];
     }
     
@@ -472,7 +435,7 @@
 }
 
 // 取出每半个小时的数据
-- (NSInteger)halfHourData:(int)index withType:(SportsModelType)type
+- (NSInteger)halfHourData:(int)index withType:(StateModelSportType)type
 {
     NSInteger number = 0;
     for (int i = index; i < index + 6; i++)
@@ -484,30 +447,31 @@
 }
 
 // 取出当前5分钟的具体数据。
-- (NSInteger)getDataWithIndex:(int)index withType:(SportsModelType)type
+- (NSInteger)getDataWithIndex:(int)index withType:(StateModelSportType)type
 {
-    if (type != SportsModelSleep)
+    if (self.stateArray && self.stateArray.count > 0)
     {
-        if (self.sportsArray && self.sportsArray.count > 0)
+        for (int i = 0; i < self.stateArray.count; i++)
         {
-            for (int i = 0; i < self.sportsArray.count; i++)
+            StateModel *model = self.stateArray[i];
+            
+            if (index <= model.currentOrder)
             {
-                SportsModel *model = self.sportsArray[i];
-                if (index <= model.currentOrder)
+                if (model.modelType == StateModelSport)
                 {
                     switch (type)
                     {
-                        case SportsModelSteps:
+                        case StateModelSportSteps:
                         {
                             return model.steps;
                         }
                             break;
-                        case SportsModelCalories:
+                        case StateModelSportDistance:
                         {
                             return model.calories;
                         }
                             break;
-                        case SportsModelDistance:
+                        case StateModelSportCalories:
                         {
                             return model.distance;
                         }
@@ -517,25 +481,22 @@
                             break;
                     }
                 }
+                else
+                {
+                    return model.sleepState;
+                }
+                
+                break;
             }
         }
-        
+    }
+    
+    if (type != StateModelSportSleep)
+    {
         return 0;
     }
     else
     {
-        if (self.sleepArray && self.sleepArray.count > 0)
-        {
-            for (int i = 0; i < self.sleepArray.count; i++)
-            {
-                SleepModel *model = self.sleepArray[i];
-                if (index <= model.currentOrder)
-                {
-                    return model.sleepState;
-                }
-            }
-        }
-        
         return 4;
     }
 }
@@ -646,6 +607,8 @@
     //比如 getTableMapping 返回nil 的时候   会取全部属性  这时候 就可以 用这个方法  移除掉 不要的属性
     [self removePropertyWithColumnName:@"sportsArray"];
     [self removePropertyWithColumnName:@"sleepArray"];
+    [self removePropertyWithColumnName:@"stateArray"];
+
     [self removePropertyWithColumnName:@"lastSleepArray"];
 
     //[self removePropertyWithColumnName:@"detailDistans"];

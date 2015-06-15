@@ -9,13 +9,18 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    SportsModelSteps = 0,
-    SportsModelCalories = 1,
-    SportsModelDistance,
-    SportsModelSleep
-} SportsModelType;
+    StateModelSportSteps = 0,
+    StateModelSportCalories = 1,
+    StateModelSportDistance = 2,
+    StateModelSportSleep
+} StateModelSportType;
 
-@interface SportsModel : NSObject
+typedef enum {
+    StateModelSport = 0,
+    StateModelSleep
+} StateModelType;
+
+@interface StateModel : NSObject
 
 @property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
 @property (nonatomic, strong) NSString *userName;
@@ -23,21 +28,23 @@ typedef enum {
 @property (nonatomic, strong) NSString *dateDay;
 @property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
 @property (nonatomic, assign) NSInteger currentOrder;   // 当前时间序号
+@property (nonatomic, assign) StateModelType modelType;
+
 @property (nonatomic, assign) NSInteger steps;
 @property (nonatomic, assign) NSInteger calories;       // 卡路里
 @property (nonatomic, assign) CGFloat distance;         // 距离
 
+@property (nonatomic, assign) NSInteger sleepState;     // 睡眠状态
+
 @end
 
-@interface SleepModel : NSObject
+@interface SportsModel : StateModel
 
-@property (nonatomic, strong) NSString *wareUUID;           // 设备uuid
-@property (nonatomic, strong) NSString *userName;
 
-@property (nonatomic, strong) NSString *dateDay;
-@property (nonatomic, assign) NSInteger lastOrder;      // 上一个时间序号
-@property (nonatomic, assign) NSInteger currentOrder;   // 当前时间序号
-@property (nonatomic, assign) NSInteger sleepState;     // 睡眠状态
+@end
+
+@interface SleepModel : StateModel
+
 
 @end
 
@@ -80,6 +87,8 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 
 @property (nonatomic, strong) NSArray *sportsArray;
 @property (nonatomic, strong) NSArray *sleepArray;
+
+@property (nonatomic, strong) NSArray *stateArray;
 
 @property (nonatomic, strong) NSArray *lastSleepArray;      // 昨天的睡眠
 @property (nonatomic, assign) BOOL isSaveAllDay;            // 是否保存了全天的数据

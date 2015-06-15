@@ -151,10 +151,11 @@
 - (NSString *)showStringForWeekDay
 {
     NSArray *weekArray = [self sortByNumberWithArray:_weekArray withSEC:NO];
-    NSDictionary *dict = @{@"0" : @"日", @"1" : @"一", @"2" : @"二",
-                           @"3" : @"三", @"4" : @"四", @"5" : @"五", @"6" : @"六"};
+    NSDictionary *dict = @{@"0" : LS_Text(@"Sun"), @"1" : LS_Text(@"Mon"), @"2" : LS_Text(@"Tues"),
+                           @"3" : LS_Text(@"Wed"), @"4" : LS_Text(@"Thur"),
+                           @"5" : LS_Text(@"Fri"), @"6" : LS_Text(@"Satur")};
     
-    NSString *weekString = weekArray.count > 0 ? @"周" : @"";
+    NSString *weekString = weekArray.count > 0 ? LS_Text(@"sign-week") : @"";
     
     for (int i = 0; i < weekArray.count; i++)
     {
