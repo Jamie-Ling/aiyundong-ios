@@ -184,6 +184,7 @@ DEF_SINGLETON(BLTSendOld)
         {
             SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
             _isSyncing = NO;
+            [self endSyncFail];
         }
         else if (type == BLTAcceptDataTypeRequestHistoryNoData)
         {
@@ -211,6 +212,7 @@ DEF_SINGLETON(BLTSendOld)
         else
         {
             // 此处删除错误数据
+            [self endSyncFail];
         }
         
         _isSyncing = NO;

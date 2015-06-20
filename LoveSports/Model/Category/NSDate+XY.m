@@ -303,11 +303,11 @@ DUMMY_CLASS(NSDate_XY);
     return date;
 }
 
-+ (NSInteger)timeZone
++ (CGFloat)timeZone
 {
     NSTimeZone *tz = [NSTimeZone systemTimeZone];
     
-    return tz.secondsFromGMT / 3600;
+    return tz.secondsFromGMT * 1.0 / 3600;
 }
 
 + (NSString *)stringToAge:(NSString *)dateString

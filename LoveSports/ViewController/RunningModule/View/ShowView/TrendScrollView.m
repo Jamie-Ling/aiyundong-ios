@@ -27,6 +27,7 @@
 - (void)loadTrendDetailView
 {
     NSDate *date = [NSDate date];
+    date = [date dateAfterDay:-1 * (date.weekday - 1)];
     for (int i = 0; i < 3; i++)
     {
         TrendDetailView *detailView = [[TrendDetailView alloc] initWithFrame:self.bounds];
@@ -135,6 +136,20 @@
         detailView.weekDate = [date dateAfterDay:(i - 1) * 7 * (int)[DataShare sharedInstance].showCount];
         detailView.monthIndex = date.month + (i - 1) * [DataShare sharedInstance].showCount;
     }
+}
+
+- (NSInteger)getCurrentWeekForMiddleThrendView
+{
+    TrendDetailView *detailView = _viewsArray[1];
+    
+    return detailView.dayDate.weekOfYear;
+}
+
+- (NSInteger)getCurrentYearForMiddleThrendView
+{
+    TrendDetailView *detailView = _viewsArray[1];
+    
+    return detailView.dayDate.year;
 }
 
 /*

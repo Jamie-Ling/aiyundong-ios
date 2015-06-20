@@ -240,6 +240,13 @@
                 
                 [weakSelf endRefreshing];
             }];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (self.tableView.header.state != MJRefreshHeaderStateIdle)
+                {
+                    [self.tableView.header endRefreshing];
+                }
+            });
         }
         else
         {
@@ -251,6 +258,13 @@
                     
                     [weakSelf endRefreshing];
                 }];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (self.tableView.header.state != MJRefreshHeaderStateIdle)
+                    {
+                        [self.tableView.header endRefreshing];
+                    }
+                });
             }
             else
             {
@@ -266,13 +280,6 @@
 
         [self endRefreshing];
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.tableView.header.state != MJRefreshHeaderStateIdle)
-        {
-            [self.tableView.header endRefreshing];
-        }
-    });
 }
 
 - (void)endRefreshing

@@ -25,6 +25,8 @@
 @property (nonatomic, strong) TrendTypeView *typeView;
 
 @property (nonatomic, strong) UILabel *yearLabel;
+@property (nonatomic, strong) UILabel *weekNumberLabel;
+
 @property (nonatomic, strong) UIViewSimpleBlock switchDateBlock;
 
 - (void)setCurrentDate:(NSDate *)currentDate;

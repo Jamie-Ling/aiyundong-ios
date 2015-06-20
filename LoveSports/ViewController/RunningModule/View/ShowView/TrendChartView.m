@@ -181,6 +181,8 @@
     DEF_WEAKSELF_(TrendChartView);
     _scrollView.yearBlock = ^ (UIView *view, id object) {
         weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@%@", object, LS_Text(@"Year")];
+        weakSelf.weekNumberLabel.text = [NSString stringWithFormat:@"%d%@",
+                                         [weakSelf.scrollView getCurrentWeekForMiddleThrendView], LS_Text(@"Week")];
     };
 }
 
@@ -213,6 +215,18 @@
                                   withText:[NSString stringWithFormat:@"%ld%@", (long)[NSDate date].year, LS_Text(@"Year")]
                              withTextColor:[UIColor blackColor]
                                    withTag:3000];
+    
+    rect = FitScreenRect(CGRectMake(68, 300, 64, 20),
+                         CGRectMake(68, 350, 64, 20),
+                         CGRectMake(68, 400, 64, 20),
+                         CGRectMake(68, 450, 64, 20),
+                         CGRectMake(68, 350, 64, 20));
+    _weekNumberLabel = [self addSubLabelWithRect:rect
+                                   withAlignment:NSTextAlignmentCenter
+                                    withFontSize:13
+                                        withText:[NSString stringWithFormat:@"%ld%@", (long)[NSDate date].weekOfYear, LS_Text(@"Week")]
+                                   withTextColor:[UIColor blackColor]
+                                         withTag:3000];
 }
 
 // 点击6个按钮后图表进行切换。
@@ -221,6 +235,8 @@
     _showType = [TrendShowType showWithIndex:_segIndex withButton:_lastButton];
  
     [_scrollView reloadTrendChartViewWith:_showType];
+    
+    _weekNumberLabel.hidden = (_showType < 3) ? NO : YES;
 }
 
 @end

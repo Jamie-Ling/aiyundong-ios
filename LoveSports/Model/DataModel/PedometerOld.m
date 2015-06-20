@@ -252,7 +252,7 @@ DEF_SINGLETON(PedometerOld)
         
         if (!model)
         {
-            model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
+            model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date isSaveAllDay:NO];
         }
      
         if (![_modelArray containsObject:model])

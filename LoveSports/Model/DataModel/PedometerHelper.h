@@ -20,7 +20,8 @@ AS_SINGLETON(PedometerHelper)
 
 + (void)creatEmptyDataArrayWithModel:(PedometerModel *)model;
 
-+ (PedometerModel *)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date;
+// save 是否进行完全保存 不在从设备拉取数据.
++ (PedometerModel *)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date isSaveAllDay:(BOOL)save;
 + (void)updateContentForPedometerModel:(NSData *)data
                                withEnd:(PedometerModelSyncEnd)endBlock;
 

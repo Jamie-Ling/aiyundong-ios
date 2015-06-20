@@ -32,6 +32,26 @@
     return model;
 }
 
++ (ShowTimeZone *)simpleWithHour:(NSInteger)hour andMinutes:(NSInteger)minutes andDirection:(NSInteger)direction
+{
+    ShowTimeZone *model = [[ShowTimeZone alloc] init];
+    
+    model.hour = hour;
+    model.minutes = minutes;
+    model.direction = direction;
+    
+    model.timeZone = (hour + ((minutes > 0) ? 0.5 : 0)) * 2 * direction;
+    
+    return model;
+}
+
+- (NSString *)showString
+{
+    NSString *show = [NSString stringWithFormat:@"%@ %02d:%02d", (_direction == 1) ? @"＋" : @"－", _hour, _minutes];
+    
+    return show;
+}
+
 - (void)updateTimeZone:(NSString *)string
 {
     NSTimeZone *tempTimeZone = [NSTimeZone timeZoneWithName:string];

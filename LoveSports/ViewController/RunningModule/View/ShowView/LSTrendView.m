@@ -28,10 +28,23 @@
 
     CGFloat offsetY = FitScreenNumber(240, 240, 260, 280, 260);
     self.yearLabel.frame = CGRectMake(20, offsetY, 100, 20);
+    
+    offsetY = FitScreenNumber(240, 240, 260, 280, 260);
+    self.weekNumberLabel.frame = CGRectMake(100, offsetY, 100, 20);
 
     offsetY = FitScreenNumber(260, 260, 280, 300, 300);
     self.typeView.frame = CGRectMake(0, offsetY, self.width, 64);
     self.typeView.offset = FitScreenNumber(140, 170, 180, 200, 300);
+    
+    DEF_WEAKSELF_(LSTrendView);
+    self.scrollView.yearBlock = ^ (UIView *view, id object) {
+        weakSelf.yearLabel.text = [NSString stringWithFormat:@"%@%@", object, LS_Text(@"Year")];
+        weakSelf.weekNumberLabel.text = [NSString stringWithFormat:@"%ld-%d%@",
+                                         (long)[weakSelf.scrollView getCurrentWeekForMiddleThrendView], [weakSelf.scrollView getCurrentWeekForMiddleThrendView] + 1, LS_Text(@"Week")];
+    };
+    
+    self.weekNumberLabel.text = [NSString stringWithFormat:@"%ld-%d%@",
+                                 (long)[NSDate date].weekOfYear, [self.scrollView getCurrentWeekForMiddleThrendView] + 1, LS_Text(@"Week")];
 }
 
 - (void)loadLandscapeButton

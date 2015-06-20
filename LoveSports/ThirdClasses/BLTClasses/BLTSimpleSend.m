@@ -29,19 +29,19 @@ DEF_SINGLETON(BLTSimpleSend)
     self.failCount = 0;
     [[BLTAcceptData sharedInstance] cleanMutableData];
     
+    if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
+    {
+        self.startDate = [NSDate date];
+        
+        return;
+    }
+
     if ([PedometerHelper queryWhetherCurrentDateDataSaveAllDay:self.startDate])
     {
         // 如果已经进行过完整的保存就不要再down了。
         self.startDate = [self.startDate dateAfterDay:1];
         [self startSyncHistoryData];
         
-        return;
-    }
-    
-    if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
-    {
-        self.startDate = [NSDate date];
-
         return;
     }
     
@@ -72,7 +72,8 @@ DEF_SINGLETON(BLTSimpleSend)
                                              NSString *alertString = [NSString stringWithFormat:@"%@%@", dateString, LS_Text(@"No data")];
                                              SHOWMBProgressHUD(alertString, nil, nil, NO, 2.0);
                                              
-                                             [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate];
+                                             [PedometerHelper pedometerSaveEmptyModelToDBWithDate:self.startDate
+                                                                                     isSaveAllDay:YES];
                                              self.startDate = [self.startDate dateAfterDay:1];
                                              [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
                                          }
@@ -157,15 +158,19 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
     // 发送用户个人信息。 体重 目标
     [self performSelector:@selector(sendRequestWeight) withObject:nil afterDelay:0.6];
     
+    // 请求历史数据.
+    [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.9];
+
+    /*
     if (![UserInfoHelp sharedInstance].braceModel.isClickBindSetting)
     {
-        // 请求历史数据.
         [self performSelector:@selector(sendRequestHistoryDataSaveDate) withObject:nil afterDelay:0.9];
     }
     else
     {
         [UserInfoHelp sharedInstance].braceModel.isClickBindSetting = NO;
     }
+     */
 }
 
 - (void)testFirm
@@ -202,13 +207,21 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
              val[4], val[5], val[6], val[7], val[8], val[9]];
             [BLTManager sharedInstance].model.hardVersion = val[10];
             [BLTManager sharedInstance].model.firmVersion = val[11];
+            [BLTManager sharedInstance].model.isRealTime = (val[16] == 1) ? YES : NO;
+            [BLTManager sharedInstance].elecQuantity = val[17];
             
+            // 检查是否复位 复位了重新发送时制.
+            if (!val[18])
+            {
+                [BLTManager sharedInstance].model.isHaveActivePlace = NO;
+            }
+
             // 保存最后设备是新的还是旧的
             [LS_LastDeviceType setBOOLValue:[BLTManager sharedInstance].model.isNewDevice];
 
-            NSLog(@"固件版本信息...%@..%ld..%ld..%@", [BLTManager sharedInstance].model.bltName,
+            NSLog(@"固件版本信息...%@..%ld..%ld..%@。。%d..%d", [BLTManager sharedInstance].model.bltName,
                   (long)[BLTManager sharedInstance].model.hardVersion,
-                  (long)[BLTManager sharedInstance].model.firmVersion, data);
+                  (long)[BLTManager sharedInstance].model.firmVersion, data, val[16], val[17]);
         }
     }];
 }
@@ -248,6 +261,8 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
                 }
             }
             
+            NSLog(@"..%@..%@", self.startDate, self.endDate);
+            // self.startDate = [self.startDate dateAfterDay:-2];
             [self performSelector:@selector(startSyncHistoryData) withObject:nil afterDelay:0.3];
         }
     }];
@@ -264,6 +279,8 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
  */
 - (void)startTimer
 {
+    self.waitTime = 0;
+
     if (!self.timer)
     {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(supervisionSync) userInfo:nil repeats:YES];
@@ -275,10 +292,14 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 {
     self.waitTime ++;
     
-    if (self.waitTime > 10 || self.failCount > 10)
+    // 10秒内没有新的数据, 那么表示当次数据同步失败.
+    NSInteger waitTime = [BLTManager sharedInstance].model.isNewDevice ? 10 : 10;
+    
+    if (self.waitTime > waitTime)
     {
         // 停止同步数据因意外情况
         [self stopTimer];
+        [self endSyncFail];
         dispatch_async(dispatch_get_main_queue(), ^{
             SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
         });

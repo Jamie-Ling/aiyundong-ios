@@ -23,7 +23,7 @@ DEF_SINGLETON(PedometerHelper)
     if (!model)
     {
         // 没有就进行完全创建.
-        model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date];
+        model = [PedometerHelper pedometerSaveEmptyModelToDBWithDate:date isSaveAllDay:NO];
     }
     
     return model;
@@ -118,7 +118,7 @@ DEF_SINGLETON(PedometerHelper)
 }
 
 // 保存空模型到数据库.
-+ (PedometerModel *)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date
++ (PedometerModel *)pedometerSaveEmptyModelToDBWithDate:(NSDate *)date isSaveAllDay:(BOOL)save
 {
     PedometerModel *model = [PedometerModel simpleInitWithDate:date];
     
@@ -127,9 +127,14 @@ DEF_SINGLETON(PedometerHelper)
     [PedometerHelper creatEmptyDataArrayWithModel:model];
     [model addSleepStartTimeAndEndTime];
 
-    if (![date isSameWithDate:[NSDate date]])
+    if (![date isSameWithDate:[NSDate date]] &&
+        [date timeIntervalSince1970] < [[NSDate date] timeIntervalSince1970])
     {
-        model.isSaveAllDay = YES;
+        // NSLog(@"model.isSaveAllDay = ..%@", date);
+        if (save)
+        {
+            model.isSaveAllDay = YES;
+        }
     }
     
     [model saveToDB];

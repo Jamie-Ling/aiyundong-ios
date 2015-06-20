@@ -21,5 +21,9 @@
 // 点击按钮后图标进行刷新
 - (void)reloadTrendChartViewWith:(TrendChartShowType)type;
 - (void)updateContentWithDate:(NSDate *)date;
+// 取得中间趋势图是周几.
+- (NSInteger)getCurrentWeekForMiddleThrendView;
+// 取得中间趋势图是哪一年.
+- (NSInteger)getCurrentYearForMiddleThrendView;
 
 @end

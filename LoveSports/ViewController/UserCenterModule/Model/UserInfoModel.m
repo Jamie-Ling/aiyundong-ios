@@ -35,7 +35,7 @@
         _birthDay = @"1990-01-01";
         _isMetricSystem = YES;
         _activePlace = LS_Text(@"Asia/Beijing");
-        _activeTimeZone = 8 * 2;
+        _activeTimeZone = [NSDate timeZone] * 2;
         _height = 172;
         _genderSex = LS_Text(@"Male");
 
@@ -206,11 +206,17 @@
 - (NSString *)activeConvertToString
 {
     NSInteger totalMin = _activeTimeZone * 3600 / 2 / 60;
-    NSInteger hour = totalMin / 60;
-    NSInteger min = totalMin % 60;
-    NSString *string = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)min];
+    NSInteger hour = ABS(totalMin / 60);
+    NSInteger min = ABS(totalMin % 60);
+    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)hour, (long)min];
+    
+    /*
     NSString *timeZone = [NSString stringWithFormat:@"%@%@ %@", (_activeTimeZone >= 0) ? @"＋" : @"",
                            string, _activePlace];
+     */
+    
+    NSString *timeZone = [NSString stringWithFormat:@"%@%@", (_activeTimeZone >= 0) ? @"＋" : @"－",
+                          string];
     
     return timeZone;
 }

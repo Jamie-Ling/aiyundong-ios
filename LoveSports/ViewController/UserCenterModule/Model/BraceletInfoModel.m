@@ -415,7 +415,7 @@
     {
         if (!isMetricSystem)
         {
-            weight = [NSString stringWithFormat:@"%d", (int) vBackToKG([weight integerValue]) ];
+            weight = [NSString stringWithFormat:@"%d", (int) vChangeToLB([weight integerValue]) ];
         }
     }
     

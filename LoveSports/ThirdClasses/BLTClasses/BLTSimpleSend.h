@@ -36,6 +36,8 @@ AS_SINGLETON(BLTSimpleSend)
 
 // 更新界面...
 - (void)endSyncData:(NSDate *)date;
+//同步失败
+- (void)endSyncFail;
 
 - (void)startTimer;
 - (void)stopTimer;

@@ -17,7 +17,7 @@ DEF_SINGLETON(DataShare)
     self = [super init];
     if (self)
     {
-        _showCount = 8;
+        _showCount = 7;
         _isPad = NO;
         _isIp4s = NO;
         _isIp5 = NO;

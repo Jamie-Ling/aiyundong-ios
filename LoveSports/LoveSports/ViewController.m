@@ -107,6 +107,8 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated: NO];
     [self.navigationController setNavigationBarHidden:NO];
+    
+    [_listTableView reloadData];
 }
 
 /*
@@ -714,10 +716,8 @@
             [self changeWeight];
             break;
         case 5:
-//            [self changeTimeZone];
         {
-         
-             TimeZoneChoiceViewController *timeZoneVC = [[TimeZoneChoiceViewController alloc] init];
+            TimeZoneChoiceViewController *timeZoneVC = [[TimeZoneChoiceViewController alloc] init];
         
             [self.navigationController pushViewController:timeZoneVC animated:YES];
         }
@@ -796,8 +796,6 @@
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
-    
-    
 }
 
 - (void) refreshTheHeadImage
@@ -822,7 +820,6 @@
         //相同，没有修改
         return;
     }
-    
     
     [[ObjectCTools shared] refreshTheUserInfoDictionaryWithKey:kUserInfoOfSexKey withValue:gender];
 }

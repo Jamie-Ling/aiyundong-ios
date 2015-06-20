@@ -34,7 +34,7 @@
 "Select Time Zone" = "选择时区";
 "Important tips" = "重要提示";
 
-"Metric/imperial and time zone can't be modified once saved. Confirm to save?" = "保存后公/英制和时区蒋不能再修改, 是否确认保存?";
+"Metric/imperial and time zone can't be modified once saved. Confirm to save?" = "保存后公/英制和时区将不能再修改, 是否确认保存?";
 
 "Week" = "周";
 "Please press device button to sync" = "请按下设备按键进行同步。";

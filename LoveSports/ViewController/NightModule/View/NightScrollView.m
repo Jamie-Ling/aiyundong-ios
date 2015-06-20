@@ -31,8 +31,6 @@
         
         detailView.currentDate = [date dateAfterDay:i - 1];
         [_viewsArray addObject:detailView];
-        
-        
     }
     
     [self loadUnlimitScrollView];

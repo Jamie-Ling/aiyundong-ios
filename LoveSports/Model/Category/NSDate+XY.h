@@ -51,7 +51,7 @@
 + (NSDate *)stringToDate:(NSString *)timeString;
 - (NSArray *)dateToArray;
 - (BOOL)isSameWithDate:(NSDate *)date;
-+ (NSInteger)timeZone;
++ (CGFloat)timeZone;
 - (NSInteger)compareOtherData:(NSDate *)date;
 + (BOOL)isDateThisWeek:(NSDate *)date;
 + (BOOL)isDateThisMonth:(NSDate *)date_;

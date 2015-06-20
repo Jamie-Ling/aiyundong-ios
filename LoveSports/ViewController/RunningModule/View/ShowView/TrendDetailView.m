@@ -26,7 +26,8 @@
         
         _showType = TrendChartViewShowDaySteps;
         
-        _dayDate = [NSDate date];
+        NSDate *date = [NSDate date];
+        _dayDate = [date dateAfterDay:-1 * (date.weekday - 1)];
         _weekDate = [NSDate date];
         _monthIndex = [NSDate date].month;
         

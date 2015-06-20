@@ -35,15 +35,20 @@
                                                                                     target:self
                                                                                   selector:@selector(goBackPrePage)
                                                                                  ImageName:@""];
-        //tableview
     
+    [self getTimeZoneArray2];
+    [self addTableView];
+}
+
+- (void)getTimeZoneArray1
+{
     //获取所有的时区名字
     NSArray *getTimeZoneArray = [NSTimeZone knownTimeZoneNames];
     _timeZoneArray  = [[NSMutableArray alloc] initWithCapacity:32];
     
     NSString *string = [UserInfoHelp sharedInstance].userModel.activePlace;
     _choiceIndex = 0;
-
+    
     for (int i = 0; i < getTimeZoneArray.count; i++)
     {
         NSString *tempTimeZoneString = getTimeZoneArray[i];
@@ -58,8 +63,37 @@
     
     [_timeZoneArray insertObject:_timeZoneArray[_choiceIndex] atIndex:0];
     _choiceIndex = 0;
+}
 
-    [self addTableView];
+- (void)getTimeZoneArray2
+{
+    _timeZoneArray  = [[NSMutableArray alloc] initWithCapacity:32];
+
+    for (int i = 24; i > 0; i--)
+    {
+        ShowTimeZone *model = [ShowTimeZone simpleWithHour:i / 2
+                                                andMinutes:((i % 2 == 0) ? 0 : 30)
+                                              andDirection:-1];
+        [_timeZoneArray addObject:model];
+        
+        if (model.timeZone == [UserInfoHelp sharedInstance].userModel.activeTimeZone)
+        {
+            _choiceIndex = 24 - i;
+        }
+    }
+    
+    for (int i = 0; i < 25; i++)
+    {
+        ShowTimeZone *model = [ShowTimeZone simpleWithHour:i / 2
+                                                andMinutes:((i % 2 == 0) ? 0 : 30)
+                                              andDirection:1];
+        [_timeZoneArray addObject:model];
+        
+        if (model.timeZone == [UserInfoHelp sharedInstance].userModel.activeTimeZone)
+        {
+            _choiceIndex = 24 + i;
+        }
+    }
 }
 
 

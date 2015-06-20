@@ -63,6 +63,9 @@ typedef void(^PedometerModelSyncEnd)(NSDate *date, BOOL success);
 @property (nonatomic, assign) NSInteger totalDistance ;     // 当天的总路程
 @property (nonatomic, assign) NSInteger totalSportTime ;    // 当天的总运动时间
 
+@property (nonatomic, assign) NSInteger lastSleepTime;      // 昨天的半天时间.
+@property (nonatomic, assign) NSInteger todaySleepTime;     // 今天的半天时间.
+@property (nonatomic, assign) NSInteger nextSleepTime;      // 明天的半天时间.
 @property (nonatomic, assign) NSInteger totalSleepTime ;    // 当天的总睡眠时间
 @property (nonatomic, assign) NSInteger totalStillTime ;    // 当天的总静止时间
 @property (nonatomic, assign) NSInteger walkTime ;          // 当天散步时间

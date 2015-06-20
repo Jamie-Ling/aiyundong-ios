@@ -409,8 +409,10 @@ DEF_SINGLETON(BLTAcceptData)
 - (void)updateBigData:(NSData *)data
 {
     _type = BLTAcceptDataTypeRequestHistorySportsData;
+    
+    // 重新等待.
     [BLTSimpleSend sharedInstance].waitTime = 0;
-
+    
     [_syncData appendData:data];
     [self showProgress];
 }

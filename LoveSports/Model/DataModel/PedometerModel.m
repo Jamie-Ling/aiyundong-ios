@@ -40,6 +40,8 @@
         _targetDistance = [self StepsConvertDistance:10000 withPace:50] / 1000;
         _targetSleep = 60 * 8;
         
+        _todaySleepTime = 0;
+        _nextSleepTime = 0;
         // _totalSleepTime = 300 + arc4random() % 60;
         _sleepNextStartTime = 143;
         _sleepTodayStartTime = 143;
@@ -105,7 +107,7 @@
                 withEnd:(PedometerModelSyncEnd)endBlock
 {
     NSData *data = array[0];
-    UInt8 val[288 * 25] = {0};
+    UInt8 val[288 * 3 + 80] = {0};
     [data getBytes:&val length:data.length];
     
     // 取模型     // 从第一个包
@@ -124,6 +126,7 @@
         {
             endBlock(array[1], NO);
         }
+        
         return;
     }
     
@@ -136,20 +139,20 @@
     NSMutableArray *states = [[NSMutableArray alloc] init];
 
     NSInteger lastOrder = 0;
-    int i = 60;
     int signOrder = 0;
+    
+    BOOL isToday = [[NSDate date] isSameWithDate:[NSDate dateWithString:totalModel.dateString]];
     
     // 卡路里与行程的浮点数精度.
     CGFloat caloriesPrecision = 0.0;
     CGFloat distancePrecision = 0.0;
     
-    for (; i < data.length && i < (3 * 288 + 64);)
+    for (int i = 60; i < (data.length - 2) && i < (3 * 288 + 64); )
     {
         int state = (val[i + 1] >> 4);
         if (state == 0 || state == 8)
         {
             StateModel *model = [[StateModel alloc] init];
-            model.wareUUID = [BLTManager sharedInstance].model.bltID;
             model.dateDay = totalModel.dateString;
             model.lastOrder = lastOrder;
             model.currentOrder = val[i] + signOrder;
@@ -176,8 +179,10 @@
             {
                 model.modelType = StateModelSleep;
                 model.sleepState = val[i + 1] & 0x0F;
-                NSLog(@"model.sleepState..%d", model.sleepState);
-                i += 2;
+                
+                // NSLog(@".model.sleepState2 = .%x..%x ...%d...%ld", val[i], val[i + 1], state, (long)model.currentOrder);
+
+                i += (isToday ? 3 : 2);
             }
          
             [states addObject:model];
@@ -188,14 +193,9 @@
             i += 6;
         }
         
-        if (lastOrder == 255)
+        if (lastOrder == 255 && signOrder == 0)
         {
             signOrder = 255;
-        }
-        
-        if (i >= data.length - 1)
-        {
-            break;
         }
     }
     
@@ -221,7 +221,7 @@
     // 将压缩的数据进行每5分钟的详细的转化.
     [totalModel modelToDetailShowWithTimeOrder:(int)lastOrder];
     
-    if ([[NSDate date] isSameWithDate:[NSDate dateWithString:totalModel.dateString]])
+    if (isToday)
     {
         totalModel.isSaveAllDay = NO;
         [BLTRealTime sharedInstance].currentDayModel = totalModel;
@@ -229,6 +229,7 @@
     }
     else
     {
+        // NSLog(@".dateString = .%@", totalModel.dateString);
         totalModel.isSaveAllDay = YES;
     }
     
@@ -358,6 +359,9 @@
     if (model)
     {
         _lastDetailSleeps = model.nextDetailSleeps;
+        
+        // 昨天睡眠的时间.
+        _lastSleepTime = model.nextSleepTime;
     }
 }
 
@@ -375,6 +379,9 @@
         [sleepArray addObjectsFromArray:[model.detailSleeps subarrayWithRange:NSMakeRange(144, 144)]];
 
         model.detailSleeps = sleepArray;
+        // 当天的睡眠总时间.
+        model.totalSleepTime = _todaySleepTime + _nextSleepTime;
+        
         [PedometerModel updateToDB:model where:nil];
     }
 }
@@ -395,18 +402,36 @@
     {
         NSInteger total = [self getDataWithIndex:i withType:StateModelSportSleep];
         [detailSleeps addObject:@(total)];
+        
+        if (i < 144)
+        {
+            if (total < 4)
+            {
+                _todaySleepTime += 5;
+            }
+        }
+        else
+        {
+            if (total < 4)
+            {
+                _nextSleepTime += 5;
+            }
+        }
     }
     
     self.currentDaySleeps = detailSleeps;
     
     // 昨天半天的加上今天半天的.
     NSMutableArray *sleepArray = [[NSMutableArray alloc] initWithCapacity:0];
-    [sleepArray addObjectsFromArray:self.lastDetailSleeps];
+    [sleepArray addObjectsFromArray:_lastDetailSleeps];
     [sleepArray addObjectsFromArray:[detailSleeps subarrayWithRange:NSMakeRange(0, 144)]];
     
-    self.detailSleeps = sleepArray;
-    self.nextDetailSleeps = [detailSleeps subarrayWithRange:NSMakeRange(144, 144)];
+    _detailSleeps = sleepArray;
+    _nextDetailSleeps = [detailSleeps subarrayWithRange:NSMakeRange(144, 144)];
 
+    // 当天睡眠总时间
+    _totalSleepTime = _lastSleepTime + _todaySleepTime;
+    
     // 加上睡眠开始和结束的时间。// detailSleeps已经是实际的睡眠了.
     [self addSleepStartTimeAndEndTime];
     
@@ -442,7 +467,7 @@
     {
         number += [self getDataWithIndex:i withType:type];
     }
-    
+
     return number;
 }
 
@@ -468,22 +493,28 @@
                             break;
                         case StateModelSportDistance:
                         {
-                            return model.calories;
+                            return model.distance;
                         }
                             break;
                         case StateModelSportCalories:
                         {
-                            return model.distance;
+                            return model.calories;
                         }
                             break;
                             
                         default:
+                            
                             break;
                     }
                 }
                 else
                 {
-                    return model.sleepState;
+                    if (type == StateModelSportSleep)
+                    {
+                        // NSLog(@"..sleep..%x..%d..%x", model.currentOrder, index, index);
+                        
+                        return model.sleepState;
+                    }
                 }
                 
                 break;

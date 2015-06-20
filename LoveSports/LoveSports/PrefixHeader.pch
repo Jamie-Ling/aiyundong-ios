@@ -94,16 +94,14 @@
 #define LS_IpSixDevice ([DataShare sharedInstance].isIp6)
 #define LS_IpSixPDevice ([DataShare sharedInstance].isIp6P)
 
-// #define vChangeToFT(A)  (A * 0.0328084)   //CM - >转换为英尺
 #define CMChangeToIN(A)  (A * 0.3937008)   //CM - >转换为英寸
-
-#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
-#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里mi
-
-// #define vBackToCM(A)  (A / 0.0328084)   //FT - >转换为CM
 #define INBackToCM(A)  (A / 0.3937008)   //IN - >转换为CM
 
-#define vBackToKG(A)  (A / 2.2046226)  //KG - >转换为磅
+#define vChangeToLB(A)  (A * 2.2046226)  //KG - >转换为磅
+#define vBackToKG(A)  (A / 2.2046226)  //磅 - >转换为KG
+
+#define vChangeToMI(A)  (A * 0.6213712)  //千米- 》英里mi
+
 
 // 国际化文件.
 #define LS_Text(string) NSLocalizedStringFromTable(string, @"LSLanguage", nil)

@@ -41,8 +41,9 @@ DEF_SINGLETON(BLTSendData)
 
 + (UInt8)timeZone
 {
-    UInt8 sign = [NSDate timeZone] > 0 ? 0 : (0x01 << 7);
-    return (UInt8)(sign | (abs([NSDate timeZone] * 2)));
+    NSInteger timeZone = (NSInteger)([NSDate timeZone] * 2);
+    UInt8 sign = timeZone > 0 ? 0 : (0x01 << 7);
+    return (UInt8)(sign | (abs(timeZone)));
 }
 
 + (UInt8)activityTimeZone:(NSInteger)timeZone
@@ -67,6 +68,8 @@ DEF_SINGLETON(BLTSendData)
 + (void)sendLocalTimeInformationData:(NSDate *)date
                      withUpdateBlock:(BLTAcceptDataUpdateValue)block
 {
+    // 测试历史数据.
+    // date = [date dateAfterDay:1];
     NSLog(@"..本地时区..%d..%d", [self timeZone], date.weekday - 1);
 
     UInt8 val[13] = {0xBE, 0x01, 0x02, 0xFE,
