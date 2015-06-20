@@ -42,6 +42,8 @@
     [super viewDidAppear:animated];
     
     [_scrollView startChartAnimation];
+    [_scrollView updateContentForNightDetailViews];
+    
     [BLTManager sharedInstance].connectBlock = nil;
 }
 
@@ -163,7 +165,7 @@
 
 - (void)updateConnectForView
 {
- 
+    [_scrollView updateContentForNightDetailViews];
 }
 
 @end

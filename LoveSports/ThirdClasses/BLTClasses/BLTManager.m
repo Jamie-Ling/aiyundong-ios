@@ -376,6 +376,7 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
             if (model.isRepeatConnect)
             {
                 [_centralManager connectPeripheral:peripheral options:nil];
+                [self waitFiveMinutesBeforeRepeatScan];
             }
             else
             {
@@ -386,16 +387,30 @@ didDisconnectPeripheral:(CBPeripheral *)peripheral
         {
             // 主动断开的.
             model.isInitiative = NO;
-           // [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startCan) object:nil];
-           // [self performSelector:@selector(startCan) withObject:nil afterDelay:8.0];
+            [self waitFiveMinutesBeforeRepeatScan];
         }
     }
     else
     {
         [self startCan];
     }
-    
+
     [self notifyViewUpdateModelState];
+}
+
+// 5秒内没连接上就重新扫描
+- (void)waitFiveMinutesBeforeRepeatScan
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(repeatScan) object:nil];
+    [self performSelector:@selector(repeatScan) withObject:nil afterDelay:10.0];
+}
+
+- (void)repeatScan
+{
+    if (!_model || _model.peripheral.state != CBPeripheralStateConnected)
+    {
+        [self startCan];
+    }
 }
 
 // 只要外围设备发生变化了就通知刷新
