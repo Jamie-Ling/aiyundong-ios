@@ -110,14 +110,33 @@ DEF_SINGLETON(DataShare)
     return existed;
 }
 
+// 每次都获取最新的.
 - (StepDataRecord *)stepRecord
 {
-    if (!_stepRecord)
+    // if (!_stepRecord)
     {
         _stepRecord = [StepDataRecord getStepDataRecordFromDB];
     }
     
     return _stepRecord;
+}
+
++ (NSDictionary *)monthDictionary
+{
+    NSDictionary *dict = @{@"1" : LS_Text(@"Jan"),
+                           @"2" : LS_Text(@"Feb"),
+                           @"3" : LS_Text(@"Mar"),
+                           @"4" : LS_Text(@"Apr"),
+                           @"5" : LS_Text(@"May"),
+                           @"6" : LS_Text(@"Jun"),
+                           @"7" : LS_Text(@"Jul"),
+                           @"8" : LS_Text(@"Aug"),
+                           @"9" : LS_Text(@"Sep"),
+                           @"10" : LS_Text(@"Otc"),
+                           @"11" : LS_Text(@"Nov"),
+                           @"12" : LS_Text(@"Dec")};
+    
+    return dict;
 }
 
 @end

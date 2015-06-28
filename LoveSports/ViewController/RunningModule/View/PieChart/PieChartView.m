@@ -175,9 +175,12 @@
 - (void)updateContentForViewWithModel:(PedometerModel *)model withState:(PieChartViewShowState)state  withReloadBlock:(PieChartViewReload)block;
 {
     CGFloat percent = 0.0;
-    NSInteger targetStep = 10000;
-    CGFloat targetCal = [self stepsConvertCalories:10000 withWeight:62 withModel:[UserInfoHelp sharedInstance].userModel.isMetricSystem];
-    CGFloat targetDis = [self StepsConvertDistance:10000 withPace:50] / 1000.0;
+    NSInteger targetStep = [UserInfoHelp sharedInstance].userModel.targetSteps;
+    CGFloat targetCal = [self stepsConvertCalories:targetStep
+                                        withWeight:[UserInfoHelp sharedInstance].userModel.weight
+                                         withModel:[UserInfoHelp sharedInstance].userModel.isMetricSystem];
+    CGFloat targetDis = [self StepsConvertDistance:targetStep
+                                          withPace:[UserInfoHelp sharedInstance].userModel.step] / 1000.0;
     switch (state)
     {
         case PieChartViewShowSteps:

@@ -45,11 +45,11 @@
 "Sunday" = "Sunday";
 
 "Mon" = "Mon";
-"Tues" = "Tues";
+"Tues" = "Tue";
 "Wed" = "Wed";
-"Thur" = "Thur";
+"Thur" = "Thu";
 "Fri" = "Fri";
-"Satur" = "Satur";
+"Satur" = "Sat";
 "Sun" = "Sun";
 
 
@@ -186,6 +186,19 @@
 "" = "";
 "" = "";
 "" = "";
+
+"Jan" = "Jan";
+"Feb" = "Feb";
+"Mar" = "Mar";
+"Apr" = "Apr";
+"May" = "May";
+"Jun" = "Jun";
+"Jul" = "Jul";
+"Aug" = "Aug";
+"Sep" = "Sep";
+"Otc" = "Otc";
+"Nov" = "Nov";
+"Dec" = "Dec";
 
 "sign-week" = "";
 

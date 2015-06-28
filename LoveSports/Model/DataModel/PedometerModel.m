@@ -380,7 +380,7 @@
 
         model.detailSleeps = sleepArray;
         // 当天的睡眠总时间.
-        model.totalSleepTime = _todaySleepTime + _nextSleepTime;
+        model.totalSleepTime = _nextSleepTime;
         
         [PedometerModel updateToDB:model where:nil];
     }
@@ -397,6 +397,10 @@
     NSMutableArray *detailDistans  = [[NSMutableArray alloc] initWithCapacity:0];
     NSMutableArray *detailCalories = [[NSMutableArray alloc] initWithCapacity:0];
 
+    // 避免重复累加 清0 .
+    _todaySleepTime = 0;
+    _nextSleepTime = 0;
+    
     // 展示的时候不足的个数再展示的时候自动补满48个.
     for (int i = 0; i < 288; i++)
     {

@@ -44,11 +44,15 @@
         _weekNumber = weekNumber;
         _yearNumber = yearNumber;
         
-        _showDate = [NSString stringWithFormat:@"%ld/%ld周", (long)yearNumber, (long)weekNumber];
+        _showDate = [NSString stringWithFormat:@"%ld/%ld%@", (long)yearNumber, (long)weekNumber, LS_Text(@"Week")];
     }
     return self;
 }
 
+- (NSString *)showDate
+{
+    return [NSString stringWithFormat:@"%ld/%ld%@", _yearNumber, _weekNumber, LS_Text(@"Week")];
+}
 
 /**
  *  更新汇总信息

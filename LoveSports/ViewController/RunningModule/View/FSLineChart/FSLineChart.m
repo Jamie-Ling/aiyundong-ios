@@ -151,6 +151,8 @@
                 {
                     label.textColor = [UIColor greenColor];
                 }
+                
+                label.text = [[DataShare monthDictionary] objectForKey:[NSString stringWithFormat:@"%ld", (long)textMonth]];
             }
             
             /*
@@ -310,6 +312,11 @@
             }
             
             label.center = CGPointMake(p.x, p.y);
+            if (label.center.y < 10)
+            {
+                label.center = CGPointMake(p.x, 10);
+            }
+            
             CGFloat number = [_data[i] floatValue];
             BOOL tail = (NSInteger)(number * 100) % 100;
             if (tail)

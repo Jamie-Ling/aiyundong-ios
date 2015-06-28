@@ -29,6 +29,7 @@ DEF_SINGLETON(BLTSimpleSend)
     self.failCount = 0;
     [[BLTAcceptData sharedInstance] cleanMutableData];
     
+    NSLog(@"self.startDate = ..%@", self.startDate);
     if ([self.startDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970])
     {
         self.startDate = [NSDate date];
@@ -62,7 +63,7 @@ DEF_SINGLETON(BLTSimpleSend)
                                          }
                                          else if (type == BLTAcceptDataTypeError)
                                          {
-                                             NSLog(@"...失败。。。");
+                                             // NSLog(@"...失败。。。");
                                              SHOWMBProgressHUD(LS_Text(@"Data sync failed"), nil, nil, NO, 2.0);
                                              [self endSyncFail];
                                          }
@@ -341,9 +342,9 @@ void showMessage(BLTSimpleSendShowMessage showBlock)
 #pragma mark --- 蓝牙连接后发送连续的指令 ---
 - (void)sendContinuousInstruction
 {
-    // 纪录最后一次连的设备的uuid。
+    // 纪录最后一次连的设备的uuid.
     [LS_LastWareUUID setObjectValue:[BLTManager sharedInstance].model.bltID];
-    
+   
     // 请求硬件信息.
     [self performSelector:@selector(sendRequestHardInfo) withObject:nil afterDelay:0.3];
     [self performSelector:@selector(startSendCommandToInitialize) withObject:nil afterDelay:0.6];

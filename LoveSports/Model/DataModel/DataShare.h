@@ -20,7 +20,7 @@
 @property (nonatomic, assign) BOOL isIp6;
 @property (nonatomic, assign) BOOL isIp6P;
 
-@property (nonatomic, strong) StepDataRecord *stepRecord;
+@property (nonatomic, strong) StepDataRecord *stepRecord;       // 保证随时获取都是最新的.
 
 // 可能需要统一整个界面的日期。后面需要再改。
 @property (nonatomic, strong) NSDate *currentDate;
@@ -38,5 +38,8 @@ AS_SINGLETON(DataShare)
 + (BOOL)isIpSixP;
 
 - (UIImage *)getHeadImage;
+
+// 月数字典.
++ (NSDictionary *)monthDictionary;
 
 @end

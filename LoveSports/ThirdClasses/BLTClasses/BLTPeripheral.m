@@ -46,7 +46,7 @@ DEF_SINGLETON(BLTPeripheral)
     }
     else
     {
-       // [self stopUpdateRSSI];
+        // [self stopUpdateRSSI];
     }
 }
 
@@ -56,14 +56,15 @@ DEF_SINGLETON(BLTPeripheral)
     
     if (!_timer)
     {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(updateRSSI) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(updateRSSI) userInfo:nil repeats:YES];
     }
 }
 
 - (void)updateRSSI
 {
-    if (_peripheral)
+    if (_peripheral && _peripheral.state == CBPeripheralStateConnected)
     {
+        NSLog(@"....... 读取rssi");
         [_peripheral readRSSI];
     }
 }
